@@ -8,10 +8,13 @@ Rodada de 12/10/2026, autorizada pelo responsável pelo projeto. Links conferido
 | Reddit — r/JogosIndiesBR | Português (Brasil) | [Meu projeto de fã de Diablo 1](https://www.reddit.com/r/JogosIndiesBR/comments/1x4hbef/meu_projeto_de_f%C3%A3_de_diablo_1_returns_from/) | Publicado; flair Projetos Pessoais; comentário de boas-vindas do AutoModerator |
 | Reddit — r/ArgenGames | Espanhol | [Un proyecto de fans para recuperar el encuentro online de Diablo 1](https://www.reddit.com/r/ArgenGames/comments/1x4hd01/returns_from_darkness_un_proyecto_de_fans_para/) | Publicado; flair Noticias / Novedades |
 | Reddit — r/italygames | Italiano | [Comentário na Gaming Room fixada](https://www.reddit.com/r/italygames/comments/1w9bpl3/comment/pgdmg4h/) | Publicado no megathread destinado a projetos; confirmação de envio mostrada pelo Reddit |
+| GitHub — Announcements | Inglês e português, com links dos 14 idiomas | [Community open, local prototype and introductions in 14 languages](https://github.com/VagJr/returns-from-darkness/discussions/1) | Anúncio publicado na Discussion #1 e conferido no navegador |
 
 Conta usada no Reddit: **u/TheSandboxCo9**, sessão já autenticada no navegador do responsável. Não foram criadas contas alternativas.
 
 Cópias exatas: [inglês](published/reddit-diablo1.en.md), [português](published/reddit-jogosindiesbr.pt-BR.md), [espanhol](published/reddit-argengames.es.md), [italiano](published/reddit-italygames.it.md).
+
+O [pacote multilíngue](https://github.com/VagJr/returns-from-darkness/tree/main/press-kit) também foi publicado no repositório do projeto. [Cópia do anúncio do GitHub](published/github-announcement.en-pt-BR.md).
 
 ## Material em 14 idiomas
 
