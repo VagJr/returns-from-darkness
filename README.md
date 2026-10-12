@@ -69,6 +69,8 @@ Independent fan project, free and noncommercial. Not affiliated with Blizzard. D
 
 Website: https://returns-from-darkness.vercel.app/
 
+Multilingual introductions, community research and published announcements: [press kit](press-kit/README.md). Follow discussions and development announcements in [GitHub Discussions](https://github.com/VagJr/returns-from-darkness/discussions).
+
 Public website source and development notes: [CONTRIBUTING.md](CONTRIBUTING.md). Asset notices: [NOTICE.md](NOTICE.md).
 
 Local community bot: [setup guide](community-bot/README.md). Compact multilingual server setup; requires your own Discord application and a locally stored token.
