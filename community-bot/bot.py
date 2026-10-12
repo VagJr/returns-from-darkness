@@ -264,7 +264,7 @@ def category_permissions(guild, spec):
     result = {
         guild.default_role: discord.PermissionOverwrite(view_channel=spec['key'] == 'gate', send_messages=False, connect=False),
         bot_member: discord.PermissionOverwrite(view_channel=True, send_messages=True, embed_links=True,
-                                               read_message_history=True, manage_channels=True),
+                                               read_message_history=True, manage_channels=True, connect=True, speak=True),
         sentinel: discord.PermissionOverwrite(view_channel=True, send_messages=True, read_message_history=True,
                                              attach_files=True, embed_links=True, connect=True, speak=True),
     }
@@ -290,17 +290,30 @@ async def ensure_channel(guild, key, spec, category=None, overwrites=None):
         if category is None:
             channel = await guild.create_category(spec['name'], overwrites=overwrites, reason='RFD community setup')
         elif spec['mode'] == 'voice':
-            channel = await guild.create_voice_channel(spec['name'], category=category, user_limit=spec['limit'], reason='RFD community setup')
+            channel = await guild.create_voice_channel(spec['name'], category=category, overwrites=category.overwrites, user_limit=spec['limit'], reason='RFD community setup')
         else:
-            channel = await guild.create_text_channel(spec['name'], category=category, topic=spec['topic'], slowmode_delay=5 if spec['mode'] == 'chat' else 0, reason='RFD community setup')
+            channel = await guild.create_text_channel(spec['name'], category=category, overwrites=category.overwrites, topic=spec['topic'], slowmode_delay=5 if spec['mode'] == 'chat' else 0, reason='RFD community setup')
     state['channels'][key] = channel.id
     save_state()
     # Only the explicitly configured channels are managed; unrelated channels are retained.
     if category is None:
-        await channel.edit(overwrites=overwrites, reason='RFD category permissions')
+        updated = await channel.edit(overwrites=overwrites, reason='RFD category permissions')
     else:
-        await channel.edit(category=category, sync_permissions=True, reason='RFD channel permissions')
-    return channel
+        if isinstance(channel, discord.VoiceChannel) and not channel.permissions_for(guild.me).connect:
+            # The old room already allows Traveler to connect. Temporarily use
+            # that unprivileged role to repair the bot's own channel overwrite.
+            traveler = get_role(guild, 'traveler')
+            added = traveler not in guild.me.roles
+            try:
+                if added:
+                    await guild.me.add_roles(traveler, reason='Recover interrupted RFD voice setup')
+                updated = await channel.edit(category=category, overwrites=category.overwrites, reason='Restore RFD voice maintenance access')
+            finally:
+                if added:
+                    await guild.me.remove_roles(traveler, reason='Finish RFD voice setup recovery')
+            return updated if updated is not None else channel
+        updated = await channel.edit(category=category, overwrites=category.overwrites, reason='RFD channel permissions')
+    return updated if updated is not None else channel
 
 
 async def ensure_message(key, channel, embed, view=None):
@@ -337,7 +350,7 @@ async def setup(interaction: discord.Interaction, action: app_commands.Choice[st
         return
     if action.value == 'plan':
         lines = ['**7 canais públicos de texto + 2 salas de voz para 4 pessoas + 1 canal privado da equipe.**',
-                 '**14 cargos de idioma**, Traveler, Watchers e Sentinels. Sem apagar canais existentes.']
+                 '**14 cargos de idioma**, Founder, Traveler, Watchers e Sentinels. Founder é atribuído ao dono do servidor. Sem apagar canais existentes.']
         for spec in CONFIG['categories']:
             lines.append(spec['name'] + '\n' + ' · '.join(c['name'] for c in spec['channels']))
         lines.append('Apply ajusta nome e ícone do servidor, permissões dos canais listados e mensagens iniciais. Não ativa Community e não publica no Reddit.')
@@ -348,32 +361,47 @@ async def setup(interaction: discord.Interaction, action: app_commands.Choice[st
         await interaction.followup.send('Outra configuração já está em andamento.', ephemeral=True)
         return
     async with setup_lock:
-        permissions = interaction.guild.me.guild_permissions
-        missing = [p for p in ['manage_guild', 'manage_roles', 'manage_channels', 'view_channel', 'send_messages', 'embed_links', 'read_message_history'] if not getattr(permissions, p)]
-        if missing:
-            await interaction.followup.send('Permissões faltando: ' + ', '.join(missing), ephemeral=True)
-            return
-        guild = interaction.guild
-        await ensure_role(guild, 'traveler', 'Traveler', 0xb78c45)
-        await ensure_role(guild, 'watcher', 'Watchers', 0x965038)
-        await ensure_role(guild, 'sentinel', 'Sentinels', 0x873434)
-        for code, name in LANGUAGES.items():
-            await ensure_role(guild, 'lang:' + code, 'Language • ' + name, 0x5a6359)
-        for spec in CONFIG['categories']:
-            category = await ensure_channel(guild, 'category:' + spec['key'], spec, overwrites=category_permissions(guild, spec))
-            for child in spec['channels']:
-                await ensure_channel(guild, child['key'], child, category=category)
-        await guild.edit(name=CONFIG['server_name'], icon=(ROOT/'server-icon.png').read_bytes(), reason='RFD project community branding')
-        welcome = discord.Embed(title='Welcome to Tristram • Bem-vindo a Tristram',
-            description='Select your language to read the project guide and rules. Then accept the rules to unlock the tavern.\n\nEscolha seu idioma, leia as regras e aceite para entrar na comunidade.\n\n**Shared channels, 14 languages.** /guide', color=int(CONFIG['color'], 16))
-        welcome.set_image(url=CONFIG['website'] + '/assets/cooperative.webp')
-        await ensure_message('welcome', guild.get_channel(state['channels']['welcome']), welcome, WelcomeView())
-        await ensure_message('guide', guild.get_channel(state['channels']['guide']), guide_embed('en'), WelcomeView())
-        news = discord.Embed(title='Returns from Darkness • Development journal',
-             description='Independent, non-commercial fan project. The game server is not publicly available yet.\n\nFollow verified progress on the website and GitHub. Use /guide for your language.', color=int(CONFIG['color'], 16))
-        news.add_field(name='Project', value=f"[Website]({CONFIG['website']}) · [GitHub]({CONFIG['github']})")
-        await ensure_message('news', guild.get_channel(state['channels']['news']), news)
+        await configure_community(interaction.guild)
         await interaction.followup.send('✅ Comunidade configurada. Repita /setup apply sem duplicar a estrutura. Atribua Sentinels manualmente à equipe confiável.', ephemeral=True)
+
+
+async def configure_community(guild):
+    if guild.id != GUILD_ID:
+        raise ValueError('Esta configuração só pode ser aplicada ao servidor autorizado do projeto.')
+    permissions = guild.me.guild_permissions
+    missing = [p for p in ['manage_guild', 'manage_roles', 'manage_channels', 'view_channel', 'send_messages', 'embed_links', 'read_message_history'] if not getattr(permissions, p)]
+    if missing:
+        raise ValueError('Permissões faltando: ' + ', '.join(missing))
+    await ensure_role(guild, 'traveler', 'Traveler', 0xb78c45)
+    await ensure_role(guild, 'watcher', 'Watchers', 0x965038)
+    await ensure_role(guild, 'sentinel', 'Sentinels', 0x873434)
+    await ensure_founder(guild)
+    for code, name in LANGUAGES.items():
+        await ensure_role(guild, 'lang:' + code, 'Language • ' + name, 0x5a6359)
+    channels = {}
+    for spec in CONFIG['categories']:
+        category = await ensure_channel(guild, 'category:' + spec['key'], spec, overwrites=category_permissions(guild, spec))
+        for child in spec['channels']:
+            channels[child['key']] = await ensure_channel(guild, child['key'], child, category=category)
+    await guild.edit(name=CONFIG['server_name'], icon=(ROOT/'server-icon.png').read_bytes(), reason='RFD project community branding')
+    welcome = discord.Embed(title='Welcome to Tristram • Bem-vindo a Tristram',
+        description='Select your language to read the project guide and rules. Then accept the rules to unlock the tavern.\n\nEscolha seu idioma, leia as regras e aceite para entrar na comunidade.\n\n**Shared channels, 14 languages.** /guide', color=int(CONFIG['color'], 16))
+    welcome.set_image(url=CONFIG['website'] + '/assets/cooperative.webp')
+    await ensure_message('welcome', channels['welcome'], welcome, WelcomeView())
+    await ensure_message('guide', channels['guide'], guide_embed('en'), WelcomeView())
+    news = discord.Embed(title='Returns from Darkness • Development journal',
+         description='Independent, non-commercial fan project. The game server is not publicly available yet.\n\nFollow verified progress on the website and GitHub. Use /guide for your language.', color=int(CONFIG['color'], 16))
+    news.add_field(name='Project', value=f"[Website]({CONFIG['website']}) · [GitHub]({CONFIG['github']})")
+    await ensure_message('news', channels['news'], news)
+
+
+async def ensure_founder(guild):
+    role = await ensure_role(guild, 'founder', 'Founder', 0xd9ae57)
+    await role.edit(hoist=True, mentionable=False, reason='RFD founder branding')
+    owner = await guild.fetch_member(guild.owner_id)
+    if role not in owner.roles:
+        await owner.add_roles(role, reason='Project founder: server owner')
+    return role
 
 
 @bot.tree.command(name='guide', description='Read the project guide in your language / Guia do projeto', guild=GUILD)
@@ -387,8 +415,10 @@ async def guide(interaction: discord.Interaction):
 @bot.tree.error
 async def command_error(interaction, error):
     actual = getattr(error, 'original', error)
-    logging.error('Command failed: %s', type(actual).__name__)
+    logging.error('Command failed: %s; HTTP=%s; Discord=%s', type(actual).__name__, getattr(actual,'status',None), getattr(actual,'code',None))
     detail = str(actual) if isinstance(actual, ValueError) else 'Confira as permissões, a posição do cargo do bot e a conexão. Pode repetir /setup apply para continuar.'
+    if isinstance(actual, discord.HTTPException):
+        detail = f'Discord recusou a ação: HTTP {actual.status}, código {actual.code}. Pode repetir /setup apply após corrigir as permissões.'
     if interaction.response.is_done():
         await interaction.followup.send('⚠ ' + detail, ephemeral=True)
     else:

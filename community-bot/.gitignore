@@ -2,4 +2,5 @@
 .venv/
 state.json
 *.log
+bot.pid
 __pycache__/

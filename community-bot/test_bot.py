@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
-from unittest.mock import AsyncMock, patch
+from unittest.mock import AsyncMock, MagicMock, patch
 from contextlib import redirect_stdout
 from io import StringIO
 
@@ -91,6 +91,50 @@ class BotTests(unittest.IsolatedAsyncioTestCase):
     async def test_direct_message_explains_correct_server(self):
         interaction=SimpleNamespace(guild_id=None)
         self.assertIn('mensagem direta',app.setup_denial(interaction))
+
+    async def test_bot_keeps_connect_permission_in_restricted_categories(self):
+        member=object(); everyone=object(); traveler=object(); sentinel=object()
+        guild=SimpleNamespace(me=member,default_role=everyone)
+        with patch.object(app,'get_role',side_effect=lambda guild,key:traveler if key=='traveler' else sentinel):
+            for category in app.CONFIG['categories']:
+                overwrites=app.category_permissions(guild,category)
+                self.assertTrue(overwrites[member].connect)
+                self.assertTrue(overwrites[member].manage_channels)
+                self.assertFalse(overwrites[everyone].connect)
+
+    async def test_configuration_rejects_unrelated_server(self):
+        with self.assertRaises(ValueError):await app.configure_community(SimpleNamespace(id=42))
+
+    async def test_interrupted_voice_channel_restores_connect_before_edit(self):
+        # A hashable member mock is needed for Discord's overwrite mapping.
+        member=MagicMock(roles=[],add_roles=AsyncMock(),remove_roles=AsyncMock())
+        traveler=object()
+        category=SimpleNamespace(id=30,overwrites={member:discord.PermissionOverwrite(connect=True,view_channel=True,manage_channels=True)})
+        voice=MagicMock(spec=discord.VoiceChannel)
+        voice.id=55
+        voice.permissions_for.return_value=discord.Permissions(connect=False)
+        async def edit(**kwargs):
+            member.add_roles.assert_awaited_once_with(traveler,reason='Recover interrupted RFD voice setup')
+            return voice
+        voice.edit=AsyncMock(side_effect=edit)
+        guild=SimpleNamespace(me=member,get_channel=lambda id:voice)
+        app.state['channels']['voice1']=55
+        with patch.object(app,'get_role',return_value=traveler):
+            result=await app.ensure_channel(guild,'voice1',{'mode':'voice','name':'Party I'},category=category)
+        self.assertIs(result,voice)
+        member.remove_roles.assert_awaited_once_with(traveler,reason='Finish RFD voice setup recovery')
+
+    async def test_founder_is_assigned_only_to_server_owner_once(self):
+        role=SimpleNamespace(edit=AsyncMock())
+        owner=SimpleNamespace(roles=[],add_roles=AsyncMock())
+        guild=SimpleNamespace(owner_id=77,fetch_member=AsyncMock(return_value=owner))
+        with patch.object(app,'ensure_role',AsyncMock(return_value=role)):
+            await app.ensure_founder(guild)
+            guild.fetch_member.assert_awaited_once_with(77)
+            owner.add_roles.assert_awaited_once_with(role,reason='Project founder: server owner')
+            owner.roles=[role]
+            await app.ensure_founder(guild)
+            self.assertEqual(owner.add_roles.await_count,1)
 
     async def test_compact_structure_and_four_player_voice(self):
         public=[c for cat in app.CONFIG['categories'] if not cat.get('private') for c in cat['channels']]

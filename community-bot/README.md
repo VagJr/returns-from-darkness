@@ -28,7 +28,7 @@ Se preferir configurar manualmente, copie `.env.example` para `.env` e preencha 
 - Comunidade: tavern, find-a-party, help-bugs e ideas-art.
 - Voz: Party I e Party II, quatro pessoas por sala.
 - Equipe: um canal privado staff.
-- Cargos: Traveler, Watchers, Sentinels e 14 cargos de idioma.
+- Cargos: Founder, Traveler, Watchers, Sentinels e 14 cargos de idioma. Founder é atribuído automaticamente ao dono do servidor, tem cor dourada e destaque na lista de membros. É um cargo de identificação, sem adicionar permissões administrativas.
 
 Escolher um idioma mostra um guia e regras traduzidos em mensagem privada do Discord. Aceitar as regras libera a área da comunidade. O botão News alterna o cargo de interesse em novidades; os anúncios são publicados manualmente pela equipe. **Sentinels não concede poderes de administrador**: permite acesso ao espaço da equipe e escrita nos canais de entrada. Atribua esse cargo manualmente às pessoas responsáveis.
 
@@ -55,3 +55,5 @@ Criar a aplicação e salvar o token não instala o bot no servidor. A inicializ
 Abra esse link com sua conta que administra o servidor e autorize a instalação. Se o bot já estiver no servidor mas o Discord recusar o registro dos comandos, use o mesmo link para reautorizar `bot` e `applications.commands`, depois reinicie. Não é necessário gerar outro token para resolver uma instalação ausente.
 
 `/setup` deve ser usado em um canal do servidor configurado, não na conversa privada com o aplicativo. O dono do servidor é aceito mesmo sem um cargo chamado Administrador. Outros usuários precisam da permissão Administrator. A mensagem de recusa agora distingue servidor errado, cache indisponível e falta de permissão, e mostra as contas do dono e de quem executou quando aplicável. Conceder Administrator ao bot não remove privilégios do dono.
+
+As categorias incluem uma exceção de conexão de voz para o bot, para que a restrição de entrada dos visitantes não interrompa a configuração. Se uma configuração antiga deixou uma sala sem essa exceção, o bot usa temporariamente o cargo comum Traveler para reparar suas próprias permissões e remove o cargo ao terminar. Não concede Administrator e não apaga a sala.
