@@ -1,0 +1,27 @@
+{
+  "officialName": "Diablo 1 HD — Returns from Darkness",
+  "source": "User-provided classic Diablo sprite sheet",
+  "sourceDimensions": [
+    941,
+    3240
+  ],
+  "sourceRegion": [
+    0,
+    0,
+    550,
+    3240
+  ],
+  "frames": 15,
+  "frameDurationMs": 85,
+  "cycleDurationMs": 1275,
+  "width": 768,
+  "height": 280,
+  "animation": "Native frame replay with full-body fire behind the custom suffix, driven by the same frame colors and flame coverage",
+  "suffix": "Original project lettering above flames; native root placement plus full-height body/counter fire",
+  "reference": "https://douglasopan.github.io/diablo-3d/",
+  "outputs": [
+    "returns-from-darkness-classic-animated.webp",
+    "returns-from-darkness-classic-animated.gif",
+    "returns-from-darkness-classic.png"
+  ]
+}

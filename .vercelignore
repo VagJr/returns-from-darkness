@@ -1,0 +1,8 @@
+.git
+.github
+docs
+github-public
+outreach
+*.py
+site/*.py
+site/*.ps1

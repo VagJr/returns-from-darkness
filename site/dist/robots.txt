@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://returns-from-darkness.vercel.app/sitemap.xml

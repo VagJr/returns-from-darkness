@@ -1,0 +1,27 @@
+{
+  "name": "Diablo 1 HD — Returns from Darkness",
+  "baseVersion": "0.1.6",
+  "updated": "2026-10-12",
+  "publicOrigin": "https://returns-from-darkness.vercel.app",
+  "discordInvite": "https://discord.gg/S9VVaBXwDk",
+  "githubRepository": "https://github.com/VagJr/returns-from-darkness",
+  "releaseReady": true,
+  "vercelTeam": "vagjrs-projects",
+  "vercelProjectName": "returns-from-darkness",
+  "languages": [
+    "pt-BR",
+    "en",
+    "es",
+    "fr",
+    "de",
+    "it",
+    "pl",
+    "ru",
+    "uk",
+    "tr",
+    "ja",
+    "ko",
+    "zh-CN",
+    "ar"
+  ]
+}

@@ -1,0 +1,1010 @@
+{
+  "pl": {
+    "nav": [
+      "Projekt",
+      "Online",
+      "Dziennik",
+      "Pytania"
+    ],
+    "eyebrow": "Klasyka. Nowa wspólna wyprawa.",
+    "headline": [
+      "Mrok wzywa.",
+      "Wróć ze swoją drużyną."
+    ],
+    "summary": "Diablo 1 HD — Returns from Darkness to niezależny, niekomercyjny projekt przywracający miejsce spotkań z klasycznego Battle.net, z oprawą HD i autorską zawartością w przygotowaniu.",
+    "actions": [
+      "Poznaj społeczność",
+      "Odkryj projekt"
+    ],
+    "facts": [
+      "Lokalna baza w rozwoju",
+      "Do 4 graczy w jednej grze",
+      "Bezpłatny · Niekomercyjny"
+    ],
+    "art": "Autorska grafika koncepcyjna · To nie zrzut ekranu z gry",
+    "vision": [
+      "Niektóre miejsca nie przestają nas wzywać.",
+      "Cisza Tristram. Wrota katedry. Jeszcze jedno piętro w dół, razem z przyjaciółmi.",
+      "Chcemy zachować atmosferę Diablo 1 i otworzyć nowe drogi: serwer społeczności, odnowioną grafikę i wspólne przygody."
+    ],
+    "pillars": [
+      [
+        "Dusza klasyki",
+        "Gotyckie fantasy, eksploracja i współpraca w centrum rozgrywki."
+      ],
+      [
+        "Wizja HD",
+        "Grafika i interfejs HD są w przygotowaniu. Klient ma własny interfejs lobby; pełna przebudowa grafiki nadal trwa."
+      ],
+      [
+        "Nowe drogi",
+        "Pierwsze Światło zaczyna się od pięciu przedmiotów i dwóch wariantów. Nowe obszary i arena to prototypy."
+      ]
+    ],
+    "online": [
+      "Spotkanie przed przygodą.",
+      "Centralna społeczność, kanały czatu i wiele pokoi dla maksymalnie czterech graczy. Inspiracją jest klasyczny Battle.net; integracja wykorzystuje własne usługi oparte na PvPGN i DevilutionX."
+    ],
+    "flow": [
+      "Zaloguj się",
+      "Znajdź drużynę",
+      "Wybierz pokój",
+      "Wróć do Tristram"
+    ],
+    "now": [
+      "Co działa dziś",
+      "Lokalna wersja 0.1.6 integruje logowanie, kanały, czat i pokoje w kliencie. Graficzne wejście do Tristram potwierdzono w 0.1.4 i 0.1.5; nowy natywny proces jest nadal sprawdzany. Warsztat obsługuje edycję tabel, import sprite’ów i przygotowanie zawartości."
+    ],
+    "next": [
+      "Następny krok",
+      "Sprawdzić rozgrywkę z dwoma klientami graficznymi, późne dołączanie i odejście gospodarza; rozwijać grafikę HD oraz zabezpieczyć i przetestować połączenia zewnętrzne przed otwarciem."
+    ],
+    "limits": "Test sieci nie jest pełną graficzną rozgrywką czterech osób. Zapisy i symulacja nadal pozostają po stronie klientów. Serwer nie jest otwarty publicznie.",
+    "journal": [
+      "Tworzone starannie. Rozwijane przejrzyście.",
+      "Rzeczywiste osiągnięcia, jasne cele i miejsce dla społeczności na każdym etapie."
+    ],
+    "milestones": [
+      [
+        "Tristram znów się wczytuje",
+        "Połączono zmodyfikowanego klienta, PvPGN, launcher i lokalne pokoje. Pierwsze wejście do świata potwierdzono w wersji 0.1.4.",
+        "Lokalna baza sprawdzona"
+      ],
+      [
+        "Nadać kształt powrotowi",
+        "Grafika i interfejs HD są w przygotowaniu. Klient ma własny interfejs lobby; pełna przebudowa grafiki nadal trwa.",
+        "W rozwoju"
+      ],
+      [
+        "Pierwsze Światło i Arena Popiołów",
+        "Pięć przedmiotów i dwa warianty w tabelach silnika. Dwie wygenerowane mapy czekają na integrację; pojedynki 1v1 i 2v2 nie są jeszcze grywalne.",
+        "Prototyp zawartości"
+      ]
+    ],
+    "faq": [
+      [
+        "Czy potrzebuję oryginalnego Diablo?",
+        "Tak. Gracze potrzebują plików z własnej instalacji. Projekt nie udostępnia DIABDAT.MPQ ani komercyjnych danych gry."
+      ],
+      [
+        "Czy mogę już grać na publicznym serwerze?",
+        "Jeszcze nie. Wersja 0.1.6 służy do lokalnych testów. Dołącz do Discorda, aby śledzić postępy i nadchodzące testy."
+      ],
+      [
+        "Czy to oficjalny remake albo świat MMO?",
+        "To niezależny projekt fanowski, niezwiązany z Blizzardem. Każda gra ma do czterech graczy; lobby może łączyć wiele grup, bez wspólnego trwałego świata."
+      ],
+      [
+        "Czy gra ma już pełną grafikę HD i arenę?",
+        "Jeszcze nie. Klient używa oryginalnej grafiki z profilami 1280 × 720. Przebudowa HD, nowe obszary i arena są celami produkcyjnymi. Nie ustalono publicznej daty premiery."
+      ]
+    ],
+    "join": [
+      "Następny rozdział zaczyna się od społeczności.",
+      "Dołącz do Discorda, znajdź drużynę i śledź rozwój oraz przygotowania do testów. Serwer gry nie jest jeszcze dostępny publicznie."
+    ],
+    "pending": [
+      "Zaproszenie w przygotowaniu",
+      "Publiczne repozytorium w przygotowaniu"
+    ],
+    "footer": "Niezależny projekt fanowski, bezpłatny i niekomercyjny. Bez powiązań z Blizzardem. Diablo i Battle.net są znakami ich właścicieli.",
+    "language": "Język",
+    "menu": "Otwórz nawigację",
+    "skip": "Przejdź do treści",
+    "post": [
+      "Returns from Darkness: odbudowujemy miejsce spotkań online w Diablo 1",
+      "Jestem twórcą Returns from Darkness i chcę pokazać, co już zbudowaliśmy, jasno wskazując, co jeszcze pozostaje do zrobienia.",
+      "Czego najbardziej brakuje wam w klasycznym lobby Diablo 1? Wspomnienia i sugestie pomogą wyznaczyć kolejne kroki."
+    ],
+    "sections": [
+      "Projekt",
+      "Społeczność online",
+      "Dziennik rozwoju",
+      "Częste pytania",
+      "Społeczność"
+    ],
+    "alt": "Gotycka katedra oświetlona ogniem we mgle: autorska grafika koncepcyjna Returns from Darkness"
+  },
+  "ru": {
+    "nav": [
+      "Проект",
+      "Онлайн",
+      "Дневник",
+      "Вопросы"
+    ],
+    "eyebrow": "Классика. Новое путешествие вместе.",
+    "headline": [
+      "Тьма зовёт.",
+      "Вернитесь своей командой."
+    ],
+    "summary": "Diablo 1 HD — Returns from Darkness — независимый некоммерческий проект: возродить место встречи классической Battle.net, с визуальным обновлением в HD и новым авторским контентом в разработке.",
+    "actions": [
+      "Найти сообщество",
+      "Узнать о проекте"
+    ],
+    "facts": [
+      "Локальная основа в разработке",
+      "До 4 игроков в игре",
+      "Бесплатно · Некоммерческий"
+    ],
+    "art": "Оригинальный концепт-арт · Не снимок игрового процесса",
+    "vision": [
+      "Некоторые места зовут нас всегда.",
+      "Тишина Тристрама. Дверь собора. Ещё один этаж вниз вместе с друзьями.",
+      "Мы хотим сохранить атмосферу Diablo 1 и открыть новые пути: сервер сообщества, обновлённую графику и совместные приключения."
+    ],
+    "pillars": [
+      [
+        "Душа классики",
+        "Готическое фэнтези, исследование и совместная игра в основе опыта."
+      ],
+      [
+        "Видение в HD",
+        "HD-графика и интерфейс в разработке. В клиенте уже есть собственный интерфейс лобби; полная переработка графики ещё продолжается."
+      ],
+      [
+        "Новые пути",
+        "Первый Свет начинается с пяти предметов и двух вариантов. Новые области и арена пока являются прототипами."
+      ]
+    ],
+    "online": [
+      "Встреча перед приключением.",
+      "Единое сообщество, каналы чата и несколько комнат до четырёх игроков каждая. Источник вдохновения — классическая Battle.net; интеграция использует собственные службы на основе PvPGN и DevilutionX."
+    ],
+    "flow": [
+      "Войдите в аккаунт",
+      "Найдите команду",
+      "Выберите комнату",
+      "Вернитесь в Тристрам"
+    ],
+    "now": [
+      "Что работает сегодня",
+      "Локальная версия 0.1.6 включает вход, каналы, чат и комнаты прямо в клиенте. Графический вход в Тристрам подтверждён в 0.1.4 и 0.1.5; новый встроенный сценарий ещё проверяется. Мастерская позволяет редактировать таблицы, импортировать спрайты и готовить контент."
+    ],
+    "next": [
+      "Следующий шаг",
+      "Проверить игру с двумя графическими клиентами, поздний вход и выход создателя; развивать HD-переработку и защитить и проверить внешние подключения перед открытием сервера."
+    ],
+    "limits": "Сетевой тест не равен полной графической игре четырёх человек. Сохранения и симуляция по-прежнему находятся на клиентах. Сервер пока не открыт для публики.",
+    "journal": [
+      "Сделано с вниманием. Разработано открыто.",
+      "Реальные этапы, ясные цели и возможность сообщества следить за каждым шагом."
+    ],
+    "milestones": [
+      [
+        "Тристрам снова загружается",
+        "Модифицированный клиент, PvPGN, лаунчер и локальные комнаты объединены. Первый вход в мир подтверждён в версии 0.1.4.",
+        "Локальная основа проверена"
+      ],
+      [
+        "Придать форму возвращению",
+        "HD-графика и интерфейс в разработке. В клиенте уже есть собственный интерфейс лобби; полная переработка графики ещё продолжается.",
+        "В разработке"
+      ],
+      [
+        "Первый Свет и Арена Пепла",
+        "Пять предметов и два варианта в таблицах движка. Две сгенерированные карты ждут интеграции; дуэли 1v1 и 2v2 ещё недоступны.",
+        "Прототип контента"
+      ]
+    ],
+    "faq": [
+      [
+        "Нужен ли оригинальный Diablo?",
+        "Да. Игрокам понадобятся файлы собственной установки. Проект не распространяет DIABDAT.MPQ или коммерческие данные игры."
+      ],
+      [
+        "Можно ли уже играть на публичном сервере?",
+        "Пока нет. Версия 0.1.6 предназначена для локальных тестов. В Discord можно следить за разработкой и будущими тестами."
+      ],
+      [
+        "Это официальный ремейк или мир MMO?",
+        "Это независимый фанатский проект, не связанный с Blizzard. В каждой игре до четырёх участников; лобби сможет объединять разные группы без общего постоянного мира."
+      ],
+      [
+        "В игре уже есть полная HD-графика и арена?",
+        "Пока нет. Клиент использует оригинальные изображения с профилями 1280 × 720. HD-переработка, новые области и арена — цели разработки. Дата публичного выпуска не определена."
+      ]
+    ],
+    "join": [
+      "Следующая глава начинается с сообщества.",
+      "Присоединяйтесь к Discord, находите группу и следите за разработкой и подготовкой тестов. Игровой сервер пока не открыт для всех."
+    ],
+    "pending": [
+      "Приглашение готовится",
+      "Публичный репозиторий готовится"
+    ],
+    "footer": "Независимый бесплатный некоммерческий фанатский проект. Не связан с Blizzard. Diablo и Battle.net — товарные знаки их владельцев.",
+    "language": "Язык",
+    "menu": "Открыть навигацию",
+    "skip": "Перейти к содержимому",
+    "post": [
+      "Returns from Darkness: восстанавливаем место онлайн-встреч Diablo 1",
+      "Я создатель Returns from Darkness и хочу рассказать о готовой работе, ясно обозначив то, что ещё предстоит сделать.",
+      "Чего вам больше всего не хватает в классическом лобби Diablo 1? Воспоминания и предложения помогут определить следующие шаги."
+    ],
+    "sections": [
+      "Проект",
+      "Сообщество онлайн",
+      "Дневник разработки",
+      "Частые вопросы",
+      "Сообщество"
+    ],
+    "alt": "Готический собор в тумане, освещённый огнём: оригинальный концепт-арт Returns from Darkness"
+  },
+  "uk": {
+    "nav": [
+      "Проєкт",
+      "Онлайн",
+      "Щоденник",
+      "Запитання"
+    ],
+    "eyebrow": "Класика. Нова спільна подорож.",
+    "headline": [
+      "Темрява кличе.",
+      "Повертайтеся командою."
+    ],
+    "summary": "Diablo 1 HD — Returns from Darkness — незалежний некомерційний проєкт: відродити місце зустрічі класичної Battle.net, з візуальним оновленням HD та авторським контентом у розробці.",
+    "actions": [
+      "Знайти спільноту",
+      "Дізнатися про проєкт"
+    ],
+    "facts": [
+      "Локальна основа в розробці",
+      "До 4 гравців у грі",
+      "Безкоштовно · Некомерційний"
+    ],
+    "art": "Оригінальний концепт-арт · Не знімок гри",
+    "vision": [
+      "Деякі місця завжди кличуть нас.",
+      "Тиша Трістрама. Двері собору. Ще один поверх униз разом із друзями.",
+      "Ми хочемо зберегти атмосферу Diablo 1 та відкрити нові шляхи: сервер спільноти, оновлену графіку й спільні пригоди."
+    ],
+    "pillars": [
+      [
+        "Душа класики",
+        "Готичне фентезі, дослідження та спільна гра в центрі досвіду."
+      ],
+      [
+        "Бачення в HD",
+        "HD-графіка та інтерфейс у розробці. Клієнт уже має власний інтерфейс лобі; повна переробка графіки ще триває."
+      ],
+      [
+        "Нові шляхи",
+        "Перше Світло починається з п'яти предметів і двох варіантів. Нові локації та арена є прототипами."
+      ]
+    ],
+    "online": [
+      "Зустріч перед пригодою.",
+      "Єдина спільнота, канали чату й кілька кімнат до чотирьох гравців кожна. Натхнення — класична Battle.net; інтеграція використовує власні служби на основі PvPGN та DevilutionX."
+    ],
+    "flow": [
+      "Увійдіть в акаунт",
+      "Знайдіть команду",
+      "Оберіть кімнату",
+      "Поверніться до Трістрама"
+    ],
+    "now": [
+      "Що працює сьогодні",
+      "Локальна версія 0.1.6 інтегрує вхід, канали, чат і кімнати в клієнт. Графічний вхід у Трістрам підтверджено у 0.1.4 і 0.1.5; новий вбудований сценарій ще перевіряється. Майстерня підтримує редагування таблиць, імпорт спрайтів і підготовку контенту."
+    ],
+    "next": [
+      "Наступний крок",
+      "Перевірити гру з двома графічними клієнтами, пізній вхід і вихід творця; розвивати HD-переробку та захистити й перевірити зовнішні з’єднання перед відкриттям сервера."
+    ],
+    "limits": "Мережевий тест не дорівнює повній графічній грі чотирьох людей. Збереження та симуляція досі на клієнтах. Сервер не відкрито для публіки.",
+    "journal": [
+      "Зроблено уважно. Розроблено відкрито.",
+      "Реальні етапи, зрозумілі цілі та можливість спільноти стежити за кожним кроком."
+    ],
+    "milestones": [
+      [
+        "Трістрам знову завантажується",
+        "Об'єднано змінений клієнт, PvPGN, лаунчер та локальні кімнати. Перший вхід у світ підтверджено у версії 0.1.4.",
+        "Локальну основу перевірено"
+      ],
+      [
+        "Надати форму поверненню",
+        "HD-графіка та інтерфейс у розробці. Клієнт уже має власний інтерфейс лобі; повна переробка графіки ще триває.",
+        "У розробці"
+      ],
+      [
+        "Перше Світло й Арена Попелу",
+        "П'ять предметів і два варіанти в таблицях рушія. Дві створені карти чекають інтеграції; дуелі 1v1 і 2v2 ще недоступні.",
+        "Прототип контенту"
+      ]
+    ],
+    "faq": [
+      [
+        "Чи потрібен оригінальний Diablo?",
+        "Так. Гравцям потрібні файли власної інсталяції. Проєкт не розповсюджує DIABDAT.MPQ або комерційні дані гри."
+      ],
+      [
+        "Чи вже можна грати на публічному сервері?",
+        "Ще ні. Версія 0.1.6 призначена для локальних тестів. У Discord можна стежити за розробкою та майбутніми тестами."
+      ],
+      [
+        "Це офіційний ремейк або світ MMO?",
+        "Це незалежний фанатський проєкт, не пов'язаний із Blizzard. Кожна гра має до чотирьох учасників; лобі може об'єднувати групи без спільного постійного світу."
+      ],
+      [
+        "Чи вже є повна HD-графіка й арена?",
+        "Ще ні. Клієнт використовує оригінальну графіку з профілями 1280 × 720. HD-переробка, нові локації та арена — цілі розробки. Дату публічного випуску не визначено."
+      ]
+    ],
+    "join": [
+      "Наступний розділ починається зі спільноти.",
+      "Приєднуйтеся до Discord, знаходьте групу та стежте за розробкою і підготовкою тестів. Ігровий сервер ще не відкритий для всіх."
+    ],
+    "pending": [
+      "Запрошення готується",
+      "Публічний репозиторій готується"
+    ],
+    "footer": "Незалежний безкоштовний некомерційний фанатський проєкт. Не пов'язаний із Blizzard. Diablo та Battle.net — торговельні марки їхніх власників.",
+    "language": "Мова",
+    "menu": "Відкрити навігацію",
+    "skip": "Перейти до вмісту",
+    "post": [
+      "Returns from Darkness: відновлюємо місце онлайн-зустрічей Diablo 1",
+      "Я творець Returns from Darkness і хочу показати зроблене, чітко пояснивши, що ще попереду.",
+      "Чого вам найбільше бракує в класичному лобі Diablo 1? Спогади та пропозиції допоможуть визначити наступні кроки."
+    ],
+    "sections": [
+      "Проєкт",
+      "Спільнота онлайн",
+      "Щоденник розробки",
+      "Часті запитання",
+      "Спільнота"
+    ],
+    "alt": "Готичний собор у тумані, освітлений вогнем: оригінальний концепт-арт Returns from Darkness"
+  },
+  "tr": {
+    "nav": [
+      "Proje",
+      "Çevrimiçi",
+      "Günlük",
+      "Sorular"
+    ],
+    "eyebrow": "Klasik oyun. Birlikte yeni bir yolculuk.",
+    "headline": [
+      "Karanlık çağırıyor.",
+      "Ekibinle geri dön."
+    ],
+    "summary": "Diablo 1 HD — Returns from Darkness, klasik Battle.net'in buluşma ortamını yeniden canlandırmayı amaçlayan bağımsız ve ticari olmayan bir projedir. HD görsel tasarım ve özgün içerikler geliştirilmektedir.",
+    "actions": [
+      "Topluluğu keşfet",
+      "Projeyi tanı"
+    ],
+    "facts": [
+      "Yerel temel geliştiriliyor",
+      "Oyun başına en fazla 4 kişi",
+      "Ücretsiz · Ticari değil"
+    ],
+    "art": "Özgün konsept çizimi · Oyun ekran görüntüsü değildir",
+    "vision": [
+      "Bazı yerler bizi hep çağırır.",
+      "Tristram'ın sessizliği. Katedralin kapısı. Dostlarla bir kat daha aşağı inmenin heyecanı.",
+      "Diablo 1'in atmosferini koruyup yeni yollar açmak istiyoruz: topluluk sunucusu, yenilenmiş grafikler ve birlikte yaşanacak maceralar."
+    ],
+    "pillars": [
+      [
+        "Klasiğin ruhu",
+        "Deneyimin merkezinde gotik fantezi, keşif ve işbirliği var."
+      ],
+      [
+        "HD vizyonu",
+        "HD görseller ve arayüz geliştiriliyor. İstemcide özel bir lobi arayüzü var; tüm grafiklerin yenilenmesi hâlâ sürüyor."
+      ],
+      [
+        "Yeni yollar",
+        "İlk Işık beş eşya ve iki varyantla başlıyor. Yeni alanlar ve arena prototip aşamasında."
+      ]
+    ],
+    "online": [
+      "Maceradan önce buluşma.",
+      "Merkezi bir topluluk, sohbet kanalları ve en fazla dörder kişilik odalar. Buluşma deneyimi klasik Battle.net'ten esinleniyor; entegrasyon PvPGN ve DevilutionX üzerine kurulu özel hizmetleri kullanıyor."
+    ],
+    "flow": [
+      "Hesabına giriş yap",
+      "Ekibini bul",
+      "Bir oda seç",
+      "Tristram'a dön"
+    ],
+    "now": [
+      "Bugün çalışanlar",
+      "Yerel 0.1.6 sürümü giriş, kanallar, sohbet ve odaları istemciye entegre eder. Tristram’a grafik arayüzle giriş 0.1.4 ve 0.1.5 sürümlerinde doğrulandı; yeni yerel akış hâlâ test ediliyor. Atölye tablo düzenleme, sprite aktarma ve içerik hazırlamayı destekler."
+    ],
+    "next": [
+      "Sonraki adım",
+      "İki grafik istemciyle oyunları, geç katılmayı ve kurucunun ayrılmasını doğrulamak; HD yenilemesini geliştirmek ve sunucuyu açmadan önce dış bağlantıları güvenli hâle getirip test etmek."
+    ],
+    "limits": "Ağ testi, dört kişinin oynadığı tam bir grafik oyun oturumu değildir. Kayıtlar ve simülasyon hâlâ istemcilerde tutuluyor. Sunucu henüz halka açık değil.",
+    "journal": [
+      "Özenle hazırlanıyor. Açıkça geliştiriliyor.",
+      "Gerçek aşamalar, net hedefler ve her adımı takip edebilen bir topluluk."
+    ],
+    "milestones": [
+      [
+        "Tristram yeniden yükleniyor",
+        "Özel istemci, PvPGN, başlatıcı ve yerel odalar birleştirildi. Dünyaya ilk giriş 0.1.4 sürümünde doğrulandı.",
+        "Yerel temel doğrulandı"
+      ],
+      [
+        "Dönüşü şekillendirmek",
+        "HD görseller ve arayüz geliştiriliyor. İstemcide özel bir lobi arayüzü var; tüm grafiklerin yenilenmesi hâlâ sürüyor.",
+        "Geliştiriliyor"
+      ],
+      [
+        "İlk Işık ve Kül Arenası",
+        "Oyun motorunun tablolarında beş eşya ve iki varyant var. Üretilen iki harita entegrasyon bekliyor; 1v1 ve 2v2 düellolar henüz oynanamıyor.",
+        "İçerik prototipi"
+      ]
+    ],
+    "faq": [
+      [
+        "Orijinal Diablo'ya sahip olmam gerekir mi?",
+        "Evet. Oyuncular kendi kurulumlarındaki dosyaları kullanmalı. Proje DIABDAT.MPQ veya ticari oyun verilerini dağıtmaz."
+      ],
+      [
+        "Halka açık sunucuda oynayabilir miyim?",
+        "Henüz değil. 0.1.6 sürümü yerel test içindir. İlerlemeyi ve gelecek testleri takip etmek için Discord’a katılın."
+      ],
+      [
+        "Resmî bir yeniden yapım veya MMO dünyası mı?",
+        "Blizzard ile bağlantısı olmayan bağımsız bir hayran projesidir. Her oyunda en fazla dört kişi bulunur; lobi, herkesin paylaştığı kalıcı bir dünya olmadan farklı grupları birleştirebilir."
+      ],
+      [
+        "Tam HD grafikler ve arena hazır mı?",
+        "Henüz değil. İstemci özgün grafikleri 1280 × 720 profilleriyle kullanıyor. HD yenileme, yeni alanlar ve arena geliştirme hedefleridir. Halka açık çıkış tarihi belirlenmedi."
+      ]
+    ],
+    "join": [
+      "Sonraki bölüm toplulukla başlar.",
+      "Grubunuzu bulmak, gelişmeleri takip etmek ve sonraki testlere hazırlanmak için Discord’a katılın. Oyun sunucusu henüz herkese açık değil."
+    ],
+    "pending": [
+      "Davet hazırlanıyor",
+      "Herkese açık depo hazırlanıyor"
+    ],
+    "footer": "Bağımsız, ücretsiz ve ticari olmayan hayran projesi. Blizzard ile bağlantılı değildir. Diablo ve Battle.net ilgili sahiplerinin markalarıdır.",
+    "language": "Dil",
+    "menu": "Gezinmeyi aç",
+    "skip": "İçeriğe geç",
+    "post": [
+      "Returns from Darkness: Diablo 1'in çevrimiçi buluşma ortamını yeniden kuruyoruz",
+      "Returns from Darkness'ın geliştiricisiyim. Neleri tamamladığımızı ve nelerin hâlâ yapılması gerektiğini açıkça paylaşmak istiyorum.",
+      "Diablo 1'in klasik lobisinde en çok neyi özlüyorsunuz? Anılarınız ve önerileriniz sonraki adımlara yön verebilir."
+    ],
+    "sections": [
+      "Proje",
+      "Çevrimiçi topluluk",
+      "Geliştirme günlüğü",
+      "Sık sorulan sorular",
+      "Topluluk"
+    ],
+    "alt": "Sisin içinde ateşle aydınlanan gotik katedral: Returns from Darkness için özgün konsept çizimi"
+  },
+  "ja": {
+    "nav": [
+      "プロジェクト",
+      "オンライン",
+      "開発日誌",
+      "よくある質問"
+    ],
+    "eyebrow": "名作から、仲間との新たな旅へ。",
+    "headline": [
+      "闇が呼んでいる。",
+      "仲間と再び帰ろう。"
+    ],
+    "summary": "Diablo 1 HD — Returns from Darkness は、往年の Battle.net の集いをよみがえらせる、独立した非営利プロジェクトです。HD のビジュアルと独自コンテンツを開発しています。",
+    "actions": [
+      "コミュニティへ",
+      "プロジェクトを見る"
+    ],
+    "facts": [
+      "ローカル版を開発中",
+      "1 ゲーム最大 4 人",
+      "無料・非営利"
+    ],
+    "art": "オリジナルのコンセプトアート・ゲーム画面ではありません",
+    "vision": [
+      "いつまでも、帰りたくなる場所がある。",
+      "トリストラムの静けさ。大聖堂の扉。友人と、もう一階下へ進むあの感覚。",
+      "Diablo 1 の雰囲気を守りながら、コミュニティサーバー、刷新したグラフィック、仲間と楽しめる冒険へと道を広げます。"
+    ],
+    "pillars": [
+      [
+        "名作の魂",
+        "ゴシックファンタジー、探索、協力プレイを体験の中心に。"
+      ],
+      [
+        "HD への構想",
+        "HDアートとインターフェースは開発中です。クライアントには独自のロビー画面がありますが、全面的なグラフィック改修は制作段階です。"
+      ],
+      [
+        "新しい道",
+        "「最初の光」は 5 個のアイテムと 2 種のバリエーションから始まります。新エリアとアリーナは試作段階です。"
+      ]
+    ],
+    "online": [
+      "冒険の前に、集まる場所を。",
+      "共通のコミュニティ、チャットチャンネル、各最大 4 人の複数ルーム。往年の Battle.net を参考に、PvPGN と DevilutionX を軸とした独自サービスを統合します。"
+    ],
+    "flow": [
+      "アカウントでログイン",
+      "仲間を見つける",
+      "ルームを選ぶ",
+      "トリストラムへ"
+    ],
+    "now": [
+      "現在できること",
+      "ローカル版0.1.6ではログイン、チャンネル、チャット、ルームをクライアントに統合しています。0.1.4と0.1.5で画面付きのTristramへの入場を確認しました。新しいネイティブの操作手順は検証中です。制作ツールではテーブル編集、スプライトのインポート、コンテンツの準備ができます。"
+    ],
+    "next": [
+      "次のステップ",
+      "画面付きクライアント2台でのプレイ、途中参加、ホスト退出を検証します。HD改修を進め、サーバー公開前に外部接続の保護とテストを行います。"
+    ],
+    "limits": "ネットワークテストは 4 人での完全な画面付きプレイの検証ではありません。セーブとシミュレーションはまだクライアント側です。サーバーは一般公開されていません。",
+    "journal": [
+      "丁寧に作り、進捗を伝える。",
+      "確認済みの成果、明確な目標、そして一歩ずつ見守れるコミュニティ。"
+    ],
+    "milestones": [
+      [
+        "トリストラムが再び読み込まれる",
+        "カスタムクライアント、PvPGN、ランチャー、ローカルルームを統合。バージョン 0.1.4 で最初の入場を確認しました。",
+        "ローカル基盤を確認済み"
+      ],
+      [
+        "帰還に形を与える",
+        "HDアートとインターフェースは開発中です。クライアントには独自のロビー画面がありますが、全面的なグラフィック改修は制作段階です。",
+        "開発中"
+      ],
+      [
+        "最初の光と灰のアリーナ",
+        "エンジンのテーブルに 5 アイテムと 2 バリエーションを追加。生成済みの 2 マップは統合待ちで、1v1 と 2v2 の対戦はまだ遊べません。",
+        "コンテンツを試作中"
+      ]
+    ],
+    "faq": [
+      [
+        "オリジナルの Diablo は必要ですか？",
+        "はい。各プレイヤー自身のインストール済みファイルが必要です。DIABDAT.MPQ や製品版のゲームデータは配布しません。"
+      ],
+      [
+        "公開サーバーでもう遊べますか？",
+        "まだ公開していません。0.1.6はローカルテスト版です。Discordで開発状況や今後のテストを確認できます。"
+      ],
+      [
+        "公式リメイクや MMO ですか？",
+        "Blizzard とは無関係の独立したファンプロジェクトです。1 ゲーム最大 4 人で、ロビーは複数グループをつなぎますが、全員が共有する永続世界ではありません。"
+      ],
+      [
+        "HD グラフィックとアリーナは完成していますか？",
+        "まだです。現行クライアントは元のアートを 1280 × 720 の設定で表示します。HD 化、新エリア、アリーナは制作目標で、公開日は未定です。"
+      ]
+    ],
+    "join": [
+      "次の章は、コミュニティとともに。",
+      "Discordに参加して仲間を探し、開発状況を確認し、次のテストに備えましょう。ゲームサーバーはまだ一般公開していません。"
+    ],
+    "pending": [
+      "招待リンクを準備中",
+      "公開リポジトリを準備中"
+    ],
+    "footer": "独立した無料・非営利のファンプロジェクトです。Blizzard とは無関係です。Diablo と Battle.net はそれぞれの権利者の商標です。",
+    "language": "言語",
+    "menu": "ナビゲーションを開く",
+    "skip": "本文へ移動",
+    "post": [
+      "Returns from Darkness：Diablo 1 のオンラインの集いを再構築",
+      "Returns from Darkness の制作者です。できたことと、これから必要なことを明確にお伝えしたいと思います。",
+      "Diablo 1 の昔のロビーで、いちばん懐かしいものは何ですか？思い出や提案を、次の開発に役立てたいです。"
+    ],
+    "sections": [
+      "プロジェクト",
+      "オンラインコミュニティ",
+      "開発日誌",
+      "よくある質問",
+      "コミュニティ"
+    ],
+    "alt": "霧の中、炎で照らされたゴシック大聖堂。Returns from Darkness のオリジナルコンセプトアート"
+  },
+  "ko": {
+    "nav": [
+      "프로젝트",
+      "온라인",
+      "개발 일지",
+      "질문"
+    ],
+    "eyebrow": "클래식에서, 동료와 함께하는 새 여정으로.",
+    "headline": [
+      "어둠이 부릅니다.",
+      "파티와 함께 돌아오세요."
+    ],
+    "summary": "Diablo 1 HD — Returns from Darkness는 옛 Battle.net의 만남을 되살리는 독립 비영리 프로젝트입니다. HD 비주얼과 새로운 자체 콘텐츠를 개발하고 있습니다.",
+    "actions": [
+      "커뮤니티 만나기",
+      "프로젝트 둘러보기"
+    ],
+    "facts": [
+      "로컬 기반 개발 중",
+      "게임당 최대 4명",
+      "무료 · 비영리"
+    ],
+    "art": "자체 콘셉트 아트 · 게임 스크린샷이 아닙니다",
+    "vision": [
+      "어떤 장소는 언제나 우리를 부릅니다.",
+      "트리스트럼의 고요함. 대성당의 문. 친구와 한 층 더 내려가던 그 느낌.",
+      "Diablo 1의 분위기를 지키며 새로운 길을 열고자 합니다. 커뮤니티 서버, 새로워진 그래픽, 함께 나눌 모험을 준비합니다."
+    ],
+    "pillars": [
+      [
+        "클래식의 혼",
+        "고딕 판타지, 탐험, 협동 플레이를 경험의 중심에 둡니다."
+      ],
+      [
+        "HD 비전",
+        "HD 아트와 인터페이스를 개발 중입니다. 클라이언트에는 전용 로비 인터페이스가 있으며 전체 그래픽 개편은 아직 제작 중입니다."
+      ],
+      [
+        "새로운 길",
+        "첫 번째 빛은 아이템 5개와 변형 2종으로 시작합니다. 새 지역과 아레나는 프로토타입입니다."
+      ]
+    ],
+    "online": [
+      "모험 전에 만나는 곳.",
+      "하나의 커뮤니티, 채팅 채널, 각 최대 4명인 여러 방. 옛 Battle.net에서 영감을 얻고 PvPGN과 DevilutionX를 중심으로 자체 서비스를 통합합니다."
+    ],
+    "flow": [
+      "계정으로 로그인",
+      "파티 찾기",
+      "방 선택",
+      "트리스트럼으로 귀환"
+    ],
+    "now": [
+      "현재 작동하는 기능",
+      "로컬 버전 0.1.6은 로그인, 채널, 채팅, 방을 클라이언트에 통합합니다. 0.1.4와 0.1.5에서 그래픽 화면으로 트리스트럼에 진입한 것을 확인했으며 새 네이티브 흐름은 검증 중입니다. 제작 도구는 테이블 편집, 스프라이트 가져오기, 콘텐츠 준비를 지원합니다."
+    ],
+    "next": [
+      "다음 단계",
+      "그래픽 클라이언트 두 대로 플레이, 늦은 참가, 방장 퇴장을 검증하고 HD 개편을 확장합니다. 서버 공개 전에 외부 연결을 보호하고 테스트합니다."
+    ],
+    "limits": "네트워크 테스트는 4명의 완전한 그래픽 플레이 검증이 아닙니다. 저장과 시뮬레이션은 아직 클라이언트에 있습니다. 서버는 일반에 공개되지 않았습니다.",
+    "journal": [
+      "정성껏 만들고, 투명하게 개발합니다.",
+      "실제 성과, 분명한 목표, 매 단계를 함께 지켜보는 커뮤니티."
+    ],
+    "milestones": [
+      [
+        "트리스트럼이 다시 로딩됩니다",
+        "커스텀 클라이언트, PvPGN, 런처, 로컬 방을 통합했습니다. 0.1.4에서 첫 월드 진입을 확인했습니다.",
+        "로컬 기반 검증 완료"
+      ],
+      [
+        "귀환에 형태를 부여하기",
+        "HD 아트와 인터페이스를 개발 중입니다. 클라이언트에는 전용 로비 인터페이스가 있으며 전체 그래픽 개편은 아직 제작 중입니다.",
+        "개발 중"
+      ],
+      [
+        "첫 번째 빛과 잿빛 아레나",
+        "엔진 테이블에 아이템 5개와 변형 2종이 있습니다. 생성된 지도 2개는 통합 대기 중이며 1v1과 2v2는 아직 플레이할 수 없습니다.",
+        "콘텐츠 프로토타입"
+      ]
+    ],
+    "faq": [
+      [
+        "원본 Diablo가 필요한가요?",
+        "네. 플레이어 본인의 설치 파일이 필요합니다. 프로젝트는 DIABDAT.MPQ나 상용 게임 데이터를 배포하지 않습니다."
+      ],
+      [
+        "공개 서버에서 벌써 플레이할 수 있나요?",
+        "아직 아닙니다. 0.1.6은 로컬 테스트 버전입니다. Discord에서 개발 상황과 향후 테스트를 확인할 수 있습니다."
+      ],
+      [
+        "공식 리메이크 또는 MMO인가요?",
+        "Blizzard와 관련 없는 독립 팬 프로젝트입니다. 게임당 최대 4명이며 로비가 여러 그룹을 모을 수 있지만 모두가 공유하는 영구 월드는 아닙니다."
+      ],
+      [
+        "모든 HD 그래픽과 아레나가 완성됐나요?",
+        "아직 아닙니다. 현재 클라이언트는 원본 아트를 1280 × 720 프로필로 사용합니다. HD 재작업, 새 지역, 아레나는 제작 목표이며 공개 출시일은 정해지지 않았습니다."
+      ]
+    ],
+    "join": [
+      "다음 장은 커뮤니티와 함께 시작됩니다.",
+      "Discord에서 함께할 파티를 찾고 개발 과정과 다음 테스트 준비에 참여하세요. 게임 서버는 아직 일반에 공개되지 않았습니다."
+    ],
+    "pending": [
+      "초대 준비 중",
+      "공개 저장소 준비 중"
+    ],
+    "footer": "독립적인 무료 비영리 팬 프로젝트이며 Blizzard와 관련이 없습니다. Diablo와 Battle.net은 각 소유자의 상표입니다.",
+    "language": "언어",
+    "menu": "메뉴 열기",
+    "skip": "본문으로 이동",
+    "post": [
+      "Returns from Darkness: Diablo 1의 온라인 만남을 다시 만들기",
+      "Returns from Darkness의 제작자입니다. 완성한 부분과 앞으로 필요한 작업을 분명하게 공유하고 싶습니다.",
+      "Diablo 1의 옛 로비에서 가장 그리운 것은 무엇인가요? 추억과 제안을 다음 개발에 반영하고 싶습니다."
+    ],
+    "sections": [
+      "프로젝트",
+      "온라인 커뮤니티",
+      "개발 일지",
+      "자주 묻는 질문",
+      "커뮤니티"
+    ],
+    "alt": "안개 속에서 불빛으로 비춰진 고딕 대성당: Returns from Darkness의 자체 콘셉트 아트"
+  },
+  "zh-CN": {
+    "nav": [
+      "项目",
+      "在线社区",
+      "开发日志",
+      "常见问题"
+    ],
+    "eyebrow": "经典，再次与伙伴出发。",
+    "headline": [
+      "黑暗正在呼唤。",
+      "与你的队伍归来。"
+    ],
+    "summary": "Diablo 1 HD — Returns from Darkness 是一个独立、非商业的社区项目，旨在重现经典 Battle.net 的玩家聚会体验，同时开发 HD 视觉更新与原创内容。",
+    "actions": [
+      "认识社区",
+      "探索项目"
+    ],
+    "facts": [
+      "本地基础版本开发中",
+      "每局最多 4 名玩家",
+      "免费 · 非商业"
+    ],
+    "art": "原创概念艺术 · 并非游戏截图",
+    "vision": [
+      "有些地方，始终在呼唤我们。",
+      "崔斯特瑞姆的寂静，大教堂的门，与朋友再深入一层的感觉。",
+      "我们希望保留 Diablo 1 的氛围，并开辟新道路：社区服务器、焕新的画面以及可以共同探索的冒险。"
+    ],
+    "pillars": [
+      [
+        "经典的灵魂",
+        "以哥特幻想、探索和合作游玩为体验核心。"
+      ],
+      [
+        "HD 视觉愿景",
+        "HD美术和界面正在开发中。客户端已有定制大厅界面，完整的图形重制仍在制作阶段。"
+      ],
+      [
+        "新的道路",
+        "“初光”包含五件物品与两种变体。新区域和竞技场仍处于原型阶段。"
+      ]
+    ],
+    "online": [
+      "冒险开始前的相聚。",
+      "一个集中社区、聊天频道以及每间最多四人的多个房间。聚会体验参考经典 Battle.net，技术整合采用围绕 PvPGN 和 DevilutionX 构建的自有服务。"
+    ],
+    "flow": [
+      "登录账号",
+      "寻找队友",
+      "选择房间",
+      "重返崔斯特瑞姆"
+    ],
+    "now": [
+      "当前已实现",
+      "本地版本0.1.6已将登录、频道、聊天和房间整合进客户端。0.1.4和0.1.5已确认可通过图形界面进入崔斯特瑞姆；新的原生流程仍在验证中。制作工具支持编辑数据表、导入精灵图和准备内容。"
+    ],
+    "next": [
+      "下一步",
+      "验证两个图形客户端共同游戏、中途加入及房主退出；继续推进HD重制，并在开放服务器前保护和测试外部连接。"
+    ],
+    "limits": "网络测试不等于四人的完整图形游戏验证。存档与模拟仍在客户端执行。服务器尚未向公众开放。",
+    "journal": [
+      "用心制作，透明开发。",
+      "真实的里程碑、明确的目标，让社区见证每一步。"
+    ],
+    "milestones": [
+      [
+        "崔斯特瑞姆再次载入",
+        "已整合自定义客户端、PvPGN、启动器和本地房间。版本 0.1.4 首次进入游戏世界已获确认。",
+        "本地基础已验证"
+      ],
+      [
+        "让归来逐渐成形",
+        "HD美术和界面正在开发中。客户端已有定制大厅界面，完整的图形重制仍在制作阶段。",
+        "开发中"
+      ],
+      [
+        "初光与灰烬竞技场",
+        "引擎表中加入五件物品与两种变体。两张生成的地图等待整合；1v1 和 2v2 对战尚不可玩。",
+        "内容原型"
+      ]
+    ],
+    "faq": [
+      [
+        "需要原版 Diablo 吗？",
+        "需要。玩家必须使用自己安装的游戏文件。项目不分发 DIABDAT.MPQ 或商业游戏数据。"
+      ],
+      [
+        "现在能在公开服务器游玩吗？",
+        "暂时还不能。0.1.6是本地测试版本。欢迎加入Discord了解开发进度和后续测试。"
+      ],
+      [
+        "这是官方重制或 MMO 世界吗？",
+        "这是与 Blizzard 无关联的独立粉丝项目。每局最多四人，大厅可汇集多个队伍，但并非所有玩家共享的持久世界。"
+      ],
+      [
+        "完整 HD 画面与竞技场已完成吗？",
+        "尚未完成。目前客户端使用原版美术及 1280 × 720 配置。HD 重制、新区域与竞技场是开发目标，尚未确定公开发布日期。"
+      ]
+    ],
+    "join": [
+      "下一章，从社区开始。",
+      "加入Discord寻找队友、关注开发进度并参与下一轮测试的准备。游戏服务器尚未向公众开放。"
+    ],
+    "pending": [
+      "邀请链接筹备中",
+      "公开仓库筹备中"
+    ],
+    "footer": "独立、免费、非商业的粉丝项目，与 Blizzard 无关联。Diablo 和 Battle.net 为各自权利人的商标。",
+    "language": "语言",
+    "menu": "打开导航",
+    "skip": "跳转到正文",
+    "post": [
+      "Returns from Darkness：重建 Diablo 1 的在线聚会体验",
+      "我是 Returns from Darkness 的开发者，希望分享已完成的工作，并清楚说明仍需实现的内容。",
+      "你最怀念 Diablo 1 经典大厅的什么？欢迎分享回忆与建议，帮助我们规划后续开发。"
+    ],
+    "sections": [
+      "项目",
+      "在线社区",
+      "开发日志",
+      "常见问题",
+      "社区"
+    ],
+    "alt": "迷雾中被火光照亮的哥特大教堂：Returns from Darkness 原创概念艺术"
+  },
+  "ar": {
+    "nav": [
+      "المشروع",
+      "اللعب عبر الإنترنت",
+      "يوميات التطوير",
+      "الأسئلة"
+    ],
+    "eyebrow": "اللعبة الكلاسيكية. رحلة جديدة مع الأصدقاء.",
+    "headline": [
+      "الظلام ينادي.",
+      "عُد مع فريقك."
+    ],
+    "summary": "Diablo 1 HD — Returns from Darkness مشروع مستقل وغير تجاري لإحياء ملتقى اللاعبين في Battle.net الكلاسيكية، مع تطوير رؤية بصرية بدقة HD ومحتوى أصلي جديد.",
+    "actions": [
+      "تعرّف إلى المجتمع",
+      "استكشف المشروع"
+    ],
+    "facts": [
+      "نسخة محلية قيد التطوير",
+      "حتى 4 لاعبين في كل جلسة",
+      "مجاني · غير تجاري"
+    ],
+    "art": "رسم تصوّري أصلي · ليس لقطة من اللعبة",
+    "vision": [
+      "بعض الأماكن لا تكفّ عن مناداتنا.",
+      "هدوء تريسترام. باب الكاتدرائية. شعور النزول طابقًا آخر مع الأصدقاء.",
+      "نريد الحفاظ على أجواء Diablo 1 وفتح مسارات جديدة: خادم للمجتمع، ورسوم مجدّدة، ومغامرات نخوضها معًا."
+    ],
+    "pillars": [
+      [
+        "روح اللعبة الكلاسيكية",
+        "فانتازيا قوطية واستكشاف وتعاون في قلب التجربة."
+      ],
+      [
+        "رؤية بدقة HD",
+        "الرسومات والواجهة بدقة HD قيد التطوير. يتضمن العميل واجهة ردهة مخصصة، ولا تزال إعادة العمل الكاملة للرسومات قيد الإنتاج."
+      ],
+      [
+        "مسارات جديدة",
+        "يبدأ «النور الأول» بخمسة عناصر ونسختين مختلفتين. المناطق الجديدة والساحة في مرحلة النموذج الأولي."
+      ]
+    ],
+    "online": [
+      "اللقاء قبل المغامرة.",
+      "مجتمع مركزي وقنوات دردشة وغرف متعددة، لكل منها أربعة لاعبين كحد أقصى. يستلهم اللقاء Battle.net الكلاسيكية، بينما يستخدم التكامل خدمات خاصة مبنية حول PvPGN وDevilutionX."
+    ],
+    "flow": [
+      "سجّل الدخول",
+      "ابحث عن فريقك",
+      "اختر غرفة",
+      "عُد إلى تريسترام"
+    ],
+    "now": [
+      "ما يعمل اليوم",
+      "يدمج الإصدار المحلي 0.1.6 تسجيل الدخول والقنوات والدردشة والغرف داخل العميل. تأكد الدخول الرسومي إلى تريسترام في الإصدارين 0.1.4 و0.1.5، ولا يزال المسار المدمج الجديد قيد التحقق. تدعم الورشة تعديل الجداول واستيراد الرسومات وتحضير المحتوى."
+    ],
+    "next": [
+      "الخطوة التالية",
+      "التحقق من اللعب بعميلين رسوميّين والانضمام المتأخر وخروج منشئ الغرفة، وتوسيع إعادة العمل بدقة HD وتأمين الاتصالات الخارجية واختبارها قبل فتح الخادم."
+    ],
+    "limits": "لا يعادل الاختبار الشبكي جلسة رسومية كاملة لأربعة أشخاص. لا تزال ملفات الحفظ والمحاكاة لدى العملاء. الخادم غير مفتوح للجمهور.",
+    "journal": [
+      "صُنع بعناية. وطُوّر بشفافية.",
+      "إنجازات حقيقية وأهداف واضحة ومساحة للمجتمع لمتابعة كل خطوة."
+    ],
+    "milestones": [
+      [
+        "تريسترام تُحمّل مجددًا",
+        "دُمج العميل المخصّص وPvPGN والمشغّل والغرف المحلية. تأكد أول دخول إلى العالم في النسخة 0.1.4.",
+        "الأساس المحلي مُتحقق منه"
+      ],
+      [
+        "منح العودة شكلًا",
+        "الرسومات والواجهة بدقة HD قيد التطوير. يتضمن العميل واجهة ردهة مخصصة، ولا تزال إعادة العمل الكاملة للرسومات قيد الإنتاج.",
+        "قيد التطوير"
+      ],
+      [
+        "النور الأول وساحة الرماد",
+        "خمسة عناصر ونسختان مختلفتان في جداول المحرك. تنتظر خريطتان مولّدتان الدمج؛ ومواجهات 1 ضد 1 و2 ضد 2 غير قابلة للعب بعد.",
+        "محتوى تجريبي"
+      ]
+    ],
+    "faq": [
+      [
+        "هل أحتاج إلى Diablo الأصلية؟",
+        "نعم. يحتاج اللاعبون إلى ملفات تثبيتهم الخاص. لا يوزّع المشروع DIABDAT.MPQ أو بيانات اللعبة التجارية."
+      ],
+      [
+        "هل يمكنني اللعب على الخادم العام الآن؟",
+        "ليس بعد. الإصدار 0.1.6 مخصص للاختبارات المحلية. انضم إلى Discord لمتابعة التطوير والاختبارات القادمة."
+      ],
+      [
+        "هل هي إعادة صنع رسمية أو عالم MMO؟",
+        "هذا مشروع مستقل من المعجبين، غير تابع لـBlizzard. تضم كل جلسة حتى أربعة لاعبين؛ ويمكن للردهة جمع مجموعات متعددة دون عالم دائم مشترك للجميع."
+      ],
+      [
+        "هل اكتملت رسوم HD والساحة؟",
+        "ليس بعد. يستخدم العميل الرسوم الأصلية بإعدادات 1280 × 720. إعادة التصميم HD والمناطق الجديدة والساحة أهداف إنتاج، ولم يُحدّد موعد إطلاق عام."
+      ]
+    ],
+    "join": [
+      "الفصل التالي يبدأ مع المجتمع.",
+      "انضم إلى Discord للعثور على فريقك ومتابعة التطوير والمساعدة في التحضير للاختبارات القادمة. خادم اللعبة لم يُفتح للجمهور بعد."
+    ],
+    "pending": [
+      "الدعوة قيد الإعداد",
+      "المستودع العام قيد الإعداد"
+    ],
+    "footer": "مشروع مستقل من المعجبين، مجاني وغير تجاري وغير تابع لـBlizzard. Diablo وBattle.net علامتان تجاريتان لأصحابهما.",
+    "language": "اللغة",
+    "menu": "فتح التنقل",
+    "skip": "انتقل إلى المحتوى",
+    "post": [
+      "Returns from Darkness: إعادة بناء ملتقى Diablo 1 عبر الإنترنت",
+      "أنا مطوّر Returns from Darkness، وأود مشاركة ما أنجزناه مع توضيح ما لا يزال بحاجة إلى عمل.",
+      "ما الذي تفتقدونه أكثر في ردهة Diablo 1 الكلاسيكية؟ تساعدنا ذكرياتكم واقتراحاتكم في تحديد الخطوات التالية."
+    ],
+    "sections": [
+      "المشروع",
+      "المجتمع عبر الإنترنت",
+      "يوميات التطوير",
+      "الأسئلة الشائعة",
+      "المجتمع"
+    ],
+    "alt": "كاتدرائية قوطية مضاءة بالنار وسط الضباب: رسم تصوّري أصلي لـReturns from Darkness"
+  }
+}
