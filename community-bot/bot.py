@@ -69,6 +69,13 @@ def get_role(guild, key):
     return role
 
 
+def install_url(application_id):
+    permissions = discord.Permissions(manage_guild=True, manage_roles=True, manage_channels=True,
+        view_channel=True, send_messages=True, embed_links=True, read_message_history=True)
+    return discord.utils.oauth_url(application_id, permissions=permissions,
+        scopes=['bot', 'applications.commands'], guild=GUILD, disable_guild_select=True)
+
+
 def locale_for(interaction):
     if isinstance(interaction.user, discord.Member):
         held = {r.id for r in interaction.user.roles}
@@ -172,14 +179,47 @@ class CommunityBot(discord.Client):
         intents.guilds = True
         super().__init__(intents=intents, allowed_mentions=discord.AllowedMentions.none())
         self.tree = app_commands.CommandTree(self)
+        self.commands_registered = False
+        self.command_sync_lock = asyncio.Lock()
 
     async def setup_hook(self):
         self.add_view(WelcomeView())
-        await self.tree.sync(guild=GUILD)
+
+    async def sync_project_commands(self):
+        async with self.command_sync_lock:
+            if self.commands_registered:
+                return
+            url = install_url(self.application_id)
+            if self.get_guild(GUILD_ID) is None:
+                print('O token funciona, mas este bot ainda não está instalado no servidor do projeto.')
+                print('Abra o link abaixo e autorize a instalação no servidor indicado:')
+                print(url)
+                print('O bot aguardará a instalação. Se os comandos não aparecerem após autorizar, reinicie INICIAR-BOT.cmd.')
+                return
+            try:
+                await self.tree.sync(guild=GUILD)
+            except discord.Forbidden:
+                print('O Discord recusou o registro de comandos. Reautorize este bot com bot + applications.commands:')
+                print(url)
+                print('Depois da autorização, reinicie INICIAR-BOT.cmd.')
+                return
+            except discord.HTTPException as error:
+                print(f'Não foi possível registrar os comandos (HTTP {error.status}). Reinicie para tentar novamente.')
+                return
+            self.commands_registered = True
+            print('Comandos registrados. Use /setup plan e /setup apply no servidor.')
 
     async def on_ready(self):
         print(f'Bot conectado: {self.user}. Servidor autorizado: {GUILD_ID}.')
-        print('Use /setup plan para revisar e /setup apply para criar a comunidade.')
+        await self.sync_project_commands()
+
+    async def on_guild_join(self, guild):
+        if guild.id == GUILD_ID:
+            await self.sync_project_commands()
+
+    async def on_guild_remove(self, guild):
+        if guild.id == GUILD_ID:
+            self.commands_registered = False
 
 
 bot = CommunityBot()

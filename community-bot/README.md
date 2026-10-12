@@ -47,3 +47,9 @@ Idiomas: português brasileiro, inglês, espanhol, francês, alemão, italiano, 
 Execute `.venv\Scripts\python.exe -m unittest -v` para as verificações locais. Elas usam simulações e não modificam o Discord. A configuração real só pode ser verificada depois de instalar a aplicação e fornecer o token local. Se a execução for interrompida no meio da criação, corrija a permissão e repita `/setup apply`.
 
 Não publique os arquivos comerciais de Diablo, dados de jogadores ou tokens. O bot não coleta mensagens privadas, não lê o conteúdo das conversas e não exige permissões de membros ou presenças.
+
+## Se aparecer Missing Access (50001)
+
+Criar a aplicação e salvar o token não instala o bot no servidor. A inicialização agora primeiro conecta o bot, confere a presença no servidor autorizado e registra os comandos somente quando ele tem acesso. Se não estiver instalado, mostra um link de instalação com o ID da aplicação autenticada, o servidor correto, os dois escopos e as permissões necessárias. O programa continua conectado, aguardando a instalação.
+
+Abra esse link com sua conta que administra o servidor e autorize a instalação. Se o bot já estiver no servidor mas o Discord recusar o registro dos comandos, use o mesmo link para reautorizar `bot` e `applications.commands`, depois reinicie. Não é necessário gerar outro token para resolver uma instalação ausente.

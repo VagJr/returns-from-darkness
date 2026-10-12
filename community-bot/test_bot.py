@@ -4,6 +4,8 @@ import unittest
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import AsyncMock, patch
+from contextlib import redirect_stdout
+from io import StringIO
 
 import discord
 import bot as app
@@ -80,6 +82,40 @@ class BotTests(unittest.IsolatedAsyncioTestCase):
         voices=[c for c in public if c['mode']=='voice']
         self.assertEqual(len(voices),2)
         self.assertTrue(all(c['limit']==4 for c in voices))
+
+    async def test_startup_without_installation_does_not_register_commands(self):
+        client=app.CommunityBot()
+        client._connection.application_id=555
+        client.tree.sync=AsyncMock()
+        output=StringIO()
+        with redirect_stdout(output): await client.sync_project_commands()
+        client.tree.sync.assert_not_awaited()
+        self.assertIn('client_id=555',output.getvalue())
+        self.assertIn(str(app.GUILD_ID),output.getvalue())
+        self.assertFalse(client.commands_registered)
+
+    async def test_command_registration_missing_access_is_explained(self):
+        client=app.CommunityBot()
+        client._connection.application_id=555
+        response=SimpleNamespace(status=403,reason='Forbidden')
+        client.tree.sync=AsyncMock(side_effect=discord.Forbidden(response,{'code':50001,'message':'Missing Access'}))
+        with patch.object(client,'get_guild',return_value=SimpleNamespace(id=app.GUILD_ID)):
+            output=StringIO()
+            with redirect_stdout(output): await client.sync_project_commands()
+        self.assertIn('applications.commands',output.getvalue())
+        self.assertFalse(client.commands_registered)
+
+    async def test_guild_install_event_syncs_only_project_once(self):
+        client=app.CommunityBot()
+        client._connection.application_id=555
+        client.tree.sync=AsyncMock()
+        with patch.object(client,'get_guild',return_value=SimpleNamespace(id=app.GUILD_ID)), redirect_stdout(StringIO()):
+            await client.on_guild_join(SimpleNamespace(id=42))
+            client.tree.sync.assert_not_awaited()
+            await client.on_guild_join(SimpleNamespace(id=app.GUILD_ID))
+            await client.sync_project_commands()
+            client.tree.sync.assert_awaited_once_with(guild=app.GUILD)
+            self.assertTrue(client.commands_registered)
 
 
 if __name__=='__main__': unittest.main()
