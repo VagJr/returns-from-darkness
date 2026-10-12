@@ -76,6 +76,22 @@ class BotTests(unittest.IsolatedAsyncioTestCase):
         interaction.response.send_message.assert_awaited_once()
         self.assertFalse(app.STATE_FILE.exists())
 
+    async def test_server_owner_does_not_need_an_administrator_role(self):
+        interaction=SimpleNamespace(guild_id=app.GUILD_ID,guild=SimpleNamespace(owner_id=77),user=SimpleNamespace(id=77),permissions=discord.Permissions.none())
+        self.assertIsNone(app.setup_denial(interaction))
+
+    async def test_resolved_administrator_permissions_are_accepted(self):
+        interaction=SimpleNamespace(guild_id=app.GUILD_ID,guild=SimpleNamespace(owner_id=77),user=SimpleNamespace(id=88),permissions=discord.Permissions(administrator=True))
+        self.assertIsNone(app.setup_denial(interaction))
+
+    async def test_non_administrator_cannot_configure_server(self):
+        interaction=SimpleNamespace(guild_id=app.GUILD_ID,guild=SimpleNamespace(owner_id=77),user=SimpleNamespace(id=88),permissions=discord.Permissions.none())
+        self.assertIn('Somente o dono',app.setup_denial(interaction))
+
+    async def test_direct_message_explains_correct_server(self):
+        interaction=SimpleNamespace(guild_id=None)
+        self.assertIn('mensagem direta',app.setup_denial(interaction))
+
     async def test_compact_structure_and_four_player_voice(self):
         public=[c for cat in app.CONFIG['categories'] if not cat.get('private') for c in cat['channels']]
         self.assertEqual(sum(c['mode']!='voice' for c in public),7)

@@ -76,6 +76,22 @@ def install_url(application_id):
         scopes=['bot', 'applications.commands'], guild=GUILD, disable_guild_select=True)
 
 
+def setup_denial(interaction):
+    if interaction.guild_id != GUILD_ID:
+        return f'Use /setup dentro do servidor do projeto ({GUILD_ID}), não por mensagem direta ou em outro servidor. {CONFIG["invite"]}'
+    guild = interaction.guild
+    if guild is None:
+        return 'O bot ainda não reconhece este servidor. Instale-o com os escopos bot + applications.commands e reinicie.'
+    # The owner is authorized independently of named roles and member-cache permissions.
+    if interaction.user.id == guild.owner_id:
+        return None
+    if interaction.permissions.administrator:
+        return None
+    if isinstance(interaction.user, discord.Member) and interaction.user.guild_permissions.administrator:
+        return None
+    return f'Somente o dono do servidor ou um administrador pode configurar. Dono: <@{guild.owner_id}>. Sua conta: <@{interaction.user.id}>. Dar administrador ao bot não muda os seus cargos.'
+
+
 def locale_for(interaction):
     if isinstance(interaction.user, discord.Member):
         held = {r.id for r in interaction.user.roles}
@@ -315,8 +331,9 @@ async def ensure_message(key, channel, embed, view=None):
 @app_commands.choices(action=[app_commands.Choice(name='plan — revisar estrutura', value='plan'),
                              app_commands.Choice(name='apply — criar ou atualizar', value='apply')])
 async def setup(interaction: discord.Interaction, action: app_commands.Choice[str]):
-    if not permitted(interaction) or not interaction.user.guild_permissions.administrator:
-        await interaction.response.send_message('Apenas administradores deste servidor podem executar /setup.', ephemeral=True)
+    denial = setup_denial(interaction)
+    if denial:
+        await interaction.response.send_message(denial, ephemeral=True)
         return
     if action.value == 'plan':
         lines = ['**7 canais públicos de texto + 2 salas de voz para 4 pessoas + 1 canal privado da equipe.**',
