@@ -6,3 +6,6 @@ outreach
 *.py
 site/*.py
 site/*.ps1
+
+community-bot
+

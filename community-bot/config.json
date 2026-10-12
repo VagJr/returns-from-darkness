@@ -1,0 +1,26 @@
+{
+  "guild_id": "1559307218762072174",
+  "server_name": "Diablo 1 HD • Returns from Darkness",
+  "website": "https://returns-from-darkness.vercel.app",
+  "github": "https://github.com/VagJr/returns-from-darkness",
+  "invite": "https://discord.gg/S9VVaBXwDk",
+  "color": "b78c45",
+  "categories": [
+    {"key":"gate","name":"Ⅰ • GATES OF TRISTRAM","channels":[
+      {"key":"welcome","name":"📜・welcome-rules","mode":"read","topic":"Choose your language, read the rules and join the community."},
+      {"key":"news","name":"🔥・announcements","mode":"read","topic":"Development updates. The game server is not public yet."},
+      {"key":"guide","name":"🗝・begin-here","mode":"read","topic":"Project links and multilingual guide. Use /guide."}
+    ]},
+    {"key":"community","name":"Ⅱ • THE TAVERN","channels":[
+      {"key":"chat","name":"🍺・tavern","mode":"chat","topic":"Shared multilingual chat. Prefix messages with your language: [EN], [PT], [ES]…"},
+      {"key":"party","name":"⚔・find-a-party","mode":"chat","topic":"Find friends for future tests. Share language, timezone and availability."},
+      {"key":"support","name":"🛡・help-bugs","mode":"chat","topic":"Questions and bug reports: version, steps, expected result. Do not share credentials or original game files."},
+      {"key":"ideas","name":"🔮・ideas-art","mode":"chat","topic":"Suggestions, concept art and community creations."},
+      {"key":"voice1","name":"⚔ Party I","mode":"voice","limit":4},
+      {"key":"voice2","name":"⚔ Party II","mode":"voice","limit":4}
+    ]},
+    {"key":"staff","name":"Ⅲ • SENTINELS","private":true,"channels":[
+      {"key":"staffchat","name":"🕯・staff","mode":"chat","topic":"Private project coordination."}
+    ]}
+  ]
+}

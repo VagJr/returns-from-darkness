@@ -71,3 +71,5 @@ Website: https://returns-from-darkness.vercel.app/
 
 Public website source and development notes: [CONTRIBUTING.md](CONTRIBUTING.md). Asset notices: [NOTICE.md](NOTICE.md).
 
+Local community bot: [setup guide](community-bot/README.md). Compact multilingual server setup; requires your own Discord application and a locally stored token.
+

@@ -10,3 +10,7 @@ site/preview.pid
 github-public/
 outreach/
 
+.vercel
+
+docs/site-publicado.png
+

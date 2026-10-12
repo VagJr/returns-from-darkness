@@ -8,6 +8,8 @@ This repository hosts the public presentation of **Diablo 1 HD — Returns from 
 4. Copy the generated `github-public/README.md` to `README.md` and the generated translated documents from `github-public/docs` to `docs`.
 5. Commit the generated `site/dist` together with its source changes. Vercel publishes that static directory.
 
+Keep `community-bot/translations.json` synchronized with the merged locale files when updating progress claims. The bot runs locally and is excluded from Vercel deployment uploads.
+
 To preview locally, run `python site/preview.py` and open http://127.0.0.1:8096/. Close any existing preview on that port first.
 
 Website: https://returns-from-darkness.vercel.app/
