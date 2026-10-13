@@ -1,6 +1,6 @@
 # Auditoria de rates — Returns from Darkness
 
-Base da entrega: **0.4.1**, fonte 1.265, dados 1.267. Os rates globais de experiência e loot ordinário permanecem iguais à 0.4.0. A coleção Primeira Vigília acrescenta três recompensas nomeadas de chefes na campanha Normal/Horror; isso é uma adição de loot, não um multiplicador geral. Veja `COLECAO-PRIMEIRA-VIGILIA.md` para as condições.
+Base publicada: **0.4.2**, fonte 1.265, dados 1.267. Nenhum rate foi aumentado nesta entrega.
 
 ## Acesso à administração
 
@@ -30,7 +30,7 @@ Essa relação compara XP necessária, **não velocidade de evolução**.
 
 ### Não há um multiplicador único em relação ao original
 
-100% neste painel representa a base publicada 0.4.0. Tabelas, teto de nível, XP por dificuldade, raridade e filtros de loot foram alterados separadamente.
+100% neste painel representa a base publicada 0.4.2. Tabelas, teto de nível, XP por dificuldade, raridade e filtros de loot foram alterados separadamente.
 
 ### XP por monstro
 
