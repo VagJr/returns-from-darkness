@@ -27,11 +27,11 @@
     ],
     "now": [
       "W tej wersji",
-      "Klient Windows ze zintegrowanym centrum, pokojami kooperacyjnymi dla czterech graczy, automatycznymi aktualizacjami i osobnymi profilami. System przedmiotów współdzieli łupy w pokoju; automatyczny zapis zachowuje ekwipunek, złoto i rozwój na tym PC."
+      "Klient Windows ze zintegrowanym centrum, pokojami kooperacyjnymi dla czterech graczy, automatycznymi aktualizacjami i osobnymi profilami. System przedmiotów współdzieli łupy w pokoju; automatyczny zapis zachowuje ekwipunek, złoto i rozwój na tym PC. Sanktuarium łączy publiczne profile, postacie, portrety, tytuły i pieczęcie kampanii. Graj i rozwijaj się, by odblokować klasy, cechy, modyfikatory i trudności; istniejące postacie zachowują swoje wybory. Pierwsze trzy ukończone kampanie przyznają punkty i złoty portret."
     ],
     "next": [
       "Następny rozdział",
-      "Rozwijać spójną oprawę remastera, ulepszać narzędzia i sprawdzać rozgrywkę zewnętrzną, Coliseum online, Arenę PvP oraz wydarzenia."
+      "Następny etap to własny HUD i pierwsza kolekcja przedmiotów ze spójną oprawą i zasadami. Pełny remaster grafiki, wydarzenia, migracja gospodarza i rankingi rywalizacji pozostają w opracowaniu."
     ],
     "limits": "Centrum korzysta z chmury; gra działa w klientach i twórca pokoju musi pozostać połączony. Postacie zapisują się automatycznie na tym komputerze z kopiami odzyskiwania. Nowy pokój tworzy nowy świat. Pełne grafiki HD, migracja hosta i ranking PvP nie są jeszcze gotowe.",
     "milestones": [
@@ -67,6 +67,10 @@
       [
         "Czy remaster i Arena są gotowe?",
         "Dostępne są Full HD i ulepszenia wizualne z klasycznymi sprite'ami. Wymiana wszystkich grafik nadal jest częściowa. Coliseum jest wyzwaniem klienta; Arena PvP online, rankingi i wydarzenia pozostają w rozwoju i testach."
+      ],
+      [
+        "Czy całą zawartość stworzyło Returns from Darkness?",
+        "Jesteśmy edycją społecznościową opartą na Diablo/Hellfire i The Hell 3. Wiele klas, obszarów, przedmiotów i grafik pochodzi z tych podstaw. Returns from Darkness rozwija centrum online, integrację klienta, aktualizacje i postęp Sanktuarium. Własne dodatki przedstawimy po wydaniu; zachowujemy informacje o autorach podstaw."
       ]
     ],
     "join": [
@@ -78,8 +82,8 @@
       "Kod dostępny na GitHub"
     ],
     "online": [
-      "Spotkanie przed przygodą.",
-      "Centrum z kontami, kanałami czatu i pokojami dla czterech graczy. Znajdź grupę na stronie lub w kliencie. Centrum pozostaje w chmurze, a gracze hostują swoje gry."
+      "Sanktuarium",
+      "Sanktuarium odtwarza społecznościowe doświadczenie klasycznego Battle.net Diablo: zaloguj się, rozmawiaj na kanałach, znajdź graczy i twórz pokoje wieloosobowe lub do nich dołączaj. To miejsce spotkań Returns from Darkness, gdzie zbierzesz drużynę i wyruszysz na dalszą przygodę w grze."
     ]
   },
   "ru": {
@@ -110,11 +114,11 @@
     ],
     "now": [
       "В этой версии",
-      "Клиент Windows со встроенным центром, совместными комнатами до четырёх игроков, автообновлением и отдельными профилями. Система предметов разделяет добычу комнаты; автосохранение сохраняет инвентарь, золото и развитие на этом ПК."
+      "Клиент Windows со встроенным центром, совместными комнатами до четырёх игроков, автообновлением и отдельными профилями. Система предметов разделяет добычу комнаты; автосохранение сохраняет инвентарь, золото и развитие на этом ПК. Санктуарий объединяет открытые профили, персонажей, портреты, титулы и печати кампании. Играйте и развивайтесь, открывая классы, черты, модификаторы и сложности; существующие герои сохраняют свой выбор. Первые три пройденные кампании дают точки и золотой портрет."
     ],
     "next": [
       "Следующая глава",
-      "Расширять визуальный ремастер согласованными материалами, улучшать инструменты и проверять внешние игры, онлайн-Coliseum, PvP-арену и события."
+      "Следующий этап — собственный HUD и первая коллекция предметов с согласованными оформлением и правилами. Полная переработка графики, события, перенос роли хозяина и соревновательные рейтинги остаются в разработке."
     ],
     "limits": "Центр использует облако; игра работает в клиентах, и создатель комнаты должен оставаться подключённым. Персонажи автоматически сохраняются на этом ПК с резервными копиями. Новая комната создаёт новый мир. Полная HD-графика, перенос хоста и рейтинговый PvP ещё не завершены.",
     "milestones": [
@@ -150,6 +154,10 @@
       [
         "Ремастер и Арена уже готовы?",
         "Есть разрешение Full HD и визуальные улучшения с классическими спрайтами. Замена всей графики пока частичная. Coliseum доступен как испытание клиента; онлайн-PvP-арена, рейтинги и события ещё разрабатываются и проверяются."
+      ],
+      [
+        "Весь контент создан Returns from Darkness?",
+        "Это издание сообщества на основе Diablo/Hellfire и The Hell 3. Значительная часть классов, областей, предметов и графики взята из этих основ. Returns from Darkness разрабатывает онлайн-центр, интеграцию клиента, обновления и прогресс Санктуария. Собственные дополнения будут представлены после выпуска; сведения об авторах основ сохранены."
       ]
     ],
     "join": [
@@ -161,8 +169,8 @@
       "Код доступен на GitHub"
     ],
     "online": [
-      "Встреча перед приключением.",
-      "Центр сообщества с аккаунтами, каналами чата и комнатами для четырёх игроков. Найдите группу на сайте или в клиенте. Центр остаётся в облаке, а игры размещают сами игроки."
+      "Санктуарий",
+      "Санктуарий воссоздаёт общение классического Battle.net Diablo: войдите в аккаунт, общайтесь в каналах, находите игроков и создавайте многопользовательские комнаты или присоединяйтесь к ним. Это место встречи сообщества Returns from Darkness, где можно собрать группу и продолжить приключение в игре."
     ]
   },
   "uk": {
@@ -193,11 +201,11 @@
     ],
     "now": [
       "У цій версії",
-      "Клієнт Windows із вбудованим центром, спільними кімнатами до чотирьох гравців, автооновленням і окремими профілями. Система предметів розділяє здобич кімнати; автозбереження зберігає інвентар, золото й розвиток на цьому ПК."
+      "Клієнт Windows із вбудованим центром, спільними кімнатами до чотирьох гравців, автооновленням і окремими профілями. Система предметів розділяє здобич кімнати; автозбереження зберігає інвентар, золото й розвиток на цьому ПК. Санктуарій об’єднує публічні профілі, персонажів, портрети, титули й печатки кампанії. Грайте й розвивайтеся, відкриваючи класи, риси, модифікатори та складності; наявні герої зберігають свій вибір. Перші три пройдені кампанії дають крапки й золотий портрет."
     ],
     "next": [
       "Наступний розділ",
-      "Розширювати візуальний ремастер узгодженими матеріалами, поліпшувати інструменти й перевіряти зовнішні ігри, онлайн-Coliseum, PvP-арену та події."
+      "Наступний етап — власний HUD і перша колекція предметів з узгодженими оформленням та правилами. Повне оновлення графіки, події, перенесення ролі господаря та змагальні рейтинги залишаються в розробці."
     ],
     "limits": "Центр використовує хмару; гра працює в клієнтах і творець кімнати має залишатися підключеним. Персонажі автоматично зберігаються на цьому ПК з копіями відновлення. Нова кімната створює новий світ. Повна HD-графіка, перенесення хоста та рейтинг PvP ще не завершені.",
     "milestones": [
@@ -233,6 +241,10 @@
       [
         "Ремастер і Арена вже готові?",
         "Є роздільність Full HD та візуальні поліпшення з класичними спрайтами. Заміна всієї графіки поки часткова. Coliseum доступний як випробування клієнта; онлайн-PvP-арена, рейтинги й події ще розробляються та перевіряються."
+      ],
+      [
+        "Увесь вміст створено Returns from Darkness?",
+        "Це видання спільноти на основі Diablo/Hellfire і The Hell 3. Значна частина класів, областей, предметів і графіки походить із цих основ. Returns from Darkness розробляє онлайн-центр, інтеграцію клієнта, оновлення й прогрес Санктуарію. Власні доповнення представимо після випуску; відомості про авторів основ збережено."
       ]
     ],
     "join": [
@@ -244,8 +256,8 @@
       "Код доступний на GitHub"
     ],
     "online": [
-      "Зустріч перед пригодою.",
-      "Центр спільноти з обліковими записами, каналами чату й кімнатами для чотирьох гравців. Знайдіть групу на сайті або в клієнті. Центр залишається в хмарі, а ігри розміщують самі гравці."
+      "Санктуарій",
+      "Санктуарій відтворює спілкування класичного Battle.net Diablo: увійдіть до облікового запису, спілкуйтеся в каналах, знаходьте гравців і створюйте багатокористувацькі кімнати або приєднуйтеся до них. Це місце зустрічі Returns from Darkness, де можна зібрати групу й продовжити пригоду в грі."
     ]
   },
   "tr": {
@@ -276,11 +288,11 @@
     ],
     "now": [
       "Bu sürümde",
-      "Entegre merkez, dört kişilik işbirliği odaları, otomatik güncellemeler ve ayrı profiller içeren Windows istemcisi. Eşya sistemi odadaki ganimetleri paylaşır; otomatik kayıt envanteri, altını ve karakter gelişimini bu PC’de korur."
+      "Entegre merkez, dört kişilik işbirliği odaları, otomatik güncellemeler ve ayrı profiller içeren Windows istemcisi. Eşya sistemi odadaki ganimetleri paylaşır; otomatik kayıt envanteri, altını ve karakter gelişimini bu PC’de korur. Sığınak; herkese açık profilleri, karakterleri, portreleri, unvanları ve sefer mühürlerini birleştirir. Oynayarak ilerleyin; sınıfları, özellikleri, değiştiricileri ve zorlukları açın. Mevcut karakterler seçimlerini korur. İlk üç tamamlanan sefer, noktaları ve altın portreyi kazandırır."
     ],
     "next": [
       "Sonraki bölüm",
-      "Tutarlı görsellerle remasterı genişletmek, araçları iyileştirmek ve dış ağ oyunlarını, çevrimiçi Coliseum'u, PvP Arenası'nı ve etkinlikleri doğrulamak."
+      "Sonraki kapsam, projeye özel bir HUD ve tutarlı görsel tasarım ile kurallara sahip ilk eşya koleksiyonudur. Tüm görsellerin yenilenmesi, etkinlikler, ev sahibi geçişi ve rekabetçi sıralamalar geliştirme aşamasındadır."
     ],
     "limits": "Merkez bulut hizmetlerini kullanır; oyun istemcilerde çalışır ve oda kurucusu bağlı kalmalıdır. Karakterler bu bilgisayarda kurtarma kopyalarıyla otomatik kaydedilir. Yeni oda yeni bir dünya oluşturur. Tam HD görseller, ev sahibi geçişi ve PvP sıralaması henüz tamamlanmadı.",
     "milestones": [
@@ -316,6 +328,10 @@
       [
         "Remaster ve Arena tamam mı?",
         "Klasik sprite'larla Full HD çözünürlük ve görsel iyileştirmeler mevcut. Tüm görsellerin değiştirilmesi hâlâ kısmidir. Coliseum istemcide bir mücadeledir; çevrimiçi PvP Arenası, sıralamalar ve etkinlikler geliştiriliyor ve doğrulanıyor."
+      ],
+      [
+        "Tüm içerik Returns from Darkness tarafından mı oluşturuldu?",
+        "Diablo/Hellfire ve The Hell 3 temellerinden uyarlanmış bir topluluk sürümüyüz. Sınıfların, bölgelerin, eşyaların ve görsellerin çoğu bu temellerden gelir. Returns from Darkness çevrimiçi merkezi, istemci entegrasyonunu, güncellemeleri ve Sığınak ilerlemesini geliştirir. Özgün eklemeler yayımlandıkça tanıtılacak; temel projelerin katkıları belirtilecektir."
       ]
     ],
     "join": [
@@ -327,8 +343,8 @@
       "Kaynak kod GitHub'da mevcut"
     ],
     "online": [
-      "Maceradan önce buluşma.",
-      "Hesaplar, sohbet kanalları ve dört oyuncuya kadar odalar sunan topluluk merkezi. Grubunu sitede veya istemcide bul. Merkez bulutta kalır; oyunları oyuncular barındırır."
+      "Sığınak",
+      "Sığınak, Diablo’nun klasik Battle.net sosyal deneyimini yeniden yaratır: hesabınızla giriş yapın, kanallarda sohbet edin, oyuncular bulun ve çok oyunculu odalar oluşturun veya odalara katılın. Returns from Darkness topluluğunun grubunu toplayıp maceraya oyunda devam ettiği buluşma noktasıdır."
     ]
   },
   "ja": {
@@ -359,11 +375,11 @@
     ],
     "now": [
       "このビルドで利用可能",
-      "ハブ内蔵Windowsクライアント、最大4人の協力ルーム、自動更新、アカウント別プロフィール。アイテムシステムはルーム内のドロップを共有し、自動保存で所持品、ゴールド、キャラクターの成長をこのPCに保管します。"
+      "ハブ内蔵Windowsクライアント、最大4人の協力ルーム、自動更新、アカウント別プロフィール。アイテムシステムはルーム内のドロップを共有し、自動保存で所持品、ゴールド、キャラクターの成長をこのPCに保管します。 サンクチュアリには公開プロフィール、キャラクター、肖像、称号、キャンペーンの紋章が集まります。プレイして成長するとクラス、特性、調整要素、難易度が解放されます。既存キャラクターの選択は維持され、最初の3段階のクリアで印と金色の肖像を獲得できます。"
     ],
     "next": [
       "次の章",
-      "統一感のある素材と画像でリマスターを拡張し、制作ツールを改善。外部ネットワークでのゲーム、オンラインColiseum、PvPアリーナ、イベントを検証します。"
+      "次の範囲は独自HUDと、世界観やルールを統一した最初のアイテムコレクションです。全アートのリマスター、イベント、ホスト移行、対戦ランキングは引き続き開発中です。"
     ],
     "limits": "ハブはクラウドサービスを利用し、ゲームは各クライアントで実行されるため、ルーム作成者は接続を維持する必要があります。キャラクターはこのPCに自動保存され、復元用コピーも作成されます。新しいルームは新しい世界を生成します。全画像のHD化、ホスト移行、PvPランキングは未完成です。",
     "milestones": [
@@ -399,6 +415,10 @@
       [
         "リマスターとアリーナは完成していますか？",
         "Full HD解像度と見た目の改善を利用でき、従来のスプライトも保持しています。全画像の高精細化はまだ一部です。Coliseumはクライアント内の挑戦として存在し、オンラインPvPアリーナ、ランキング、イベントは検証・開発中です。"
+      ],
+      [
+        "すべてのコンテンツはReturns from Darknessが制作したものですか？",
+        "Diablo/HellfireとThe Hell 3を基にしたコミュニティ版です。クラス、エリア、アイテム、アートの多くはそれらの基盤に由来します。Returns from Darknessはオンライン拠点、クライアント統合、更新、サンクチュアリの進行を開発しています。独自の追加要素は公開時に紹介し、基盤の制作元はクレジットに記載します。"
       ]
     ],
     "join": [
@@ -410,8 +430,8 @@
       "ソースコードはGitHubで公開中"
     ],
     "online": [
-      "冒険の前に、集まる場所を。",
-      "アカウント、チャットチャンネル、最大4人のルームを備えたコミュニティハブ。サイトやゲーム内ハブで仲間を見つけましょう。ハブはクラウドにあり、ゲームはプレイヤーがホストします。"
+      "サンクチュアリ",
+      "サンクチュアリはDiabloのクラシックBattle.netの交流体験を再現します。アカウントにログインし、チャンネルで会話し、仲間を見つけ、マルチプレイルームを作成・参加できます。Returns from Darknessの仲間が集まり、パーティーを組んでゲームの冒険へ向かう拠点です。"
     ]
   },
   "ko": {
@@ -442,11 +462,11 @@
     ],
     "now": [
       "이번 빌드에서 이용 가능",
-      "허브가 통합된 Windows 클라이언트, 최대 4인 협동 방, 자동 업데이트, 계정별 프로필. 아이템 시스템은 방의 드롭을 공유하고 자동 저장으로 인벤토리, 금, 캐릭터 성장을 이 PC에 보관합니다."
+      "허브가 통합된 Windows 클라이언트, 최대 4인 협동 방, 자동 업데이트, 계정별 프로필. 아이템 시스템은 방의 드롭을 공유하고 자동 저장으로 인벤토리, 금, 캐릭터 성장을 이 PC에 보관합니다. 성역은 공개 프로필, 캐릭터, 초상화, 칭호와 캠페인 인장을 모읍니다. 플레이하며 성장하면 클래스, 특성, 변경 요소와 난이도가 해제됩니다. 기존 캐릭터의 선택은 유지되며, 처음 세 캠페인을 완료하면 점 표시와 황금 초상화를 얻습니다."
     ],
     "next": [
       "다음 장",
-      "일관된 소재와 이미지로 리마스터를 확장하고 제작 도구를 개선합니다. 외부 네트워크 플레이, 온라인 Coliseum, PvP 아레나, 이벤트를 검증합니다."
+      "다음 범위는 프로젝트 고유 HUD와 일관된 아트 및 규칙을 갖춘 첫 아이템 컬렉션입니다. 전체 아트 리마스터, 이벤트, 호스트 이전과 경쟁 순위는 계속 개발 중입니다."
     ],
     "limits": "허브는 클라우드 서비스를 사용하며 게임은 각 클라이언트에서 실행되므로 방 생성자는 연결을 유지해야 합니다. 캐릭터는 이 PC에 자동 저장되며 복구 사본을 만듭니다. 새 방은 새 세계를 생성합니다. 전체 HD 이미지, 호스트 이전, PvP 랭킹은 아직 완성되지 않았습니다.",
     "milestones": [
@@ -482,6 +502,10 @@
       [
         "리마스터와 아레나는 완성됐나요?",
         "Full HD 해상도와 시각적 개선을 제공하면서 고전 스프라이트를 유지합니다. 전체 고해상도 이미지 교체는 아직 일부만 적용됐습니다. Coliseum은 클라이언트 도전으로 존재하며 온라인 PvP 아레나, 랭킹, 이벤트는 검증 및 개발 중입니다."
+      ],
+      [
+        "모든 콘텐츠를 Returns from Darkness가 만들었나요?",
+        "Diablo/Hellfire와 The Hell 3를 기반으로 각색한 커뮤니티 버전입니다. 많은 클래스, 지역, 아이템과 아트는 해당 기반에서 왔습니다. Returns from Darkness는 온라인 허브, 클라이언트 통합, 업데이트와 성역 진행을 개발합니다. 고유 추가 요소는 출시 시 소개하며 기반 제작진의 크레딧을 유지합니다."
       ]
     ],
     "join": [
@@ -493,8 +517,8 @@
       "GitHub에서 소스 공개"
     ],
     "online": [
-      "모험 전에 만나는 곳.",
-      "계정, 채팅 채널, 최대 4인 방을 제공하는 커뮤니티 허브입니다. 사이트나 클라이언트에서 동료를 찾으세요. 허브는 클라우드에 있고 게임은 플레이어가 호스팅합니다."
+      "성역",
+      "성역은 디아블로의 고전 배틀넷 소셜 경험을 재현합니다. 계정으로 로그인하고 채널에서 대화하며, 동료를 찾고 멀티플레이 방을 만들거나 참가하세요. Returns from Darkness 커뮤니티가 파티를 모으고 게임 속 모험을 이어 가는 만남의 장소입니다."
     ]
   },
   "zh-CN": {
@@ -525,11 +549,11 @@
     ],
     "now": [
       "此版本已提供",
-      "内置大厅的Windows客户端、最多四人的合作房间、自动更新和独立账号档案。物品系统共享房间内的掉落，自动保存将背包、金币和角色成长保存在本机。"
+      "内置大厅的Windows客户端、最多四人的合作房间、自动更新和独立账号档案。物品系统共享房间内的掉落，自动保存将背包、金币和角色成长保存在本机。 庇护之地整合公开资料、角色、头像、称号和战役印记。通过游玩与成长解锁职业、特性、调整项和难度；现有角色保留已选内容。完成前三个难度的战役可获得圆点标记与金色头像。"
     ],
     "next": [
       "下一篇章",
-      "用一致的素材和美术扩展重制效果，改进创作工具，验证外部网络游戏、在线Coliseum、PvP竞技场和社区活动。"
+      "下一阶段是项目专属HUD和首批具有统一美术与规则的物品。全游戏美术重制、活动、房主迁移与竞技排名仍在开发中。"
     ],
     "limits": "大厅使用云服务，游戏运行于客户端，因此房间创建者必须保持连接。角色在本机自动保存并保留恢复副本。新房间生成新世界。完整HD美术、主机迁移和PvP排名尚未完成。",
     "milestones": [
@@ -565,6 +589,10 @@
       [
         "完整重制和竞技场完成了吗？",
         "客户端支持Full HD分辨率和视觉改进，并保留经典精灵图。全部高清美术替换仍只完成了一部分。Coliseum已作为客户端挑战存在；在线PvP竞技场、排名和活动仍在开发和验证中。"
+      ],
+      [
+        "所有内容都是Returns from Darkness原创的吗？",
+        "这是基于Diablo/Hellfire和The Hell 3改编的社区版本。许多职业、区域、物品和美术来自这些基础。Returns from Darkness开发在线中心、客户端整合、更新和庇护之地进度系统。原创新增内容将在发布时介绍，并保留基础项目的制作人员信息。"
       ]
     ],
     "join": [
@@ -576,8 +604,8 @@
       "源码已在GitHub公开"
     ],
     "online": [
-      "冒险开始前的相聚。",
-      "社区大厅提供账号、聊天频道和最多四人的房间。在网站或游戏内大厅寻找队友。大厅运行在云端，游戏由玩家主持。"
+      "庇护之地",
+      "庇护之地重现Diablo经典Battle.net的社交体验：登录账号、在频道聊天、寻找玩家、创建或加入多人房间。这里是Returns from Darkness社区的集合点，让你召集队友，再回到游戏中继续冒险。"
     ]
   },
   "ar": {
@@ -608,11 +636,11 @@
     ],
     "now": [
       "في هذا الإصدار",
-      "عميل Windows بمركز مدمج وغرف تعاونية لأربعة لاعبين وتحديث تلقائي وملفات منفصلة للحسابات. يشارك نظام العناصر غنائم الغرفة؛ ويحفظ الحفظ التلقائي المحتويات والذهب وتطور الشخصية على هذا الحاسوب."
+      "عميل Windows بمركز مدمج وغرف تعاونية لأربعة لاعبين وتحديث تلقائي وملفات منفصلة للحسابات. يشارك نظام العناصر غنائم الغرفة؛ ويحفظ الحفظ التلقائي المحتويات والذهب وتطور الشخصية على هذا الحاسوب. يجمع الملاذ الملفات العامة والشخصيات والصور والألقاب وأختام الحملة. تقدّم باللعب لفتح الفئات والسمات والمعدّلات والصعوبات؛ تحتفظ الشخصيات الحالية باختياراتها. تمنح أول ثلاث حملات مكتملة النقاط والصورة الذهبية."
     ],
     "next": [
       "الفصل التالي",
-      "توسيع التحسين البصري بمواد ورسوم متناسقة وتحسين الأدوات والتحقق من اللعب عبر شبكات خارجية وColiseum عبر الإنترنت وحلبة PvP وفعاليات المجتمع."
+      "النطاق التالي هو واجهة قتال خاصة بالمشروع ومجموعة أولية من العناصر بفن وقواعد متناسقة. لا تزال إعادة تصميم جميع الرسومات والأحداث وانتقال المضيف والتصنيفات التنافسية قيد التطوير."
     ],
     "limits": "يستخدم المركز خدمات سحابية؛ تعمل المباراة في أجهزة اللاعبين ويجب أن يبقى منشئ الغرفة متصلًا. تُحفظ الشخصيات تلقائيًا على هذا الحاسوب مع نسخ للاستعادة. الغرفة الجديدة تنشئ عالمًا جديدًا. الرسوم عالية الدقة الكاملة ونقل المضيف وتصنيف PvP لم تكتمل بعد.",
     "milestones": [
@@ -648,6 +676,10 @@
       [
         "هل اكتمل التحسين البصري والحلبة؟",
         "تتوفر دقة Full HD وتحسينات بصرية مع الحفاظ على الرسومات الكلاسيكية. استبدال جميع الرسوم بموارد أوضح ما زال جزئيًا. يوجد Coliseum كتحدٍ داخل العميل؛ الحلبة التنافسية عبر الإنترنت والتصنيفات والفعاليات ما زالت قيد التطوير والتحقق."
+      ],
+      [
+        "هل أنشأ Returns from Darkness كل المحتوى؟",
+        "نحن إصدار مجتمعي مقتبس من Diablo/Hellfire وThe Hell 3. تأتي فئات ومناطق وعناصر ورسومات كثيرة من هذه الأسس. يطوّر Returns from Darkness المركز عبر الإنترنت وتكامل العميل والتحديثات وتقدّم الملاذ. سنعرض الإضافات الأصلية عند إصدارها، مع الاحتفاظ بذكر أصحاب المشاريع الأساسية."
       ]
     ],
     "join": [
@@ -659,8 +691,8 @@
       "الشيفرة متاحة على GitHub"
     ],
     "online": [
-      "اللقاء قبل المغامرة.",
-      "مركز مجتمع للحسابات وقنوات الدردشة والغرف التي تستوعب أربعة لاعبين. ابحث عن مجموعتك في الموقع أو العميل. يبقى المركز في السحابة ويستضيف اللاعبون مبارياتهم."
+      "الملاذ",
+      "يعيد الملاذ تجربة التواصل في Battle.net الكلاسيكية للعبة Diablo: سجّل الدخول، وتحدّث في القنوات، وابحث عن لاعبين، وأنشئ غرف اللعب الجماعي أو انضم إليها. إنه ملتقى مجتمع Returns from Darkness لتجميع فريقك ومتابعة المغامرة داخل اللعبة."
     ]
   }
 }

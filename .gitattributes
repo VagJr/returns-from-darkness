@@ -1,0 +1,2 @@
+# Preserve byte-exact source patch context, including CRLF and missing final newlines.
+client-source/engine.patch -text

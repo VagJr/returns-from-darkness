@@ -1,0 +1,1690 @@
+{
+  "format": 1,
+  "revision": "sanctuary-1",
+  "maxLevel": 150,
+  "classes": [
+    {
+      "id": 0,
+      "name": "Warrior",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      }
+    },
+    {
+      "id": 1,
+      "name": "Inquisitor",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      }
+    },
+    {
+      "id": 2,
+      "name": "Guardian",
+      "unlock": {
+        "level": 20,
+        "clear": -1
+      }
+    },
+    {
+      "id": 3,
+      "name": "Templar",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      }
+    },
+    {
+      "id": 4,
+      "name": "Archer",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      }
+    },
+    {
+      "id": 5,
+      "name": "Scout",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      }
+    },
+    {
+      "id": 6,
+      "name": "Sharpshooter",
+      "unlock": {
+        "level": 20,
+        "clear": -1
+      }
+    },
+    {
+      "id": 7,
+      "name": "Trapper",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      }
+    },
+    {
+      "id": 8,
+      "name": "Mage",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      }
+    },
+    {
+      "id": 9,
+      "name": "Elementalist",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      }
+    },
+    {
+      "id": 10,
+      "name": "Demonologist",
+      "unlock": {
+        "level": 20,
+        "clear": -1
+      }
+    },
+    {
+      "id": 11,
+      "name": "Necromancer",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      }
+    },
+    {
+      "id": 12,
+      "name": "Beastmaster",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      }
+    },
+    {
+      "id": 13,
+      "name": "Warlock",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      }
+    },
+    {
+      "id": 14,
+      "name": "Monk",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      }
+    },
+    {
+      "id": 15,
+      "name": "Kensei",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      }
+    },
+    {
+      "id": 16,
+      "name": "Shugoki",
+      "unlock": {
+        "level": 20,
+        "clear": -1
+      }
+    },
+    {
+      "id": 17,
+      "name": "Shinobi",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      }
+    },
+    {
+      "id": 18,
+      "name": "Rogue",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      }
+    },
+    {
+      "id": 19,
+      "name": "Assassin",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      }
+    },
+    {
+      "id": 20,
+      "name": "Iron maiden",
+      "unlock": {
+        "level": 20,
+        "clear": -1
+      }
+    },
+    {
+      "id": 21,
+      "name": "Bombardier",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      }
+    },
+    {
+      "id": 22,
+      "name": "Savage",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      }
+    },
+    {
+      "id": 23,
+      "name": "Berserker",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      }
+    },
+    {
+      "id": 24,
+      "name": "Executioner",
+      "unlock": {
+        "level": 20,
+        "clear": -1
+      }
+    },
+    {
+      "id": 25,
+      "name": "Thraex",
+      "unlock": {
+        "level": 20,
+        "clear": -1
+      }
+    },
+    {
+      "id": 26,
+      "name": "Murmillo",
+      "unlock": {
+        "level": 25,
+        "clear": -1
+      }
+    },
+    {
+      "id": 27,
+      "name": "Dimachaerus",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      }
+    },
+    {
+      "id": 28,
+      "name": "Secutor",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      }
+    }
+  ],
+  "traits": [
+    {
+      "id": 0,
+      "key": "NoTrait",
+      "name": "No Trait",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 1,
+      "key": "Gifted",
+      "name": "Gifted",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 2,
+      "key": "Kamikaze",
+      "name": "Kamikaze",
+      "unlock": {
+        "level": 5,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 3,
+      "key": "HeavyHanded",
+      "name": "Heavy Handed",
+      "unlock": {
+        "level": 5,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 4,
+      "key": "Skilled",
+      "name": "Skilled",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 5,
+      "key": "Barbarism",
+      "name": "Barbarism",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 6,
+      "key": "Finesse",
+      "name": "Finesse",
+      "unlock": {
+        "level": 5,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 7,
+      "key": "Survivor",
+      "name": "Survivor",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 8,
+      "key": "Weird",
+      "name": "Weird",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 9,
+      "key": "OldFashioned",
+      "name": "Old Fashioned",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 10,
+      "key": "Domesticated",
+      "name": "Domesticated",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 11,
+      "key": "Rabid",
+      "name": "Rabid",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      },
+      "online": true
+    },
+    {
+      "id": 12,
+      "key": "Bruiser",
+      "name": "Bruiser",
+      "unlock": {
+        "level": 5,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 13,
+      "key": "Negotiant",
+      "name": "Negotiant",
+      "unlock": {
+        "level": 5,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 14,
+      "key": "Leper",
+      "name": "Leper",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      },
+      "online": true
+    },
+    {
+      "id": 15,
+      "key": "Rudiarius",
+      "name": "Rudiarius",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 16,
+      "key": "Scrounger",
+      "name": "Scrounger",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 17,
+      "key": "Adventurer",
+      "name": "Adventurer",
+      "unlock": {
+        "level": 5,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 18,
+      "key": "ThickSkinned",
+      "name": "Thick Skinned",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 19,
+      "key": "RatelHide",
+      "name": "Ratel Hide",
+      "unlock": {
+        "level": 5,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 20,
+      "key": "Forgetful",
+      "name": "Forgetful",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      },
+      "online": true
+    },
+    {
+      "id": 21,
+      "key": "WildSorcery",
+      "name": "Wild Sorcery",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      },
+      "online": true
+    },
+    {
+      "id": 22,
+      "key": "Cautious",
+      "name": "Cautious",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 23,
+      "key": "OldHabit",
+      "name": "Old Habit",
+      "unlock": {
+        "level": 5,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 24,
+      "key": "GoldDigger",
+      "name": "Gold Digger",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 25,
+      "key": "ArrowDancing",
+      "name": "Arrow Dancing",
+      "unlock": {
+        "level": 5,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 26,
+      "key": "PointBlank",
+      "name": "Point Blank",
+      "unlock": {
+        "level": 5,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 27,
+      "key": "FastMetabolism",
+      "name": "Fast Metabolism",
+      "unlock": {
+        "level": 5,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 28,
+      "key": "Bouncer",
+      "name": "Bouncer",
+      "unlock": {
+        "level": 5,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 29,
+      "key": "Sandman",
+      "name": "Sandman",
+      "unlock": {
+        "level": 5,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 30,
+      "key": "ARoseWithThorns",
+      "name": "A Rose with Thorns",
+      "unlock": {
+        "level": 5,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 31,
+      "key": "Pyromaniac",
+      "name": "Pyromaniac",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 32,
+      "key": "AvatarOfCold",
+      "name": "Avatar of Cold",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 33,
+      "key": "BestDefense",
+      "name": "The Best Defense...",
+      "unlock": {
+        "level": 5,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 34,
+      "key": "GrimDeal",
+      "name": "Grim Deal",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 35,
+      "key": "HolyAura",
+      "name": "Holy Aura",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 36,
+      "key": "Strafer",
+      "name": "Strafer",
+      "unlock": {
+        "level": 5,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 37,
+      "key": "PiercingShot",
+      "name": "Piercing Shot",
+      "unlock": {
+        "level": 5,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 38,
+      "key": "Destroyer",
+      "name": "Destroyer",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 39,
+      "key": "ChromaticSkin",
+      "name": "Chromatic Skin",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 40,
+      "key": "Tormentor",
+      "name": "Tormentor",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 41,
+      "key": "Armadillo",
+      "name": "Armadillo",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 42,
+      "key": "BloodyMess",
+      "name": "Bloody Mess",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 43,
+      "key": "Bestiarius",
+      "name": "Bestiarius",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 44,
+      "key": "Petrifier",
+      "name": "Petrifier",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 45,
+      "key": "DarkPact",
+      "name": "Dark Pact",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      },
+      "online": true
+    },
+    {
+      "id": 46,
+      "key": "Toxic_at_Heart",
+      "name": "Toxic at Heart",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 47,
+      "key": "Hunger",
+      "name": "Hunger",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 48,
+      "key": "Fechtmeister",
+      "name": "Fechtmeister",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 49,
+      "key": "WreckingBlock",
+      "name": "Wrecking Block",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 50,
+      "key": "TwoTowers",
+      "name": "Two Towers",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 51,
+      "key": "PuncturingStab",
+      "name": "Puncturing Stab",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 52,
+      "key": "BloodAndSand",
+      "name": "Blood and Sand",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 53,
+      "key": "BloodForBlood",
+      "name": "Blood for Blood",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 54,
+      "key": "BigFrame",
+      "name": "Big Frame",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 55,
+      "key": "CrossbowTraining",
+      "name": "Crossbow Training",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 56,
+      "key": "BlisteredSkin",
+      "name": "Blistered Skin",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 57,
+      "key": "Cleric",
+      "name": "Cleric",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 58,
+      "key": "Bloodless",
+      "name": "Bloodless",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 59,
+      "key": "Engineer",
+      "name": "Engineer",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 60,
+      "key": "Necropathy",
+      "name": "Necropathy",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 61,
+      "key": "TreasureHunter",
+      "name": "Treasure Hunter",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 62,
+      "key": "BreakerOfStones",
+      "name": "Breaker of Stones",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 63,
+      "key": "Cannibalism",
+      "name": "Cannibalism",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 64,
+      "key": "Black_Witchery",
+      "name": "Black Witchery",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      },
+      "online": true
+    },
+    {
+      "id": 65,
+      "key": "Axepertise",
+      "name": "Axepertise",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 66,
+      "key": "MonkeyGrip",
+      "name": "Monkey Grip",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 67,
+      "key": "Zealot",
+      "name": "Zealot",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 68,
+      "key": "Adrenaline",
+      "name": "Adrenaline",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 69,
+      "key": "Sisyphean",
+      "name": "Sisyphean Task",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      },
+      "online": true
+    },
+    {
+      "id": 70,
+      "key": "BendTheRules",
+      "name": "Bend the Rules",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 71,
+      "key": "Barbarian",
+      "name": "Barbarian",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 72,
+      "key": "Psion",
+      "name": "Psion",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      },
+      "online": true
+    },
+    {
+      "id": 73,
+      "key": "Devastator",
+      "name": "Devastator",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      },
+      "online": true
+    },
+    {
+      "id": 74,
+      "key": "Thrill_Seeker",
+      "name": "Thrill Seeker",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 75,
+      "key": "Psychotic",
+      "name": "Psychotic",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 76,
+      "key": "SmallFrame",
+      "name": "Small Frame",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 77,
+      "key": "BlueBlood",
+      "name": "Blue Blood",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 78,
+      "key": "Juggernaut",
+      "name": "Juggernaut",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      },
+      "online": true
+    },
+    {
+      "id": 79,
+      "key": "Prodigy",
+      "name": "Prodigy",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      },
+      "online": true
+    },
+    {
+      "id": 80,
+      "key": "Insensitive",
+      "name": "Insensitive",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 81,
+      "key": "Hydramancer",
+      "name": "Hydramancer",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      },
+      "online": true
+    },
+    {
+      "id": 82,
+      "key": "IronFisted",
+      "name": "Iron Fisted",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 83,
+      "key": "Paladin",
+      "name": "Paladin",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      },
+      "online": true
+    },
+    {
+      "id": 84,
+      "key": "Unshakable",
+      "name": "Unshakable",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 85,
+      "key": "ResoluteGuard",
+      "name": "Resolute Guard",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 86,
+      "key": "Ranger",
+      "name": "Ranger",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 87,
+      "key": "Mamluk",
+      "name": "Mamluk",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      },
+      "online": true
+    },
+    {
+      "id": 88,
+      "key": "Vigorous",
+      "name": "Vigorous",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      },
+      "online": true
+    },
+    {
+      "id": 89,
+      "key": "Pistoleer",
+      "name": "Pistoleer",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      },
+      "online": true
+    },
+    {
+      "id": 90,
+      "key": "FearTheReaper",
+      "name": "Fear the Reaper",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      },
+      "online": true
+    },
+    {
+      "id": 91,
+      "key": "NastyDisposition",
+      "name": "Nasty Disposition",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 92,
+      "key": "CrowdSeeker",
+      "name": "Crowd Seeker",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      },
+      "online": false
+    },
+    {
+      "id": 93,
+      "key": "Stoneform",
+      "name": "Stoneform",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      },
+      "online": true
+    },
+    {
+      "id": 94,
+      "key": "LitheBuild",
+      "name": "Lithe Build",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      },
+      "online": true
+    },
+    {
+      "id": 95,
+      "key": "BloodOath",
+      "name": "Blood Oath",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      },
+      "online": true
+    },
+    {
+      "id": 96,
+      "key": "ManaFlux",
+      "name": "Mana Flux",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      },
+      "online": true
+    },
+    {
+      "id": 97,
+      "key": "Coinbound",
+      "name": "Coinbound",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 98,
+      "key": "Doomwhorl",
+      "name": "Doomwhorl",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      },
+      "online": true
+    }
+  ],
+  "difficulties": [
+    {
+      "id": 0,
+      "name": "Horror",
+      "level": 1,
+      "previous_clear": -1
+    },
+    {
+      "id": 1,
+      "name": "Purgatory",
+      "level": 20,
+      "previous_clear": 0
+    },
+    {
+      "id": 2,
+      "name": "Doom",
+      "level": 35,
+      "previous_clear": 1
+    },
+    {
+      "id": 3,
+      "name": "Crucible",
+      "level": 43,
+      "previous_clear": 2
+    },
+    {
+      "id": 4,
+      "name": "Torment",
+      "level": 51,
+      "previous_clear": 3
+    },
+    {
+      "id": 5,
+      "name": "Agony",
+      "level": 59,
+      "previous_clear": 4
+    },
+    {
+      "id": 6,
+      "name": "Terror",
+      "level": 67,
+      "previous_clear": 5
+    },
+    {
+      "id": 7,
+      "name": "Destruction",
+      "level": 75,
+      "previous_clear": 6
+    },
+    {
+      "id": 8,
+      "name": "Inferno",
+      "level": 83,
+      "previous_clear": 7
+    }
+  ],
+  "modes": [
+    {
+      "id": 0,
+      "key": "GM_NORMAL",
+      "name": "Normal",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      },
+      "online": true
+    },
+    {
+      "id": 1,
+      "key": "GM_HARDCORE",
+      "name": "Hardcore",
+      "unlock": {
+        "level": 30,
+        "clear": 0
+      },
+      "online": false
+    },
+    {
+      "id": 2,
+      "key": "GM_IRONMAN",
+      "name": "Ironman",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      },
+      "online": false
+    },
+    {
+      "id": 3,
+      "key": "GM_NIGHTMARE",
+      "name": "Nightmare",
+      "unlock": {
+        "level": 43,
+        "clear": 2
+      },
+      "online": false
+    },
+    {
+      "id": 4,
+      "key": "GM_EASY",
+      "name": "Easy",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      },
+      "online": false
+    },
+    {
+      "id": 5,
+      "key": "GM_SURVIVAL",
+      "name": "Survival",
+      "unlock": {
+        "level": 20,
+        "clear": 0
+      },
+      "online": false
+    },
+    {
+      "id": 6,
+      "key": "GM_HARD",
+      "name": "Hard",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": false
+    },
+    {
+      "id": 7,
+      "key": "GM_SPEEDRUN",
+      "name": "Speedrun",
+      "unlock": {
+        "level": 50,
+        "clear": 2
+      },
+      "online": false
+    },
+    {
+      "id": 8,
+      "key": "GM_COLISEUM",
+      "name": "Coliseum",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "online": true
+    }
+  ],
+  "gameChangers": [
+    {
+      "id": 0,
+      "name": "None",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      }
+    },
+    {
+      "id": 1,
+      "name": "Auto-saving",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      }
+    },
+    {
+      "id": 2,
+      "name": "Bound Gear",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      }
+    },
+    {
+      "id": 3,
+      "name": "Item Drops",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      }
+    },
+    {
+      "id": 4,
+      "name": "Effortless",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      }
+    },
+    {
+      "id": 5,
+      "name": "Live off the Land",
+      "unlock": {
+        "level": 20,
+        "clear": 0
+      }
+    },
+    {
+      "id": 6,
+      "name": "Impossible",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      }
+    },
+    {
+      "id": 7,
+      "name": "Prohibition",
+      "unlock": {
+        "level": 20,
+        "clear": 0
+      }
+    },
+    {
+      "id": 8,
+      "name": "Full Contact",
+      "unlock": {
+        "level": 20,
+        "clear": 0
+      }
+    },
+    {
+      "id": 9,
+      "name": "Night Kin",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      }
+    },
+    {
+      "id": 10,
+      "name": "Hack & Slash",
+      "unlock": {
+        "level": 20,
+        "clear": 0
+      }
+    },
+    {
+      "id": 11,
+      "name": "Vaccinated",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      }
+    },
+    {
+      "id": 12,
+      "name": "That's my Secret",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      }
+    },
+    {
+      "id": 13,
+      "name": "No regeneration",
+      "unlock": {
+        "level": 20,
+        "clear": 0
+      }
+    },
+    {
+      "id": 14,
+      "name": "Clean Hands",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      }
+    },
+    {
+      "id": 15,
+      "name": "Ice Age",
+      "unlock": {
+        "level": 20,
+        "clear": 0
+      }
+    },
+    {
+      "id": 16,
+      "name": "Groundhog Day",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      }
+    },
+    {
+      "id": 17,
+      "name": "Tougher Monsters",
+      "unlock": {
+        "level": 20,
+        "clear": 0
+      }
+    },
+    {
+      "id": 18,
+      "name": "Imperishable Items",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      }
+    },
+    {
+      "id": 19,
+      "name": "No Map",
+      "unlock": {
+        "level": 20,
+        "clear": 0
+      }
+    },
+    {
+      "id": 20,
+      "name": "Double Damage",
+      "unlock": {
+        "level": 20,
+        "clear": 0
+      }
+    },
+    {
+      "id": 21,
+      "name": "See No Evil",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      }
+    },
+    {
+      "id": 22,
+      "name": "Black Death",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      }
+    },
+    {
+      "id": 23,
+      "name": "Tough Luck",
+      "unlock": {
+        "level": 20,
+        "clear": 0
+      }
+    },
+    {
+      "id": 24,
+      "name": "Ruthless Iron",
+      "unlock": {
+        "level": 35,
+        "clear": 1
+      }
+    },
+    {
+      "id": 25,
+      "name": "Acceleration",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      }
+    },
+    {
+      "id": 26,
+      "name": "Asceticism",
+      "unlock": {
+        "level": 20,
+        "clear": 0
+      }
+    }
+  ],
+  "titles": [
+    {
+      "id": "wanderer",
+      "name": "Wanderer",
+      "unlock": {
+        "level": 0,
+        "clear": -1
+      }
+    },
+    {
+      "id": "pathfinder",
+      "name": "Pathfinder",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      }
+    },
+    {
+      "id": "veteran",
+      "name": "Veteran",
+      "unlock": {
+        "level": 30,
+        "clear": -1
+      }
+    },
+    {
+      "id": "lightbearer",
+      "name": "Lightbearer",
+      "unlock": {
+        "level": 20,
+        "clear": 0
+      }
+    },
+    {
+      "id": "nightbreaker",
+      "name": "Nightbreaker",
+      "unlock": {
+        "level": 35,
+        "clear": 2
+      }
+    },
+    {
+      "id": "hellwalker",
+      "name": "Hellwalker",
+      "unlock": {
+        "level": 83,
+        "clear": 8
+      }
+    },
+    {
+      "id": "duelist",
+      "name": "Duelist",
+      "unlock": {
+        "level": 10,
+        "clear": -1
+      },
+      "pvp_kills": 5
+    }
+  ],
+  "completionDots": [
+    0,
+    1,
+    2
+  ],
+  "goldenAvatarRequires": [
+    0,
+    1,
+    2
+  ],
+  "milestones": [
+    5,
+    10,
+    20,
+    30,
+    35,
+    43,
+    50,
+    51,
+    59,
+    67,
+    75,
+    83,
+    100,
+    125,
+    150
+  ],
+  "notes": [
+    "Unlocks are shared by the account and apply to new character choices. Existing heroes and their selected traits are preserved.",
+    "Perk ranks, class restrictions, trait conflicts, item requirements and area rules from the engine are preserved.",
+    "Game progression is reported by the native peer client; it is not an authoritative competitive ranking.",
+    "Arena character levels are tracked separately and do not unlock campaign paths or difficulty tiers.",
+    "Auto-saving remains available immediately. Account unlocks never disable essential save or update functions."
+  ]
+}

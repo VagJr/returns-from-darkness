@@ -1,7 +1,11 @@
 # Project and asset notices
 
-This public repository contains the community website and multilingual project documentation. It does not include the game client, DIABDAT.MPQ, commercial game data, account databases or local runtime files.
+This public repository contains the community website, multilingual project documentation, the modified client source/patch and public release links. It does not contain DIABDAT.MPQ, TH3data.mor, account databases, private signing keys or player save files.
 
 Diablo and Battle.net are trademarks of their respective owners. This is an independent, non-commercial fan project, not affiliated with Blizzard Entertainment. The classic Diablo lettering and flame animation are derived from the reference supplied by the project owner; those elements are not claimed as original artwork or relicensed here. Project-specific suffix lettering and website layout are custom work. Website illustrations are AI-generated concept art, not gameplay screenshots. Font licenses are preserved in site/dist/assets/fonts.
 
-The game development base uses modified DevilutionX 1.5.5. Its Sustainable Use License and notices apply to that separate engine; this repository does not relicense it or Tchernobog assets. Players need their own lawful installation of the original game. No public game release or public multiplayer server is provided by this repository.
+The current Windows client is adapted from The Hell 3 source 1.265 with matching mod data 1.267, on top of Diablo/Hellfire. The classes, traits, areas, items, spells, HUD and most game artwork inherited from those projects are not claimed as Returns from Darkness creations. The original source README is retained in client-source and the distribution. Earlier prototypes used DevilutionX; its Sustainable Use License and notices remain applicable to code derived from that engine.
+
+The partial stone-floor material comes from the DamnationX 1.6.0 beta 3 distribution. It is not a port of the complete DamnationX WebGPU renderer. Sanctuary portraits are adapted from the existing mod resource archive. The project does not claim authorship or relicense these assets. Original project work includes the community hub, client/account integration, launcher/update flow and Sanctuary account progression layer; third-party libraries and services retain their respective notices.
+
+Native room gameplay is hosted by the room creator, with cloud accounts, discovery and relay. The public package imports compatible game data during first preparation. Full replacement HD artwork, an original in-game HUD, project-specific item artwork, automatic host migration and authoritative competitive rankings are not part of the current completed content.

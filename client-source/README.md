@@ -1,17 +1,15 @@
-# Returns from Darkness 0.3.7
+# Returns from Darkness HD 0.4.0
 
-Native peer transport, launcher, serverless community and engine patch used by this release.
-Apply `engine.patch` to the published TH3 1.265 source. Keep ORIGINAL-SOURCE-README.txt with redistributions.
-Place the patched engine in `candidates/thehell3`. Configure Win32 MSVC v145, Windows SDK 10.0.26100.0, /MT, /Z7. Build native/thehell3-online first and link its rfd_room.lib.
+Community client adapted from The Hell 3 source 1.265 and data1.267, with native creator-hosted rooms, a signed updater, and Sanctuary progression. Existing gameplay/artwork is credited to its original projects; see ORIGINAL-SOURCE-README.txt and the project NOTICE.md.
 
-The companion uses libdatachannel v0.24.6 (commit 6b1e2e620f1e37f0eafeee702eaea0043cb305fd) with recursive submodules and Mbed TLS mbedtls-3.6.5 (commit e185d7fd85499c8ce5ca2a54f5cf8fe7dbe3f8df). Clone both official repositories to native/vendor/libdatachannel and native/vendor/mbedtls. Configure native/peer-bridge with CMake for Windows x64 and compile target RfdPeer, Release.
+Apply engine.patch to TH3 1.265 in candidates/thehell3. The patch contains the account progression hooks and generated rules. Build the native/thehell3-online rfd_room library first. Build the engine with Win32 MSVC v145, Windows SDK10.0.26100.0, /MT and /Z7. RfdDevQa defaults to0: keep that value in public builds. The original source README must remain with redistributions.
 
-Compile launcher/Launcher.cs and launcher/Lang.cs for .NET Framework 4 with WinForms, Drawing, Security, Web.Extensions and IO.Compression assemblies. Embed launcher/assets/sanctuary.jpg, logo.gif, title.ttf and body.ttf using those resource names, plus update-public.xml as update-public.xml. Keep font OFL notices in the package. Installer additionally embeds initial.zip. The signing private key is never included.
+The companion uses libdatachannel0.24.6 (commit6b1e2e620f1e37f0eafeee702eaea0043cb305fd, recursive submodules) and Mbed TLS3.6.5 (commite185d7fd85499c8ce5ca2a54f5cf8fe7dbe3f8df). Fetch these official projects into native/vendor/libdatachannel and native/vendor/mbedtls. Configure native/peer-bridge with CMake for Windowsx64 and build RfdPeer in Release.
 
-Each room creator runs the native game and companion. The original deterministic turn protocol remains reliable and ordered. Direct WebRTC uses DTLS/SCTP, MTU 1200, bounded queues and event-driven local I/O. A Cloudflare WebSocket relay handles restrictive networks after 15 seconds. Signaling alone can disconnect without terminating established direct gameplay. Cloud relay requires the service to remain reachable and consumes Cloudflare quotas.
+Compile launcher/Launcher.cs and launcher/Lang.cs for .NET Framework4 with WinForms, Drawing, Security, Web.Extensions, IO.Compression and IO.Compression.FileSystem assemblies. Embed launcher/assets/{sanctuary.jpg,logo.gif,title.ttf,body.ttf,launcher-locales.json} under those exact names and launcher/update-public.xml as update-public.xml. The setup additionally embeds initial.zip containing the signed release.json. No private signing key is included.
 
-Cloudflare worker uses SQLite Durable Objects. Accounts, chat and room discovery are cloud-side; gameplay simulation stays in player clients. No automatic host migration or authoritative ranked PvP. The Coliseum mode uses separate engine saves and remains experimental. No claim of whole-world HD art.
+Account progression rules are in content/progression/rules.json, services/peer-realm/progression-rules.mjs and the generated native header. Preserve engine mode IDs: Normal0, Hardcore1, Ironman2, Nightmare3, Easy4, Survival5, Hard6, Speedrun7, Coliseum8. Perks, trait conflicts, class restrictions and item requirements remain engine-side. Imported saves preserve access without generating completion seals. Native reports are client-reported and unranked, not authoritative anti-cheat attestation.
 
-The public package imports the user's DIABDAT.MPQ and matching TH3data.mor; neither is included here.
+Cloudflare uses SQLite Durable Objects for accounts, chat, discovery, profiles and relay fallback. Simulation stays in the room creator's client, using reliable ordered WebRTC when possible. Restrictive networks can use the authenticated cloud relay. No automatic host migration or authoritative ranked PvP. The Coliseum room route remains experimental.
 
-Website/native sign-on uses one-use handoff codes scoped to client or browser, expires after two minutes, and requires a live issuing session. Codes are consumed under the Durable Object concurrency lock. Native sessions use Windows DPAPI for the current Windows user. Browser codes are carried in a fragment and immediately removed from the URL.
+The public setup imports DIABDAT.MPQ and matching TH3data.mor on first preparation. Full save files stay on the player's PC; the Sanctuary profile is not a cloud save backup. Whole-world HD art and a project-original HUD/item collection remain future work.

@@ -1,0 +1,13 @@
+Returns from Darkness HD 0.4.0 — Sanctuary
+
+Account progression now unlocks character paths, traits, modifiers, local challenge modes and nine sequential campaign difficulties. New accounts start with six paths. Higher tiers require character levels and previous campaign completion. Existing saves retain their selected builds and legacy access without fabricated medals. Perk ranks, equipment requirements and trait conflicts remain intact; XP and drop rates are unchanged.
+
+The Sanctuary adds public account profiles, native character summaries, portrait selection, seven achievement titles, nine campaign seals, three completion dots and a golden portrait. Campaign/solo and Coliseum levels are tracked separately. The game hub can select titles and portraits; the website shares the same profile. Progression is client-reported and unranked; full saves remain local. Extended campaign completion is Uber Diablo on floor24, not the original floor16 boss.
+
+The community and play layouts now include profile navigation, campaign/Coliseum room filters, tier selection and clearer unlock requirements. Website content in14 languages distinguishes inherited Diablo/Hellfire and The Hell3 content from Returns from Darkness integration and Sanctuary systems. A project-original HUD and item collection are the next scope, not content already supplied by this release.
+
+The native menus retain the launcher0.3.7 Enter Game fix, consume completed preparation, and the setup chooses its embedded signed version rather than a hardcoded folder. Signing into an already open menu applies the account without forcing the room list. Room changes reuse the running game. A temporary lock on the connection statistics file no longer disconnects gameplay. Developer progression/loot fixtures and local test endpoints are excluded from the production engine. A death XP deduction boundary error was corrected; base rates remain unchanged.
+
+Validation includes backend unlock/ownership/replay/legacy invariants; real native solo-world progression to an isolated SQLite realm; two production native clients entering and switching test rooms; statistics-file lock survival; desktop/mobile and14-language UI; embedded installation and signed manifest verification. Cross-PC external graphical testing and natural complete campaigns across all nine tiers are not certified by these tests. Coliseum remains experimental without authoritative ranking.
+
+Compatible original/mod game data is required on first preparation. Whole-world HD artwork, host migration and browser gameplay remain unfinished. Update manifests are cryptographically signed; trusted publisher Authenticode signing is not yet available.

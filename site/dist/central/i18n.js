@@ -2,9 +2,9 @@
  const names={'pt-BR':'Português','en':'English','es':'Español','fr':'Français','de':'Deutsch','it':'Italiano','pl':'Polski','ru':'Русский','uk':'Українська','tr':'Türkçe','ja':'日本語','ko':'한국어','zh-CN':'简体中文','ar':'العربية'};
  const requested=new URLSearchParams(location.search).get('lang');
  let language=names[requested]?requested:localStorage.getItem('rfd-language')||navigator.language;
- if(!names[language])language=names[language.split('-')[0]]?language.split('-')[0]:'en';
+ if(!names[language]){const primary=language.split('-')[0];language=primary==='pt'?'pt-BR':primary==='zh'?'zh-CN':names[primary]?primary:'en';}
  let packs={},originals=new WeakMap();
- const skip='#messages,#users,#channels,.room strong,.party-slot strong,#identity,#welcome,#room-name,#room-detail,#home-room,script,style,option';
+ const skip='[data-no-translate],#messages,#users,#channels,.room strong,.party-slot strong,#identity,#welcome,#room-name,#room-detail,#home-room,script,style,option';
  window.rfdT=text=>packs[language]?.[text]||text;
  function translate(){
   document.title=(packs[language]?.['Santuário']||'Sanctuary')+' · Returns from Darkness';
@@ -34,9 +34,9 @@
  const label=document.createElement('label');label.className='language-picker';label.setAttribute('aria-label','Idioma');
  const select=document.createElement('select');select.setAttribute('aria-label','Idioma');
  for(const [id,name]of Object.entries(names)){const option=document.createElement('option');option.value=id;option.textContent=name;select.append(option);}select.value=language;label.append(select);document.querySelector('header').append(label);
- select.addEventListener('change',()=>{language=select.value;localStorage.setItem('rfd-language',language);const url=new URL(location.href);url.searchParams.set('lang',language);history.replaceState(null,'',url);translate();});
+ select.addEventListener('change',()=>{language=select.value;localStorage.setItem('rfd-language',language);const url=new URL(location.href);url.searchParams.set('lang',language);history.replaceState(null,'',url);translate();document.documentElement.dispatchEvent(new Event('rfd-language'));});
  fetch('locales.json').then(r=>{if(!r.ok)throw Error('Translations unavailable');return r.json();}).then(data=>{
-  packs=data;translate();let queued=false;
+  packs=data;translate();document.documentElement.dispatchEvent(new Event('rfd-language'));let queued=false;
   const options={childList:true,subtree:true,characterData:true};
   const observer=new MutationObserver(()=>{
    if(queued)return;queued=true;

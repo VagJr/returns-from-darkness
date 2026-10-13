@@ -8,17 +8,17 @@ The silence of Tristram. The cathedral door. The feeling of descending one more 
 
 Rediscover the classic with deeper character builds, exploration and equipment. Accounts, chat and rooms meet in one community hub; each group has its own adventure under the Returns from Darkness identity.
 
-## The gathering before the adventure.
+## Sanctuary
 
-A community hub with accounts, chat channels and rooms for up to four players. Find your group on the website or in the client hub and prepare the next journey. The hub stays in the cloud; players host their games.
+The Sanctuary recreates the social experience of Diablo’s classic Battle.net: sign in, chat in channels, find players, and create or join multiplayer rooms. It is the Returns from Darkness community’s meeting place to gather your party and continue the adventure in the game.
 
-**Available in this build — v0.3.7**
+**Available in this build — v0.4.0**
 
-Windows client with an integrated hub, cooperative rooms for up to four players, automatic updates and separate account profiles. The item system shares room drops; automatic saving preserves inventory, gold and character development on this computer.
+Windows client with an integrated hub, cooperative rooms for up to four players, automatic updates and separate account profiles. The item system shares room drops; automatic saving preserves inventory, gold and character development on this computer. The Sanctuary brings together public profiles, characters, portraits, titles and campaign seals. Progress through play to unlock new classes, traits, modifiers and difficulties; existing characters keep their choices. The first three campaign completions grant dots and a golden portrait.
 
 **The next chapter**
 
-Expand the visual remaster with coherent materials and artwork, improve content tools and validate external games, online Coliseum, PvP Arena and community events.
+The next scope is a project HUD and a pilot item collection with coherent art and rules. Full artwork remastering, events, host migration and competitive rankings remain in development.
 
 The hub uses cloud services; gameplay runs in the clients and requires the room creator to stay connected. Characters save on this computer automatically, with recovery copies. A new room creates a new world. Full HD artwork, host migration and ranked PvP are not yet complete.
 
@@ -53,6 +53,10 @@ Yes. Automatic saves during play and on normal exit preserve inventory, gold and
 ### Is the full remaster and Arena finished?
 
 The client supports Full HD resolution and evolving visual improvements while preserving classic sprites. Higher-definition artwork replacement is still partial. Coliseum exists as a client challenge; online PvP Arena, rankings and project events remain in validation and development.
+
+### Was all the content created by Returns from Darkness?
+
+We are a community edition adapted from Diablo/Hellfire and The Hell 3. Most classes, areas, items and art come from those foundations. Returns from Darkness develops the online hub, client integration, updates and Sanctuary progression. Original additions will be presented as they are released; foundation credits are retained.
 
 ## The next chapter begins with the community.
 

@@ -23,8 +23,8 @@ using Microsoft.Win32;
 [assembly: AssemblyTitle("Returns from Darkness HD")]
 [assembly: AssemblyProduct("Returns from Darkness HD")]
 [assembly: AssemblyDescription("Cliente e atualizações de Returns from Darkness")]
-[assembly: AssemblyVersion("0.3.7.0")]
-[assembly: AssemblyFileVersion("0.3.7.0")]
+[assembly: AssemblyVersion("0.4.0.0")]
+[assembly: AssemblyFileVersion("0.4.0.0")]
 namespace ReturnsFromDarkness {
  static class Program {
   public static Mutex Instance;
@@ -151,8 +151,9 @@ namespace ReturnsFromDarkness {
    string marker=Path.Combine(Root,"current.json");if(File.Exists(marker))return;
    using(var resource=Assembly.GetExecutingAssembly().GetManifestResourceStream("initial.zip")){
     if(resource==null)return;string archive=Path.Combine(Root,"initial.zip");using(var output=File.Create(archive))resource.CopyTo(output);
-    string versionDir=Path.Combine(Root,"versions","0.3.6");Extract(archive,versionDir);
-    string envelope=File.ReadAllText(Path.Combine(versionDir,"release.json"));var manifest=Verify(envelope);CheckFiles(versionDir,manifest);Activate(envelope);File.Delete(archive);
+    string envelope;using(var zip=ZipFile.OpenRead(archive)){var entry=zip.GetEntry("release.json");if(entry==null)throw new Exception(Lang.S("package"));using(var reader=new StreamReader(entry.Open(),Encoding.UTF8))envelope=reader.ReadToEnd();}
+    var manifest=Verify(envelope);string versionDir=Path.Combine(Root,"versions",(string)manifest["version"]);Extract(archive,versionDir);
+    CheckFiles(versionDir,manifest);Activate(envelope);File.Delete(archive);
    }
   }
   public static void Activate(string envelope){string pointer=Path.Combine(Root,"current.json"),temp=pointer+".new";File.WriteAllText(temp,envelope,Encoding.UTF8);if(File.Exists(pointer))File.Replace(temp,pointer,pointer+".previous");else File.Move(temp,pointer);}
@@ -205,6 +206,7 @@ namespace ReturnsFromDarkness {
    await PrepareData(directory,manifest,status);
    request=await RenewInvitation(request,manifest);
    var info=new ProcessStartInfo(Path.Combine(directory,(string)manifest["executable"])){WorkingDirectory=directory,UseShellExecute=false};info.EnvironmentVariables["RFD_PORTAL_URL"]=Site+"/central/?lang="+Lang.Language;info.EnvironmentVariables["RFD_UI_LANGUAGE"]=Lang.Language;info.EnvironmentVariables["RFD_CONTENT_HASH"]=(string)manifest["contentHash"];
+   foreach(string key in new[]{"RFD_ROOM_HOST","RFD_ROOM_PORT","RFD_ROOM_TICKET","RFD_ROOM_NAME","RFD_ROOM_MODE","RFD_ROOM_ID","RFD_ROOM_DIFFICULTY","RFD_CONTROL_TOKEN","RFD_CONTROL_PID"})info.EnvironmentVariables.Remove(key);
    string account=PreferredAccount();Dictionary<string,object> invite=null;Process peer=null;
    if(request!=null&&request.StartsWith("rfd://play/")){
     string encoded=request.Substring(11);if(encoded.Length>4096||!Regex.IsMatch(encoded,@"^[A-Za-z0-9_-]+$"))throw new Exception(Lang.S("invite"));encoded=encoded.Replace('-','+').Replace('_','/');encoded=encoded.PadRight((encoded.Length+3)/4*4,'=');invite=Json.Deserialize<Dictionary<string,object>>(Encoding.UTF8.GetString(Convert.FromBase64String(encoded)));
@@ -233,7 +235,7 @@ namespace ReturnsFromDarkness {
     }catch{if(!peer.HasExited)peer.Kill();throw;}finally{if(File.Exists(ready))File.Delete(ready);}
    }
    try{
-    string roomText=invite==null?"":String.Join("\n",new[]{"room",profile,"127.0.0.1",info.EnvironmentVariables["RFD_ROOM_PORT"],info.EnvironmentVariables["RFD_ROOM_TICKET"],(string)manifest["contentHash"],((string)invite["room"]).Replace("\r","").Replace("\n"," "),info.EnvironmentVariables["RFD_ROOM_MODE"],(string)invite["roomId"]});
+    string roomText=invite==null?"":String.Join("\n",new[]{"room",profile,"127.0.0.1",info.EnvironmentVariables["RFD_ROOM_PORT"],info.EnvironmentVariables["RFD_ROOM_TICKET"],(string)manifest["contentHash"],((string)invite["room"]).Replace("\r","").Replace("\n"," "),info.EnvironmentVariables["RFD_ROOM_MODE"],(string)invite["roomId"],info.EnvironmentVariables["RFD_ROOM_DIFFICULTY"]});
     if(GameRunning){
       if(!SendRoom(roomText))throw new Exception(Lang.S("transition"));
     }else{
@@ -268,7 +270,7 @@ namespace ReturnsFromDarkness {
    tray=new NotifyIcon{Icon=SystemIcons.Application,Text="Returns from Darkness HD",Visible=true};tray.DoubleClick+=(s1,e1)=>Accept("rfd://focus");var menu=new ContextMenuStrip();menu.Items.Add(Lang.S("open"),null,(s1,e1)=>Accept("rfd://focus"));menu.Items.Add(Lang.S("community"),null,(s1,e1)=>Accept("rfd://central"));menu.Items.Add(Lang.S("check"),null,(s1,e1)=>Accept("rfd://prepare"));menu.Items.Add(Lang.S("close"),null,(s1,e1)=>{if(Program.GameRunning){Hide();return;}tray.Visible=false;Close();});tray.ContextMenuStrip=menu;
    central.Click+=(s1,e1)=>Accept("rfd://central");play.Click+=(s1,e1)=>Accept(PlayRequest(request));
    FormClosing+=(s1,e1)=>{if(Program.GameRunning){e1.Cancel=true;Hide();}else tray.Dispose();};
-   Shown+=async(s1,e1)=>{if(loaded)return;loaded=true;var listener=Program.Listen();if(request=="--preview"){status.Text=Lang.S("portal");version.Text=Lang.S("preview")+" · v0.3.7";progress.Visible=false;play.Enabled=true;request=null;}else Accept(request??"rfd://prepare");await Task.CompletedTask;};
+   Shown+=async(s1,e1)=>{if(loaded)return;loaded=true;var listener=Program.Listen();if(request=="--preview"){status.Text=Lang.S("portal");version.Text=Lang.S("preview")+" · v0.3.5";progress.Visible=false;play.Enabled=true;request=null;}else Accept(request??"rfd://prepare");await Task.CompletedTask;};
   }
   public static string PlayRequest(string pending){return pending!=null&&(pending.StartsWith("rfd://play/")||pending.StartsWith("rfd://resume/")||pending.StartsWith("rfd://auth/"))?pending:"rfd://open";}
   public async void Accept(string value){requests.Enqueue(value);if(processing)return;processing=true;play.Enabled=false;progress.Visible=true;
