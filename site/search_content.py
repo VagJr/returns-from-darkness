@@ -128,7 +128,8 @@ def apply_search_content(root,config,locales):
             (folder/'index.html').write_text(html,encoding='utf-8');generated.append((url,lang,slug))
     verification=root/'verification'
     if verification.exists():
-        for path in verification.glob('google*.html'):(dist/path.name).write_bytes(path.read_bytes())
+        for pattern in ('google*.html','indexnow*.txt'):
+            for path in verification.glob(pattern):(dist/path.name).write_bytes(path.read_bytes())
     sitemap=dist/'sitemap.xml'
     tree=ET.fromstring(sitemap.read_text(encoding='utf-8'))
     ns='{http://www.sitemaps.org/schemas/sitemap/0.9}'; xhtml='{http://www.w3.org/1999/xhtml}'
