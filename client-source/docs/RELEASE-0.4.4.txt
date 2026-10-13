@@ -1,0 +1,7 @@
+Returns from Darkness HD 0.4.4 — Dark Gothic HUD refinement
+
+Complete Gothic frames, guardian sculptures, textured panels and animated resource liquids are integrated with the project's native interface. The final refinement widens the lower left button column so CHAR, QUESTS, MAP and MENU remain inside their frames, with the actual hit areas aligned. All live HUD captions are measured using the game's own font metrics.
+
+Character labels and numbers occupy separate columns. The inventory keeps 70 native cells, complete crown and lower pentagram, a correctly positioned live gold label, and Gothic weapon tabs. Eight potion slots and a recessed experience strip complete the lower panel. The kit's 52 original PNGs are preserved; 24 runtime pieces form one RGBA atlas. Tchernobog remains credited for the 48-frame animated liquids; world artwork is inherited and a complete world-art remaster remains in development.
+
+The website shows real current-client captures and localized descriptions. Signed automatic updates, Sanctuary accounts and progression, creator-hosted rooms and local saves are retained. Experience and ordinary loot rates are unchanged.

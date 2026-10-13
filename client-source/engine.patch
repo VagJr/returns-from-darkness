@@ -3717,7 +3717,7 @@
 +};
 --- /dev/null
 +++ b/src/CommunityHudKit.cpp
-@@ -0,0 +1,290 @@
+@@ -0,0 +1,296 @@
 +#include "stdafx.h"
 +#include "CommunityHudKit.h"
 +#include "CommunityRemaster.h"
@@ -3741,6 +3741,7 @@
 +#if RFD_DEV_QA
 +struct Caption {std::string text;int x,y,width,advance;};
 +std::vector<Caption> captions;
++bool buttonCaptionsFit=true;int buttonCaptions=0;
 +#endif
 +IDirect3DDevice9 *owner=nullptr;
 +IDirect3DTexture9 *texture=nullptr,*mask=nullptr;
@@ -3874,7 +3875,7 @@
 +  for(size_t i=0;i<sprites.size();i++){const auto &s=sprites[i];fprintf(f,"%s{\"asset\":%d,\"rect\":[%d,%d,%d,%d],\"source\":[%d,%d,%d,%d]}",i?",":"",s.asset,s.x,s.y,s.w,s.h,s.source.x,s.source.y,s.source.w,s.source.h);}
 +  fputs("],\"captions\":[",f);
 +  for(size_t i=0;i<captions.size();i++){auto &c=captions[i];fprintf(f,"%s{\"text\":\"%s\",\"box\":[%d,%d,%d,13],\"advance\":%d}",i?",":"",c.text.c_str(),c.x,c.y-12,c.width,c.advance);}
-+  fputs("]}",f);fclose(f);
++  fprintf(f,"],\"buttonCaptionsInsideFrames\":%s,\"buttonCaptions\":%d}",buttonCaptionsFit?"true":"false",buttonCaptions);fclose(f);
 + }
 +}
 +#endif
@@ -3883,7 +3884,7 @@
 +bool RfdKitReady(){return load();}
 +void RfdKitBegin(){sprites.clear();
 +#if RFD_DEV_QA
-+ captions.clear();
++ captions.clear();buttonCaptionsFit=true;buttonCaptions=0;
 +#endif
 + const size_t size=size_t(ScreenWidth)*ScreenHeight;expected.assign(size,0);visible.assign(size,0);}
 +void RfdKitClearPixel(void *destination){int x,y;if(gbRunGame==1&&location(destination,x,y)&&visible.size()==size_t(ScreenWidth)*ScreenHeight)visible[size_t(y)*ScreenWidth+x]=0;}
@@ -3908,7 +3909,7 @@
 +void RfdKitConfigureButtons(){
 + if(!load())return;
 + const int ids[]={B_CHAR,B_QUEST,B_AUTOMAP,B_MENU};
-+ for(int i=0;i<4;i++){auto &b=Buttons[ids[i]];b.x=32;b.y=395+i*19;b.width=42;b.height=16;}
++ for(int i=0;i<4;i++){auto &b=Buttons[ids[i]];b.x=29;b.y=395+i*19;b.width=58;b.height=16;}
 + const int secondary[]={B_PERKS,B_GC,B_SYNERGY};
 + for(int i=0;i<3;i++){auto &b=Buttons[secondary[i]];b.x=5;b.y=395+i*19;b.width=21;b.height=16;}
 + auto &chat=Buttons[B_TALK];chat.x=180;chat.y=455;chat.width=44;chat.height=17;
@@ -3923,6 +3924,11 @@
 +  for(int row=0;row<b.height;row++)for(int col=0;col<b.width;col++)if(!row||!col||row==b.height-1||col==b.width-1){auto *p=base+row*WorkingWidth+col;*p=b.pressed?232:245;RfdKitClearPixel(p);}
 + }
 + return true;
++}
++void RfdKitRecordButtonCaption(Button &b,int width){
++#if RFD_DEV_QA
++ if(loaded){buttonCaptionsFit=buttonCaptionsFit&&width+2<=b.width;buttonCaptions++;}
++#endif
 +}
 +void RfdKitBelt(){
 + auto &slot=InvSlots[IS_11_8_Belt];
@@ -4010,7 +4016,7 @@
 +}
 --- /dev/null
 +++ b/src/CommunityHudKit.h
-@@ -0,0 +1,13 @@
+@@ -0,0 +1,14 @@
 +#pragma once
 +bool RfdKitReady();
 +void RfdKitBegin();
@@ -4019,6 +4025,7 @@
 +void RfdKitMainPanel();
 +void RfdKitConfigureButtons();
 +bool RfdKitButton(Button &button);
++void RfdKitRecordButtonCaption(Button &button,int width);
 +void RfdKitBelt();
 +void RfdKitInventory();
 +void RfdKitWeaponTabs();
@@ -6174,7 +6181,7 @@
 +static const int RfdDifficultyLevels[] = {1,20,35,43,51,59,67,75,83};
 --- /dev/null
 +++ b/src/CommunityRemaster.cpp
-@@ -0,0 +1,268 @@
+@@ -0,0 +1,269 @@
 +#include "stdafx.h"
 +#include "CommunityRemaster.h"
 +#include "CommunityDev.h"
@@ -6363,6 +6370,7 @@
 +  case B_PVP:caption=IsPlayerFriendly?"PvE":"PvP";break;
 +  case B_SYNERGY:caption="S";break;case B_TIME:caption=CurTimeSpeedIndex?">>":">";break;}
 + const int width=GetTextWidth(caption);
++ RfdKitRecordButtonCaption(button,width);
 + DrawLevelInfoText(x+(button.width-width)/2+down,y+(button.height+10)/2+down,caption,C_0_White,true);
 +}
 +void RfdDrawInventoryBackdrop(){
@@ -141738,9 +141746,9 @@
 +#pragma once
 +
 +#define TH3_REVISION 1265
-+#define THE_HELL_VERSION_INT 0,4,3,0
-+#define THE_HELL_VERSION_STRING "v0.4.3\0"
-+#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.4.3\0"
++#define THE_HELL_VERSION_INT 0,4,4,0
++#define THE_HELL_VERSION_STRING "v0.4.4\0"
++#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.4.4\0"
 +
 +
 +

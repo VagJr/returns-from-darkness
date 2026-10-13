@@ -1,4 +1,4 @@
-# Returns from Darkness HD 0.4.3
+# Returns from Darkness HD 0.4.4
 
 Community client adapted from The Hell 3 source 1.265/data1.267, with creator-hosted online rooms, signed updates and Sanctuary account progression. Inherited gameplay and artwork remain credited; project-specific additions include the integration, progression layer, interface framing and First Vigil relic collection. See NOTICE.md and ORIGINAL-SOURCE-README.txt.
 
