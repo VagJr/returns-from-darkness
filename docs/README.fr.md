@@ -1,62 +1,62 @@
 # Diablo 1 HD — Returns from Darkness
 
-Diablo 1 HD — Returns from Darkness est un projet indépendant et non commercial visant à retrouver le lieu de rencontre de Battle.net classique, avec une direction visuelle HD et du contenu original en développement.
+Retrouvez Tristram dans une aventure enrichie : 29 voies de personnage, des milliers d'équipements, des sorts, talents et défis. Réunissez jusqu'à quatre joueurs dans le portail en ligne et poursuivez sur le client Windows Returns from Darkness HD.
 
-## Certains lieux ne cessent de nous appeler.
+## Certains lieux ne cessent jamais d'appeler.
 
-Le silence de Tristram. La porte de la cathédrale. Le plaisir de descendre encore un étage entre amis.
+Le silence de Tristram. La porte de la cathédrale. Descendre un étage de plus entre amis.
 
-Nous voulons préserver l'atmosphère de Diablo 1 et ouvrir de nouvelles voies : un serveur communautaire, des graphismes renouvelés et des aventures à partager.
+Redécouvrez le classique avec davantage de choix de personnage, d'exploration et d'équipement. Comptes, discussion et salons se retrouvent dans un portail commun ; chaque groupe vit sa propre aventure sous l'identité Returns from Darkness.
 
 ## Se retrouver avant l'aventure.
 
-Une communauté centrale, des canaux de discussion et plusieurs salles de quatre joueurs au maximum. Battle.net classique inspire les rencontres ; l'intégration utilise des services propres autour de PvPGN et DevilutionX.
+Un portail avec comptes, canaux de discussion et salons de quatre joueurs. Retrouvez votre groupe sur le site ou dans le client. Le portail reste dans le cloud ; les joueurs hébergent les parties.
 
-**Ce qui fonctionne aujourd'hui — v0.1.6**
+**Dans cette version — v0.3.5**
 
-La version locale 0.1.6 intègre connexion, canaux, chat et salons dans le client. L’arrivée graphique à Tristram a été confirmée en 0.1.4 et 0.1.5 ; le nouveau parcours natif reste en validation. L’atelier permet de modifier les tables, importer des sprites et préparer du contenu.
+Client Windows avec portail intégré, salons coopératifs de quatre joueurs, mises à jour automatiques et profils distincts. Le système de butin partage les objets de la partie ; les sauvegardes automatiques préservent inventaire, or et progression sur cet ordinateur.
 
-**La prochaine étape**
+**Le prochain chapitre**
 
-Valider les parties avec deux clients graphiques, les arrivées tardives et le départ de l’hôte ; poursuivre la refonte HD et sécuriser et tester les connexions externes avant l’ouverture.
+Étendre la remasterisation avec des visuels cohérents, améliorer les outils et valider les parties externes, Coliseum en ligne, l'Arène PvP et les événements.
 
-Le test réseau ne constitue pas une partie graphique complète à quatre. Les sauvegardes et la simulation restent côté client. Le serveur n'est pas ouvert au public.
+Le portail utilise le cloud ; la partie s'exécute dans les clients et son créateur doit rester connecté. Les personnages sont sauvegardés automatiquement sur cet ordinateur avec une copie de récupération. Un nouveau salon crée un nouveau monde. Les visuels HD complets, la migration d'hôte et le classement PvP restent à terminer.
 
 ## Fait avec soin. Construit en toute transparence.
 
-### Tristram se charge à nouveau · Base locale vérifiée
+### La communauté est en ligne · Disponible
 
-Client personnalisé, PvPGN, lanceur et salles locales consolidés. Première entrée dans le monde confirmée en version 0.1.4.
+Comptes, canaux, discussion et salons sont sur le site, sans dépendre du PC de l'administrateur allumé.
 
-### Donner forme au retour · En développement
+### Une aventure enrichie · Dans le client
 
-Les graphismes et l’interface HD sont en développement. Le client dispose d’un lobby personnalisé ; la refonte graphique complète est toujours en production.
+29 voies de personnage, équipements, talents, sorts et défis font partie du client actuel.
 
-### Première Lumière et Arène des Cendres · Contenu en prototype
+### Le retour se poursuit · En développement
 
-Cinq objets et deux variantes dans les tables du moteur. Deux cartes générées attendent leur intégration ; les duels 1v1 et 2v2 ne sont pas encore jouables.
+Full HD, matériaux améliorés et logo animé guident les visuels. La remasterisation de toutes les illustrations et l'Arène des Cendres restent en production.
 
 ## Questions fréquentes
 
-### Faut-il posséder Diablo original ?
+### Comment commencer ?
 
-Oui. Chaque joueur aura besoin des fichiers de sa propre installation. Le projet ne distribue ni DIABDAT.MPQ ni les données commerciales du jeu.
+Téléchargez le client Windows, connectez-vous et créez ou choisissez un salon. Son bouton ouvre le jeu ; le portail interne rejoint aussi la communauté. Le launcher vérifie la dernière version avant une nouvelle partie et importe les fichiers compatibles de votre installation. Ouvrir le jeu depuis le site connecte aussi votre compte au centre intégré. Ouvrir la communauté depuis le jeu ou le lanceur connecté vous connecte dans le navigateur.
 
-### Puis-je déjà jouer sur le serveur public ?
+### Faut-il un serveur sur mon PC ?
 
-Pas encore. La version 0.1.6 est une base de tests locaux. Rejoignez le Discord pour suivre les progrès et les prochains tests.
+Comptes, discussion et salons restent dans le cloud. Le client du créateur héberge la partie, en connexion directe ou via un relais sur les réseaux restrictifs. Le créateur doit rester dans le jeu ; son départ termine la session du groupe.
 
-### Est-ce un remake officiel ou un MMO ?
+### Mon personnage est-il sauvegardé ?
 
-C'est un projet indépendant de fans, sans affiliation avec Blizzard. Chaque partie accueille quatre joueurs au maximum ; le salon pourra réunir plusieurs groupes sans monde persistant partagé par tous.
+Oui. Les sauvegardes automatiques et la sortie normale conservent inventaire, or et progression dans un profil par compte sur cet ordinateur, séparé des mises à jour. Il n'y a pas de synchronisation entre ordinateurs et le monde du salon n'est pas persistant.
 
-### Le jeu possède-t-il déjà tous les graphismes HD et une arène ?
+### La remasterisation et l'Arène sont-elles terminées ?
 
-Pas encore. Le client utilise les illustrations originales avec des profils 1280 × 720. La refonte HD, les nouvelles zones et l'arène sont des objectifs de production. Aucune date de sortie publique n'est fixée.
+La résolution Full HD et des améliorations visuelles sont disponibles avec les sprites classiques. Le remplacement de toutes les illustrations reste partiel. Coliseum est un défi du client ; Arène PvP en ligne, classement et événements restent en validation et développement.
 
 ## Le prochain chapitre commence avec la communauté.
 
-Rejoignez le Discord pour trouver votre groupe, suivre le développement et préparer les prochains tests. Le serveur de jeu n’est pas encore ouvert au public.
+Rejoignez le portail pour discuter, réunir votre groupe et lancer une partie. Suivez les mises à jour et partagez votre expérience sur Discord.
 
 Discord: https://discord.gg/S9VVaBXwDk
 

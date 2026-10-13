@@ -44,3 +44,5 @@
   });observer.observe(document.body,options);
  }).catch(()=>{});
 })();
+
+const discordNames={"pt-BR": "Comunidade no Discord", "en": "Join our Discord", "es": "Comunidad en Discord", "fr": "Communauté Discord", "de": "Discord-Community", "it": "Comunità Discord", "pl": "Społeczność na Discordzie", "ru": "Сообщество Discord", "uk": "Спільнота Discord", "tr": "Discord topluluğu", "ja": "Discordコミュニティ", "ko": "Discord 커뮤니티", "zh-CN": "加入Discord社区", "ar": "مجتمع Discord"};function localizeDiscord(){const label=document.querySelector('.discord-entry span');if(label){const text=discordNames[document.documentElement.lang]||discordNames.en;if(label.textContent!==text)label.textContent=text;}}new MutationObserver(localizeDiscord).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});localizeDiscord();

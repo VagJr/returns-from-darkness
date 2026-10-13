@@ -1,62 +1,62 @@
 # Diablo 1 HD — Returns from Darkness
 
-Diablo 1 HD — Returns from Darkness, klasik Battle.net'in buluşma ortamını yeniden canlandırmayı amaçlayan bağımsız ve ticari olmayan bir projedir. HD görsel tasarım ve özgün içerikler geliştirilmektedir.
+Genişletilmiş bir macera için Tristram'a dön: 29 karakter yolu, binlerce ekipman temeli, büyüler, yetenekler ve mücadeleler. Çevrimiçi merkezde dört oyuncuya kadar bir grup kur ve Returns from Darkness HD Windows istemcisinde devam et.
 
-## Bazı yerler bizi hep çağırır.
+## Bazı yerler çağırmayı hiç bırakmaz.
 
-Tristram'ın sessizliği. Katedralin kapısı. Dostlarla bir kat daha aşağı inmenin heyecanı.
+Tristram'ın sessizliği. Katedralin kapısı. Arkadaşlarla bir kat daha aşağı inmek.
 
-Diablo 1'in atmosferini koruyup yeni yollar açmak istiyoruz: topluluk sunucusu, yenilenmiş grafikler ve birlikte yaşanacak maceralar.
+Daha kapsamlı karakter gelişimi, keşif ve ekipmanla klasiği yeniden keşfet. Hesaplar, sohbet ve odalar topluluk merkezinde buluşur; her grup Returns from Darkness'ta kendi macerasını yaşar.
 
 ## Maceradan önce buluşma.
 
-Merkezi bir topluluk, sohbet kanalları ve en fazla dörder kişilik odalar. Buluşma deneyimi klasik Battle.net'ten esinleniyor; entegrasyon PvPGN ve DevilutionX üzerine kurulu özel hizmetleri kullanıyor.
+Hesaplar, sohbet kanalları ve dört oyuncuya kadar odalar sunan topluluk merkezi. Grubunu sitede veya istemcide bul. Merkez bulutta kalır; oyunları oyuncular barındırır.
 
-**Bugün çalışanlar — v0.1.6**
+**Bu sürümde — v0.3.5**
 
-Yerel 0.1.6 sürümü giriş, kanallar, sohbet ve odaları istemciye entegre eder. Tristram’a grafik arayüzle giriş 0.1.4 ve 0.1.5 sürümlerinde doğrulandı; yeni yerel akış hâlâ test ediliyor. Atölye tablo düzenleme, sprite aktarma ve içerik hazırlamayı destekler.
+Entegre merkez, dört kişilik işbirliği odaları, otomatik güncellemeler ve ayrı profiller içeren Windows istemcisi. Eşya sistemi odadaki ganimetleri paylaşır; otomatik kayıt envanteri, altını ve karakter gelişimini bu PC’de korur.
 
-**Sonraki adım**
+**Sonraki bölüm**
 
-İki grafik istemciyle oyunları, geç katılmayı ve kurucunun ayrılmasını doğrulamak; HD yenilemesini geliştirmek ve sunucuyu açmadan önce dış bağlantıları güvenli hâle getirip test etmek.
+Tutarlı görsellerle remasterı genişletmek, araçları iyileştirmek ve dış ağ oyunlarını, çevrimiçi Coliseum'u, PvP Arenası'nı ve etkinlikleri doğrulamak.
 
-Ağ testi, dört kişinin oynadığı tam bir grafik oyun oturumu değildir. Kayıtlar ve simülasyon hâlâ istemcilerde tutuluyor. Sunucu henüz halka açık değil.
+Merkez bulut hizmetlerini kullanır; oyun istemcilerde çalışır ve oda kurucusu bağlı kalmalıdır. Karakterler bu bilgisayarda kurtarma kopyalarıyla otomatik kaydedilir. Yeni oda yeni bir dünya oluşturur. Tam HD görseller, ev sahibi geçişi ve PvP sıralaması henüz tamamlanmadı.
 
 ## Özenle hazırlanıyor. Açıkça geliştiriliyor.
 
-### Tristram yeniden yükleniyor · Yerel temel doğrulandı
+### Topluluk çevrimiçi · Mevcut
 
-Özel istemci, PvPGN, başlatıcı ve yerel odalar birleştirildi. Dünyaya ilk giriş 0.1.4 sürümünde doğrulandı.
+Hesaplar, kanallar, sohbet ve odalar, yöneticinin PC'si açık olmadan sitede erişilebilir.
 
-### Dönüşü şekillendirmek · Geliştiriliyor
+### Genişletilmiş yolculuk · İstemcide
 
-HD görseller ve arayüz geliştiriliyor. İstemcide özel bir lobi arayüzü var; tüm grafiklerin yenilenmesi hâlâ sürüyor.
+29 karakter yolu, ekipman, yetenekler, büyüler ve mücadeleler mevcut istemcinin parçasıdır.
 
-### İlk Işık ve Kül Arenası · İçerik prototipi
+### Dönüş sürüyor · Geliştiriliyor
 
-Oyun motorunun tablolarında beş eşya ve iki varyant var. Üretilen iki harita entegrasyon bekliyor; 1v1 ve 2v2 düellolar henüz oynanamıyor.
+Full HD, geliştirilmiş malzemeler ve hareketli logo görsel yönü belirler. Tüm görsellerin yenilenmesi ve Kül Arenası hâlâ geliştirme aşamasında.
 
 ## Sık sorulan sorular
 
-### Orijinal Diablo'ya sahip olmam gerekir mi?
+### Nasıl başlarım?
 
-Evet. Oyuncular kendi kurulumlarındaki dosyaları kullanmalı. Proje DIABDAT.MPQ veya ticari oyun verilerini dağıtmaz.
+Windows istemcisini indir, giriş yap ve oda oluştur veya seç. Oda düğmesi oyunu açar; dahili merkez de topluluğa erişir. Başlatıcı yeni oyundan önce son sürümü kontrol eder ve kurulumundaki uyumlu oyun dosyalarını içe aktarır. Oyunu siteden açtığınızda hesabınız oyun içindeki merkeze de giriş yapar. Topluluğu giriş yapılmış oyundan veya başlatıcıdan açmak, hesabınızı tarayıcıya taşır.
 
-### Halka açık sunucuda oynayabilir miyim?
+### PC'mde sunucu gerekir mi?
 
-Henüz değil. 0.1.6 sürümü yerel test içindir. İlerlemeyi ve gelecek testleri takip etmek için Discord’a katılın.
+Hesaplar, sohbet ve odalar bulutta kalır. Oda kurucusunun istemcisi oyunu doğrudan ya da kısıtlı ağlarda aktarma üzerinden barındırır. Kurucu oyunda kalmalıdır; çıkması grubun oturumunu bitirir.
 
-### Resmî bir yeniden yapım veya MMO dünyası mı?
+### Karakterim kaydedilir mi?
 
-Blizzard ile bağlantısı olmayan bağımsız bir hayran projesidir. Her oyunda en fazla dört kişi bulunur; lobi, herkesin paylaştığı kalıcı bir dünya olmadan farklı grupları birleştirebilir.
+Evet. Otomatik kayıt ve normal çıkış; envanteri, altını ve gelişimi bu PC'de hesap profiline kaydeder, güncellemelerden ayrı tutar. Bilgisayarlar arasında eşitleme yoktur; oda dünyası kalıcı değildir.
 
-### Tam HD grafikler ve arena hazır mı?
+### Remaster ve Arena tamam mı?
 
-Henüz değil. İstemci özgün grafikleri 1280 × 720 profilleriyle kullanıyor. HD yenileme, yeni alanlar ve arena geliştirme hedefleridir. Halka açık çıkış tarihi belirlenmedi.
+Klasik sprite'larla Full HD çözünürlük ve görsel iyileştirmeler mevcut. Tüm görsellerin değiştirilmesi hâlâ kısmidir. Coliseum istemcide bir mücadeledir; çevrimiçi PvP Arenası, sıralamalar ve etkinlikler geliştiriliyor ve doğrulanıyor.
 
 ## Sonraki bölüm toplulukla başlar.
 
-Grubunuzu bulmak, gelişmeleri takip etmek ve sonraki testlere hazırlanmak için Discord’a katılın. Oyun sunucusu henüz herkese açık değil.
+Sohbet etmek, grup toplamak ve oyun açmak için merkeze gir. Discord'da güncellemeleri izle ve deneyimlerini paylaş.
 
 Discord: https://discord.gg/S9VVaBXwDk
 

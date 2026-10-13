@@ -1,4 +1,4 @@
-# Returns from Darkness 0.3.4
+# Returns from Darkness 0.3.5
 
 Native peer transport, launcher, serverless community and engine patch used by this release.
 Apply `engine.patch` to the published TH3 1.265 source. Keep ORIGINAL-SOURCE-README.txt with redistributions.

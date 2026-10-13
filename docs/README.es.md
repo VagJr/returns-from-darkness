@@ -1,62 +1,62 @@
 # Diablo 1 HD — Returns from Darkness
 
-Diablo 1 HD — Returns from Darkness es un proyecto independiente y no comercial para recuperar el punto de encuentro de la Battle.net clásica, con una nueva dirección visual HD y contenido propio en desarrollo.
+Regresa a Tristram en una aventura ampliada: 29 caminos de personaje, miles de equipos, hechizos, talentos y desafíos. Reúne hasta cuatro jugadores en la central online y continúa en el cliente Windows de Returns from Darkness HD.
 
-## Algunos lugares nunca dejan de llamarnos.
+## Algunos lugares nunca dejan de llamar.
 
-El silencio de Tristram. La puerta de la catedral. La sensación de bajar un piso más con amigos.
+El silencio de Tristram. La puerta de la catedral. Descender un piso más con amigos.
 
-Queremos conservar la atmósfera de Diablo 1 y abrir nuevos caminos: un servidor de la comunidad, gráficos renovados y aventuras para compartir.
+Redescubre el clásico con más opciones de personaje, exploración y equipo. Cuentas, chat y salas se reúnen en la central; cada grupo vive su propia aventura con la identidad de Returns from Darkness.
 
 ## El encuentro antes de la aventura.
 
-Una comunidad central, canales de chat y varias salas de hasta cuatro jugadores. La Battle.net clásica inspira el encuentro; la integración utiliza servicios propios sobre PvPGN y DevilutionX.
+Una central con cuentas, canales de chat y salas para hasta cuatro jugadores. Encuentra tu grupo en el sitio o en el cliente. La central permanece en la nube y los jugadores alojan las partidas.
 
-**Lo que funciona hoy — v0.1.6**
+**Disponible en esta versión — v0.3.5**
 
-La versión local 0.1.6 integra inicio de sesión, canales, chat y salas en el cliente. La entrada gráfica en Tristram se confirmó en 0.1.4 y 0.1.5; el nuevo flujo nativo sigue en validación. El taller permite editar tablas, importar sprites y preparar contenido.
+Cliente Windows con central integrada, salas cooperativas de hasta cuatro jugadores, actualizaciones automáticas y perfiles separados. El sistema de objetos comparte los drops de la sala; el guardado automático conserva inventario, oro y evolución en este equipo.
 
-**El siguiente paso**
+**El próximo capítulo**
 
-Validar partidas con dos clientes gráficos, entradas tardías y salida del anfitrión; ampliar el rework HD y proteger y probar las conexiones externas antes de abrir el servidor.
+Ampliar la remasterización con arte coherente, mejorar las herramientas y validar partidas externas, Coliseum online, Arena PvP y eventos.
 
-La prueba de red no equivale a una partida gráfica completa con cuatro personas. Los guardados y la simulación siguen en los clientes. El servidor no está abierto al público.
+La central usa servicios en la nube; la partida depende de los clientes y de que el creador siga conectado. Los personajes se guardan automáticamente en este equipo con copias de recuperación. Cada sala nueva genera otro mundo. El arte HD completo, la migración de anfitrión y el ranking PvP siguen pendientes.
 
 ## Hecho con cuidado. Construido con transparencia.
 
-### Tristram vuelve a cargar · Base local verificada
+### La comunidad está online · Disponible
 
-Cliente personalizado, PvPGN, launcher y salas locales consolidados. Primera entrada al mundo confirmada en la versión 0.1.4.
+Cuentas, canales, chat y salas están en el sitio, sin necesitar el PC del administrador encendido.
 
-### Dar forma al regreso · En desarrollo
+### Una aventura ampliada · En el cliente
 
-El arte y la interfaz HD están en desarrollo. El cliente ya tiene un lobby personalizado; el rework gráfico completo sigue en producción.
+29 caminos de personaje, equipos, talentos, hechizos y desafíos forman parte del cliente actual.
 
-### Primera Luz y Arena de las Cenizas · Contenido en prototipo
+### El regreso continúa · En desarrollo
 
-Cinco objetos y dos variantes en las tablas del motor. Dos mapas generados esperan integración; los duelos 1v1 y 2v2 aún no se pueden jugar.
+Full HD, mejoras de materiales y logo animado definen la dirección visual. La remasterización de todas las artes y Arena de las Cenizas siguen en desarrollo.
 
 ## Preguntas frecuentes
 
-### ¿Necesito el Diablo original?
+### ¿Cómo empezar?
 
-Sí. Cada jugador necesitará los archivos de su propia instalación. El proyecto no distribuye DIABDAT.MPQ ni los datos comerciales del juego.
+Descarga el cliente Windows, inicia sesión y crea o elige una sala. El botón de la sala abre el juego y la central interna conecta con la comunidad. El launcher comprueba la versión antes de una partida nueva e importa los archivos compatibles de tu instalación. Al abrir el juego desde el sitio, tu cuenta también inicia sesión en el centro del juego. Al abrir la comunidad desde el juego o lanzador conectado, tu cuenta te acompaña al navegador.
 
-### ¿Ya puedo jugar en el servidor público?
+### ¿Necesito un servidor en mi PC?
 
-Todavía no. La versión 0.1.6 es una base de pruebas locales. Únete al Discord para seguir el progreso y las próximas pruebas.
+Cuentas, chat y salas permanecen en la nube. El cliente del creador aloja la partida mediante conexión directa o retransmisión en redes restrictivas. El creador debe seguir jugando; al salir termina la sesión del grupo.
 
-### ¿Es un remake oficial o un mundo MMO?
+### ¿Mi personaje se guarda?
 
-Es un proyecto independiente de fans, sin afiliación con Blizzard. Cada partida admite hasta cuatro jugadores; el lobby podrá reunir varios grupos sin un mundo persistente compartido por todos.
+Sí. El guardado automático durante el juego y al salir normalmente conserva inventario, oro y evolución en un perfil por cuenta en este equipo. Los saves están separados de las actualizaciones. No se sincronizan entre equipos y el mundo de la sala no es persistente.
 
-### ¿El juego ya tiene todos los gráficos HD y arena?
+### ¿Ya están terminadas la remasterización y la Arena?
 
-Todavía no. El cliente usa el arte original con perfiles de 1280 × 720. El rediseño HD, las nuevas zonas y la arena son objetivos de producción. No hay fecha pública de lanzamiento.
+Hay resolución Full HD y mejoras visuales, conservando los sprites clásicos. El reemplazo de todo el arte sigue siendo parcial. Coliseum está disponible como desafío del cliente; Arena PvP online, ranking y eventos siguen en validación y desarrollo.
 
-## El próximo capítulo comienza con la comunidad.
+## El próximo capítulo empieza con la comunidad.
 
-Únete al Discord para encontrar tu grupo, seguir el desarrollo y preparar las próximas pruebas. El servidor del juego aún no está abierto al público.
+Entra en la central para conversar, reunir tu grupo y abrir una partida. Sigue las novedades y comparte tu experiencia en Discord.
 
 Discord: https://discord.gg/S9VVaBXwDk
 
