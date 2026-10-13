@@ -1,0 +1,38 @@
+{
+  "name": "returns-darkness-realm",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-12",
+  "account_id": "6ec02e7da3eace6ee5065de682da5468",
+  "workers_dev": true,
+  "vars": {
+    "SITE_ORIGIN": "https://returns-from-darkness.vercel.app",
+    "CLIENT_VERSION": "0.3.0",
+    "CONTENT_HASH": "4b7a13302e92e7cbd927d09455f6e43cf90d15b63b9d602bb6abdee99bf4fc5b",
+    "MIGRATION_ENABLED": "false"
+  },
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "COMMUNITY",
+        "class_name": "Community"
+      },
+      {
+        "name": "SIGNALS",
+        "class_name": "SignalRoom"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": [
+        "Community",
+        "SignalRoom"
+      ]
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 0.02
+  }
+}

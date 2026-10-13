@@ -6,3 +6,5 @@ outreach
 __pycache__
 *.pyc
 site/preview*
+
+client-source/
