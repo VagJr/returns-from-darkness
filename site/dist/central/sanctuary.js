@@ -36,7 +36,7 @@
   const form=byId('room-form'),select=byId('room-difficulty'),mode=form.elements.mode;
   const signature=JSON.stringify([current?.profile?.unlocks?.difficulties,current?.profile?.unlocks?.modes,document.documentElement.lang,mode.value]);if(signature===roomFormKey)return;roomFormKey=signature;
   const selected=select.disabled?campaignTier:select.value;select.replaceChildren();const owned=current?.profile?.unlocks?.difficulties||[0];
-  tiers.forEach((name,i)=>{const option=node('option',name+(owned.includes(i)?'':' · '+T('Bloqueado')));option.value=String(i);option.disabled=!owned.includes(i);select.append(option);});select.value=owned.includes(Number(selected))?selected:'0';
+  tiers.forEach((name,i)=>{const option=node('option',name+(owned.includes(i)?'':' · '+T('Bloqueado')));option.value=String(i);option.disabled=!owned.includes(i);select.append(option);});select.value=/^\d+$/.test(selected)&&owned.includes(Number(selected))?selected:'0';
   const col=mode.querySelector('[value="coliseum-pvp"]');col.disabled=!(current?.profile?.unlocks?.modes||[]).includes(8);
   if(col.disabled&&mode.value==='coliseum-pvp')mode.value='campaign-coop';
   const arena=mode.value==='coliseum-pvp';if(arena&&!select.disabled)campaignTier=select.value;
