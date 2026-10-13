@@ -18,7 +18,7 @@ export default {
     try {
       const signal=/^\/signal\/([a-f0-9-]{36})(\/bootstrap)?$/.exec(url.pathname);
       if(signal){if((signal[2]&&req.method!=='POST')||(!signal[2]&&req.headers.get('Upgrade')!=='websocket'))return json({error:'Rota indisponível.'},404);result=await roomStub(env,signal[1]).fetch(req);}
-      else if(url.pathname==='/health'||/^\/api\/(login|register|state|channel|chat|rooms\/(create|join|leave)|logout|launch|native\/connect)$/.test(url.pathname))result=await community(env).fetch(req);
+      else if(url.pathname==='/health'||/^\/api\/(login|register|state|channel|chat|rooms\/(create|join|leave)|logout|launch|auth\/(handoff|redeem)|native\/connect)$/.test(url.pathname))result=await community(env).fetch(req);
       else if(url.pathname==='/migration'&&env.MIGRATION_ENABLED==='true'&&env.MIGRATION_TOKEN&&equal(req.headers.get('Authorization'), 'Bearer '+env.MIGRATION_TOKEN))result=await community(env).fetch(req);
       else return json({error:'Rota indisponível.'},404);
     }catch(error){result=json({error:error.status?error.message:'Não foi possível concluir a operação.'},error.status||503);}
@@ -34,7 +34,8 @@ export class Community {
       CREATE TABLE IF NOT EXISTS sessions (hash TEXT PRIMARY KEY, user TEXT NOT NULL, channel TEXT NOT NULL, expires INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS rooms (id TEXT PRIMARY KEY, record TEXT NOT NULL, updated INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS messages (id INTEGER PRIMARY KEY AUTOINCREMENT, channel TEXT NOT NULL, user TEXT NOT NULL, text TEXT NOT NULL, at INTEGER NOT NULL);
-      CREATE TABLE IF NOT EXISTS limits (key TEXT PRIMARY KEY, count INTEGER NOT NULL, until INTEGER NOT NULL);`);
+      CREATE TABLE IF NOT EXISTS limits (key TEXT PRIMARY KEY, count INTEGER NOT NULL, until INTEGER NOT NULL);
+      CREATE TABLE IF NOT EXISTS handoffs (hash TEXT PRIMARY KEY, source TEXT NOT NULL, target TEXT NOT NULL, expires INTEGER NOT NULL);`);
   }
   rows(query,...args){return this.sql.exec(query,...args).toArray();}
   async limit(key,max,window=60000){const now=Date.now(),r=this.rows('SELECT count,until FROM limits WHERE key=?',key)[0];if(r&&r.until>now&&r.count>=max)fail('Aguarde um instante.',429);this.sql.exec('INSERT OR REPLACE INTO limits VALUES (?,?,?)',key,r&&r.until>now?r.count+1:1,r&&r.until>now?r.until:now+window);}
@@ -46,8 +47,12 @@ export class Community {
     else{room.members=room.members.filter(m=>m.user.toLowerCase()!==user.toLowerCase());await call(roomStub(this.env,room.id),'/internal/members',{members:room.members});room.connected=(room.connected||[]).filter(slot=>room.members.some(m=>m.slot===slot));this.save(room);}
   }
   async fetch(req){
-    if(req.method==='POST'&&new URL(req.url).pathname.startsWith('/api/rooms/'))return this.ctx.blockConcurrencyWhile(()=>this.handle(req));
+    if(req.method==='POST'&&(/^\/api\/(rooms\/|auth\/|launch$|native\/connect$)/.test(new URL(req.url).pathname)))return this.ctx.blockConcurrencyWhile(()=>this.handle(req));
     return this.handle(req);
+  }
+  async handoff(s,target){
+    if(!['client','web'].includes(target))fail('Destino inválido.');await this.limit('handoff:'+s.user.toLowerCase(),20);
+    const code=random();this.sql.exec('INSERT INTO handoffs VALUES (?,?,?,?)',await digest(code),s.hash,target,Date.now()+120000);await this.ctx.storage.setAlarm(Date.now()+TTL);return code;
   }
   async handle(req) {
     const path=new URL(req.url).pathname,now=Date.now();
@@ -75,6 +80,16 @@ export class Community {
         }
         const token=random();this.sql.exec('INSERT INTO sessions VALUES (?,?,?,?)',await digest(token),account.display,'Tristram',now+SESSION);await this.ctx.storage.setAlarm(now+TTL);return json({username:account.display,sessionToken:token});
       }
+      if(path==='/api/auth/redeem'){
+        if(req.method!=='POST')fail('Método inválido.',405);const input=await body(req);await this.limit('redeem:'+await digest(req.headers.get('CF-Connecting-IP')||'unknown'),60);
+        if(!validToken(input.code)||!['client','web'].includes(input.target))fail('Autorização inválida.',403);
+        const hash=await digest(input.code),h=this.rows('SELECT * FROM handoffs WHERE hash=? AND expires>?',hash,now)[0];
+        if(!h||h.target!==input.target)fail('Autorização expirada. Abra novamente pela sua conta.',403);
+        const source=this.rows('SELECT * FROM sessions WHERE hash=? AND expires>?',h.source,now)[0];
+        if(!source||(input.username&&(!validUser(input.username)||input.username.toLowerCase()!==source.user.toLowerCase())))fail('Autorização inválida.',403);
+        this.sql.exec('DELETE FROM handoffs WHERE hash=?',hash);
+        const token=random();this.sql.exec('INSERT INTO sessions VALUES (?,?,?,?)',await digest(token),source.user,source.channel,now+SESSION);return json({username:source.user,sessionToken:token});
+      }
       const s=await this.session(req),user=s.user;
       if(path==='/api/state'&&req.method==='GET'){
         const events=this.rows('SELECT user,text,at FROM messages WHERE channel=? ORDER BY id DESC LIMIT 100',s.channel).reverse().map(e=>({...e,type:5}));
@@ -82,6 +97,7 @@ export class Community {
         return json({username:user,channel:s.channel,channels:CHANNELS,users,events,rooms:this.rooms().map(publicRoom),contentHash:this.env.CONTENT_HASH,transport:'native-webrtc-host',clientVersion:this.env.CLIENT_VERSION,clientOpen:false});
       }
       if(req.method!=='POST')fail('Método inválido.',405);const input=await body(req);await this.limit('action:'+s.hash,40,10000);
+      if(path==='/api/auth/handoff')return json({code:await this.handoff(s,input.target),username:user,expires:now+120000});
       if(path==='/api/channel'){if(!CHANNELS.includes(input.channel))fail('Canal inválido.');this.sql.exec('UPDATE sessions SET channel=? WHERE hash=?',input.channel,s.hash);return json({ok:true});}
       if(path==='/api/chat') {await this.limit('chat:'+user.toLowerCase(),5,10000);if(typeof input.text!=='string'||input.text.trim().length<1||input.text.length>240||/[\x00-\x1f]/.test(input.text))fail('Mensagem inválida.');this.sql.exec('INSERT INTO messages(channel,user,text,at) VALUES (?,?,?,?)',s.channel,user,input.text.trim(),now);this.sql.exec('DELETE FROM messages WHERE channel=? AND id NOT IN (SELECT id FROM messages WHERE channel=? ORDER BY id DESC LIMIT 100)',s.channel,s.channel);return json({ok:true});}
       const current=this.rooms().find(r=>r.members.some(m=>m.user.toLowerCase()===user.toLowerCase()));
@@ -102,15 +118,15 @@ export class Community {
       }
       if(path==='/api/rooms/leave'){if(!current||current.id!==input.roomId)fail('Sala não encontrada.',404);await this.leave(user,current);return json({ok:true});}
       if(['/api/launch','/api/native/connect'].includes(path)) {
-        if(!current||current.id!==input.roomId)fail('Entre na sala primeiro.');const member=current.members.find(m=>m.user.toLowerCase()===user.toLowerCase()),ticket=random();
-        const result=await call(roomStub(this.env,current.id),'/internal/ticket',{slot:member.slot,ticketHash:await digest(ticket),expires:now+120000});if(result.status===409)return json({launchUri:'rfd://resume/'+user.toLowerCase()+'/'+current.id,message:'Retomando a partida no cliente aberto.'});if(!result.ok)fail('Não foi possível preparar a entrada.',503);
-        const payload={transport:'webrtc',signalUrl:'https://returns-darkness-realm.oblique-tactical.workers.dev',roomId:current.id,ticket,contentHash:this.env.CONTENT_HASH,username:user,room:current.name,expires:now+120000};
+        if(!current||current.id!==input.roomId)fail('Entre na sala primeiro.');const member=current.members.find(m=>m.user.toLowerCase()===user.toLowerCase()),ticket=random(),authCode=await this.handoff(s,'client');
+        const result=await call(roomStub(this.env,current.id),'/internal/ticket',{slot:member.slot,ticketHash:await digest(ticket),expires:now+120000});if(result.status===409)return json({launchUri:'rfd://resume/'+user.toLowerCase()+'/'+current.id+'?auth='+authCode,message:'Retomando a partida no cliente aberto.'});if(!result.ok)fail('Não foi possível preparar a entrada.',503);
+        const payload={transport:'webrtc',signalUrl:'https://returns-darkness-realm.oblique-tactical.workers.dev',roomId:current.id,ticket,contentHash:this.env.CONTENT_HASH,username:user,room:current.name,expires:now+120000,authCode};
         const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(payload)))).replaceAll('+','-').replaceAll('/','_').replaceAll('=','');return json({launchUri:'rfd://play/'+encoded,message:member.slot===0?'Abra seu personagem para hospedar a partida.':'Abra seu personagem para reunir-se ao grupo.'});
       }
       fail('Rota indisponível.',404);
     }catch(error){return json({error:error.status?error.message:'Não foi possível concluir a operação.'},error.status||503);}
   }
-  async alarm(){const now=Date.now();this.sql.exec('DELETE FROM sessions WHERE expires<?',now);this.sql.exec('DELETE FROM limits WHERE until<?',now);this.sql.exec('DELETE FROM rooms WHERE updated<?',now-TTL);if(this.rows('SELECT COUNT(*) AS n FROM sessions')[0].n||this.rows('SELECT COUNT(*) AS n FROM rooms')[0].n)await this.ctx.storage.setAlarm(now+TTL);}
+  async alarm(){const now=Date.now();this.sql.exec('DELETE FROM sessions WHERE expires<?',now);this.sql.exec('DELETE FROM limits WHERE until<?',now);this.sql.exec('DELETE FROM handoffs WHERE expires<?',now);this.sql.exec('DELETE FROM rooms WHERE updated<?',now-TTL);if(this.rows('SELECT COUNT(*) AS n FROM sessions')[0].n||this.rows('SELECT COUNT(*) AS n FROM rooms')[0].n)await this.ctx.storage.setAlarm(now+TTL);}
 }
 
 export class SignalRoom {

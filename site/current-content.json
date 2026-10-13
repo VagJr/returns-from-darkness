@@ -54,7 +54,7 @@
     "faq": [
       [
         "Como começar a jogar?",
-        "Baixe o cliente Windows na central, entre na conta e crie ou escolha uma sala. O botão da sala abre o jogo; o hub interno também dá acesso à comunidade. O launcher verifica a versão mais recente antes de iniciar uma nova partida e importa os arquivos de jogo compatíveis da sua instalação."
+        "Baixe o cliente Windows na central, entre na conta e crie ou escolha uma sala. O botão da sala abre o jogo; o hub interno também dá acesso à comunidade. O launcher verifica a versão mais recente antes de iniciar uma nova partida e importa os arquivos de jogo compatíveis da sua instalação. Ao abrir o jogo pelo site, sua conta também entra no hub interno. Ao abrir a central pelo jogo ou launcher conectado, a conta acompanha você no navegador."
       ],
       [
         "É preciso manter um servidor no meu PC?",
@@ -137,7 +137,7 @@
     "faq": [
       [
         "How do I start?",
-        "Download the Windows client from the hub, sign in and create or choose a room. The room button opens the game, and the internal hub also connects to the community. The launcher checks for the latest version before a new game and imports compatible game files from your installation."
+        "Download the Windows client from the hub, sign in and create or choose a room. The room button opens the game, and the internal hub also connects to the community. The launcher checks for the latest version before a new game and imports compatible game files from your installation. Opening the game from the site also signs your account into the in-game hub. Opening the community from a signed-in game or launcher carries your account into the browser."
       ],
       [
         "Do I need a server running on my PC?",
@@ -220,7 +220,7 @@
     "faq": [
       [
         "¿Cómo empezar?",
-        "Descarga el cliente Windows, inicia sesión y crea o elige una sala. El botón de la sala abre el juego y la central interna conecta con la comunidad. El launcher comprueba la versión antes de una partida nueva e importa los archivos compatibles de tu instalación."
+        "Descarga el cliente Windows, inicia sesión y crea o elige una sala. El botón de la sala abre el juego y la central interna conecta con la comunidad. El launcher comprueba la versión antes de una partida nueva e importa los archivos compatibles de tu instalación. Al abrir el juego desde el sitio, tu cuenta también inicia sesión en el centro del juego. Al abrir la comunidad desde el juego o lanzador conectado, tu cuenta te acompaña al navegador."
       ],
       [
         "¿Necesito un servidor en mi PC?",
@@ -303,7 +303,7 @@
     "faq": [
       [
         "Comment commencer ?",
-        "Téléchargez le client Windows, connectez-vous et créez ou choisissez un salon. Son bouton ouvre le jeu ; le portail interne rejoint aussi la communauté. Le launcher vérifie la dernière version avant une nouvelle partie et importe les fichiers compatibles de votre installation."
+        "Téléchargez le client Windows, connectez-vous et créez ou choisissez un salon. Son bouton ouvre le jeu ; le portail interne rejoint aussi la communauté. Le launcher vérifie la dernière version avant une nouvelle partie et importe les fichiers compatibles de votre installation. Ouvrir le jeu depuis le site connecte aussi votre compte au centre intégré. Ouvrir la communauté depuis le jeu ou le lanceur connecté vous connecte dans le navigateur."
       ],
       [
         "Faut-il un serveur sur mon PC ?",
@@ -386,7 +386,7 @@
     "faq": [
       [
         "Wie beginne ich?",
-        "Lade den Windows-Client herunter, melde dich an und erstelle oder wähle einen Raum. Der Raumknopf öffnet das Spiel; auch die interne Zentrale führt zur Gemeinschaft. Der Launcher prüft vor einer neuen Partie die aktuelle Version und importiert passende Spieldateien aus deiner Installation."
+        "Lade den Windows-Client herunter, melde dich an und erstelle oder wähle einen Raum. Der Raumknopf öffnet das Spiel; auch die interne Zentrale führt zur Gemeinschaft. Der Launcher prüft vor einer neuen Partie die aktuelle Version und importiert passende Spieldateien aus deiner Installation. Wenn du das Spiel über die Website öffnest, wirst du auch im Spiel angemeldet. Öffnest du die Community aus dem angemeldeten Spiel oder Launcher, wird dein Konto im Browser übernommen."
       ],
       [
         "Brauche ich einen Server auf meinem PC?",
@@ -469,7 +469,7 @@
     "faq": [
       [
         "Come iniziare?",
-        "Scarica il client Windows, accedi e crea o scegli una stanza. Il pulsante della stanza apre il gioco; anche la centrale interna porta alla comunità. Il launcher controlla l'ultima versione prima di una nuova partita e importa i file compatibili dalla tua installazione."
+        "Scarica il client Windows, accedi e crea o scegli una stanza. Il pulsante della stanza apre il gioco; anche la centrale interna porta alla comunità. Il launcher controlla l'ultima versione prima di una nuova partita e importa i file compatibili dalla tua installazione. Aprendo il gioco dal sito, il tuo account accede anche al centro interno. Aprendo la comunità dal gioco o dal launcher connesso, il tuo account ti segue nel browser."
       ],
       [
         "Serve un server sul mio PC?",

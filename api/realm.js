@@ -2,7 +2,7 @@
 const UPSTREAM='https://returns-darkness-realm.oblique-tactical.workers.dev/';
 const ORIGIN='https://returns-from-darkness.vercel.app';
 const reads=new Set(['health','state']);
-const writes=new Set(['login','register','channel','chat','rooms/create','rooms/join','rooms/leave','logout','native/connect','launch']);
+const writes=new Set(['login','register','channel','chat','rooms/create','rooms/join','rooms/leave','logout','native/connect','launch','auth/handoff','auth/redeem']);
 module.exports=async function realm(req,res){
  res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');
  const route=req.query.route;

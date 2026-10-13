@@ -22,15 +22,15 @@ using Microsoft.Win32;
 [assembly: AssemblyTitle("Returns from Darkness HD")]
 [assembly: AssemblyProduct("Returns from Darkness HD")]
 [assembly: AssemblyDescription("Cliente e atualizações de Returns from Darkness")]
-[assembly: AssemblyVersion("0.3.3.0")]
-[assembly: AssemblyFileVersion("0.3.3.0")]
+[assembly: AssemblyVersion("0.3.4.0")]
+[assembly: AssemblyFileVersion("0.3.4.0")]
 namespace ReturnsFromDarkness {
  static class Program {
   public static Mutex Instance;
   public static string PipeName="RfdControl-"+WindowsIdentity.GetCurrent().User.Value;
   public static string InstanceAccount="";
   public static string InviteAccount(string request){try{if(request==null||!request.StartsWith("rfd://play/"))return "";string text=request.Substring(11);if(text.Length>4096||!Regex.IsMatch(text,@"^[A-Za-z0-9_-]+$"))return "";text=text.Replace('-','+').Replace('_','/');text=text.PadRight((text.Length+3)/4*4,'=');var invite=Json.Deserialize<Dictionary<string,object>>(Encoding.UTF8.GetString(Convert.FromBase64String(text)));object user;if(!invite.TryGetValue("username",out user)||!(user is string))return "";string name=((string)user).ToLowerInvariant();return Regex.IsMatch(name,@"^[a-z][a-z0-9_-]{2,15}$")?name:"";}catch{return "";}}
-  public static string RequestAccount(string request){string value=InviteAccount(request);if(value!="")return value;var match=Regex.Match(request??"",@"^rfd://resume/([a-z][a-z0-9_-]{2,15})/[a-f0-9-]{36}$");return match.Success?match.Groups[1].Value:"";}
+  public static string RequestAccount(string request){string value=InviteAccount(request);if(value!="")return value;var match=Regex.Match(request??"",@"^rfd://(?:resume/([a-z][a-z0-9_-]{2,15})/[a-f0-9-]{36}(?:\?auth=[A-Za-z0-9_-]{43})?|auth/([a-z][a-z0-9_-]{2,15})/[A-Za-z0-9_-]{43})$");return match.Success?(match.Groups[1].Success?match.Groups[1].Value:match.Groups[2].Value):"";}
   public static bool RouteAccount(string request){string account=RequestAccount(request);if(account==""||account==InstanceAccount||GameRunning&&(GameAccount=="offline"||GameAccount==account))return false;
    string channel="RfdControl-"+WindowsIdentity.GetCurrent().User.Value+"-"+account;
    try{using(var pipe=new NamedPipeClientStream(".",channel,PipeDirection.Out)){pipe.Connect(150);using(var writer=new StreamWriter(pipe,new UTF8Encoding(false))){writer.WriteLine(request);writer.Flush();}}return true;}catch(IOException){}catch(TimeoutException){}
@@ -49,7 +49,36 @@ namespace ReturnsFromDarkness {
   public static bool GameRunning{get{return Game!=null&&!Game.HasExited;}}
   public static void FocusGame(){if(GameRunning){Game.Refresh();ShowWindow(Game.MainWindowHandle,9);SetForegroundWindow(Game.MainWindowHandle);}}
   public static bool SendRoom(string text){if(!GameRunning)return false;Game.Refresh();if(Game.MainWindowHandle==IntPtr.Zero)return false;byte[] bytes=Encoding.UTF8.GetBytes(ControlToken+"\n"+text);IntPtr memory=Marshal.AllocHGlobal(bytes.Length);try{Marshal.Copy(bytes,0,memory,bytes.Length);var data=new CopyData{tag=(IntPtr)0x52464432,size=bytes.Length,data=memory};IntPtr ack;return SendMessageTimeout(Game.MainWindowHandle,0x4a,(IntPtr)Process.GetCurrentProcess().Id,ref data,2,5000,out ack)!=IntPtr.Zero&&ack==(IntPtr)1;}finally{Marshal.FreeHGlobal(memory);}}
-  public static bool Resume(string request){var match=Regex.Match(request??"",@"^rfd://resume/([a-z][a-z0-9_-]{2,15})/([a-f0-9-]{36})$");if(!match.Success)return false;string account=match.Groups[1].Value,room=match.Groups[2].Value;if(GameRunning&&GameAccount!=account){Process.Start(new ProcessStartInfo(Assembly.GetExecutingAssembly().Location,"--account "+account+" \""+request+"\""){UseShellExecute=false,CreateNoWindow=true});return true;}if(!GameRunning||GameAccount!=account||GameRoom!=room||Peer==null||Peer.HasExited)throw new Exception("A conexão anterior foi encerrada. Atualize as salas e abra a partida novamente.");Game.Refresh();if(GetProp(Game.MainWindowHandle,"RFD_GAME_IN_ROOM")==IntPtr.Zero&&!SendRoom(LastRoomControl))throw new Exception("A partida está finalizando uma transição. Tente novamente.");FocusGame();return true;}
+  public static bool Resume(string request){var match=Regex.Match(request??"",@"^rfd://resume/([a-z][a-z0-9_-]{2,15})/([a-f0-9-]{36})(?:\?auth=[A-Za-z0-9_-]{43})?$");if(!match.Success)return false;string account=match.Groups[1].Value,room=match.Groups[2].Value;if(GameRunning&&GameAccount!=account){Process.Start(new ProcessStartInfo(Assembly.GetExecutingAssembly().Location,"--account "+account+" \""+request+"\""){UseShellExecute=false,CreateNoWindow=true});return true;}if(!GameRunning||GameAccount!=account||GameRoom!=room||Peer==null||Peer.HasExited)throw new Exception("A conexão anterior foi encerrada. Atualize as salas e abra a partida novamente.");Game.Refresh();if(GetProp(Game.MainWindowHandle,"RFD_GAME_IN_ROOM")==IntPtr.Zero&&!SendRoom(LastRoomControl))throw new Exception("A partida está finalizando uma transição. Tente novamente.");FocusGame();return true;}
+  public static string AuthAccount="";
+  static Dictionary<string,DateTime> UsedAuthCodes=new Dictionary<string,DateTime>();
+  public const string Realm="https://returns-darkness-realm.oblique-tactical.workers.dev/api/";
+  public static string PreferredAccount(){if(AuthAccount!="")return AuthAccount;if(InstanceAccount!="")return InstanceAccount;string path=Path.Combine(Root,"last-account.txt");if(File.Exists(path)){string name=File.ReadAllText(path).Trim();if(Regex.IsMatch(name,@"^[a-z][a-z0-9_-]{2,15}$"))return name;}return "offline";}
+  public static async Task<Dictionary<string,object>> AccountApi(string route,Dictionary<string,object> input,string token){
+   using(var web=new WebClient()){web.Encoding=Encoding.UTF8;web.Headers[HttpRequestHeader.ContentType]="application/json";if(token!=null)web.Headers[HttpRequestHeader.Authorization]="Bearer "+token;string response=await web.UploadStringTaskAsync(Realm+route,Json.Serialize(input));return Json.Deserialize<Dictionary<string,object>>(response);}
+  }
+  public static void StoreNativeSession(string account,Dictionary<string,object> session){
+   object user,value;if(!session.TryGetValue("username",out user)||!(user is string)||!session.TryGetValue("sessionToken",out value)||!(value is string)||((string)user).ToLowerInvariant()!=account||!Regex.IsMatch((string)value,@"^[A-Za-z0-9_-]{43}$"))throw new Exception("A autorização da conta não corresponde ao convite.");
+   string profile=Path.Combine(Root,"profiles",account);Directory.CreateDirectory(profile);byte[] plain=Encoding.UTF8.GetBytes(Json.Serialize(new Dictionary<string,object>{{"user",user},{"token",value}}));byte[] protectedBytes;
+   try{protectedBytes=ProtectedData.Protect(plain,null,DataProtectionScope.CurrentUser);}finally{Array.Clear(plain,0,plain.Length);}
+   string path=Path.Combine(profile,"native-session.bin"),temp=path+"."+Guid.NewGuid().ToString("N");File.WriteAllBytes(temp,protectedBytes);if(File.Exists(path))File.Replace(temp,path,null);else File.Move(temp,path);AuthAccount=account;File.WriteAllText(Path.Combine(Root,"last-account.txt"),account);
+   if(GameRunning&&!SendRoom("auth\n"+profile))throw new Exception("A conta foi conectada. Aguarde a transição do jogo e abra a central novamente.");
+  }
+  public static async Task<bool> ApplyNativeSession(string request){
+   string account=RequestAccount(request),code="";if(account=="")return false;
+   var auth=Regex.Match(request??"",@"^rfd://auth/[a-z][a-z0-9_-]{2,15}/([A-Za-z0-9_-]{43})$");
+   if(auth.Success)code=auth.Groups[1].Value;else if(request.StartsWith("rfd://play/")){string text=request.Substring(11).Replace('-','+').Replace('_','/');text=text.PadRight((text.Length+3)/4*4,'=');var invite=Json.Deserialize<Dictionary<string,object>>(Encoding.UTF8.GetString(Convert.FromBase64String(text)));object value;if(invite.TryGetValue("authCode",out value)&&value is string)code=(string)value;}
+   else{var resume=Regex.Match(request,@"\?auth=([A-Za-z0-9_-]{43})$");if(resume.Success)code=resume.Groups[1].Value;}
+   if(code!=""){if(!Regex.IsMatch(code,@"^[A-Za-z0-9_-]{43}$"))throw new Exception("Autorização inválida.");DateTime used;if(UsedAuthCodes.TryGetValue(account+":"+code,out used)&&used>DateTime.UtcNow.AddMinutes(-2))return auth.Success;var result=await AccountApi("auth/redeem",new Dictionary<string,object>{{"code",code},{"target","client"},{"username",account}},null);StoreNativeSession(account,result);foreach(var key in new List<string>(UsedAuthCodes.Keys))if(UsedAuthCodes[key]<DateTime.UtcNow.AddMinutes(-2))UsedAuthCodes.Remove(key);UsedAuthCodes[account+":"+code]=DateTime.UtcNow;}
+   return auth.Success;
+  }
+  public static async Task OpenCentral(){
+   string url=Site+"/central/",account=GameRunning&&GameAccount!="offline"?GameAccount:PreferredAccount(),path=Path.Combine(Root,"profiles",account,"native-session.bin");
+   try{if(File.Exists(path)){byte[] plain=ProtectedData.Unprotect(File.ReadAllBytes(path),null,DataProtectionScope.CurrentUser);Dictionary<string,object> session;try{session=Json.Deserialize<Dictionary<string,object>>(Encoding.UTF8.GetString(plain));}finally{Array.Clear(plain,0,plain.Length);}object token,user;
+    if(session.TryGetValue("token",out token)&&token is string&&Regex.IsMatch((string)token,@"^[A-Za-z0-9_-]{43}$")&&session.TryGetValue("user",out user)&&user is string&&((string)user).ToLowerInvariant()==account){var link=await AccountApi("auth/handoff",new Dictionary<string,object>{{"target","web"}},(string)token);object code;if(link.TryGetValue("code",out code)&&code is string&&Regex.IsMatch((string)code,@"^[A-Za-z0-9_-]{43}$"))url+="#auth="+(string)code;}}}
+   catch(WebException){}catch(CryptographicException){}catch(ArgumentException){}catch(IOException){}
+   Process.Start(url);
+  }
   public static async Task<bool> Forward(string request){for(int i=0;i<20;i++){try{using(var pipe=new NamedPipeClientStream(".",PipeName,PipeDirection.Out)){pipe.Connect(250);using(var writer=new StreamWriter(pipe,new UTF8Encoding(false))){await writer.WriteLineAsync(request??"rfd://focus");await writer.FlushAsync();}}return true;}catch(IOException){}catch(TimeoutException){}await Task.Delay(100);}return false;}
   public static async Task Listen(){var security=new PipeSecurity();security.SetAccessRuleProtection(true,false);security.AddAccessRule(new PipeAccessRule(WindowsIdentity.GetCurrent().User,PipeAccessRights.FullControl,AccessControlType.Allow));while(Controller!=null&&!Controller.IsDisposed){try{using(var pipe=new NamedPipeServerStream(PipeName,PipeDirection.In,1,PipeTransmissionMode.Byte,PipeOptions.Asynchronous,8192,8192,security)){await pipe.WaitForConnectionAsync();using(var reader=new StreamReader(pipe,Encoding.UTF8)){var line=await reader.ReadLineAsync();if(line!=null&&line.Length<=8192)Controller.BeginInvoke(new Action(()=>Controller.Accept(line)));}}}catch(ObjectDisposedException){return;}catch(IOException){}await Task.Delay(100);}}
 
@@ -102,7 +131,7 @@ namespace ReturnsFromDarkness {
    string marker=Path.Combine(Root,"current.json");if(File.Exists(marker))return;
    using(var resource=Assembly.GetExecutingAssembly().GetManifestResourceStream("initial.zip")){
     if(resource==null)return;string archive=Path.Combine(Root,"initial.zip");using(var output=File.Create(archive))resource.CopyTo(output);
-    string versionDir=Path.Combine(Root,"versions","0.3.3");Extract(archive,versionDir);
+    string versionDir=Path.Combine(Root,"versions","0.3.4");Extract(archive,versionDir);
     string envelope=File.ReadAllText(Path.Combine(versionDir,"release.json"));var manifest=Verify(envelope);CheckFiles(versionDir,manifest);Activate(envelope);File.Delete(archive);
    }
   }
@@ -145,7 +174,7 @@ namespace ReturnsFromDarkness {
    foreach(string filename in new[]{"DIABDAT.MPQ","TH3data.mor"}){ImportData(filename);string source=Path.Combine(Root,"data",filename),target=Path.Combine(directory,filename);if(!File.Exists(target)&&!CreateHardLink(target,source,IntPtr.Zero))File.Copy(source,target);}
    if(Hash(Path.Combine(directory,"TH3data.mor"))!=(string)manifest["dataSha256"])throw new Exception("O pacote de recursos não corresponde a esta versão do cliente.");
    var info=new ProcessStartInfo(Path.Combine(directory,(string)manifest["executable"])){WorkingDirectory=directory,UseShellExecute=false};info.EnvironmentVariables["RFD_PORTAL_URL"]=Site+"/central/";info.EnvironmentVariables["RFD_CONTENT_HASH"]=(string)manifest["contentHash"];
-   string account="offline";Dictionary<string,object> invite=null;Process peer=null;
+   string account=PreferredAccount();Dictionary<string,object> invite=null;Process peer=null;
    if(request!=null&&request.StartsWith("rfd://play/")){
     string encoded=request.Substring(11);if(encoded.Length>4096||!Regex.IsMatch(encoded,@"^[A-Za-z0-9_-]+$"))throw new Exception("Convite inválido.");encoded=encoded.Replace('-','+').Replace('_','/');encoded=encoded.PadRight((encoded.Length+3)/4*4,'=');invite=Json.Deserialize<Dictionary<string,object>>(Encoding.UTF8.GetString(Convert.FromBase64String(encoded)));
     foreach(string required in new[]{"contentHash","expires","transport","signalUrl","roomId","username","ticket","room"})if(!invite.ContainsKey(required))throw new Exception("Este convite usa uma conexão antiga. Abra a sala novamente na central.");
@@ -154,7 +183,7 @@ namespace ReturnsFromDarkness {
     account=((string)invite["username"]).ToLowerInvariant();if(!Regex.IsMatch(account,@"^[a-z][a-z0-9_-]{2,15}$")||!Regex.IsMatch((string)invite["ticket"],@"^[A-Za-z0-9_-]{43}$"))throw new Exception("Convite inválido.");
     info.EnvironmentVariables["RFD_CONTENT_HASH"]=(string)invite["contentHash"];info.EnvironmentVariables["RFD_ROOM_NAME"]=(string)invite["room"];
    }
-   string profile=Path.Combine(Root,"profiles",account);Directory.CreateDirectory(profile);if(!File.Exists(Path.Combine(profile,"config.ini")))File.Copy(Path.Combine(directory,"config.ini"),Path.Combine(profile,"config.ini"));info.EnvironmentVariables["RFD_PROFILE"]=profile;
+   string profile=Path.Combine(Root,"profiles",account);Directory.CreateDirectory(profile);if(!File.Exists(Path.Combine(profile,"config.ini")))File.Copy(Path.Combine(directory,"config.ini"),Path.Combine(profile,"config.ini"));info.EnvironmentVariables["RFD_PROFILE"]=profile;info.EnvironmentVariables["RFD_AUTH_PROFILE"]=profile;
    if(invite!=null&&GameRunning&&GameRoom==(string)invite["roomId"]&&GameAccount==account&&GetProp(Game.MainWindowHandle,"RFD_GAME_IN_ROOM")!=IntPtr.Zero){FocusGame();return;}
    if(GameRunning&&Path.GetFileName(Game.MainModule.FileName)!=(string)manifest["executable"])throw new Exception("A atualização está pronta. Saia da partida e feche o jogo para aplicar a nova versão.");
    if(invite!=null){
@@ -204,18 +233,20 @@ namespace ReturnsFromDarkness {
    play=new RealmButton{Text="ENTRAR NO JOGO  →",Location=new Point(58,469),Size=new Size(300,54),Enabled=false,Font=actionFont};central=new RealmButton{Text="CENTRAL DA COMUNIDADE  ↗",Location=new Point(376,469),Size=new Size(336,54),Font=smallActionFont,Secondary=true};Controls.Add(play);Controls.Add(central);
    status=Copy("Preparando a sua jornada…",59,539,880,46,smallBodyFont,muted);progress=new ProgressBar{Style=ProgressBarStyle.Marquee,MarqueeAnimationSpeed=22,Location=new Point(60,590),Size=new Size(980,3)};Controls.Add(progress);
    version=Copy("RETURNS FROM DARKNESS HD",58,630,520,28,smallActionFont,gold);Copy("COOPERATIVO  ·  ATÉ 4 JOGADORES",708,630,340,28,smallActionFont,muted);
-   tray=new NotifyIcon{Icon=SystemIcons.Application,Text="Returns from Darkness HD",Visible=true};tray.DoubleClick+=(s1,e1)=>Accept("rfd://focus");var menu=new ContextMenuStrip();menu.Items.Add("Abrir cliente",null,(s1,e1)=>Accept("rfd://focus"));menu.Items.Add("Central da comunidade",null,(s1,e1)=>Process.Start(Program.Site+"/central/"));menu.Items.Add("Verificar atualização",null,(s1,e1)=>Accept("rfd://prepare"));menu.Items.Add("Fechar central",null,(s1,e1)=>{if(Program.GameRunning){Hide();return;}tray.Visible=false;Close();});tray.ContextMenuStrip=menu;
-   central.Click+=(s1,e1)=>Process.Start(Program.Site+"/central/");play.Click+=(s1,e1)=>Accept(request??"rfd://open");
+   tray=new NotifyIcon{Icon=SystemIcons.Application,Text="Returns from Darkness HD",Visible=true};tray.DoubleClick+=(s1,e1)=>Accept("rfd://focus");var menu=new ContextMenuStrip();menu.Items.Add("Abrir cliente",null,(s1,e1)=>Accept("rfd://focus"));menu.Items.Add("Central da comunidade",null,(s1,e1)=>Accept("rfd://central"));menu.Items.Add("Verificar atualização",null,(s1,e1)=>Accept("rfd://prepare"));menu.Items.Add("Fechar central",null,(s1,e1)=>{if(Program.GameRunning){Hide();return;}tray.Visible=false;Close();});tray.ContextMenuStrip=menu;
+   central.Click+=(s1,e1)=>Accept("rfd://central");play.Click+=(s1,e1)=>Accept(request??"rfd://open");
    FormClosing+=(s1,e1)=>{if(Program.GameRunning){e1.Cancel=true;Hide();}else tray.Dispose();};
-   Shown+=async(s1,e1)=>{if(loaded)return;loaded=true;var listener=Program.Listen();if(request=="--preview"){status.Text="Seu portal para Tristram.";version.Text="PRÉVIA DO LAUNCHER · v0.3.3";progress.Visible=false;play.Enabled=true;request=null;}else Accept(request??"rfd://prepare");await Task.CompletedTask;};
+   Shown+=async(s1,e1)=>{if(loaded)return;loaded=true;var listener=Program.Listen();if(request=="--preview"){status.Text="Seu portal para Tristram.";version.Text="PRÉVIA DO LAUNCHER · v0.3.4";progress.Visible=false;play.Enabled=true;request=null;}else Accept(request??"rfd://prepare");await Task.CompletedTask;};
   }
   public async void Accept(string value){requests.Enqueue(value);if(processing)return;processing=true;play.Enabled=false;progress.Visible=true;
    try{while(requests.Count>0){string next=requests.Dequeue();try{
     if(Program.RouteAccount(next))continue;
-    if(Program.Resume(next)){Hide();continue;}
-    if(next=="rfd://central"||next=="rfd://central/"){Process.Start(Program.Site+"/central/");continue;}
-    if(Program.GameRunning&&(next=="rfd://focus"||next=="rfd://open")){Program.FocusGame();Hide();continue;}
+    if(next=="rfd://central"||next=="rfd://central/"){await Program.OpenCentral();continue;}
     manifest=await Program.Update(status);if(Program.RefreshLauncher(manifest,next)){tray.Dispose();Close();return;}
+    bool authenticated=await Program.ApplyNativeSession(next);
+    if(Program.Resume(next)){Hide();continue;}
+    if(Program.GameRunning&&(authenticated||next=="rfd://focus"||next=="rfd://open")){Program.FocusGame();Hide();continue;}
+    if(authenticated)next="rfd://open";
     version.Text="RETURNS FROM DARKNESS HD · v"+manifest["version"];if(next=="rfd://prepare"){status.Text="Cliente atualizado. Sua jornada está pronta.";Show();continue;}if(next=="rfd://focus")next=null;
     await Program.Launch(manifest,next=="rfd://open"?null:next,status);request=null;Hide();
    }catch(Exception error){status.Text=error.Message;Show();Activate();}}}finally{processing=false;play.Enabled=true;progress.Visible=false;}

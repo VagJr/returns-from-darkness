@@ -1,62 +1,62 @@
 # Diablo 1 HD — Returns from Darkness
 
-Return to Tristram for an expanded adventure: 29 character paths, thousands of equipment bases, spells, talents and challenges. Gather up to four players in the online community hub and continue your journey in the Returns from Darkness HD Windows client.
+Diablo 1 HD — Returns from Darkness is an independent, noncommercial project to revive the gathering place of classic Battle.net, with an HD visual direction and original content in development.
 
 ## Some places never stop calling.
 
 The silence of Tristram. The cathedral door. The feeling of descending one more floor with friends.
 
-Rediscover the classic with deeper character builds, exploration and equipment. Accounts, chat and rooms meet in one community hub; each group has its own adventure under the Returns from Darkness identity.
+We want to preserve Diablo 1's atmosphere while opening new paths: a community server, renewed visuals and adventures made for players to share.
 
 ## The gathering before the adventure.
 
-A community hub with accounts, chat channels and rooms for up to four players. Find your group on the website or in the client hub and prepare the next journey. The hub stays in the cloud; players host their games.
+One central community, chat channels and multiple rooms for up to four players each. Classic Battle.net inspires the gathering; the integration uses custom services built around PvPGN and DevilutionX.
 
-**Available in this build — v0.3.3**
+**What works today — v0.1.6**
 
-Windows client with an integrated hub, cooperative rooms for up to four players, automatic updates and separate account profiles. The item system shares room drops; automatic saving preserves inventory, gold and character development on this computer.
+Local build 0.1.6 integrates login, channels, chat and rooms into the client. Graphical entry into Tristram was confirmed in 0.1.4 and 0.1.5; the new native flow is still being validated. The workshop supports table editing, sprite imports and content preparation.
 
-**The next chapter**
+**The next step**
 
-Expand the visual remaster with coherent materials and artwork, improve content tools and validate external games, online Coliseum, PvP Arena and community events.
+Validate games with two graphical clients, late joining and host departure; expand the HD rework and secure and test external connections before opening the server.
 
-The hub uses cloud services; gameplay runs in the clients and requires the room creator to stay connected. Characters save on this computer automatically, with recovery copies. A new room creates a new world. Full HD artwork, host migration and ranked PvP are not yet complete.
+The network test is not a complete graphical game with four people. Saves and simulation still reside on clients. The server is not open to the public.
 
 ## Made with care. Built in the open.
 
-### The community is online · Available
+### Tristram loads again · Local foundation verified
 
-Accounts, channels, chat and rooms are on the website. Keeping the hub accessible does not require the administrator's PC to stay on.
+Custom client, PvPGN, launcher and local rooms consolidated. First entry into the world confirmed in version 0.1.4.
 
-### An expanded journey · In the client
+### Shaping the return · In development
 
-29 character paths, equipment, talents, spells and challenges are part of the current client. The room menu and project identity continue to join the experience.
+HD artwork and interface are in development. The client has a custom lobby interface; the full graphics rework is still in production.
 
-### The return continues · In development
+### First Light and Ashen Arena · Prototype content
 
-Full HD, material improvements and an animated logo shape the visual direction. Remastering all artwork and the Ashen Arena remain in development.
+Five items and two variants in engine tables. Two generated maps await integration; 1v1 and 2v2 duels are not playable yet.
 
 ## Frequently asked questions
 
-### How do I start?
+### Do I need the original Diablo?
 
-Download the Windows client from the hub, sign in and create or choose a room. The room button opens the game, and the internal hub also connects to the community. The launcher checks for the latest version before a new game and imports compatible game files from your installation.
+Yes. Players will need files from their own installation. The project does not distribute DIABDAT.MPQ or commercial game data.
 
-### Do I need a server running on my PC?
+### Can I play on the public server yet?
 
-Accounts, chat and room discovery stay in the cloud. The room creator's client hosts gameplay, using a direct connection when possible and a relay on restrictive networks. The creator must stay in the game; leaving ends the group's session.
+Not yet. Version 0.1.6 is a local test build. Join the Discord community to follow progress and upcoming tests.
 
-### Is my character saved?
+### Is this an official remake or an MMO world?
 
-Yes. Automatic saves during play and on normal exit preserve inventory, gold and character development in a separate account profile on this computer. Updates keep saves separate. Characters do not sync across computers, and the room world is not persistent.
+It is an independent fan project with no Blizzard affiliation. Each game supports up to four players; the lobby can bring several groups together without a persistent world shared by everyone.
 
-### Is the full remaster and Arena finished?
+### Does the game already have full HD artwork and an arena?
 
-The client supports Full HD resolution and evolving visual improvements while preserving classic sprites. Higher-definition artwork replacement is still partial. Coliseum exists as a client challenge; online PvP Arena, rankings and project events remain in validation and development.
+Not yet. The client currently uses original art with 1280 × 720 profiles. HD rework, new areas and the arena are production goals. No public release date has been set.
 
-## The next chapter begins with the community.
+## The next chapter starts with the community.
 
-Visit the hub to chat, gather your group and open a game. Follow updates and share your gameplay experiences on Discord.
+Join Discord to find your party, follow development and help prepare the next tests. The game server is not open to the public yet.
 
 Discord: https://discord.gg/S9VVaBXwDk
 

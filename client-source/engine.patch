@@ -3248,7 +3248,7 @@
 +}
 --- /dev/null
 +++ b/src/CommunityHub.cpp
-@@ -0,0 +1,101 @@
+@@ -0,0 +1,138 @@
 +#include "stdafx.h"
 +#include "CommunityHub.h"
 +#pragma pack(push,8)
@@ -3261,6 +3261,10 @@
 +extern int __stdcall DialogMainMenu(HWND,unsigned int,WPARAM,LPARAM);
 +extern int __stdcall UiLogonDialog(HWND,int*,char*,int,char*,int);
 +extern int LoadFonts();
++extern void __fastcall SetCurFont(int);
++extern int __cdecl GetSpaceWidth();
++extern int __cdecl GetPentagramWidth();
++extern int __fastcall GetStringDrawWidth(char*);
 +extern int __fastcall InitButtonListText(HWND,int*,int,int);
 +extern int MainMenuButtonList[8];
 +extern bool MainMainMenu;
@@ -3280,17 +3284,23 @@
 +extern int AnimTitleWidth,AnimTitleHeight;
 +namespace {
 +std::string token,username,title="Online do projeto";std::array<std::string,7> labels;
++int formQaFrames=0;bool formQaPassed=true;DWORD formQaStarted=0;
 +char *formName=nullptr,*formPassword=nullptr;int formNameSize=0,formPasswordSize=0;
 +int formTexts[]={ID_CAPTION,1040,1041,0},formEdits[]={1028,1029,0},formButtons[]={ID_OK_BUTTON,ID_EXIT_CANCEL_BUTTON,0};
 +const int ids[]={ID_MAINMENU_SINGLEPLAYER,ID_MAINMENU_MULTIPLAYER,ID_MAINMENU_COLISEUM,ID_MAINMENU_REPLAY_INTRO,ID_MAINMENU_SUPPORT,ID_MAINMENU_CREDITS,ID_EXIT_CANCEL_BUTTON};
-+std::string storage(bool reading){char profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_PROFILE",profile,sizeof(profile));if(!reading&&!username.empty()){char root[MAX_PATH];GetEnvironmentVariableA("LOCALAPPDATA",root,sizeof(root));std::string path=std::string(root)+"\\ReturnsFromDarkness\\profiles\\"+username;std::transform(path.begin(),path.end(),path.begin(),[](unsigned char c){return char(tolower(c));});CreateDirectoryA(path.c_str(),nullptr);return path+"\\native-session.bin";}return std::string(profile)+"\\native-session.bin";}
++std::string storage(bool reading){
++ char profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_AUTH_PROFILE",profile,sizeof(profile));
++ if(!profile[0])GetEnvironmentVariableA("RFD_PROFILE",profile,sizeof(profile));
++ if(!reading&&!username.empty()){char root[MAX_PATH]={};GetEnvironmentVariableA("LOCALAPPDATA",root,sizeof(root));std::string name=username;std::transform(name.begin(),name.end(),name.begin(),[](unsigned char c){return char(tolower(c));});std::string path=std::string(root)+"\\ReturnsFromDarkness\\profiles\\"+name;CreateDirectoryA(path.c_str(),nullptr);if(!token.empty()){FILE *last=fopen((std::string(root)+"\\ReturnsFromDarkness\\last-account.txt").c_str(),"w");if(last){fwrite(name.data(),1,name.size(),last);fclose(last);}}SetEnvironmentVariableA("RFD_AUTH_PROFILE",path.c_str());return path+"\\native-session.bin";}
++ return std::string(profile)+"\\native-session.bin";
++}
 +void remember(bool read){
-+ if(read){token.clear();username.clear();FILE *f=fopen(storage(true).c_str(),"rb");if(!f)return;fseek(f,0,SEEK_END);long size=ftell(f);rewind(f);if(size<1||size>8192){fclose(f);return;}std::vector<BYTE> bytes(size);fread(bytes.data(),1,size,f);fclose(f);DATA_BLOB input{DWORD(size),bytes.data()},out{};
-+  if(CryptUnprotectData(&input,nullptr,nullptr,nullptr,nullptr,CRYPTPROTECT_UI_FORBIDDEN,&out)){try{auto j=HubJson::parse(std::string((char*)out.pbData,out.cbData));token=j.at("token");username=j.at("user");}catch(...){}LocalFree(out.pbData);}
-+ }else{std::string text=HubJson({{"token",token},{"user",username}}).dump();DATA_BLOB input{DWORD(text.size()),(BYTE*)text.data()},out{};if(CryptProtectData(&input,L"Returns from Darkness",nullptr,nullptr,nullptr,CRYPTPROTECT_UI_FORBIDDEN,&out)){FILE *f=fopen(storage(false).c_str(),"wb");if(f){fwrite(out.pbData,1,out.cbData,f);fclose(f);}LocalFree(out.pbData);}}
++ if(read){token.clear();username.clear();FILE *f=fopen(storage(true).c_str(),"rb");if(!f)return;fseek(f,0,SEEK_END);long size=ftell(f);rewind(f);if(size<1||size>8192){fclose(f);return;}std::vector<BYTE> bytes(size);if(fread(bytes.data(),1,size,f)!=size){fclose(f);return;}fclose(f);DATA_BLOB input{DWORD(size),bytes.data()},out{};
++  if(CryptUnprotectData(&input,nullptr,nullptr,nullptr,nullptr,CRYPTPROTECT_UI_FORBIDDEN,&out)){try{auto j=HubJson::parse(std::string((char*)out.pbData,out.cbData));token=j.at("token");username=j.at("user");if(token.size()!=43||username.size()<3||username.size()>16){token.clear();username.clear();}}catch(...){token.clear();username.clear();}SecureZeroMemory(out.pbData,out.cbData);LocalFree(out.pbData);}
++ }else{std::string text=HubJson({{"token",token},{"user",username}}).dump();DATA_BLOB input{DWORD(text.size()),(BYTE*)text.data()},out{};if(CryptProtectData(&input,L"Returns from Darkness",nullptr,nullptr,nullptr,CRYPTPROTECT_UI_FORBIDDEN,&out)){std::string path=storage(false),temp=path+".new";FILE *f=fopen(temp.c_str(),"wb");if(f){fwrite(out.pbData,1,out.cbData,f);fclose(f);MoveFileExA(temp.c_str(),path.c_str(),MOVEFILE_REPLACE_EXISTING|MOVEFILE_WRITE_THROUGH);}LocalFree(out.pbData);}}
 +}
 +HubJson api(const std::wstring &route,const HubJson &body=nullptr){
-+ HINTERNET session=WinHttpOpen(L"RFD-NativeHub/0.3.3",WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY,nullptr,nullptr,0);if(!session)throw std::runtime_error("A central nao respondeu.");
++ HINTERNET session=WinHttpOpen(L"RFD-NativeHub/0.3.4",WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY,nullptr,nullptr,0);if(!session)throw std::runtime_error("A central nao respondeu.");
 + WinHttpSetTimeouts(session,5000,5000,5000,12000);HINTERNET conn=WinHttpConnect(session,L"returns-darkness-realm.oblique-tactical.workers.dev",443,0),req=conn?WinHttpOpenRequest(conn,body.is_null()?L"GET":L"POST",(L"/api/"+route).c_str(),nullptr,nullptr,nullptr,WINHTTP_FLAG_SECURE):nullptr;
 + std::string text=body.is_null()?"":body.dump();std::wstring header=L"Content-Type: application/json\r\nAuthorization: Bearer "+std::wstring(token.begin(),token.end())+L"\r\n";std::string response;DWORD status=0,length=sizeof(status),received=0;char buffer[4096];bool ok=req&&WinHttpSendRequest(req,header.c_str(),DWORD(header.size()),text.empty()?nullptr:text.data(),DWORD(text.size()),DWORD(text.size()),0)&&WinHttpReceiveResponse(req,nullptr);
 + if(ok){WinHttpQueryHeaders(req,WINHTTP_QUERY_STATUS_CODE|WINHTTP_QUERY_FLAG_NUMBER,nullptr,&status,&length,nullptr);while(WinHttpReadData(req,buffer,sizeof(buffer),&received)&&received){response.append(buffer,received);if(response.size()>262144){ok=false;break;}}}
@@ -3303,6 +3313,16 @@
 + int value=DialogMainMenu(dlg,msg,w,l);if(msg==WM_INITDIALOG){DeleteElementListData(dlg,MainMenuButtonList);for(int i=0;i<7;i++){SetDlgItemTextA(dlg,ids[i],labels[i].c_str());EnableWindow(GetDlgItem(dlg,ids[i]),!labels[i].empty());}InitButtonListText(dlg,MainMenuButtonList,6,1);SetFocus(GetDlgItem(dlg,ids[0]));}return value;
 +}
 +int menu(){LoadFonts();MainMainMenu=true;int result=SDlgDialogBoxParam(HInstance,"MAINMENU_DIALOG2",ghMainWnd,hubDialog,0);MainMainMenu=false;return result;}
++bool inputQaEnabled(){char mode[16]={},profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_ENGINE_QA",mode,sizeof(mode));GetEnvironmentVariableA("RFD_PROFILE",profile,sizeof(profile));return strcmp(mode,"form")==0&&strstr(profile,"engine-qa-")!=nullptr;}
++void checkQaInput(HWND dlg){
++ for(int i=0;i<2;i++){HWND edit=GetDlgItem(dlg,formEdits[i]);const char *expected=i?"SenhaQA9Z":"Teste7Z";char actual[65]={};GetWindowTextA(edit,actual,sizeof(actual));if(strcmp(actual,expected))formQaPassed=false;
++  SetFocus(edit);SetPropA(edit,"CURSOR",nullptr);DrawEnterDialog(dlg,formEdits,2);auto data=(TextWin*)GetWindowLongA(edit,GWL_USERDATA);if(!data||!data->surface){formQaPassed=false;continue;}
++  SetCurFont(2);int begin=GetSpaceWidth()+GetPentagramWidth(),width=GetStringDrawWidth(i?"*********":"Teste7Z")-2;std::vector<BYTE> baseline(data->surface,data->surface+data->size.cx*data->size.cy);
++  SetPropA(edit,"CURSOR",reinterpret_cast<HANDLE>(1));DrawEnterDialog(dlg,formEdits,2);
++  for(int y=0;y<data->size.cy;y++)for(int x=begin;x<std::min(begin+width,int(data->size.cx));x++)if(baseline[y*data->size.cx+x]!=data->surface[y*data->size.cx+x])formQaPassed=false;
++ }
++ if(++formQaFrames>=16&&GetTickCount()-formQaStarted>1200){char profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_PROFILE",profile,sizeof(profile));FILE *f=fopen((std::string(profile)+"\\form-qa.json").c_str(),"w");if(f){fprintf(f,"{\"passed\":%s,\"frames\":%d,\"inputTextStable\":%s,\"glyphPixelsStableWithCursor\":%s}",formQaPassed?"true":"false",formQaFrames,formQaPassed?"true":"false",formQaPassed?"true":"false");fclose(f);}SDlgEndDialog(dlg,1);}
++}
 +int __stdcall formDialog(HWND dlg,unsigned int msg,WPARAM w,LPARAM l){
 + if(msg==WM_INITDIALOG){
 +  TextWin *data=AllocTextWin();SetWindowLongA(dlg,GWL_USERDATA,(LONG)data);
@@ -3312,11 +3332,12 @@
 +  InitTextElemList(dlg,formTexts,2);InitTextElemList(dlg,VersionList,1);InitEditElems(dlg,formEdits,2);InitButtonListText(dlg,formButtons,4,0);
 +  InitSelectionAndLoadPentagram("ui_art\\focus.pcx");SetYesNoButtonListProc(dlg,formButtons);
 +  SendMessageA(GetDlgItem(dlg,1028),MSG_LIMIT,formNameSize-1,0);SendMessageA(GetDlgItem(dlg,1029),MSG_LIMIT,formPasswordSize-1,0);
-+  SetPropA(GetDlgItem(dlg,1029),"RFD_PASSWORD",reinterpret_cast<HANDLE>(1));SDlgSetTimer(dlg,1,55,0);SetFocus(GetDlgItem(dlg,1028));PostMessageA(dlg,MSG_BEGIN_FADE,0,0);return 0;
++  SetPropA(GetDlgItem(dlg,1029),"RFD_PASSWORD",reinterpret_cast<HANDLE>(1));SDlgSetTimer(dlg,1,55,0);SetFocus(GetDlgItem(dlg,1028));PostMessageA(dlg,MSG_BEGIN_FADE,0,0);
++  if(inputQaEnabled()){formQaFrames=0;formQaPassed=true;formQaStarted=GetTickCount();for(int i=0;i<2;i++){const char *text=i?"SenhaQA9Z":"Teste7Z";for(const char *c=text;*c;c++)SendMessageA(GetDlgItem(dlg,formEdits[i]),WM_CHAR,*c,0);}}return 0;
 + }
 + if(msg==WM_DESTROY){CheckFadeTimer();DeleteDialogTitleAnim();DeletePentagram();DeleteElementListData(dlg,formTexts);DeleteElementListData(dlg,formEdits);DeleteElementListData(dlg,formButtons);DeleteElementListData(dlg,VersionList);DeleteWinData((TextWin*)GetWindowLongA(dlg,GWL_USERDATA));SetWindowLongA(dlg,GWL_USERDATA,0);SetSystemCursor();}
 + if(msg==MSG_BEGIN_FADE){if(!PhasedFadeInProcess())SetFadeTimer(dlg);return 0;}
-+ if(msg==WM_TIMER){if(RfdControlPending()){SDlgEndDialog(dlg,2);return 0;}if(w==1){DrawEnterDialog(dlg,formEdits,2);AnimateSelectionPentagram(dlg,GetFocus());for(int id:formEdits)if(id)InvalidateRect(GetDlgItem(dlg,id),nullptr,FALSE);}return 0;}
++ if(msg==WM_TIMER){if(RfdControlPending()){SDlgEndDialog(dlg,2);return 0;}if(w==1){if(inputQaEnabled()){checkQaInput(dlg);return 0;}DrawEnterDialog(dlg,formEdits,2);AnimateSelectionPentagram(dlg,GetFocus());for(int id:formEdits)if(id)InvalidateRect(GetDlgItem(dlg,id),nullptr,FALSE);}return 0;}
 + if(msg==WM_COMMAND){int id=LOWORD(w),event=HIWORD(w);
 +  if((id==1028||id==1029)&&(event==1||event==3)){DrawEnterDialog(dlg,formEdits,2);return 0;}
 +  if(event==BN_SETFOCUS&&id!=1028&&id!=1029){SelectButton((HWND)l);return 0;}
@@ -3337,7 +3358,7 @@
 +  if(RfdControlPending())return 1;
 +  if(token.empty()){labels={"Entrar na conta","Criar conta","Comunidade","","","","Voltar"};int choice=menu();if(choice==7||choice<1)return 1;if(choice==99)return 1;if(choice==3){RfdOpenProjectLobby();continue;}if(choice!=1&&choice!=2)continue;
 +   char name[17]={},password[65]={};if(!form(choice==1?"Entrar na conta":"Criar conta",name,sizeof(name),password,sizeof(password)))continue;
-+   auto login=api(choice==1?L"login":L"register",{{"username",name},{"password",password}});SecureZeroMemory(password,sizeof(password));token=login.at("sessionToken");username=name;remember(false);continue;
++   auto login=api(choice==1?L"login":L"register",{{"username",name},{"password",password}});SecureZeroMemory(password,sizeof(password));token=login.at("sessionToken");username=login.at("username");remember(false);continue;
 +  }
 +  auto state=api(L"state");std::vector<HubJson> rooms;HubJson current=nullptr;for(auto &room:state.at("rooms")){rooms.push_back(room);for(auto &player:room.at("players"))if(_stricmp(player.at("user").get<std::string>().c_str(),username.c_str())==0)current=room;}
 +  if(!current.is_null()){
@@ -3350,12 +3371,33 @@
 +  size_t index=page*3+choice-2;if(choice>=2&&choice<=4&&index<rooms.size()){auto &room=rooms[index];char name[49]={},password[65]={};if(room.value("locked",false)&&!form("Senha da sala",name,sizeof(name),password,sizeof(password)))continue;api(L"rooms/join",{{"roomId",room.at("id")},{"password",password},{"contentHash",hash}});SecureZeroMemory(password,sizeof(password));launch(room);}
 + }catch(const std::exception &e){MessageBoxA(ghMainWnd,e.what(),"Online do projeto",MB_OK|MB_ICONINFORMATION);}}
 +}
++
++bool RfdOpenAuthenticatedCommunity(){
++ remember(true);if(token.empty())return false;
++ try{auto link=api(L"auth/handoff",{{"target","web"}});std::string code=link.at("code");if(code.size()!=43||code.find_first_not_of("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-")!=std::string::npos)return false;
++  std::string url="https://returns-from-darkness.vercel.app/central/#auth="+code;
++  return reinterpret_cast<INT_PTR>(ShellExecuteA(ghMainWnd,"open",url.c_str(),nullptr,nullptr,SW_SHOWNORMAL))>32;
++ }catch(...){return false;}
++}
++
++bool RfdHubInputQa(){if(!inputQaEnabled())return false;char name[17]={},password[65]={};form("Teste de entrada",name,sizeof(name),password,sizeof(password));return true;}
++void RfdHubSessionQa(){
++ char mode[16]={},profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_ENGINE_QA",mode,sizeof(mode));GetEnvironmentVariableA("RFD_PROFILE",profile,sizeof(profile));if(strcmp(mode,"resident")||strstr(profile,"engine-qa-")==nullptr)return;
++ bool valid=false;std::string code;remember(true);
++ try{auto state=api(L"state");valid=!username.empty()&&_stricmp(state.at("username").get<std::string>().c_str(),username.c_str())==0;if(valid)code=api(L"auth/handoff",{{"target","web"}}).at("code");}catch(...){}
++ FILE *f=fopen((std::string(profile)+"\\native-session-qa.json").c_str(),"w");if(f){std::string report=HubJson({{"passed",valid},{"username",username},{"webCode",code}}).dump();fwrite(report.data(),1,report.size(),f);fclose(f);}
++}
 --- /dev/null
 +++ b/src/CommunityHub.h
-@@ -0,0 +1,3 @@
+@@ -0,0 +1,8 @@
 +#pragma once
 +int RfdShowRoomHub();
 +const char *RfdHubFormTitle();
++
++bool RfdOpenAuthenticatedCommunity();
++
++bool RfdHubInputQa();
++void RfdHubSessionQa();
 --- /dev/null
 +++ b/src/CommunityLoot.cpp
 @@ -0,0 +1,16 @@
@@ -3392,14 +3434,16 @@
 +int RfdPutGroundItem(int row,int col,const LastItemInfo &info);
 --- /dev/null
 +++ b/src/CommunityOnline.cpp
-@@ -0,0 +1,84 @@
+@@ -0,0 +1,92 @@
 +#include "stdafx.h"
 +#include "CommunityOnline.h"
++#include "CommunityHub.h"
 +#include "room_transport.h"
 +#include <shellapi.h>
 +namespace {
 +bool active=false;
 +bool wantsHub=false;
++bool authChanged=false;
 +std::vector<std::string> pendingRoom;
 +GameTemplate connectedGame={};
 +int handlers[5]={};
@@ -3410,25 +3454,30 @@
 +void log(const char *message){char profile[MAX_PATH];if(!environment(profile,MAX_PATH,"RFD_PROFILE"))return;std::string file=std::string(profile)+"\\client-events.log";FILE *output=fopen(file.c_str(),"a");if(output){fprintf(output,"%lu %s\n",GetTickCount(),message);fclose(output);}}
 +}
 +bool RfdOnlineRequested(){char ticket[64];return environment(ticket,sizeof(ticket),"RFD_ROOM_TICKET");}
-+bool RfdControlPending(){return !pendingRoom.empty();}
++bool RfdControlPending(){return authChanged||!pendingRoom.empty();}
 +bool RfdHandleControl(WPARAM source,LPARAM data){
 + auto copy=reinterpret_cast<COPYDATASTRUCT*>(data);char token[64],owner[24];
 + if(!copy||copy->dwData!=0x52464432||copy->cbData>8192||copy->cbData<64||!environment(token,sizeof(token),"RFD_CONTROL_TOKEN")||!environment(owner,sizeof(owner),"RFD_CONTROL_PID")||strtoul(owner,nullptr,10)!=source)return false;
 + std::string text(static_cast<const char*>(copy->lpData),copy->cbData);std::vector<std::string> fields;size_t begin=0;
 + while(true){size_t end=text.find('\n',begin);fields.push_back(text.substr(begin,end==std::string::npos?end:end-begin));if(end==std::string::npos)break;begin=end+1;}
++ if(fields.size()==3&&fields[0]==token&&fields[1]=="auth"){
++  char root[MAX_PATH]={};GetEnvironmentVariableA("LOCALAPPDATA",root,sizeof(root));std::string prefix=std::string(root)+"\\ReturnsFromDarkness\\profiles\\";
++  if(fields[2].rfind(prefix,0)!=0)return false;std::string account=fields[2].substr(prefix.size());if(account.size()<3||account.size()>16||account.find_first_not_of("abcdefghijklmnopqrstuvwxyz0123456789_-")!=std::string::npos)return false;
++  SetEnvironmentVariableA("RFD_AUTH_PROFILE",fields[2].c_str());if(gbRunGame!=1&&!RfdOnlineRequested()){authChanged=true;wantsHub=true;}return true;
++ }
 + if(fields.size()!=10||fields[0]!=token||fields[1]!="room"||fields[2].size()>=MAX_PATH||fields[3]!="127.0.0.1"||fields[5].size()!=43||fields[6].size()!=64||fields[7].size()>96||fields[9].size()!=36)return false;
 + if(!pendingRoom.empty())return false;
 + pendingRoom=std::move(fields);if(gbRunGame==1){gbRunGame=0;gbRunGameResult=1;ResetMainMenu();}log("room switch queued by resident controller");return true;
 +}
 +bool RfdApplyRoomRequest(){
-+ if(pendingRoom.empty())return false;auto fields=std::move(pendingRoom);pendingRoom.clear();
++ authChanged=false;if(pendingRoom.empty())return false;auto fields=std::move(pendingRoom);pendingRoom.clear();
 + const char *keys[]={"RFD_PROFILE","RFD_ROOM_HOST","RFD_ROOM_PORT","RFD_ROOM_TICKET","RFD_CONTENT_HASH","RFD_ROOM_NAME","RFD_ROOM_MODE","RFD_ROOM_ID"};
-+ for(int i=0;i<8;i++)SetEnvironmentVariableA(keys[i],fields[i+2].c_str());log("room switch applied after previous game saved");return true;
++ for(int i=0;i<8;i++)SetEnvironmentVariableA(keys[i],fields[i+2].c_str());SetEnvironmentVariableA("RFD_AUTH_PROFILE",fields[2].c_str());log("room switch applied after previous game saved");return true;
 +}
 +void RfdClearRoomRequest(){SetEnvironmentVariableA("RFD_ROOM_TICKET",nullptr);SetEnvironmentVariableA("RFD_ROOM_ID",nullptr);if(ghMainWnd)RemovePropA(ghMainWnd,"RFD_GAME_IN_ROOM");}
 +void RfdLeaveToHub(){log("intentional return to community hub");wantsHub=true;gbRunGame=0;gbRunGameResult=1;ResetMainMenu();}
 +bool RfdTakeHubRequest(){bool value=wantsHub;wantsHub=false;return value;}
-+void RfdOpenProjectLobby(){char url[256];if(!environment(url,sizeof(url),"RFD_PORTAL_URL"))strcpy(url,"https://returns-from-darkness.vercel.app/central/");ShellExecuteA(ghMainWnd,"open",url,nullptr,nullptr,SW_SHOWNORMAL);}
++void RfdOpenProjectLobby(){if(RfdOpenAuthenticatedCommunity())return;char url[256];if(!environment(url,sizeof(url),"RFD_PORTAL_URL"))strcpy(url,"https://returns-from-darkness.vercel.app/central/");ShellExecuteA(ghMainWnd,"open",url,nullptr,nullptr,SW_SHOWNORMAL);}
 +bool RfdJoinProjectRoom(int *player,GameTemplate *game,bool *startsWorld){
 + char host[256],ticket[64],port[8],hash[65];
 + if(!environment(host,sizeof(host),"RFD_ROOM_HOST")||!environment(ticket,sizeof(ticket),"RFD_ROOM_TICKET")||!environment(hash,sizeof(hash),"RFD_CONTENT_HASH")){MessageBoxA(ghMainWnd,"Abra o cliente pelo botao da sua sala no lobby do projeto.","Returns from Darkness",MB_OK);return false;}
@@ -3441,7 +3490,8 @@
 +// Explicit developer fixture: runs only against an isolated profile supplied by the QA runner.
 +void RfdEngineQaTick(){
 + char mode[32],profile[MAX_PATH];if(!active||!environment(mode,sizeof(mode),"RFD_ENGINE_QA")||!environment(profile,sizeof(profile),"RFD_PROFILE")||strstr(profile,"engine-qa-")==nullptr)return;
-+ static DWORD begin=GetTickCount(),reported=0;static bool dropped=false,picked=false;auto elapsed=GetTickCount()-begin;auto &player=Players[CurrentPlayerIndex];
++ static DWORD begin=GetTickCount(),reported=0;static bool dropped=false,picked=false,sessionChecked=false;auto elapsed=GetTickCount()-begin;auto &player=Players[CurrentPlayerIndex];
++ if(!sessionChecked){sessionChecked=true;RfdHubSessionQa();}
 + if(strcmp(mode,"gold-host")==0&&!dropped&&elapsed>8000&&NetPlayerCount>=2){
 +  auto &item=player.ItemOnCursor;SetPlayerHandItem(item,BI_0_GOLD);item.amount=1234;item.SetSeed(0x12345678ll,CurItemGenVersion);SetGraphicToGold(item);
 +  NetSendCmdPItem(true,CMD_10_PUTITEM,player.Row,player.Col);dropped=true;log("QA gold dropped through native game command");
@@ -3690,7 +3740,7 @@
 +const char *RfdWindowTitle();
 --- /dev/null
 +++ b/src/CommunityVisual.cpp
-@@ -0,0 +1,80 @@
+@@ -0,0 +1,81 @@
 +#include "stdafx.h"
 +#include <wincodec.h>
 +extern bool MainMainMenu;
@@ -3771,6 +3821,7 @@
 + if(footer&&!gbRunGame){D3DVIEWPORT9 viewport;dev->GetViewport(&viewport);const float left=20.f,bottom=float(viewport.Height)-18.f,top=bottom-24.f;Vertex line[]={{left,top,0,1,0xffffffff,0,0},{left+512,top,0,1,0xffffffff,1,0},{left,bottom,0,1,0xffffffff,0,1},{left+512,bottom,0,1,0xffffffff,1,1}};dev->SetTexture(0,footer);dev->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,2,line,sizeof(Vertex));}
 + state->Apply();state->Release();
 +}
++
 --- a/src/Config.cpp
 +++ b/src/Config.cpp
 @@ -1,418 +1,419 @@
@@ -25956,7 +26007,7 @@
 +};
 --- a/src/Hell.cpp
 +++ b/src/Hell.cpp
-@@ -1,13905 +1,13925 @@
+@@ -1,13905 +1,13892 @@
 -﻿#include "stdafx.h"
 -
 -// hellfrui.dll sources
@@ -39861,7 +39912,7 @@
 -		SMemFree( data, __FILE__, __LINE__, 0 );
 -		data = nullptr;
 -	}
--}+﻿#include "stdafx.h"
+-}+#include "stdafx.h"
 +#include "CommunityHub.h"
 +
 +// hellfrui.dll sources
@@ -43049,37 +43100,8 @@
 +//----- (20004D90) --------------------------------------------------------
 +void __fastcall HandleCursor( HWND hdlg )
 +{
-+	HWND hdlg_1; // esi@1
-+	int winId; // ST0C_4@2
-+	HWND parent; // eax@2
-+	unsigned int len; // ecx@3
-+	char *lastChar; // edi@3
-+	int winId_1; // ST08_4@3
-+	HWND parent_1; // eax@3
-+	char winText[ 256 ]; // [sp+8h] [bp-100h]@1
-+
-+	hdlg_1 = hdlg;
-+	memset( winText, 0, 256 );
-+	if( GetPropA( hdlg, "CURSOR" ) ){
-+		SetPropA( hdlg_1, "CURSOR", 0 );
-+		winId = (unsigned __int16) GetWindowLongA( hdlg_1, GWL_ID ) | 0x30000;
-+		parent = GetParent( hdlg_1 );
-+		SendMessageA( parent, WM_COMMAND, winId, (LPARAM) hdlg_1 );
-+	}else{
-+		SetPropA( hdlg_1, "CURSOR", (HANDLE)HANDLE_FLAG_INHERIT );
-+		GetWindowTextA( hdlg_1, winText, 255 );
-+		winText[ 254 ] = 0;
-+		len = strlen( winText );
-+		lastChar = &winText[ len ];
-+		winText[ len ] = 124;
-+		winText[ len + 1 ] = 0;
-+		SetWindowTextA( hdlg_1, winText );
-+		winId_1 = (unsigned __int16) GetWindowLongA( hdlg_1, GWL_ID ) | 0x30000;
-+		parent_1 = GetParent( hdlg_1 );
-+		SendMessageA( parent_1, WM_COMMAND, winId_1, (LPARAM) hdlg_1 );
-+		*lastChar = 0;
-+		SetWindowTextA( hdlg_1, winText );
-+	}
++    SetPropA(hdlg,"CURSOR",GetPropA(hdlg,"CURSOR")?nullptr:reinterpret_cast<HANDLE>(1));
++    SendMessageA(GetParent(hdlg),WM_COMMAND,GetDlgCtrlID(hdlg)|0x30000,reinterpret_cast<LPARAM>(hdlg));
 +}
 +
 +//----- (20004E90) --------------------------------------------------------
@@ -43974,17 +43996,15 @@
 +	if( dlgData ){
 +		if( dlgData->surface ){
 +			GetWindowTextA( hdlg_1, winText, 255 );
-+            if(GetPropA(hdlg_1,"RFD_PASSWORD")){size_t masked=strlen(winText);if(SendMessageA(hdlg_1,MSG_CURSOR,0,0)&&masked)masked--;for(size_t i=0;i<masked;i++)winText[i]='*';}
++            if(GetPropA(hdlg_1,"RFD_PASSWORD")){for(size_t i=0;i<strlen(winText);i++)winText[i]='*';}
 +			len = strlen( winText );
 +			pentaWidth = GetPentagramWidth();
 +			spaceWidth = GetSpaceWidth() + pentaWidth;
 +			GetClientRect( hdlg_1, &Rect );
 +			pentaWidth_1 = GetPentagramWidth();
 +			drawWidth = Rect.right - 2 * (GetSpaceWidth() + pentaWidth_1);
-+			result = SendMessageA( hdlg_1, MSG_CURSOR, 0, 0 );
-+			if( result == 1 ){
-+				winText[len-1] = 0;
-+			}
++			result = GetFocus()==hdlg_1 && SendMessageA(hdlg_1,MSG_CURSOR,0,0);
++            if(result && len<254){winText[len]='|';winText[len+1]=0;}
 +			str = winText;
 +			if( winText[ 0 ] ){
 +				do{
@@ -43994,9 +44014,7 @@
 +					v9 = (str++)[ 1 ];
 +				} while( v9 );
 +			}
-+			if( result ){
-+				winText[len-1] = '|';
-+			}
++
 +			curFontWidth = GetCurFontWidth();
 +			DrawFontString( (unsigned __int8 *) str, elemData, spaceWidth, (elemData->size.cy - curFontWidth) / 2 );
 +		}
@@ -88822,7 +88840,7 @@
 +}
 --- a/src/MainMenu.cpp
 +++ b/src/MainMenu.cpp
-@@ -1,219 +1,234 @@
+@@ -1,219 +1,236 @@
 -﻿#include "stdafx.h"
 -
 -int MenuMusicIndex = 0;
@@ -89092,9 +89110,11 @@
 +    int v2;  // eax@14
 +    int dialogResult;  // [sp+4h] [bp-4h]@2
 +    StartMenuMusic();
++    if(RfdHubInputQa())return;
 +    v0 = 0;
 +    do{
 +        RfdApplyRoomRequest();
++        if(!RfdOnlineRequested()&&RfdTakeHubRequest()){RfdShowRoomHub();continue;}
 +        if(RfdOnlineRequested()){
 +            char roomMode[32]={};GetEnvironmentVariableA("RFD_ROOM_MODE",roomMode,sizeof(roomMode));
 +            if(strcmp(roomMode,"coliseum-pvp")==0)ColiseumGame();else MultiPlayerGame();
@@ -138605,9 +138625,9 @@
 +#pragma once
 +
 +#define TH3_REVISION 1265
-+#define THE_HELL_VERSION_INT 0,3,3,0
-+#define THE_HELL_VERSION_STRING "v0.3.3\0"
-+#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.3.3\0"
++#define THE_HELL_VERSION_INT 0,3,4,0
++#define THE_HELL_VERSION_STRING "v0.3.4\0"
++#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.3.4\0"
 +
 +
 +
