@@ -65,7 +65,7 @@ export class Progression {
   if(h.level<RULES.difficulties[input.difficulty].level)bad('Este personagem ainda não tem nível para esta dificuldade.',403);
   if(input.roomId){const room=this.c.rooms().find(r=>r.id===input.roomId),member=room?.members.find(m=>m.user.toLowerCase()===user.toLowerCase());
    if(!member||!(room.connected||[]).includes(member.slot))bad('Conecte o cliente à sua sala antes de registrar progresso.',409);
-   if(room.difficulty!==input.difficulty||(room.mode==='coliseum-pvp')!==(h.mode===8))bad('Modo ou dificuldade não corresponde à sala.');slot=member.slot;
+   if(room.difficulty!==input.difficulty||h.mode!==(room.mode==='coliseum-pvp'?8:0))bad('Modo ou dificuldade não corresponde à sala.');slot=member.slot;
   }
   const p=this.get(user),candidate=h.category==='coliseum'?p:{...p,maxLevel:Math.max(p.maxLevel,h.level),legacyDifficulty:Math.max(p.legacyDifficulty,h.allowedDifficulty)};
   if(h.mode===8&&!permits(p,RULES.modes[8].unlock))bad('Desbloqueie o Coliseum antes de iniciar a jornada.',403);

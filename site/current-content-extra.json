@@ -27,11 +27,11 @@
     ],
     "now": [
       "W tej wersji",
-      "Klient Windows ze zintegrowanym centrum, pokojami kooperacyjnymi dla czterech graczy, automatycznymi aktualizacjami i osobnymi profilami. System przedmiotów współdzieli łupy w pokoju; automatyczny zapis zachowuje ekwipunek, złoto i rozwój na tym PC. Sanktuarium łączy publiczne profile, postacie, portrety, tytuły i pieczęcie kampanii. Graj i rozwijaj się, by odblokować klasy, cechy, modyfikatory i trudności; istniejące postacie zachowują swoje wybory. Pierwsze trzy ukończone kampanie przyznają punkty i złoty portret."
+      "Klient Windows ze zintegrowanym centrum, pokojami kooperacyjnymi dla czterech graczy, automatycznymi aktualizacjami i osobnymi profilami. System przedmiotów współdzieli łupy w pokoju; automatyczny zapis zachowuje ekwipunek, złoto i rozwój na tym PC. Sanktuarium łączy publiczne profile, postacie, portrety, tytuły i pieczęcie kampanii. Graj i rozwijaj się, by odblokować klasy, cechy, modyfikatory i trudności; istniejące postacie zachowują swoje wybory. Pierwsze trzy ukończone kampanie przyznają punkty i złoty portret. Wersja 0.4.1 dodaje własne oprawy HUD i ekwipunku, komunikaty w grze oraz kolekcję Pierwsza Warta: trzy relikwie z autorskimi ikonami i sprite’ami, zdobywane u określonych bossów w kampanii Normal na Horror. Sanktuarium zyskuje zwartą nawigację, zakładki profilu i nową ilustrację. Powierzchnie HUD i ekwipunku otrzymują autorski materiał z ciemnego kamienia i postarzanego żelaza w wysokiej rozdzielczości, zachowując czytelność przedmiotów i przycisków."
     ],
     "next": [
       "Następny rozdział",
-      "Następny etap to własny HUD i pierwsza kolekcja przedmiotów ze spójną oprawą i zasadami. Pełny remaster grafiki, wydarzenia, migracja gospodarza i rankingi rywalizacji pozostają w opracowaniu."
+      "Rozwijamy własne grafiki i interfejsy. Remaster całego świata, nowe wydarzenia, migracja gospodarza i rankingi rywalizacji pozostają w przygotowaniu."
     ],
     "limits": "Centrum korzysta z chmury; gra działa w klientach i twórca pokoju musi pozostać połączony. Postacie zapisują się automatycznie na tym komputerze z kopiami odzyskiwania. Nowy pokój tworzy nowy świat. Pełne grafiki HD, migracja hosta i ranking PvP nie są jeszcze gotowe.",
     "milestones": [
@@ -66,11 +66,11 @@
       ],
       [
         "Czy remaster i Arena są gotowe?",
-        "Dostępne są Full HD i ulepszenia wizualne z klasycznymi sprite'ami. Wymiana wszystkich grafik nadal jest częściowa. Coliseum jest wyzwaniem klienta; Arena PvP online, rankingi i wydarzenia pozostają w rozwoju i testach."
+        "Klient obsługuje rozdzielczość Full HD. Wersja 0.4.1 dodaje autorskie ramy i materiał z kamienia i metalu w wysokiej rozdzielczości do HUD i ekwipunku, a także ikony i sprite’y na ziemi trzech relikwii z Pierwszej Warty. Lokacje, postacie i potwory nadal zachowują dużą część klasycznej grafiki: remaster całego świata nie jest ukończony. Coliseum jest dostępne jako wyzwanie w kliencie; rywalizacyjna arena PvP, rankingi i wydarzenia projektu są w przygotowaniu."
       ],
       [
         "Czy całą zawartość stworzyło Returns from Darkness?",
-        "Jesteśmy edycją społecznościową opartą na Diablo/Hellfire i The Hell 3. Wiele klas, obszarów, przedmiotów i grafik pochodzi z tych podstaw. Returns from Darkness rozwija centrum online, integrację klienta, aktualizacje i postęp Sanktuarium. Własne dodatki przedstawimy po wydaniu; zachowujemy informacje o autorach podstaw."
+        "Jesteśmy edycją społecznościową opartą na Diablo/Hellfire i The Hell 3 i zachowujemy informacje o twórcach tych podstaw. Większość klas, obszarów, sprzętu i grafik pochodzi z tych projektów. Returns from Darkness tworzy Sanktuarium, integrację online, aktualizacje i postęp konta, a także ilustracje, emblemat, teksturowane ramy HUD i ekwipunku oraz trzy relikwie Pierwszej Warty. Te autorskie elementy uzupełniają odziedziczoną zawartość; nie przypisujemy sobie stworzenia całej gry."
       ]
     ],
     "join": [
@@ -114,11 +114,11 @@
     ],
     "now": [
       "В этой версии",
-      "Клиент Windows со встроенным центром, совместными комнатами до четырёх игроков, автообновлением и отдельными профилями. Система предметов разделяет добычу комнаты; автосохранение сохраняет инвентарь, золото и развитие на этом ПК. Санктуарий объединяет открытые профили, персонажей, портреты, титулы и печати кампании. Играйте и развивайтесь, открывая классы, черты, модификаторы и сложности; существующие герои сохраняют свой выбор. Первые три пройденные кампании дают точки и золотой портрет."
+      "Клиент Windows со встроенным центром, совместными комнатами до четырёх игроков, автообновлением и отдельными профилями. Система предметов разделяет добычу комнаты; автосохранение сохраняет инвентарь, золото и развитие на этом ПК. Санктуарий объединяет открытые профили, персонажей, портреты, титулы и печати кампании. Играйте и развивайтесь, открывая классы, черты, модификаторы и сложности; существующие герои сохраняют свой выбор. Первые три пройденные кампании дают точки и золотой портрет. Версия 0.4.1 добавляет собственное оформление HUD и инвентаря, уведомления в игре и коллекцию «Первая стража»: три реликвии с оригинальными значками и спрайтами, получаемые у определённых боссов в кампании Normal на Horror. В Санктуарии появились компактная навигация, вкладки профиля и новая иллюстрация. Поверхности HUD и инвентаря получают собственный материал тёмного камня и состаренного железа в высоком разрешении, сохраняя читаемость предметов и элементов управления."
     ],
     "next": [
       "Следующая глава",
-      "Следующий этап — собственный HUD и первая коллекция предметов с согласованными оформлением и правилами. Полная переработка графики, события, перенос роли хозяина и соревновательные рейтинги остаются в разработке."
+      "Мы продолжаем создавать собственную графику и интерфейсы. Ремастер всего мира, новые события, перенос роли хозяина и соревновательный рейтинг ещё разрабатываются."
     ],
     "limits": "Центр использует облако; игра работает в клиентах, и создатель комнаты должен оставаться подключённым. Персонажи автоматически сохраняются на этом ПК с резервными копиями. Новая комната создаёт новый мир. Полная HD-графика, перенос хоста и рейтинговый PvP ещё не завершены.",
     "milestones": [
@@ -153,11 +153,11 @@
       ],
       [
         "Ремастер и Арена уже готовы?",
-        "Есть разрешение Full HD и визуальные улучшения с классическими спрайтами. Замена всей графики пока частичная. Coliseum доступен как испытание клиента; онлайн-PvP-арена, рейтинги и события ещё разрабатываются и проверяются."
+        "Клиент поддерживает разрешение Full HD. Версия 0.4.1 добавляет собственные рамки и материал камня и металла в высоком разрешении для HUD и инвентаря, а также значки и спрайты на земле трёх реликвий «Первой стражи». Окружение, персонажи и монстры всё ещё сохраняют значительную часть классической графики: ремастер всего мира не завершён. Coliseum доступен как испытание в клиенте; соревновательная PvP-арена, рейтинги и события проекта ещё разрабатываются."
       ],
       [
         "Весь контент создан Returns from Darkness?",
-        "Это издание сообщества на основе Diablo/Hellfire и The Hell 3. Значительная часть классов, областей, предметов и графики взята из этих основ. Returns from Darkness разрабатывает онлайн-центр, интеграцию клиента, обновления и прогресс Санктуария. Собственные дополнения будут представлены после выпуска; сведения об авторах основ сохранены."
+        "Это общественная редакция, адаптированная из Diablo/Hellfire и The Hell 3, с сохранением указания авторов исходных проектов. Большинство классов, областей, снаряжения и графики пришло из этих основ. Returns from Darkness создаёт Санктуарий, онлайн-интеграцию, обновления и развитие аккаунта, а также иллюстрации, эмблему, текстурированные рамки HUD и инвентаря и три реликвии «Первой стражи». Эти оригинальные элементы дополняют унаследованный контент; мы не приписываем себе создание всей игры."
       ]
     ],
     "join": [
@@ -201,11 +201,11 @@
     ],
     "now": [
       "У цій версії",
-      "Клієнт Windows із вбудованим центром, спільними кімнатами до чотирьох гравців, автооновленням і окремими профілями. Система предметів розділяє здобич кімнати; автозбереження зберігає інвентар, золото й розвиток на цьому ПК. Санктуарій об’єднує публічні профілі, персонажів, портрети, титули й печатки кампанії. Грайте й розвивайтеся, відкриваючи класи, риси, модифікатори та складності; наявні герої зберігають свій вибір. Перші три пройдені кампанії дають крапки й золотий портрет."
+      "Клієнт Windows із вбудованим центром, спільними кімнатами до чотирьох гравців, автооновленням і окремими профілями. Система предметів розділяє здобич кімнати; автозбереження зберігає інвентар, золото й розвиток на цьому ПК. Санктуарій об’єднує публічні профілі, персонажів, портрети, титули й печатки кампанії. Грайте й розвивайтеся, відкриваючи класи, риси, модифікатори та складності; наявні герої зберігають свій вибір. Перші три пройдені кампанії дають крапки й золотий портрет. Версія 0.4.1 додає власне оформлення HUD та інвентарю, повідомлення в грі й колекцію «Перша варта»: три реліквії з оригінальними значками та спрайтами, які дають певні боси в кампанії Normal на Horror. Санктуарій отримав компактну навігацію, вкладки профілю та нову ілюстрацію. Поверхні HUD та інвентарю отримують власний матеріал темного каменю й зістареного заліза у високій роздільності зі збереженням читабельності предметів і елементів керування."
     ],
     "next": [
       "Наступний розділ",
-      "Наступний етап — власний HUD і перша колекція предметів з узгодженими оформленням та правилами. Повне оновлення графіки, події, перенесення ролі господаря та змагальні рейтинги залишаються в розробці."
+      "Продовжуємо створювати власну графіку й інтерфейси. Ремастер усього світу, нові події, перенесення ролі господаря та змагальні рейтинги ще розробляються."
     ],
     "limits": "Центр використовує хмару; гра працює в клієнтах і творець кімнати має залишатися підключеним. Персонажі автоматично зберігаються на цьому ПК з копіями відновлення. Нова кімната створює новий світ. Повна HD-графіка, перенесення хоста та рейтинг PvP ще не завершені.",
     "milestones": [
@@ -240,11 +240,11 @@
       ],
       [
         "Ремастер і Арена вже готові?",
-        "Є роздільність Full HD та візуальні поліпшення з класичними спрайтами. Заміна всієї графіки поки часткова. Coliseum доступний як випробування клієнта; онлайн-PvP-арена, рейтинги й події ще розробляються та перевіряються."
+        "Клієнт підтримує роздільність Full HD. Версія 0.4.1 додає власні рамки й матеріал каменю та металу у високій роздільності для HUD та інвентарю, а також значки й наземні спрайти трьох реліквій «Першої варти». Оточення, персонажі та монстри досі зберігають значну частину класичної графіки: ремастер усього світу не завершено. Coliseum доступний як випробування в клієнті; змагальна PvP-арена, рейтинги й події проєкту ще розробляються."
       ],
       [
         "Увесь вміст створено Returns from Darkness?",
-        "Це видання спільноти на основі Diablo/Hellfire і The Hell 3. Значна частина класів, областей, предметів і графіки походить із цих основ. Returns from Darkness розробляє онлайн-центр, інтеграцію клієнта, оновлення й прогрес Санктуарію. Власні доповнення представимо після випуску; відомості про авторів основ збережено."
+        "Це спільнотна редакція, адаптована з Diablo/Hellfire та The Hell 3, зі збереженням згадок про авторів вихідних проєктів. Більшість класів, локацій, спорядження та графіки походить із цих основ. Returns from Darkness створює Санктуарій, онлайн-інтеграцію, оновлення та розвиток облікового запису, а також ілюстрації, емблему, текстуровані рамки HUD та інвентарю і три реліквії «Першої варти». Ці оригінальні елементи доповнюють успадкований вміст; ми не приписуємо собі створення всієї гри."
       ]
     ],
     "join": [
@@ -288,11 +288,11 @@
     ],
     "now": [
       "Bu sürümde",
-      "Entegre merkez, dört kişilik işbirliği odaları, otomatik güncellemeler ve ayrı profiller içeren Windows istemcisi. Eşya sistemi odadaki ganimetleri paylaşır; otomatik kayıt envanteri, altını ve karakter gelişimini bu PC’de korur. Sığınak; herkese açık profilleri, karakterleri, portreleri, unvanları ve sefer mühürlerini birleştirir. Oynayarak ilerleyin; sınıfları, özellikleri, değiştiricileri ve zorlukları açın. Mevcut karakterler seçimlerini korur. İlk üç tamamlanan sefer, noktaları ve altın portreyi kazandırır."
+      "Entegre merkez, dört kişilik işbirliği odaları, otomatik güncellemeler ve ayrı profiller içeren Windows istemcisi. Eşya sistemi odadaki ganimetleri paylaşır; otomatik kayıt envanteri, altını ve karakter gelişimini bu PC’de korur. Sığınak; herkese açık profilleri, karakterleri, portreleri, unvanları ve sefer mühürlerini birleştirir. Oynayarak ilerleyin; sınıfları, özellikleri, değiştiricileri ve zorlukları açın. Mevcut karakterler seçimlerini korur. İlk üç tamamlanan sefer, noktaları ve altın portreyi kazandırır. 0.4.1 sürümü özgün HUD ve envanter çerçeveleri, oyun içi bildirimler ve İlk Nöbet koleksiyonunu sunar: Horror zorluğunda Normal sefer modundaki belirli bosslardan kazanılan, özgün simge ve yer sprite’larına sahip üç yadigâr. Sığınak daha kompakt gezinme, profil sekmeleri ve yeni bir illüstrasyon kazanır. HUD ve envanter yüzeyleri, eşyaların ve kontrollerin okunabilirliğini koruyan, koyu taş ve yaşlanmış demirden oluşan özgün yüksek çözünürlüklü bir malzeme kazanır."
     ],
     "next": [
       "Sonraki bölüm",
-      "Sonraki kapsam, projeye özel bir HUD ve tutarlı görsel tasarım ile kurallara sahip ilk eşya koleksiyonudur. Tüm görsellerin yenilenmesi, etkinlikler, ev sahibi geçişi ve rekabetçi sıralamalar geliştirme aşamasındadır."
+      "Özgün görselleri ve arayüzleri geliştirmeyi sürdürüyoruz. Tüm dünya görsellerinin yenilenmesi, yeni etkinlikler, ev sahibi geçişi ve rekabetçi sıralamalar geliştirme aşamasındadır."
     ],
     "limits": "Merkez bulut hizmetlerini kullanır; oyun istemcilerde çalışır ve oda kurucusu bağlı kalmalıdır. Karakterler bu bilgisayarda kurtarma kopyalarıyla otomatik kaydedilir. Yeni oda yeni bir dünya oluşturur. Tam HD görseller, ev sahibi geçişi ve PvP sıralaması henüz tamamlanmadı.",
     "milestones": [
@@ -327,11 +327,11 @@
       ],
       [
         "Remaster ve Arena tamam mı?",
-        "Klasik sprite'larla Full HD çözünürlük ve görsel iyileştirmeler mevcut. Tüm görsellerin değiştirilmesi hâlâ kısmidir. Coliseum istemcide bir mücadeledir; çevrimiçi PvP Arenası, sıralamalar ve etkinlikler geliştiriliyor ve doğrulanıyor."
+        "İstemci Full HD çözünürlüğü destekler. 0.4.1 sürümü, HUD ve envantere özgün çerçeveler ve yüksek çözünürlüklü taş ve metal malzemesi, ayrıca İlk Nöbet’in üç yadigârına ait simgeler ve yer sprite’ları ekler. Ortamlar, karakterler ve yaratıklar klasik görsellerin büyük kısmını korur; tüm dünyanın görsel yenilemesi tamamlanmamıştır. Coliseum istemcide bir mücadele olarak sunulur; rekabetçi PvP Arenası, sıralamalar ve projeye özgü etkinlikler geliştirme aşamasındadır."
       ],
       [
         "Tüm içerik Returns from Darkness tarafından mı oluşturuldu?",
-        "Diablo/Hellfire ve The Hell 3 temellerinden uyarlanmış bir topluluk sürümüyüz. Sınıfların, bölgelerin, eşyaların ve görsellerin çoğu bu temellerden gelir. Returns from Darkness çevrimiçi merkezi, istemci entegrasyonunu, güncellemeleri ve Sığınak ilerlemesini geliştirir. Özgün eklemeler yayımlandıkça tanıtılacak; temel projelerin katkıları belirtilecektir."
+        "Diablo/Hellfire ve The Hell 3’ten uyarlanmış bir topluluk sürümüyüz; temel projelerin katkıları belirtilmeye devam eder. Sınıfların, bölgelerin, ekipmanların ve görsellerin çoğu bu temellerden gelir. Returns from Darkness, Sığınağı, çevrimiçi entegrasyonu, güncellemeleri ve hesap ilerlemesini; ayrıca illüstrasyonları, amblemi, dokulu HUD ve envanter çerçevelerini ve İlk Nöbet’in üç yadigârını oluşturur. Bu özgün öğeler devralınan içeriğe eklemelerdir; tüm oyunu projenin yarattığını iddia etmeyiz."
       ]
     ],
     "join": [
@@ -375,11 +375,11 @@
     ],
     "now": [
       "このビルドで利用可能",
-      "ハブ内蔵Windowsクライアント、最大4人の協力ルーム、自動更新、アカウント別プロフィール。アイテムシステムはルーム内のドロップを共有し、自動保存で所持品、ゴールド、キャラクターの成長をこのPCに保管します。 サンクチュアリには公開プロフィール、キャラクター、肖像、称号、キャンペーンの紋章が集まります。プレイして成長するとクラス、特性、調整要素、難易度が解放されます。既存キャラクターの選択は維持され、最初の3段階のクリアで印と金色の肖像を獲得できます。"
+      "ハブ内蔵Windowsクライアント、最大4人の協力ルーム、自動更新、アカウント別プロフィール。アイテムシステムはルーム内のドロップを共有し、自動保存で所持品、ゴールド、キャラクターの成長をこのPCに保管します。 サンクチュアリには公開プロフィール、キャラクター、肖像、称号、キャンペーンの紋章が集まります。プレイして成長するとクラス、特性、調整要素、難易度が解放されます。既存キャラクターの選択は維持され、最初の3段階のクリアで印と金色の肖像を獲得できます。 バージョン0.4.1では独自のHUD・インベントリ装飾、ゲーム内通知、「最初の守り」のコレクションを追加。独自アイコンと地面スプライトを持つ3つの遺物は、NormalキャンペーンのHorror難易度で特定のボスから入手できます。サンクチュアリはコンパクトなナビゲーション、プロフィールタブ、新しいイラストを備えます。 HUDとインベントリの表面には、暗い石と古びた鉄を表現した独自の高精細素材を使用し、アイテムや操作表示の読みやすさを保ちます。"
     ],
     "next": [
       "次の章",
-      "次の範囲は独自HUDと、世界観やルールを統一した最初のアイテムコレクションです。全アートのリマスター、イベント、ホスト移行、対戦ランキングは引き続き開発中です。"
+      "独自のアートとインターフェースを引き続き拡充します。全世界のリマスター、新イベント、ホスト移行、対戦ランキングは開発中です。"
     ],
     "limits": "ハブはクラウドサービスを利用し、ゲームは各クライアントで実行されるため、ルーム作成者は接続を維持する必要があります。キャラクターはこのPCに自動保存され、復元用コピーも作成されます。新しいルームは新しい世界を生成します。全画像のHD化、ホスト移行、PvPランキングは未完成です。",
     "milestones": [
@@ -414,11 +414,11 @@
       ],
       [
         "リマスターとアリーナは完成していますか？",
-        "Full HD解像度と見た目の改善を利用でき、従来のスプライトも保持しています。全画像の高精細化はまだ一部です。Coliseumはクライアント内の挑戦として存在し、オンラインPvPアリーナ、ランキング、イベントは検証・開発中です。"
+        "クライアントはFull HD解像度に対応しています。バージョン0.4.1ではHUDとインベントリに独自の枠と高精細な石・金属素材を追加し、「最初の守り」の3つの遺物に独自アイコンと地面スプライトを用意しました。背景、キャラクター、モンスターには今も多くのクラシックなアートを使用しており、世界全体のリマスターは完成していません。Coliseumはクライアント内のチャレンジとして利用可能です。競技用PvPアリーナ、ランキング、独自イベントは開発中です。"
       ],
       [
         "すべてのコンテンツはReturns from Darknessが制作したものですか？",
-        "Diablo/HellfireとThe Hell 3を基にしたコミュニティ版です。クラス、エリア、アイテム、アートの多くはそれらの基盤に由来します。Returns from Darknessはオンライン拠点、クライアント統合、更新、サンクチュアリの進行を開発しています。独自の追加要素は公開時に紹介し、基盤の制作元はクレジットに記載します。"
+        "本作はDiablo/HellfireとThe Hell 3を基に調整したコミュニティ版で、元プロジェクトのクレジットを保持しています。多くのクラス、地域、装備、アートはその基盤から受け継いでいます。Returns from Darknessはサンクチュアリ、オンライン連携、更新、アカウント進行に加え、イラスト、エンブレム、テクスチャ付きHUD・インベントリ枠、「最初の守り」の3つの遺物を制作しています。これらの独自要素は既存コンテンツへの追加であり、ゲーム全体を制作したとは主張しません。"
       ]
     ],
     "join": [
@@ -462,11 +462,11 @@
     ],
     "now": [
       "이번 빌드에서 이용 가능",
-      "허브가 통합된 Windows 클라이언트, 최대 4인 협동 방, 자동 업데이트, 계정별 프로필. 아이템 시스템은 방의 드롭을 공유하고 자동 저장으로 인벤토리, 금, 캐릭터 성장을 이 PC에 보관합니다. 성역은 공개 프로필, 캐릭터, 초상화, 칭호와 캠페인 인장을 모읍니다. 플레이하며 성장하면 클래스, 특성, 변경 요소와 난이도가 해제됩니다. 기존 캐릭터의 선택은 유지되며, 처음 세 캠페인을 완료하면 점 표시와 황금 초상화를 얻습니다."
+      "허브가 통합된 Windows 클라이언트, 최대 4인 협동 방, 자동 업데이트, 계정별 프로필. 아이템 시스템은 방의 드롭을 공유하고 자동 저장으로 인벤토리, 금, 캐릭터 성장을 이 PC에 보관합니다. 성역은 공개 프로필, 캐릭터, 초상화, 칭호와 캠페인 인장을 모읍니다. 플레이하며 성장하면 클래스, 특성, 변경 요소와 난이도가 해제됩니다. 기존 캐릭터의 선택은 유지되며, 처음 세 캠페인을 완료하면 점 표시와 황금 초상화를 얻습니다. 0.4.1 버전은 자체 HUD와 인벤토리 장식, 게임 내 알림, 첫 번째 파수 컬렉션을 추가합니다. 독자적인 아이콘과 바닥 스프라이트를 가진 유물 세 개는 Horror 난이도의 Normal 캠페인에서 특정 우두머리에게 얻습니다. 성역에는 간결한 탐색, 프로필 탭과 새 삽화가 추가됩니다. HUD와 인벤토리 표면에는 어두운 돌과 낡은 철을 표현한 독자적인 고해상도 소재가 적용되며, 아이템과 조작 표시의 가독성을 유지합니다."
     ],
     "next": [
       "다음 장",
-      "다음 범위는 프로젝트 고유 HUD와 일관된 아트 및 규칙을 갖춘 첫 아이템 컬렉션입니다. 전체 아트 리마스터, 이벤트, 호스트 이전과 경쟁 순위는 계속 개발 중입니다."
+      "독자적인 아트와 인터페이스를 계속 확장합니다. 전체 세계 리마스터, 새 이벤트, 호스트 이전과 경쟁 순위는 개발 중입니다."
     ],
     "limits": "허브는 클라우드 서비스를 사용하며 게임은 각 클라이언트에서 실행되므로 방 생성자는 연결을 유지해야 합니다. 캐릭터는 이 PC에 자동 저장되며 복구 사본을 만듭니다. 새 방은 새 세계를 생성합니다. 전체 HD 이미지, 호스트 이전, PvP 랭킹은 아직 완성되지 않았습니다.",
     "milestones": [
@@ -501,11 +501,11 @@
       ],
       [
         "리마스터와 아레나는 완성됐나요?",
-        "Full HD 해상도와 시각적 개선을 제공하면서 고전 스프라이트를 유지합니다. 전체 고해상도 이미지 교체는 아직 일부만 적용됐습니다. Coliseum은 클라이언트 도전으로 존재하며 온라인 PvP 아레나, 랭킹, 이벤트는 검증 및 개발 중입니다."
+        "클라이언트는 Full HD 해상도를 지원합니다. 0.4.1 버전은 HUD와 인벤토리에 자체 테두리와 고해상도 돌·금속 소재를 추가하며, 첫 번째 파수의 유물 세 개에 독자적인 아이콘과 바닥 스프라이트를 제공합니다. 환경, 캐릭터, 몬스터는 여전히 고전 아트의 상당 부분을 사용합니다. 전체 세계 리마스터는 완성되지 않았습니다. Coliseum은 클라이언트 내 도전으로 이용할 수 있으며, 경쟁 PvP 아레나, 순위와 프로젝트 이벤트는 개발 중입니다."
       ],
       [
         "모든 콘텐츠를 Returns from Darkness가 만들었나요?",
-        "Diablo/Hellfire와 The Hell 3를 기반으로 각색한 커뮤니티 버전입니다. 많은 클래스, 지역, 아이템과 아트는 해당 기반에서 왔습니다. Returns from Darkness는 온라인 허브, 클라이언트 통합, 업데이트와 성역 진행을 개발합니다. 고유 추가 요소는 출시 시 소개하며 기반 제작진의 크레딧을 유지합니다."
+        "Diablo/Hellfire와 The Hell 3를 기반으로 각색한 커뮤니티 버전으로, 원본 프로젝트의 크레딧을 유지합니다. 대부분의 클래스, 지역, 장비와 아트는 해당 기반에서 왔습니다. Returns from Darkness는 성역, 온라인 통합, 업데이트와 계정 진행뿐 아니라 삽화, 엠블럼, 텍스처가 적용된 HUD 및 인벤토리 테두리와 첫 번째 파수의 유물 세 개를 만듭니다. 이러한 독자 요소는 계승한 콘텐츠에 추가되는 것이며, 게임 전체를 제작했다고 주장하지 않습니다."
       ]
     ],
     "join": [
@@ -549,11 +549,11 @@
     ],
     "now": [
       "此版本已提供",
-      "内置大厅的Windows客户端、最多四人的合作房间、自动更新和独立账号档案。物品系统共享房间内的掉落，自动保存将背包、金币和角色成长保存在本机。 庇护之地整合公开资料、角色、头像、称号和战役印记。通过游玩与成长解锁职业、特性、调整项和难度；现有角色保留已选内容。完成前三个难度的战役可获得圆点标记与金色头像。"
+      "内置大厅的Windows客户端、最多四人的合作房间、自动更新和独立账号档案。物品系统共享房间内的掉落，自动保存将背包、金币和角色成长保存在本机。 庇护之地整合公开资料、角色、头像、称号和战役印记。通过游玩与成长解锁职业、特性、调整项和难度；现有角色保留已选内容。完成前三个难度的战役可获得圆点标记与金色头像。 0.4.1版本加入项目原创HUD与背包边框、游戏内提示和“初次守望”系列：三件拥有原创图标及地面精灵的遗物，可在Horror难度的Normal战役模式中击败指定首领获得。圣所新增紧凑导航、个人资料标签页与社区插画。 HUD与背包表面采用原创的高分辨率暗色石材和旧铁材质，同时保持物品和操作信息清晰可读。"
     ],
     "next": [
       "下一篇章",
-      "下一阶段是项目专属HUD和首批具有统一美术与规则的物品。全游戏美术重制、活动、房主迁移与竞技排名仍在开发中。"
+      "我们将继续扩展原创美术和界面。全世界重制、新活动、房主迁移与竞技排名仍在开发中。"
     ],
     "limits": "大厅使用云服务，游戏运行于客户端，因此房间创建者必须保持连接。角色在本机自动保存并保留恢复副本。新房间生成新世界。完整HD美术、主机迁移和PvP排名尚未完成。",
     "milestones": [
@@ -588,11 +588,11 @@
       ],
       [
         "完整重制和竞技场完成了吗？",
-        "客户端支持Full HD分辨率和视觉改进，并保留经典精灵图。全部高清美术替换仍只完成了一部分。Coliseum已作为客户端挑战存在；在线PvP竞技场、排名和活动仍在开发和验证中。"
+        "客户端支持Full HD分辨率。0.4.1版本为HUD与背包加入原创边框和高清石材、金属材质，并为“初次守望”的三件遗物提供原创图标及地面精灵。场景、角色和怪物仍保留大量经典美术，全世界重制尚未完成。Coliseum已作为客户端内挑战提供；竞技PvP场、排名和项目专属活动仍在开发中。"
       ],
       [
         "所有内容都是Returns from Darkness原创的吗？",
-        "这是基于Diablo/Hellfire和The Hell 3改编的社区版本。许多职业、区域、物品和美术来自这些基础。Returns from Darkness开发在线中心、客户端整合、更新和庇护之地进度系统。原创新增内容将在发布时介绍，并保留基础项目的制作人员信息。"
+        "这是基于Diablo/Hellfire和The Hell 3改编的社区版本，并保留基础项目的制作人员信息。大部分职业、区域、装备与美术来自这些基础。Returns from Darkness制作庇护之地、在线整合、更新和账号进度系统，以及插画、徽标、带材质的HUD与背包边框和“初次守望”的三件遗物。这些原创元素是在继承内容上的新增部分，不代表整个游戏都由本项目原创。"
       ]
     ],
     "join": [
@@ -636,11 +636,11 @@
     ],
     "now": [
       "في هذا الإصدار",
-      "عميل Windows بمركز مدمج وغرف تعاونية لأربعة لاعبين وتحديث تلقائي وملفات منفصلة للحسابات. يشارك نظام العناصر غنائم الغرفة؛ ويحفظ الحفظ التلقائي المحتويات والذهب وتطور الشخصية على هذا الحاسوب. يجمع الملاذ الملفات العامة والشخصيات والصور والألقاب وأختام الحملة. تقدّم باللعب لفتح الفئات والسمات والمعدّلات والصعوبات؛ تحتفظ الشخصيات الحالية باختياراتها. تمنح أول ثلاث حملات مكتملة النقاط والصورة الذهبية."
+      "عميل Windows بمركز مدمج وغرف تعاونية لأربعة لاعبين وتحديث تلقائي وملفات منفصلة للحسابات. يشارك نظام العناصر غنائم الغرفة؛ ويحفظ الحفظ التلقائي المحتويات والذهب وتطور الشخصية على هذا الحاسوب. يجمع الملاذ الملفات العامة والشخصيات والصور والألقاب وأختام الحملة. تقدّم باللعب لفتح الفئات والسمات والمعدّلات والصعوبات؛ تحتفظ الشخصيات الحالية باختياراتها. تمنح أول ثلاث حملات مكتملة النقاط والصورة الذهبية. يقدم الإصدار 0.4.1 إطارات أصلية لواجهة اللعب والمخزون وتنبيهات داخل اللعبة ومجموعة الحراسة الأولى: ثلاث تحف بأيقونات ورسوم أرضية أصلية، يمنحها زعماء محددون في حملة Normal على صعوبة Horror. يحصل الملاذ على تنقل أكثر تنظيماً وتبويبات للملف الشخصي ورسمة جديدة للمجتمع. تكتسب أسطح واجهة اللعب والمخزون مادة أصلية عالية الدقة من الحجر الداكن والحديد المعتّق، مع الحفاظ على وضوح العناصر وأدوات التحكم."
     ],
     "next": [
       "الفصل التالي",
-      "النطاق التالي هو واجهة قتال خاصة بالمشروع ومجموعة أولية من العناصر بفن وقواعد متناسقة. لا تزال إعادة تصميم جميع الرسومات والأحداث وانتقال المضيف والتصنيفات التنافسية قيد التطوير."
+      "نواصل تطوير الرسوم والواجهات الأصلية. تجديد عالم اللعبة بالكامل والأحداث الجديدة ونقل المضيف والتصنيفات التنافسية ما زالت قيد التطوير."
     ],
     "limits": "يستخدم المركز خدمات سحابية؛ تعمل المباراة في أجهزة اللاعبين ويجب أن يبقى منشئ الغرفة متصلًا. تُحفظ الشخصيات تلقائيًا على هذا الحاسوب مع نسخ للاستعادة. الغرفة الجديدة تنشئ عالمًا جديدًا. الرسوم عالية الدقة الكاملة ونقل المضيف وتصنيف PvP لم تكتمل بعد.",
     "milestones": [
@@ -675,11 +675,11 @@
       ],
       [
         "هل اكتمل التحسين البصري والحلبة؟",
-        "تتوفر دقة Full HD وتحسينات بصرية مع الحفاظ على الرسومات الكلاسيكية. استبدال جميع الرسوم بموارد أوضح ما زال جزئيًا. يوجد Coliseum كتحدٍ داخل العميل؛ الحلبة التنافسية عبر الإنترنت والتصنيفات والفعاليات ما زالت قيد التطوير والتحقق."
+        "يدعم العميل دقة Full HD. يضيف الإصدار 0.4.1 إطارات أصلية ومادة عالية الدقة من الحجر والمعدن إلى واجهة اللعب والمخزون، إضافةً إلى أيقونات ورسوم أرضية للتحف الثلاث من الحراسة الأولى. ما زالت البيئات والشخصيات والوحوش تحتفظ بجزء كبير من الرسوم الكلاسيكية؛ لم يكتمل تجديد عالم اللعبة بالكامل. يتوفر Coliseum كتحدٍ داخل العميل، بينما ما زالت حلبة PvP التنافسية والتصنيفات وأحداث المشروع قيد التطوير."
       ],
       [
         "هل أنشأ Returns from Darkness كل المحتوى؟",
-        "نحن إصدار مجتمعي مقتبس من Diablo/Hellfire وThe Hell 3. تأتي فئات ومناطق وعناصر ورسومات كثيرة من هذه الأسس. يطوّر Returns from Darkness المركز عبر الإنترنت وتكامل العميل والتحديثات وتقدّم الملاذ. سنعرض الإضافات الأصلية عند إصدارها، مع الاحتفاظ بذكر أصحاب المشاريع الأساسية."
+        "نحن إصدار مجتمعي مقتبس من Diablo/Hellfire وThe Hell 3، مع الحفاظ على ذكر أصحاب المشاريع الأساسية. تأتي معظم الفئات والمناطق والمعدات والرسوم من هذه الأسس. ينشئ Returns from Darkness الملاذ والتكامل عبر الإنترنت والتحديثات وتقدّم الحساب، إلى جانب الرسوم والشعار وإطارات واجهة اللعب والمخزون ذات الخامات والتحف الثلاث من الحراسة الأولى. تُعرض هذه العناصر الأصلية كإضافات إلى المحتوى الموروث، ولا ننسب إلى المشروع إنشاء اللعبة كاملةً."
       ]
     ],
     "join": [

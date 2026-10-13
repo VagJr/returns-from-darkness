@@ -1796,6 +1796,16 @@
 +      8, 128,   4,   0, 170, 160, 
 +    255, 255,   0,   0
 +};
+--- a/src/CharPanel.cpp
++++ b/src/CharPanel.cpp
+@@ -144,6 +144,7 @@
+ 	int yoffset = CharPanelRect.Top;
+ 	
+ 	Surface_DrawCEL(CharPanelRect.Left + Screen_LeftBorder, CharPanelRect.Down + Screen_TopBorder, (int*)Data_CharCEL, 1, CharPanelRect.Width);
++    RfdDecorateCharacterPanel();
+     
+ 	Player& player = Players[CurrentPlayerIndex];
+ 	DrawText(20 + xoffset, 32 + yoffset, 151 + xoffset, player.playerName, 0);// Имя персонажа
 --- a/src/CharSlots.cpp
 +++ b/src/CharSlots.cpp
 @@ -1,716 +1,735 @@
@@ -3270,11 +3280,12 @@
 +}
 --- /dev/null
 +++ b/src/CommunityHub.cpp
-@@ -0,0 +1,171 @@
+@@ -0,0 +1,271 @@
 +#include "stdafx.h"
 +#include "CommunityHub.h"
 +#include "CommunityProgress.h"
 +#include "CommunityDev.h"
++#include "CommunitySession.h"
 +#pragma pack(push,8)
 +#include <winhttp.h>
 +#include <wincrypt.h>
@@ -3284,6 +3295,8 @@
 +using HubJson=nlohmann::json;
 +extern int __stdcall DialogMainMenu(HWND,unsigned int,WPARAM,LPARAM);
 +extern int __stdcall UiLogonDialog(HWND,int*,char*,int,char*,int);
++extern int __stdcall UiMainMenuDialog(char*,int*,char,void(__stdcall*)(int),int);
++extern int __stdcall UiSelHeroMultDialog(int(__stdcall*)(void(__stdcall*)(CharSaveInfo*)),int(__stdcall*)(CharSaveInfo*),int(__stdcall*)(CharSaveInfo*),int(__stdcall*)(unsigned int,unsigned short*),int*,char*,char,char);
 +extern int LoadFonts();
 +extern void __fastcall SetCurFont(int);
 +extern int __cdecl GetSpaceWidth();
@@ -3304,9 +3317,48 @@
 +extern BOOL __stdcall SetSystemCursor();
 +extern void __fastcall InitDialogSurface(HWND);
 +extern void DeleteDialogTitleAnim();
++extern void __fastcall AnimateDialogTitle(HWND);
 +extern void *TitleDialogSurface;
 +extern int AnimTitleWidth,AnimTitleHeight;
++extern void __fastcall DrawFontString(uint8_t*,TextWin*,int,int);
++extern void __fastcall SetDialogBmpToElem(HWND,HWND);
++extern PALETTEENTRY *__fastcall GetMenuPalette(int);
 +namespace {
++struct NoticeState {std::string caption,text;std::vector<std::string> lines;size_t page=0;int rows=1;};
++int noticeTexts[]={ID_QUESTION_TEXT,ID_CAPTION,0},noticeButtons[]={ID_YES_OK_BUTTON,0};
++std::string noticeText(const char *text){
++ std::string input=text?text:"";if(input.size()>8192)input.resize(8192);
++ int count=MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,input.c_str(),int(input.size()),nullptr,0);
++ if(count>0){std::wstring wide(count,L' ');MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,input.data(),int(input.size()),&wide[0],count);count=WideCharToMultiByte(1252,0,wide.data(),int(wide.size()),nullptr,0,nullptr,nullptr);std::string converted(count,' ');WideCharToMultiByte(1252,0,wide.data(),int(wide.size()),&converted[0],count,nullptr,nullptr);input=std::move(converted);}
++ for(char &c:input)if(static_cast<unsigned char>(c)<32&&c!='\n')c=' ';
++ return input;
++}
++void wrapNotice(NoticeState &state,int width){
++ SetCurFont(3);std::string line,word;
++ auto measure=[](const std::string &s){return GetStringDrawWidth(const_cast<char*>(s.c_str()));};
++ auto append=[&](){if(word.empty())return;std::string next=line+(line.empty()?"":" ")+word;if(!line.empty()&&measure(next)>width){state.lines.push_back(line);line.clear();}if(!line.empty())line+=' ';for(char c:word){std::string next=line+c;if(!line.empty()&&measure(next)>width){state.lines.push_back(line);line.clear();}line+=c;}word.clear();};
++ for(char c:state.text){if(c==' '||c=='\n'){append();if(c=='\n'){state.lines.push_back(line);line.clear();}}else word+=c;}
++ append();if(!line.empty()||state.lines.empty())state.lines.push_back(line);
++}
++void drawNotice(HWND dlg,NoticeState &state){
++ HWND body=GetDlgItem(dlg,ID_QUESTION_TEXT);auto data=(TextWin*)GetWindowLongA(body,GWL_USERDATA);if(!data||!data->surface)return;
++ SetDialogBmpToElem(dlg,body);SetCurFont(3);size_t begin=state.page*state.rows;
++ for(int i=0;i<state.rows&&begin+i<state.lines.size();i++){auto &line=state.lines[begin+i];int width=GetStringDrawWidth(const_cast<char*>(line.c_str()));DrawFontString((uint8_t*)line.c_str(),data,std::max(4,(int(data->size.cx)-width)/2),i*26+2);}
++ InvalidateRect(body,nullptr,TRUE);
++}
++int __stdcall noticeDialog(HWND dlg,unsigned int msg,WPARAM w,LPARAM l){
++ auto state=(NoticeState*)GetPropA(dlg,"RFD_NOTICE_STATE");
++ if(msg==WM_INITDIALOG){state=(NoticeState*)l;SetPropA(dlg,"RFD_NOTICE_STATE",state);auto data=AllocTextWin();SetWindowLongA(dlg,GWL_USERDATA,(LONG)data);LoadDialogBackground(dlg,0,&ZeroString_,-1,1,"ui_art\\mainmenu.pcx",&data->surface,&data->size,0);InitDialogSurface(dlg);if(TitleDialogSurface)memset(TitleDialogSurface,0,AnimTitleWidth*AnimTitleHeight);
++  SetDlgItemTextA(dlg,ID_CAPTION,state->caption.c_str());SetDlgItemTextA(dlg,ID_QUESTION_TEXT,"");SetDlgItemTextA(dlg,ID_YES_OK_BUTTON,"OK");InitTextElemList(dlg,noticeTexts,3);InitButtonListText(dlg,noticeButtons,4,0);
++  // Opening after hero selection/room pages may follow a completed fade-out.
++  // Restore the popup palette before its first frame, as the original skin does.
++  PALETTEENTRY *palette=GetMenuPalette(0);SDrawUpdatePalette(0,10,palette,0);SDrawUpdatePalette(112,144,palette+112,1);
++  auto body=(TextWin*)GetWindowLongA(GetDlgItem(dlg,ID_QUESTION_TEXT),GWL_USERDATA);state->rows=std::max(1,(int(body->size.cy)-4)/26);wrapNotice(*state,int(body->size.cx)-20);drawNotice(dlg,*state);SetFocus(GetDlgItem(dlg,ID_YES_OK_BUTTON));SetPropA(ghMainWnd,"RFD_NATIVE_NOTICE",reinterpret_cast<HANDLE>(1));return 1;
++ }
++ if(msg==WM_DESTROY){DeleteDialogTitleAnim();DeleteElementListData(dlg,noticeTexts);DeleteElementListData(dlg,noticeButtons);DeleteWinData((TextWin*)GetWindowLongA(dlg,GWL_USERDATA));SetWindowLongA(dlg,GWL_USERDATA,0);RemovePropA(dlg,"RFD_NOTICE_STATE");RemovePropA(ghMainWnd,"RFD_NATIVE_NOTICE");return SDlgDefDialogProc_(dlg,msg,w,l);}
++ if(msg==WM_COMMAND&&!HIWORD(w)&&(LOWORD(w)==1||LOWORD(w)==ID_YES_OK_BUTTON||LOWORD(w)==2)){if(state&&LOWORD(w)!=2&&(state->page+1)*state->rows<state->lines.size()){state->page++;drawNotice(dlg,*state);}else SDlgEndDialog(dlg,1);return 0;}
++ return SDlgDefDialogProc_(dlg,msg,w,l);
++}
 +std::string token,username,title="Online do projeto";std::array<std::string,7> labels;
 +int formQaFrames=0;bool formQaPassed=true;DWORD formQaStarted=0;
 +char *formName=nullptr,*formPassword=nullptr;int formNameSize=0,formPasswordSize=0;
@@ -3319,22 +3371,37 @@
 + return std::string(profile)+"\\native-session.bin";
 +}
 +void remember(bool read){
++ struct AccountIdentitySync {~AccountIdentitySync(){RfdPublishNativeAccount(token.empty()?"":username.c_str());}} identitySync;
 + if(read){token.clear();username.clear();FILE *f=fopen(storage(true).c_str(),"rb");if(!f)return;fseek(f,0,SEEK_END);long size=ftell(f);rewind(f);if(size<1||size>8192){fclose(f);return;}std::vector<BYTE> bytes(size);if(fread(bytes.data(),1,size,f)!=size){fclose(f);return;}fclose(f);DATA_BLOB input{DWORD(size),bytes.data()},out{};
 +  if(CryptUnprotectData(&input,nullptr,nullptr,nullptr,nullptr,CRYPTPROTECT_UI_FORBIDDEN,&out)){try{auto j=HubJson::parse(std::string((char*)out.pbData,out.cbData));token=j.at("token");username=j.at("user");if(token.size()!=43||username.size()<3||username.size()>16){token.clear();username.clear();}}catch(...){token.clear();username.clear();}SecureZeroMemory(out.pbData,out.cbData);LocalFree(out.pbData);}
 + }else{std::string text=HubJson({{"token",token},{"user",username}}).dump();DATA_BLOB input{DWORD(text.size()),(BYTE*)text.data()},out{};if(CryptProtectData(&input,L"Returns from Darkness",nullptr,nullptr,nullptr,CRYPTPROTECT_UI_FORBIDDEN,&out)){std::string path=storage(false),temp=path+".new";FILE *f=fopen(temp.c_str(),"wb");if(f){fwrite(out.pbData,1,out.cbData,f);fclose(f);MoveFileExA(temp.c_str(),path.c_str(),MOVEFILE_REPLACE_EXISTING|MOVEFILE_WRITE_THROUGH);}LocalFree(out.pbData);}}
 +}
 +HubJson api(const std::wstring &route,const HubJson &body=nullptr){
-+ HINTERNET session=WinHttpOpen(L"RFD-NativeHub/0.4.0",WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY,nullptr,nullptr,0);if(!session)throw std::runtime_error("A central nao respondeu.");
++ HINTERNET session=WinHttpOpen(L"RFD-NativeHub/0.4.1",WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY,nullptr,nullptr,0);if(!session)throw std::runtime_error("A central nao respondeu.");
 + const bool fixture=RfdDevLocalRealm();WinHttpSetTimeouts(session,5000,5000,5000,12000);HINTERNET conn=WinHttpConnect(session,fixture?L"127.0.0.1":L"returns-darkness-realm.oblique-tactical.workers.dev",fixture?19140:443,0),req=conn?WinHttpOpenRequest(conn,body.is_null()?L"GET":L"POST",(L"/api/"+route).c_str(),nullptr,nullptr,nullptr,fixture?0:WINHTTP_FLAG_SECURE):nullptr;
 + std::string text=body.is_null()?"":body.dump();std::wstring header=L"Content-Type: application/json\r\nAuthorization: Bearer "+std::wstring(token.begin(),token.end())+L"\r\n";std::string response;DWORD status=0,length=sizeof(status),received=0;char buffer[4096];bool ok=req&&WinHttpSendRequest(req,header.c_str(),DWORD(header.size()),text.empty()?nullptr:text.data(),DWORD(text.size()),DWORD(text.size()),0)&&WinHttpReceiveResponse(req,nullptr);
 + if(ok){WinHttpQueryHeaders(req,WINHTTP_QUERY_STATUS_CODE|WINHTTP_QUERY_FLAG_NUMBER,nullptr,&status,&length,nullptr);while(WinHttpReadData(req,buffer,sizeof(buffer),&received)&&received){response.append(buffer,received);if(response.size()>262144){ok=false;break;}}}
 + if(req)WinHttpCloseHandle(req);if(conn)WinHttpCloseHandle(conn);WinHttpCloseHandle(session);if(!ok)throw std::runtime_error("A central nao respondeu. Tente novamente.");
 + auto value=HubJson::parse(response);if(status!=200){if(status==401){token.clear();remember(false);}throw std::runtime_error(value.value("error","Nao foi possivel concluir."));}return value;
 +}
++bool hubLabelsFit=true;
++void drawHubLabels(HWND dlg){
++ // Keep complete captions. Only the font size changes, never their spelling.
++ for(int i=0;i<7;i++){
++  HWND button=GetDlgItem(dlg,ids[i]);RECT rect{};GetClientRect(button,&rect);
++  std::string label=noticeText(labels[i].c_str());int chosen=0;
++  for(int font:{4,2,0}){SetCurFont(font);chosen=font;if(GetStringDrawWidth(const_cast<char*>(label.c_str()))<=rect.right-2*GetPentagramWidth()-8)break;}
++  hubLabelsFit=hubLabelsFit&&GetStringDrawWidth(const_cast<char*>(label.c_str()))<=rect.right-2*GetPentagramWidth()-8;
++  SetDlgItemTextA(dlg,ids[i],label.c_str());EnableWindow(button,!label.empty());int one[]={ids[i],0};InitButtonListText(dlg,one,chosen,0);
++ }
++}
 +int __stdcall hubDialog(HWND dlg,unsigned int msg,WPARAM w,LPARAM l){
 + if(msg==WM_TIMER&&RfdControlPending()){SDlgEndDialog(dlg,99);return 0;}
++ // Main-menu timer 2 redraws every caption in Font42. This hub keeps its
++ // fitted captions and only shares the native title animation.
++ if(msg==WM_TIMER&&w==2){AnimateDialogTitle(dlg);return 0;}
 + if(msg==WM_COMMAND&&!HIWORD(w)){int id=LOWORD(w);if(id==1)id=GetDlgCtrlID(GetFocus());if(id==2){SDlgEndDialog(dlg,7);return 0;}for(int i=0;i<7;i++)if(id==ids[i]){SDlgEndDialog(dlg,i+1);return 0;}}
-+ int value=DialogMainMenu(dlg,msg,w,l);if(msg==WM_INITDIALOG){DeleteElementListData(dlg,MainMenuButtonList);for(int i=0;i<7;i++){SetDlgItemTextA(dlg,ids[i],labels[i].c_str());EnableWindow(GetDlgItem(dlg,ids[i]),!labels[i].empty());}InitButtonListText(dlg,MainMenuButtonList,6,1);SetFocus(GetDlgItem(dlg,ids[0]));}return value;
++ int value=DialogMainMenu(dlg,msg,w,l);if(msg==WM_INITDIALOG){DeleteElementListData(dlg,MainMenuButtonList);drawHubLabels(dlg);SetFocus(GetDlgItem(dlg,ids[0]));}return value;
 +}
 +int menu(){LoadFonts();MainMainMenu=true;int result=SDlgDialogBoxParam(HInstance,"MAINMENU_DIALOG2",ghMainWnd,hubDialog,0);MainMainMenu=false;return result;}
 +bool inputQaEnabled(){
@@ -3383,13 +3450,20 @@
 +const char *tierNames[]={"Horror","Purgatory","Doom","Crucible","Torment","Agony","Terror","Destruction","Inferno"};
 +bool chooseJourney(const HubJson &state,std::string &mode,int &tier){
 + labels={"Campanha cooperativa","Coliseum PvP","","","","","Voltar"};int choice=menu();if(choice==7||choice<1||choice==99)return false;
-+ mode=choice==2?"coliseum-pvp":"campaign-coop";if(choice==2&&!RfdProgressModeAllowed(8,true))return false;
++ mode=choice==2?"coliseum-pvp":"campaign-coop";if(choice==2){if(!RfdProgressModeAllowed(8,true))return false;tier=0;return true;}
 + auto owned=state.contains("profile")?state.at("profile").at("unlocks").at("difficulties"):HubJson::array({0});size_t page=0;
 + for(;;){labels={"","","","","Mais dificuldades","","Voltar"};for(size_t i=0;i<4&&page*4+i<9;i++){int id=int(page*4+i);bool unlocked=std::find(owned.begin(),owned.end(),id)!=owned.end();labels[i]=std::string(tierNames[id])+(unlocked?"":" [bloqueado]");}
-+  int selected=menu();if(selected==7||selected<1||selected==99)return false;if(selected==5){page=(page+1)%3;continue;}if(selected>=1&&selected<=4&&page*4+selected-1<9){tier=int(page*4+selected-1);if(std::find(owned.begin(),owned.end(),tier)==owned.end()){MessageBoxA(ghMainWnd,"Complete a dificuldade anterior e alcance o nivel necessario para desbloquear esta jornada.","Santuario",MB_OK);continue;}return true;}}
++  int selected=menu();if(selected==7||selected<1||selected==99)return false;if(selected==5){page=(page+1)%3;continue;}if(selected>=1&&selected<=4&&page*4+selected-1<9){tier=int(page*4+selected-1);if(std::find(owned.begin(),owned.end(),tier)==owned.end()){RfdShowNotice("Santuario","Complete a dificuldade anterior e alcance o nivel necessario para desbloquear esta jornada.");continue;}return true;}}
 +}
 +}
 +const char *RfdHubFormTitle(){return title.c_str();}
++void RfdShowNotice(const char *caption,const char *text){
++ // Only startup/fatal errors before graphics initialization may use a system box.
++ if(!ghMainWnd||!ScreenSurface){MessageBoxA(ghMainWnd,text?text:"",caption?caption:"Returns from Darkness",MB_OK|MB_ICONINFORMATION);return;}
++ LoadFonts();NoticeState state{noticeText(caption),noticeText(text)};HWND parent=GetActiveWindow();if(!parent||GetWindowThreadProcessId(parent,nullptr)!=GetCurrentThreadId())parent=ghMainWnd;
++ SDlgDialogBoxParam(HInstance,"RFD_NATIVE_NOTICE",parent,noticeDialog,(LPARAM)&state);
++ extern void RfdRepaintMenus();RfdRepaintMenus();
++}
 +int RfdShowRoomHub(){
 + remember(true);size_t page=0;char hash[65]={};GetEnvironmentVariableA("RFD_CONTENT_HASH",hash,sizeof(hash));
 + for(;;){try{
@@ -3407,7 +3481,7 @@
 +  int choice=menu();if(choice==7||choice<1||choice==99)return 1;if(choice==6){RfdShowAccountHub();continue;}if(choice==5){page++;continue;}
 +  if(choice==1){char name[49]={},password[65]={};if(!form("Criar sala",name,sizeof(name),password,sizeof(password)))continue;std::string mode;int difficulty=0;if(!chooseJourney(state,mode,difficulty)){SecureZeroMemory(password,sizeof(password));continue;}auto created=api(L"rooms/create",{{"name",name},{"password",password},{"contentHash",hash},{"mode",mode},{"difficulty",difficulty}});SecureZeroMemory(password,sizeof(password));launch(created.at("room"));continue;}
 +  size_t index=page*3+choice-2;if(choice>=2&&choice<=4&&index<rooms.size()){auto &room=rooms[index];char name[49]={},password[65]={};if(room.value("locked",false)&&!form("Senha da sala",name,sizeof(name),password,sizeof(password)))continue;api(L"rooms/join",{{"roomId",room.at("id")},{"password",password},{"contentHash",hash}});SecureZeroMemory(password,sizeof(password));launch(room);}
-+ }catch(const std::exception &e){MessageBoxA(ghMainWnd,e.what(),"Online do projeto",MB_OK|MB_ICONINFORMATION);}}
++ }catch(const std::exception &e){RfdShowNotice("Online do projeto",e.what());}}
 +}
 +
 +bool RfdOpenAuthenticatedCommunity(){
@@ -3427,10 +3501,10 @@
 + for(;;){try{
 +  if(RfdControlPending())return;auto state=api(L"state");if(!state.contains("profile"))throw std::runtime_error("O Santuario ainda esta recebendo esta atualizacao.");auto p=state.at("profile");
 +  labels={username+" - Nv "+std::to_string(p.value("maxLevel",1)),"Escolher titulo","Escolher avatar","Meus personagens","Selos e desbloqueios","Comunidade","Voltar"};int choice=menu();if(choice==7||choice<1||choice==99)return;if(choice==1){RfdProgressRefresh();continue;}if(choice==6){RfdOpenProjectLobby();continue;}
-+  if(choice==5){std::string text="Selos da campanha: ";for(int i=0;i<9;i++)if(std::find(p.at("cleared").begin(),p.at("cleared").end(),i)!=p.at("cleared").end())text+=std::string(tierNames[i])+" ";text+="\nClasses disponiveis: "+std::to_string(p.at("unlocks").at("classes").size())+" / 29\nTraits disponiveis: "+std::to_string(p.at("unlocks").at("traits").size()-1)+" / 98\n";text+=p.value("golden",false)?"Avatar dourado conquistado.":"Complete Horror, Purgatory e Doom para o avatar dourado.";MessageBoxA(ghMainWnd,text.c_str(),"Meu Santuario",MB_OK);continue;}
++  if(choice==5){std::string text="Selos da campanha: ";for(int i=0;i<9;i++)if(std::find(p.at("cleared").begin(),p.at("cleared").end(),i)!=p.at("cleared").end())text+=std::string(tierNames[i])+" ";text+="\nClasses disponiveis: "+std::to_string(p.at("unlocks").at("classes").size())+" / 29\nTraits disponiveis: "+std::to_string(p.at("unlocks").at("traits").size()-1)+" / 98\n";text+=p.value("golden",false)?"Avatar dourado conquistado.":"Complete Horror, Purgatory e Doom para o avatar dourado.";RfdShowNotice("Meu Santuario",text.c_str());continue;}
 +  if(choice==2||choice==3){auto owned=p.at("unlocks").at(choice==2?"titles":"classes");size_t page=0;for(;;){labels={"","","","","Mais opcoes","","Voltar"};for(size_t i=0;i<4&&page*4+i<owned.size();i++){auto value=owned[page*4+i];labels[i]=choice==2?titleName(value.get<std::string>()):FullClassNames[value.get<int>()];}int selected=menu();if(selected==7||selected<1||selected==99)break;if(selected==5){page=(page+1)%std::max(size_t(1),(owned.size()+3)/4);continue;}if(selected>=1&&selected<=4&&page*4+selected-1<owned.size()){auto value=owned[page*4+selected-1];api(L"profiles/update",choice==2?HubJson{{"title",value}}:HubJson{{"avatar",value}});RfdProgressRefresh();break;}}continue;}
 +  if(choice==4){auto all=api(L"profiles/public?username="+std::wstring(username.begin(),username.end()));auto heroes=all.at("characters");size_t page=0;for(;;){labels={"Nenhum personagem sincronizado","","","","Mais personagens","","Voltar"};for(size_t i=0;i<4&&page*4+i<heroes.size();i++){auto h=heroes[page*4+i];labels[i]=h.at("name").get<std::string>()+" - Nv "+std::to_string(h.at("level").get<int>());}int selected=menu();if(selected==7||selected<1||selected==99)break;if(selected==5)page=(page+1)%std::max(size_t(1),(heroes.size()+3)/4);}continue;}
-+ }catch(const std::exception &e){MessageBoxA(ghMainWnd,e.what(),"Meu Santuario",MB_OK);return;}}
++ }catch(const std::exception &e){RfdShowNotice("Meu Santuario",e.what());return;}}
 +}
 +
 +bool RfdHubInputQa(){if(!inputQaEnabled())return false;char name[17]={},password[65]={};form("Teste de entrada",name,sizeof(name),password,sizeof(password));return true;}
@@ -3442,9 +3516,45 @@
 + FILE *f=fopen((std::string(profile)+"\\native-session-qa.json").c_str(),"w");if(f){std::string report=HubJson({{"passed",valid},{"username",username},{"webCode",code}}).dump();fwrite(report.data(),1,report.size(),f);fclose(f);}
 +#endif
 +}
++
++bool RfdMenuRenderQa(){
++#if RFD_DEV_QA
++ char mode[32]={},profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_ENGINE_QA",mode,sizeof(mode));GetEnvironmentVariableA("RFD_PROFILE",profile,sizeof(profile));
++ if(strcmp(mode,"render")||strstr(profile,"engine-qa-")==nullptr)return false;
++ struct Fixture{
++  static std::string &folder(){static std::string path;return path;}
++  static std::string &phase(){static std::string name;return name;}
++  static int &ticks(){static int count=0;return count;}
++  static bool &noticeSeen(){static bool seen=false;return seen;}
++  static BOOL CALLBACK findDialog(HWND window,LPARAM output){if(window!=ghMainWnd&&IsWindowVisible(window)){*(HWND*)output=window;return FALSE;}return TRUE;}
++  static void CALLBACK timer(HWND,UINT,UINT_PTR,DWORD){
++   int tick=++ticks();extern void RfdQueueMenuCapture(const char*);
++   if(GetPropA(ghMainWnd,"RFD_NATIVE_NOTICE"))noticeSeen()=true;
++   const char *state=tick==4?"initial":tick==10?"activated":tick==15?"reset":nullptr;
++   if(state)RfdQueueMenuCapture((folder()+"\\"+phase()+"-"+state+".bmp").c_str());
++   if(tick==7)SendMessageA(ghMainWnd,WM_ACTIVATEAPP,FALSE,0);
++   if(tick==8)SendMessageA(ghMainWnd,WM_ACTIVATEAPP,TRUE,0);
++   if(tick==12){extern bool D3dReset();D3dReset();}
++   if(tick>=20&&tick%5==0){HWND dialog=nullptr;EnumThreadWindows(GetCurrentThreadId(),findDialog,(LPARAM)&dialog);if(dialog)PostMessageA(dialog,WM_COMMAND,2,0);}
++  }
++  static int __stdcall heroes(void(__stdcall* add)(CharSaveInfo*)){for(int i=0;i<3;i++){CharSaveInfo hero{};sprintf(hero.Name,"RenderHero%d",i+1);hero.Class=i==1?PC_1_ARCHER:i==2?PC_2_MAGE:PC_0_WARRIOR;hero.Level=1+i*5;hero.GameMode=GM_NORMAL;hero.Stats.Strength=25;hero.Stats.Magic=10;hero.Stats.Dexterity=20;hero.Stats.Vitality=25;add(&hero);}return 1;}
++ };
++ Fixture::folder()=profile;SetTimer(ghMainWnd,0x524647,200,Fixture::timer);
++ for(int repeat=0;repeat<2;repeat++){
++  Fixture::phase()="menu-"+std::to_string(repeat);Fixture::ticks()=0;MainMainMenu=true;int choice=0;UiMainMenuDialog(TheHellVersion,&choice,0,PlaySoundFile,30);MainMainMenu=false;
++  Fixture::phase()="form-"+std::to_string(repeat);Fixture::ticks()=0;char name[17]={},password[65]={};form("Entrar na conta",name,sizeof(name),password,sizeof(password));
++  Fixture::phase()="characters-"+std::to_string(repeat);Fixture::ticks()=0;MaxCountOfPlayersInGame=4;GameMode=GM_NORMAL;char hero[17]={};UiSelHeroMultDialog(Fixture::heroes,UiCreateHero,DeleteCharSlot,GetStartingStatsByClass,&choice,hero,Enable5Class,Enable6Class);
++  Fixture::phase()="hub-"+std::to_string(repeat);Fixture::ticks()=0;labels={"Campanha cooperativa","Mais salas / Atualizar","Nenhum personagem sincronizado","Destruction [bloqueado]","Selos e desbloqueios","RenderHero12 - Nv 150","Voltar"};menu();
++ }
++ Fixture::phase()="unlock-notice";Fixture::ticks()=0;RfdProgressHeroDifficultyAllowed(8,1);
++ KillTimer(ghMainWnd,0x524647);FILE *report=fopen((std::string(profile)+"\\menu-render-qa.json").c_str(),"w");if(report){fprintf(report,"{\"nativeNotice\":%s,\"menuOpenings\":2,\"formOpenings\":2,\"characterOpenings\":2,\"hubCaptionsFit\":%s,\"mouseInputUsed\":false,\"activationRecovery\":true,\"deviceResetRecovery\":true}",Fixture::noticeSeen()?"true":"false",hubLabelsFit?"true":"false");fclose(report);}return true;
++#else
++ return false;
++#endif
++}
 --- /dev/null
 +++ b/src/CommunityHub.h
-@@ -0,0 +1,8 @@
+@@ -0,0 +1,11 @@
 +#pragma once
 +int RfdShowRoomHub();
 +const char *RfdHubFormTitle();
@@ -3453,6 +3563,9 @@
 +
 +bool RfdHubInputQa();
 +void RfdHubSessionQa();
++// Account, room and unlock notices use the game's bitmap fonts and popup skin.
++void RfdShowNotice(const char *caption,const char *text);
++bool RfdMenuRenderQa();
 --- /dev/null
 +++ b/src/CommunityLoot.cpp
 @@ -0,0 +1,16 @@
@@ -3489,12 +3602,13 @@
 +int RfdPutGroundItem(int row,int col,const LastItemInfo &info);
 --- /dev/null
 +++ b/src/CommunityOnline.cpp
-@@ -0,0 +1,98 @@
+@@ -0,0 +1,108 @@
 +#include "stdafx.h"
 +#include "CommunityDev.h"
 +#include "CommunityProgress.h"
 +#include "CommunityOnline.h"
 +#include "CommunityHub.h"
++#include "CommunitySession.h"
 +#include "room_transport.h"
 +#include <shellapi.h>
 +namespace {
@@ -3520,7 +3634,7 @@
 + if(fields.size()==3&&fields[0]==token&&fields[1]=="auth"){
 +  char root[MAX_PATH]={};GetEnvironmentVariableA("LOCALAPPDATA",root,sizeof(root));std::string prefix=std::string(root)+"\\ReturnsFromDarkness\\profiles\\";
 +  if(fields[2].rfind(prefix,0)!=0)return false;std::string account=fields[2].substr(prefix.size());if(account.size()<3||account.size()>16||account.find_first_not_of("abcdefghijklmnopqrstuvwxyz0123456789_-")!=std::string::npos)return false;
-+  SetEnvironmentVariableA("RFD_AUTH_PROFILE",fields[2].c_str());if(gbRunGame!=1&&!RfdOnlineRequested())authChanged=true;return true;
++  SetEnvironmentVariableA("RFD_AUTH_PROFILE",fields[2].c_str());RfdPublishNativeAccount(account.c_str());if(gbRunGame!=1&&!RfdOnlineRequested())authChanged=true;return true;
 + }
 + if(fields.size()!=11||fields[0]!=token||fields[1]!="room"||fields[2].size()>=MAX_PATH||fields[3]!="127.0.0.1"||fields[5].size()!=43||fields[6].size()!=64||fields[7].size()>96||fields[9].size()!=36||fields[10].size()!=1||fields[10][0]<'0'||fields[10][0]>'8')return false;
 + if(!pendingRoom.empty())return false;
@@ -3536,13 +3650,22 @@
 +void RfdLeaveToHub(){log("intentional return to community hub");wantsHub=true;gbRunGame=0;gbRunGameResult=1;ResetMainMenu();}
 +bool RfdTakeHubRequest(){bool value=wantsHub;wantsHub=false;return value;}
 +void RfdOpenProjectLobby(){if(RfdOpenAuthenticatedCommunity())return;char url[256];if(!environment(url,sizeof(url),"RFD_PORTAL_URL"))strcpy(url,"https://returns-from-darkness.vercel.app/central/");ShellExecuteA(ghMainWnd,"open",url,nullptr,nullptr,SW_SHOWNORMAL);}
-+bool RfdJoinProjectRoom(int *player,GameTemplate *game,bool *startsWorld){
++bool RfdJoinProjectRoom(int *player,GameTemplate *game,bool *startsWorld,const CharSaveInfo &selectedHero){
 + char host[256],ticket[64],port[8],hash[65];
-+ if(!environment(host,sizeof(host),"RFD_ROOM_HOST")||!environment(ticket,sizeof(ticket),"RFD_ROOM_TICKET")||!environment(hash,sizeof(hash),"RFD_CONTENT_HASH")){MessageBoxA(ghMainWnd,"Abra o cliente pelo botao da sua sala no lobby do projeto.","Returns from Darkness",MB_OK);return false;}
-+ int selectedLevel=CurCharSaveInfo?std::max(1,int(CurCharSaveInfo->Level)):1;char desired[8]={};if(environment(desired,sizeof(desired),"RFD_ROOM_DIFFICULTY")&&!RfdProgressHeroDifficultyAllowed(atoi(desired),selectedLevel))return false;
++ if(!environment(host,sizeof(host),"RFD_ROOM_HOST")||!environment(ticket,sizeof(ticket),"RFD_ROOM_TICKET")||!environment(hash,sizeof(hash),"RFD_CONTENT_HASH")){RfdShowNotice("Returns from Darkness","Abra o cliente pelo botao da sua sala no lobby do projeto.");return false;}
++ if(selectedHero.Level<1||selectedHero.Level>PlayerMaxLevel_150){RfdShowNotice("Santuario - Personagem","O personagem selecionado tem um nivel invalido. Selecione outro personagem.");return false;}
++ if(!RfdCharacterRulesMatchRoom(int(selectedHero.GameMode),true))return false;
++ char desired[8]={};if(environment(desired,sizeof(desired),"RFD_ROOM_DIFFICULTY")&&!RfdProgressHeroDifficultyAllowed(atoi(desired),int(selectedHero.Level)))return false;
 + unsigned int number=environment(port,sizeof(port),"RFD_ROOM_PORT")?static_cast<unsigned int>(strtoul(port,nullptr,10)):25565;
-+ if(!number||number>65535||!rfd_room_open(host,static_cast<unsigned short>(number),ticket,hash)){MessageBoxA(ghMainWnd,rfd_room_error(),"Conexao ao projeto",MB_OK|MB_ICONERROR);log("room connection failed");return false;}
-+ active=true;NetItem=true;*player=rfd_room_slot();connectedGame.seed=rfd_room_seed();connectedGame.difficulty=static_cast<uchar>(rfd_room_difficulty());
++ if(!number||number>65535||!rfd_room_open(host,static_cast<unsigned short>(number),ticket,hash)){RfdShowNotice("Conexao ao projeto",rfd_room_error());log("room connection failed");return false;}
++ const int actualDifficulty=rfd_room_difficulty();
++ if(!RfdProgressHeroDifficultyAllowed(actualDifficulty,int(selectedHero.Level),false)){
++  rfd_room_close();log("selected hero does not meet connected room difficulty");
++  if(actualDifficulty>=0&&actualDifficulty<DL_COUNT)RfdProgressHeroDifficultyAllowed(actualDifficulty,int(selectedHero.Level));
++  else RfdShowNotice("Santuario - Dificuldade","A sala informou uma dificuldade invalida. Crie uma nova sala ou entre em outra partida.");
++  return false;
++ }
++ active=true;NetItem=true;*player=rfd_room_slot();connectedGame.seed=rfd_room_seed();connectedGame.difficulty=static_cast<uchar>(actualDifficulty);
 + *game=connectedGame;*startsWorld=rfd_room_starts_world()!=0;log("central room connected");return true;
 +}
 +void RfdGameEntered(){if(active){SetPropA(ghMainWnd,"RFD_GAME_IN_ROOM",reinterpret_cast<HANDLE>(1));log("world loaded and game loop entered; shared ground items enabled");}}
@@ -3599,7 +3722,7 @@
 +void RfdClearRoomRequest();
 +void RfdLeaveToHub();
 +bool RfdTakeHubRequest();
-+bool RfdJoinProjectRoom(int *player, GameTemplate *game, bool *startsWorld);
++bool RfdJoinProjectRoom(int *player, GameTemplate *game, bool *startsWorld, const CharSaveInfo& selectedHero);
 +void RfdOpenProjectLobby();
 +void RfdGameEntered();
 +void RfdEngineQaTick();
@@ -3649,9 +3772,10 @@
 +#define SNetSendTurn RfdNetSendTurn
 --- /dev/null
 +++ b/src/CommunityProgress.cpp
-@@ -0,0 +1,127 @@
+@@ -0,0 +1,128 @@
 +#include "stdafx.h"
 +#include "CommunityProgress.h"
++#include "CommunityHub.h"
 +#include "CommunityProgressRules.h"
 +#include "CommunityHub.h"
 +#include "CommunityOnline.h"
@@ -3728,7 +3852,7 @@
 +Reporter &reporter(){static Reporter value;return value;}
 +void enqueue(const std::string &route,const ProgressJson &data){std::string token,user,key=profile();if(key.empty()||!session(key,token,user))return;SecureZeroMemory(&token[0],token.size());reporter().add({route,key,data});}
 +bool allowed(const RfdUnlockRule &rule){selectKey();std::lock_guard<std::mutex> lock(cacheMutex);return accountLevel>=rule.level&&(rule.clear<0||(clearMask&(1<<rule.clear))||legacyDifficulty>rule.clear);}
-+void explainRule(const RfdUnlockRule &rule){char text[200];if(rule.clear<0)sprintf(text,"Esta escolha desbloqueia quando um personagem da conta atinge o nivel %d.",rule.level);else sprintf(text,"Esta escolha requer nivel %d na conta e conclusao da dificuldade %d.",rule.level,rule.clear+1);MessageBoxA(ghMainWnd,text,"Santuario - Desbloqueios",MB_OK|MB_ICONINFORMATION);}
++void explainRule(const RfdUnlockRule &rule){char text[200];if(rule.clear<0)sprintf(text,"Esta escolha desbloqueia quando um personagem da conta atinge o nivel %d.",rule.level);else sprintf(text,"Esta escolha requer nivel %d na conta e conclusao da dificuldade %d.",rule.level,rule.clear+1);RfdShowNotice("Santuario - Desbloqueios",text);}
 +void emit(const char *kind,int bossId=-1,int victim=-1){if(!runStarted)return;ProgressJson data={{"runNonce",runNonce},{"eventId",eventId()},{"character",activeHero()},{"kind",kind}};if(bossId>=0){data["bossId"]=bossId;data["floor"]=Dungeon->level;}if(victim>=0)data["victimSlot"]=victim;enqueue("progression/report",data);}
 +}
 +#pragma pack(pop)
@@ -3737,7 +3861,7 @@
 +bool RfdProgressTraitAllowed(int id){return id>=0&&id<99&&allowed(RfdTraitsRules[id]);}
 +bool RfdProgressModeAllowed(int id,bool explain){if(id<0||id>=9)return false;bool ok=allowed(RfdModesRules[id]);if(!ok&&explain)explainRule(RfdModesRules[id]);return ok;}
 +bool RfdProgressChangerAllowed(int id){return id>=0&&id<27&&allowed(RfdChangersRules[id]);}
-+bool RfdProgressHeroDifficultyAllowed(int tier,int level){if(tier<0||tier>=9)return false;if(level>=RfdDifficultyLevels[tier])return true;char text[160];sprintf(text,"Esta sala requer um personagem de nivel %d ou superior.",RfdDifficultyLevels[tier]);MessageBoxA(ghMainWnd,text,"Santuario - Dificuldade",MB_OK|MB_ICONINFORMATION);return false;}
++bool RfdProgressHeroDifficultyAllowed(int tier,int level,bool explain){if(tier<0||tier>=9)return false;if(level>=RfdDifficultyLevels[tier])return true;if(explain){char text[160];sprintf(text,"Esta sala requer um personagem de nivel %d ou superior.",RfdDifficultyLevels[tier]);RfdShowNotice("Santuario - Dificuldade",text);}return false;}
 +bool RfdProgressDifficultyAllowed(int tier,int level){if(tier<0||tier>=9||level<RfdDifficultyLevels[tier])return false;selectKey();std::lock_guard<std::mutex> lock(cacheMutex);return tier==0||(accountLevel>=RfdDifficultyLevels[tier]&&((clearMask&(1<<(tier-1)))||legacyDifficulty>=tier));}
 +void RfdProgressRosterBegin(){selectKey();roster=ProgressJson::array();}
 +void RfdProgressRosterHero(const CharSaveInfo &info){auto h=hero(info);roster.push_back(h);std::lock_guard<std::mutex> lock(cacheMutex);if(GameMode!=GM_COLISEUM){accountLevel=std::max(accountLevel,int(info.Level));legacyDifficulty=std::max(legacyDifficulty,int(info.allowedDifficulty));}}
@@ -3794,7 +3918,7 @@
 +bool RfdProgressTraitAllowed(int traitId);
 +bool RfdProgressModeAllowed(int modeId,bool explain=false);
 +bool RfdProgressChangerAllowed(int changerId);
-+bool RfdProgressHeroDifficultyAllowed(int difficulty,int level);
++bool RfdProgressHeroDifficultyAllowed(int difficulty,int level,bool explain=true);
 +bool RfdProgressDifficultyAllowed(int difficulty,int level);
 +void RfdShowAccountHub();
 +bool RfdProgressQa();
@@ -3979,15 +4103,18 @@
 +static const int RfdDifficultyLevels[] = {1,20,35,43,51,59,67,75,83};
 --- /dev/null
 +++ b/src/CommunityRemaster.cpp
-@@ -0,0 +1,87 @@
+@@ -0,0 +1,250 @@
 +#include "stdafx.h"
 +#include "CommunityRemaster.h"
++#include "CommunityDev.h"
 +#include <wincodec.h>
 +
 +// Source material: DamnationX beta 3 assets/hd/cathedral-floor-atlas.png.
 +// The original archive and material are unchanged. No generated game artwork.
 +namespace {
 +std::vector<DWORD> plane;
++std::vector<unsigned char> interfacePlane;
++std::vector<int> interfaceRowLeft,interfaceRowRight;
 +bool collecting=false,floorDraw=false,originKnown=false;
 +float originU=0,originV=0;
 +IDirect3DDevice9 *owner=nullptr;
@@ -4013,7 +4140,7 @@
 +}
 +}
 +void RfdHdBeginWorld(){
-+ const size_t size=size_t(ScreenWidth)*ScreenHeight;plane.assign(size,0);collecting=true;floorDraw=false;originKnown=false;
++ const size_t size=size_t(ScreenWidth)*ScreenHeight;plane.assign(size,0);interfacePlane.assign(size,0);interfaceRowLeft.assign(ScreenHeight,ScreenWidth);interfaceRowRight.assign(ScreenHeight,-1);collecting=true;floorDraw=false;originKnown=false;
 +}
 +void RfdHdEndWorld(){collecting=false;floorDraw=false;}
 +void RfdHdFloor(int row,int col,int x,int y,bool enabled){
@@ -4038,10 +4165,10 @@
 +void RfdHdClearSprite(void *destination,int width,int height){
 + if(!gbRunGame||plane.empty()||width<=0||height<=0)return;int x,y;if(!coordinates(destination,x,y))return;
 + const int left=std::max(0,x-2),right=std::min(ScreenWidth,x+width+2),top=std::max(0,y-height-2),bottom=std::min(ScreenHeight,y+3);
-+ for(int j=top;j<bottom;j++)if(right>left)std::fill(plane.begin()+size_t(j)*ScreenWidth+left,plane.begin()+size_t(j)*ScreenWidth+right,0u);
++ for(int j=top;j<bottom;j++)if(right>left){std::fill(plane.begin()+size_t(j)*ScreenWidth+left,plane.begin()+size_t(j)*ScreenWidth+right,0u);if(interfacePlane.size()==plane.size())std::fill(interfacePlane.begin()+size_t(j)*ScreenWidth+left,interfacePlane.begin()+size_t(j)*ScreenWidth+right,0);}
 +}
 +void RfdHdClearPixel(void *destination){
-+ if(!gbRunGame||plane.empty())return;int x,y;if(coordinates(destination,x,y)&&x>=0&&x<ScreenWidth)plane[size_t(y)*ScreenWidth+x]=0;
++ if(!gbRunGame||plane.empty())return;int x,y;if(coordinates(destination,x,y)&&x>=0&&x<ScreenWidth){plane[size_t(y)*ScreenWidth+x]=0;if(interfacePlane.size()==plane.size())interfacePlane[size_t(y)*ScreenWidth+x]=0;}
 +}
 +void RfdHdZoom(){
 + if(plane.empty())return;
@@ -4067,10 +4194,172 @@
 + static bool reported=false;if(!reported&&visiblePixels){char profile[MAX_PATH]={};if(GetEnvironmentVariableA("RFD_PROFILE",profile,MAX_PATH)){std::string path=std::string(profile)+"\\remaster-status.json";FILE *f=fopen(path.c_str(),"w");if(f){fprintf(f,"{\"material\":\"DamnationX cathedral-floor-atlas.png\",\"resolution\":[%d,%d],\"visibleMaterialPixels\":%u,\"fullHdArtwork\":false,\"generatedGameArt\":false}\n",ScreenWidth,ScreenHeight,visiblePixels);fclose(f);reported=true;}}}
 + return true;
 +}
++
++// Original RFD interface geometry. The palette indices below belong to the
++// shared UI ramps, so dungeon palette cycling cannot recolor the controls.
++// Art is painted into the existing panel buffers: no hitbox or save changes.
++namespace {
++enum { RfdBlack=0, RfdStone=253, RfdStoneLit=252, RfdIron=251,
++       RfdGold=199, RfdGoldLit=195, RfdGoldDark=203, RfdEmber=232 };
++struct RfdCanvas {
++ unsigned char *pixels;int pitch,width,height;
++ void point(int x,int y,unsigned char c){if(x>=0&&y>=0&&x<width&&y<height){auto *p=pixels+y*pitch+x;*p=c;RfdInterfacePixel(p,c);}}
++ void box(int x,int y,int w,int h,unsigned char c){
++  const int left=std::max(0,x),right=std::min(width,x+w),top=std::max(0,y),bottom=std::min(height,y+h);
++  if(right<=left||bottom<=top)return;
++  for(int row=top;row<bottom;row++)for(int col=left;col<right;col++)point(col,row,c);
++ }
++ void edge(int x,int y,int w,int h,unsigned char c){box(x,y,w,1,c);box(x,y+h-1,w,1,c);box(x,y,1,h,c);box(x+w-1,y,1,h,c);}
++ void diamond(int cx,int cy,int radius,unsigned char c){for(int y=-radius;y<=radius;y++){int w=radius-abs(y);for(int x=-w;x<=w;x++)point(cx+x,cy+y,c);}}
++ void stone(int x,int y,int w,int h){
++  for(int row=y;row<y+h;row++)for(int col=x;col<x+w;col++){
++   const unsigned grain=(unsigned(col)*92821u^unsigned(row)*68917u^unsigned((col/47)+(row/19))*15485863u);
++   point(col,row,(grain%31==0)?RfdStoneLit:(grain%11==0)?RfdIron:RfdStone);
++  }
++ }
++ void frame(int x,int y,int w,int h){
++  edge(x,y,w,h,RfdBlack);edge(x+1,y+1,w-2,h-2,RfdGoldDark);
++  edge(x+2,y+2,w-4,h-4,RfdGold);edge(x+3,y+3,w-6,h-6,RfdIron);
++  box(x+4,y+4,w-8,1,RfdGoldLit);box(x+4,y+h-5,w-8,1,RfdBlack);
++  for(int a=0;a<2;a++)for(int b=0;b<2;b++){
++   int cx=x+(a?w-8:7),cy=y+(b?h-8:7);diamond(cx,cy,3,RfdGoldDark);diamond(cx,cy,1,RfdGoldLit);
++  }
++ }
++ void seal(int x,int y){
++  diamond(x,y,9,RfdBlack);diamond(x,y,7,RfdGoldDark);diamond(x,y,5,RfdIron);
++  for(int i=-4;i<=4;i++){point(x+i,y+abs(i)-2,RfdGoldLit);point(x+i,y-abs(i)+2,RfdGold);}
++  diamond(x,y,2,RfdEmber);point(x,y-1,RfdGoldLit);
++ }
++};
++RfdCanvas screenCanvas(){return {WorkingSurface+Screen_TopBorder*WorkingWidth+Screen_LeftBorder,WorkingWidth,ScreenWidth,ScreenHeight};}
++void ring(RfdCanvas &c,int cx,int cy){
++ for(int y=-44;y<=44;y++)for(int x=-44;x<=44;x++){
++  const int d=x*x+y*y;if(d>44*44)continue;
++  if(d>40*40)c.point(cx+x,cy+y,RfdBlack);
++  else if(d>38*38)c.point(cx+x,cy+y,y<-x?RfdGoldLit:RfdGoldDark);
++  else if(d>36*36)c.point(cx+x,cy+y,RfdIron);
++ }
++ for(int i=0;i<4;i++){int x=cx+(i==1?41:i==3?-41:0),y=cy+(i==0?-41:i==2?41:0);c.diamond(x,y,3,RfdGoldDark);c.diamond(x,y,1,RfdGoldLit);}
++}
++}
++void RfdSkinMainPanel(){
++ if(!MainPanelImage||!LifeShereImage||!ManaShereImage)return;
++ RfdCanvas panel={MainPanelImage,GUI_Width,GUI_Width,144};
++ // Preserve the blood/mana fills; replace the inherited statues and framing.
++ for(int y=0;y<144;y++)for(int x=0;x<GUI_Width;x++){
++  const int life=(x-140)*(x-140)+(y-44)*(y-44),mana=(x-508)*(x-508)+(y-44)*(y-44);
++  if(life>36*36&&mana>36*36)panel.point(x,y,((unsigned(x)*47u^unsigned(y)*197u)%19==0)?RfdStoneLit:RfdStone);
++ }
++ panel.frame(0,16,640,128);panel.frame(172,19,300,29); // belt
++ panel.box(178,57,284,75,RfdBlack);panel.frame(173,54,299,78);
++ panel.box(177,62,288,60,RfdBlack); // existing information text area
++ panel.box(170,136,305,6,RfdBlack);panel.box(172,136,300,1,RfdGoldDark); // XP track
++ panel.frame(562,78,63,62); // current skill
++ panel.seal(322,124);
++ ring(panel,140,44);ring(panel,508,44);
++ for(int orb=0;orb<2;orb++){
++  RfdCanvas bulb={orb?ManaShereImage:LifeShereImage,88,88,88};
++  for(int y=0;y<88;y++)for(int x=0;x<88;x++)if((x-44)*(x-44)+(y-44)*(y-44)>36*36)
++   bulb.point(x,y,RfdStone);
++  ring(bulb,44,44);
++ }
++}
++void RfdSkinPanelButton(Button &button){
++ if(!WorkingSurface)return;RfdCanvas c=screenCanvas();
++ const int x=button.x+(ScreenWidth-GUI_Width)/2,y=button.y+ScreenHeight-GUI_Height;
++ const bool hover=CursorX>=x&&CursorX<=x+button.width&&CursorY>=y&&CursorY<=y+button.height;const int down=button.pressed?1:0;
++ c.box(x,y,button.width,button.height,RfdIron);c.edge(x,y,button.width,button.height,hover?RfdGoldLit:RfdGoldDark);
++ c.edge(x+1,y+1,button.width-2,button.height-2,button.pressed?RfdBlack:RfdGold);
++ c.box(x+3,y+3,button.width-6,button.height-6,button.pressed?RfdBlack:RfdStone);
++ const char *caption="";
++ switch(button.id){case B_CHAR:caption="C";break;case B_QUEST:caption="Q";break;case B_AUTOMAP:caption="M";break;
++  case B_MENU:caption="MENU";break;case B_INV:caption="INV";break;case B_SPELL:caption="SPELLS";break;
++  case B_PERKS:caption="P";break;case B_GC:caption="G";break;case B_TALK:caption="CHAT";break;
++  case B_PVP:caption=IsPlayerFriendly?"PvE":"PvP";break;
++  case B_SYNERGY:caption="S";break;case B_TIME:caption=CurTimeSpeedIndex?">>":">";break;}
++ const int width=GetTextWidth(caption);
++ DrawLevelInfoText(x+(button.width-width)/2+down,y+(button.height+10)/2+down,caption,hover?C_0_White:C_3_Gold,true);
++}
++void RfdDrawInventoryBackdrop(){
++ if(!WorkingSurface)return;RfdCanvas c=screenCanvas();const auto &p=InventoryPanelRect;
++ RfdHdClearSprite(WorkingSurface+(p.Down+Screen_TopBorder-1)*WorkingWidth+p.Left+Screen_LeftBorder,p.Width,p.Heigth);
++ c.stone(p.Left,p.Top,p.Width,p.Heigth);c.frame(p.Left,p.Top,p.Width,p.Heigth);
++ for(int i=0;i<IS_11_8_Belt;i++){
++  const auto &slot=InvSlots[i];const int x=slot.Left-Screen_LeftBorder,y=slot.Top-Screen_TopBorder;
++  c.box(x,y,slot.Width,slot.Heigth,RfdBlack);c.edge(x-1,y-1,slot.Width+2,slot.Heigth+2,RfdGoldDark);
++  if(i==IS_10_7_Inventory){
++   for(int col=1;col<InvCols;col++)c.box(x+col*(CELL_SIZE+1)-1,y,1,slot.Heigth,RfdIron);
++   for(int row=1;row<InvRows;row++)c.box(x,y+row*(CELL_SIZE+1)-1,slot.Width,1,RfdIron);
++  }else{c.diamond(x+slot.Width/2,y+slot.Heigth/2,5,RfdIron);c.diamond(x+slot.Width/2,y+slot.Heigth/2,2,RfdGoldDark);}
++ }
++ c.seal(p.Left+160,p.Top+202);
++ c.box(p.Left+20,p.Top+215,p.Width-40,1,RfdGoldDark);
++ // The seven-row grid, weapon-pair buttons and gold text retain native positions.
++}
++void RfdDecorateCharacterPanel(){
++ if(!WorkingSurface)return;RfdCanvas c=screenCanvas();const auto &p=CharPanelRect;
++ RfdHdClearSprite(WorkingSurface+(p.Down+Screen_TopBorder-1)*WorkingWidth+p.Left+Screen_LeftBorder,p.Width,p.Heigth);
++ c.frame(p.Left,p.Top,p.Width,p.Heigth);
++ c.box(p.Left+12,p.Top+108,p.Width-24,1,RfdGoldDark);
++ c.diamond(p.Left+160,p.Top+108,3,RfdGoldLit);
++}
++
++void RfdInterfacePixel(void *destination,unsigned char index){
++ if(interfacePlane.size()!=size_t(ScreenWidth)*ScreenHeight)return;
++ int x,y;if(!coordinates(destination,x,y)||x<0||x>=ScreenWidth)return;
++ interfacePlane[size_t(y)*ScreenWidth+x]=(index==RfdStone||index==RfdStoneLit||index==RfdIron)?index:0;
++ if(interfacePlane[size_t(y)*ScreenWidth+x]){interfaceRowLeft[y]=std::min(interfaceRowLeft[y],x);interfaceRowRight[y]=std::max(interfaceRowRight[y],x);}
++}
++void RfdInterfaceTrackMainPanel(){
++ if(!WorkingSurface)return;
++ const int left=(ScreenWidth-GUI_Width)/2;
++ for(int y=ScreenHeight-144;y<ScreenHeight;y++)for(int x=left;x<left+GUI_Width;x++){
++  // Exclude the live orb interiors from decorative materials.
++  int lx=x-left,ly=y-(ScreenHeight-144);
++  if((lx-140)*(lx-140)+(ly-44)*(ly-44)<=36*36||(lx-508)*(lx-508)+(ly-44)*(ly-44)<=36*36)continue;
++  auto *p=WorkingSurface+(y+Screen_TopBorder)*WorkingWidth+x+Screen_LeftBorder;RfdInterfacePixel(p,*p);
++ }
++}
++namespace {
++IDirect3DDevice9 *interfaceDevice=nullptr;
++IDirect3DTexture9 *interfaceMaterial=nullptr,*interfaceMask=nullptr;
++int interfaceW=0,interfaceH=0;bool interfaceAttempted=false;
++void loadInterfaceMaterial(IDirect3DDevice9 *device){
++ wchar_t path[MAX_PATH];GetModuleFileNameW(nullptr,path,MAX_PATH);auto *tail=wcsrchr(path,L'\\');if(!tail)return;wcscpy(tail+1,L"assets\\original\\ui\\interface-stone.png");
++ HRESULT initialized=CoInitializeEx(nullptr,COINIT_MULTITHREADED);IWICImagingFactory *factory=nullptr;IWICBitmapDecoder *decoder=nullptr;IWICBitmapFrameDecode *frame=nullptr;IWICFormatConverter *converter=nullptr;UINT w=0,h=0;
++ if(SUCCEEDED(CoCreateInstance(CLSID_WICImagingFactory,nullptr,CLSCTX_INPROC_SERVER,IID_PPV_ARGS(&factory)))&&SUCCEEDED(factory->CreateDecoderFromFilename(path,nullptr,GENERIC_READ,WICDecodeMetadataCacheOnLoad,&decoder))&&SUCCEEDED(decoder->GetFrame(0,&frame))&&SUCCEEDED(factory->CreateFormatConverter(&converter))&&SUCCEEDED(converter->Initialize(frame,GUID_WICPixelFormat32bppBGRA,WICBitmapDitherTypeNone,nullptr,0,WICBitmapPaletteTypeCustom))&&SUCCEEDED(converter->GetSize(&w,&h))&&w&&h&&w<=4096&&h<=4096&&SUCCEEDED(device->CreateTexture(w,h,1,0,D3DFMT_A8R8G8B8,D3DPOOL_MANAGED,&interfaceMaterial,nullptr))){D3DLOCKED_RECT locked{};if(SUCCEEDED(interfaceMaterial->LockRect(0,&locked,nullptr,0))){HRESULT copied=converter->CopyPixels(nullptr,locked.Pitch,locked.Pitch*h,(BYTE*)locked.pBits);interfaceMaterial->UnlockRect(0);if(FAILED(copied)){interfaceMaterial->Release();interfaceMaterial=nullptr;}}}
++ if(converter)converter->Release();if(frame)frame->Release();if(decoder)decoder->Release();if(factory)factory->Release();if(SUCCEEDED(initialized))CoUninitialize();
++}
++}
++void RfdDrawHdInterface(LPDIRECT3DDEVICE9 device){
++ if(gbRunGame!=1||LoadingScreenCEL||VideoWindowExists||interfacePlane.size()!=size_t(ScreenWidth)*ScreenHeight)return;
++ if(interfaceDevice!=device){if(interfaceMaterial)interfaceMaterial->Release();if(interfaceMask)interfaceMask->Release();interfaceMaterial=interfaceMask=nullptr;interfaceDevice=device;interfaceAttempted=false;interfaceW=interfaceH=0;}
++ if(!interfaceAttempted){interfaceAttempted=true;loadInterfaceMaterial(device);}if(!interfaceMaterial)return;
++ if(interfaceW!=ScreenWidth||interfaceH!=ScreenHeight){if(interfaceMask)interfaceMask->Release();interfaceMask=nullptr;interfaceW=ScreenWidth;interfaceH=ScreenHeight;if(FAILED(device->CreateTexture(ScreenWidth,ScreenHeight,1,0,D3DFMT_A8,D3DPOOL_MANAGED,&interfaceMask,nullptr)))return;}
++ D3DLOCKED_RECT locked{};if(!interfaceMask||FAILED(interfaceMask->LockRect(0,&locked,nullptr,0)))return;
++ unsigned visible=0;for(int y=0;y<ScreenHeight;y++){auto *out=(BYTE*)locked.pBits+y*locked.Pitch;memset(out,0,ScreenWidth);auto *frame=WorkingSurface+(y+Screen_TopBorder)*WorkingWidth+Screen_LeftBorder;for(int x=interfaceRowLeft[y];x<=interfaceRowRight[y];x++){unsigned char expected=interfacePlane[size_t(y)*ScreenWidth+x];out[x]=expected&&frame[x]==expected?255:0;visible+=out[x]!=0;}}
++ interfaceMask->UnlockRect(0);if(!visible)return;
++#if RFD_DEV_QA
++ static bool reported=false;if(!reported&&visible>1000){char profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_PROFILE",profile,MAX_PATH);if(strstr(profile,"engine-qa-")!=nullptr){D3DSURFACE_DESC desc{};interfaceMaterial->GetLevelDesc(0,&desc);FILE *f=fopen((std::string(profile)+"\\interface-material-qa.json").c_str(),"w");if(f){fprintf(f,"{\"loaded\":true,\"material\":\"assets/original/ui/interface-stone.png\",\"sourceSize\":[%u,%u],\"screenSize\":[%d,%d],\"maskedPixels\":%u,\"decodeOnce\":true,\"maskFormat\":\"A8\"}",desc.Width,desc.Height,ScreenWidth,ScreenHeight,visible);fclose(f);reported=true;}}}
++#endif
++ IDirect3DStateBlock9 *state=nullptr;if(FAILED(device->CreateStateBlock(D3DSBT_ALL,&state)))return;state->Capture();
++ D3DVIEWPORT9 viewport{};device->GetViewport(&viewport);float width=float(viewport.Width)-.5f,height=float(viewport.Height)-.5f;
++ struct Vertex{float x,y,z,rhw;DWORD color;float u,v,mu,mv;};
++ float u=float(ScreenWidth)/512.f,v=float(ScreenHeight)/512.f;
++ Vertex vertices[]={{-.5f,-.5f,0,1,0xffb8b8b8,0,0,0,0},{width,-.5f,0,1,0xffb8b8b8,u,0,1,0},{-.5f,height,0,1,0xffb8b8b8,0,v,0,1},{width,height,0,1,0xffb8b8b8,u,v,1,1}};
++ device->SetPixelShader(nullptr);device->SetVertexShader(nullptr);device->SetTexture(0,interfaceMaterial);device->SetTexture(1,interfaceMask);device->SetTexture(2,nullptr);
++ device->SetRenderState(D3DRS_ALPHABLENDENABLE,TRUE);device->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);device->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_INVSRCALPHA);device->SetRenderState(D3DRS_ZENABLE,FALSE);device->SetRenderState(D3DRS_CULLMODE,D3DCULL_NONE);
++ device->SetTextureStageState(0,D3DTSS_COLOROP,D3DTOP_MODULATE);device->SetTextureStageState(0,D3DTSS_COLORARG1,D3DTA_TEXTURE);device->SetTextureStageState(0,D3DTSS_COLORARG2,D3DTA_DIFFUSE);device->SetTextureStageState(0,D3DTSS_ALPHAOP,D3DTOP_SELECTARG1);device->SetTextureStageState(0,D3DTSS_ALPHAARG1,D3DTA_DIFFUSE);device->SetTextureStageState(0,D3DTSS_TEXCOORDINDEX,0);
++ device->SetTextureStageState(1,D3DTSS_COLOROP,D3DTOP_SELECTARG2);device->SetTextureStageState(1,D3DTSS_COLORARG2,D3DTA_CURRENT);device->SetTextureStageState(1,D3DTSS_ALPHAOP,D3DTOP_MODULATE);device->SetTextureStageState(1,D3DTSS_ALPHAARG1,D3DTA_TEXTURE);device->SetTextureStageState(1,D3DTSS_ALPHAARG2,D3DTA_CURRENT);device->SetTextureStageState(1,D3DTSS_TEXCOORDINDEX,1);device->SetTextureStageState(2,D3DTSS_COLOROP,D3DTOP_DISABLE);
++ for(int i=0;i<2;i++){device->SetSamplerState(i,D3DSAMP_MINFILTER,i?D3DTEXF_POINT:D3DTEXF_LINEAR);device->SetSamplerState(i,D3DSAMP_MAGFILTER,i?D3DTEXF_POINT:D3DTEXF_LINEAR);device->SetSamplerState(i,D3DSAMP_ADDRESSU,i?D3DTADDRESS_CLAMP:D3DTADDRESS_WRAP);device->SetSamplerState(i,D3DSAMP_ADDRESSV,i?D3DTADDRESS_CLAMP:D3DTADDRESS_WRAP);}
++ device->SetFVF(D3DFVF_XYZRHW|D3DFVF_DIFFUSE|D3DFVF_TEX2);device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,2,vertices,sizeof(Vertex));state->Apply();state->Release();
++}
 --- /dev/null
 +++ b/src/CommunityRemaster.h
-@@ -0,0 +1,9 @@
+@@ -0,0 +1,22 @@
 +#pragma once
++struct Button;
++struct Item;
 +void RfdHdBeginWorld();
 +void RfdHdEndWorld();
 +void RfdHdFloor(int row,int col,int x,int y,bool enabled);
@@ -4079,14 +4368,38 @@
 +void RfdHdClearPixel(void *destination);
 +void RfdHdZoom();
 +bool RfdHdBind(LPDIRECT3DDEVICE9 device,unsigned char *frame,int pitch);
++// RFD relicary interface. Coordinates remain the engine's existing hitboxes.
++void RfdSkinMainPanel();
++void RfdSkinPanelButton(Button &button);
++void RfdDrawInventoryBackdrop();
++void RfdDecorateCharacterPanel();
++void RfdOriginalRelicDrop(int bossId,int baseMonsterId,int row,int col,bool sendMsg);
++const char *RfdOriginalRelicLore(const Item &item);
++bool RfdOriginalRelicQa();
++void RfdInterfacePixel(void *destination,unsigned char index);
++void RfdInterfaceTrackMainPanel();
++void RfdDrawHdInterface(LPDIRECT3DDEVICE9 device);
 --- /dev/null
 +++ b/src/CommunitySession.cpp
-@@ -0,0 +1,38 @@
+@@ -0,0 +1,51 @@
 +#include "stdafx.h"
 +#include "CommunitySession.h"
 +
 +namespace {
 +std::string profile(){char value[4096]={};DWORD n=GetEnvironmentVariableA("RFD_PROFILE",value,sizeof(value));return n&&n<sizeof(value)?value:"";}
++}
++void RfdPublishNativeAccount(const char *account){
++ if(!ghMainWnd)return;
++ std::string name=account?account:"";
++ std::transform(name.begin(),name.end(),name.begin(),[](unsigned char c){return char(tolower(c));});
++ const bool valid=name.size()>=3&&name.size()<=16&&name!="offline"&&name[0]>='a'&&name[0]<='z'&&name.find_first_not_of("abcdefghijklmnopqrstuvwxyz0123456789_-")==std::string::npos;
++ // Publish the state last, so the launcher never reads a partially changed hash.
++ RemovePropA(ghMainWnd,"RFD_ACCOUNT_STATE");
++ if(valid){unsigned long long hash=14695981039346656037ull;for(unsigned char c:name)hash=(hash^c)*1099511628211ull;
++  SetPropA(ghMainWnd,"RFD_ACCOUNT_HASH_LO",reinterpret_cast<HANDLE>(static_cast<uintptr_t>(static_cast<uint32_t>(hash))));
++  SetPropA(ghMainWnd,"RFD_ACCOUNT_HASH_HI",reinterpret_cast<HANDLE>(static_cast<uintptr_t>(static_cast<uint32_t>(hash>>32))));
++  SetPropA(ghMainWnd,"RFD_ACCOUNT_STATE",reinterpret_cast<HANDLE>(1));
++ }else{RemovePropA(ghMainWnd,"RFD_ACCOUNT_HASH_LO");RemovePropA(ghMainWnd,"RFD_ACCOUNT_HASH_HI");SetPropA(ghMainWnd,"RFD_ACCOUNT_STATE",reinterpret_cast<HANDLE>(2));}
 +}
 +bool RfdAcquireInstance(){
 + static HANDLE guard=nullptr;
@@ -4117,21 +4430,23 @@
 +}
 +const char *RfdWindowTitle(){
 + static std::string title=[](){std::string t="Diablo 1 HD - Returns from Darkness",p=profile();
-+  if(!p.empty()){const auto parent=std::filesystem::path(p).parent_path().filename().string();if(!parent.empty())t+=" ["+parent+"]";}return t;}();
++  if(!p.empty()){const auto account=std::filesystem::path(p).filename().string();if(!account.empty())t+=" ["+account+"]";}return t;}();
 + return title.c_str();
 +}
 --- /dev/null
 +++ b/src/CommunitySession.h
-@@ -0,0 +1,6 @@
+@@ -0,0 +1,8 @@
 +#pragma once
 +bool RfdAcquireInstance();
 +void RfdConfigureWindow();
 +char *RfdConfigPath();
 +void RfdTestWindow(int &width,int &height,int &x,int &y);
 +const char *RfdWindowTitle();
++// Account identity only; credentials never cross the window-property boundary.
++void RfdPublishNativeAccount(const char *account);
 --- /dev/null
 +++ b/src/CommunityVisual.cpp
-@@ -0,0 +1,81 @@
+@@ -0,0 +1,69 @@
 +#include "stdafx.h"
 +#include <wincodec.h>
 +extern bool MainMainMenu;
@@ -4139,17 +4454,6 @@
 +extern PALETTEENTRY MenuPalette[256];
 +
 +namespace {
-+void refreshMenus(){
-+ if(gbRunGame||VideoWindowExists||!DlgHwnd)return;
-+ static HWND previous=nullptr;static DWORD last=0;
-+ if(!IsWindow(DlgHwnd))return;
-+ const HWND dialog=GetAncestor(DlgHwnd,GA_ROOT);if(!dialog)return;
-+ const DWORD now=GetTickCount();if(dialog==previous&&now-last<100)return;
-+ previous=dialog;last=now;
-+ // Storm otherwise refreshes only the hovered controls in the custom D3D window.
-+ // Queue a complete repaint without re-entering the presentation callback.
-+ RedrawWindow(dialog,nullptr,nullptr,RDW_INVALIDATE|RDW_ERASE|RDW_ALLCHILDREN);
-+}
 +IDirect3DTexture9 *logo=nullptr;
 +IDirect3DTexture9 *footer=nullptr;
 +std::vector<IDirect3DTexture9*> logoFrames;
@@ -4187,7 +4491,6 @@
 +}
 +
 +void RfdDrawProjectLogo(LPDIRECT3DDEVICE9 dev,const RECT &menuRect){
-+ refreshMenus();
 + if(VideoWindowExists||(gbRunGame&&!LoadingScreenCEL))return;
 + if(owner!=dev){for(auto texture:logoFrames)texture->Release();logoFrames.clear();logo=nullptr;if(footer){footer->Release();footer=nullptr;}owner=dev;attempted=false;}
 + if(!footer&&!gbRunGame){std::vector<unsigned char> pixels(512*24);if(RfdMenuFooter(pixels.data(),512,24)&&SUCCEEDED(dev->CreateTexture(512,24,1,0,D3DFMT_A8R8G8B8,D3DPOOL_MANAGED,&footer,nullptr))){D3DLOCKED_RECT locked;if(SUCCEEDED(footer->LockRect(0,&locked,nullptr,0))){for(int y=0;y<24;y++)for(int x=0;x<512;x++){unsigned char value=pixels[y*512+x];auto &color=MenuPalette[value];unsigned int intensity=std::max(60u,(unsigned(color.peRed)+color.peGreen+color.peBlue)/3);((DWORD*)((char*)locked.pBits+y*locked.Pitch))[x]=value?0xc0000000|(intensity<<16)|(intensity<<8)|intensity:0;}footer->UnlockRect(0);}}}
@@ -15246,9 +15549,20 @@
 +	}
 +}
 +
+--- a/src/dx.cpp
++++ b/src/dx.cpp
+@@ -369,6 +369,8 @@
+ 			D3dDevice->SetPixelShader(PaletteShader);
+ 		}
+ 	}
++	extern void RfdRepaintMenus();
++	RfdRepaintMenus();
+ 	return true;
+ }
+ 
 --- a/src/dx_utility.cpp
 +++ b/src/dx_utility.cpp
-@@ -1,1129 +1,1135 @@
+@@ -1,1129 +1,1192 @@
 -﻿#include "stdafx.h"
 -#ifndef OLD_PCX_SCREENSHOT
 -#include "ScreenShotMaker.h"
@@ -16380,6 +16694,7 @@
 -}
 +#include "stdafx.h"
 +#include "CommunityRemaster.h"
++#include "CommunityDev.h"
 +#ifndef OLD_PCX_SCREENSHOT
 +#include "ScreenShotMaker.h"
 +#endif
@@ -16403,6 +16718,40 @@
 +IDirect3DPixelShader9* InterfaceShader = 0; // reserved for second layer
 +IDirect3DPixelShader9* DirectShader = 0; // shader for automap
 +struct TransformedVertex { vec4 pos;	vec2 tex; };
++
++#if RFD_DEV_QA
++namespace {std::string menuQaCapture;}
++void CaptureMenuQaFrame();
++void CaptureWindowMenuQaFrame(){
++ if(menuQaCapture.empty()||!D3dDevice||!ghMainWnd)return;
++ D3DDISPLAYMODE mode{};IDirect3DSurface9 *copy=nullptr;D3DLOCKED_RECT lock{};
++ if(FAILED(D3dDevice->GetDisplayMode(0,&mode))||FAILED(D3dDevice->CreateOffscreenPlainSurface(mode.Width,mode.Height,D3DFMT_A8R8G8B8,D3DPOOL_SYSTEMMEM,&copy,nullptr)))return;
++ if(SUCCEEDED(D3dDevice->GetFrontBufferData(0,copy))&&SUCCEEDED(copy->LockRect(&lock,nullptr,D3DLOCK_READONLY))){
++  RECT client{};GetClientRect(ghMainWnd,&client);POINT origin{};ClientToScreen(ghMainWnd,&origin);
++  int left=std::max(0,int(origin.x)),top=std::max(0,int(origin.y)),width=std::min(int(client.right),int(mode.Width)-left),height=std::min(int(client.bottom),int(mode.Height)-top);
++  FILE *file=width>0&&height>0?fopen(menuQaCapture.c_str(),"wb"):nullptr;
++  if(file){BITMAPFILEHEADER header{};BITMAPINFOHEADER info{};header.bfType=0x4d42;header.bfOffBits=sizeof(header)+sizeof(info);header.bfSize=header.bfOffBits+width*height*4;info.biSize=sizeof(info);info.biWidth=width;info.biHeight=-height;info.biPlanes=1;info.biBitCount=32;info.biCompression=BI_RGB;fwrite(&header,sizeof(header),1,file);fwrite(&info,sizeof(info),1,file);for(int y=0;y<height;y++)fwrite((BYTE*)lock.pBits+(top+y)*lock.Pitch+left*4,4,width,file);fclose(file);menuQaCapture.clear();}
++  copy->UnlockRect();
++ }copy->Release();
++}
++void RfdQueueMenuCapture(const char *path){
++ // DISCARD swap chains do not preserve a buffer after Present. Queue the
++ // readback for the completed next frame, immediately before presentation.
++ menuQaCapture=path?path:"";extern void RfdRepaintMenus();RfdRepaintMenus();
++ // Windowed Storm menus can use its native window composition path rather
++ // than the gameplay render target. Observe the actual displayed client.
++ if(!IsFullScreen)CaptureWindowMenuQaFrame();
++}
++void CaptureMenuQaFrame(){
++	if(menuQaCapture.empty()||!D3dDevice||!BackBuffer)return;
++	D3DSURFACE_DESC desc{};IDirect3DSurface9 *copy=nullptr;D3DLOCKED_RECT locked{};
++    if(FAILED(BackBuffer->GetDesc(&desc))||(desc.Format!=D3DFMT_X8R8G8B8&&desc.Format!=D3DFMT_A8R8G8B8)||FAILED(D3dDevice->CreateOffscreenPlainSurface(desc.Width,desc.Height,desc.Format,D3DPOOL_SYSTEMMEM,&copy,nullptr)))return;
++	if(SUCCEEDED(D3dDevice->GetRenderTargetData(BackBuffer,copy))&&SUCCEEDED(copy->LockRect(&locked,nullptr,D3DLOCK_READONLY))){
++		FILE *file=fopen(menuQaCapture.c_str(),"wb");if(file){BITMAPFILEHEADER header{};BITMAPINFOHEADER info{};header.bfType=0x4d42;header.bfOffBits=sizeof(header)+sizeof(info);header.bfSize=header.bfOffBits+desc.Width*desc.Height*4;info.biSize=sizeof(info);info.biWidth=desc.Width;info.biHeight=-int(desc.Height);info.biPlanes=1;info.biBitCount=32;info.biCompression=BI_RGB;fwrite(&header,sizeof(header),1,file);fwrite(&info,sizeof(info),1,file);for(UINT y=0;y<desc.Height;y++)fwrite((char*)locked.pBits+y*locked.Pitch,4,desc.Width,file);fclose(file);menuQaCapture.clear();}
++		copy->UnlockRect();
++	}copy->Release();
++}
++#endif
 +
 +extern unsigned int AutomapPointsCount;
 +extern unsigned int AutomapLinePointsCount;
@@ -17366,13 +17715,20 @@
 +
 +		if( useRenderTexture ){
 +			if( D3D_OK != dev->SetRenderTarget( 0, pSurf ) ){ pSurf->Release(); return 0; }
-+			if( D3D_OK != dev->StretchRect( vid, 0, pSurf, 0, FilteringMode ) ){ pSurf->Release(); return 0; }
++			// Resolve the complete color frame after EndScene, before presentation.
 +		}
 +	}else{
 +		if( pSurf ) pSurf->Release(); return 0; 
 +	}
 +	if( pSurf ) pSurf->Release();
 +	return 1;
++}
++
++int ResolveQuadTexture(LPDIRECT3DDEVICE9 dev,LPDIRECT3DSURFACE9 vid,LPDIRECT3DSURFACE9 back){
++	D3DSURFACE_DESC desc{};
++	if(!back||D3D_OK!=back->GetDesc(&desc))return 0;
++	if(FilteringMode==D3DTEXF_NONE||(desc.Width==ScreenWidth&&desc.Height==ScreenHeight))return 1;
++	return D3D_OK==dev->StretchRect(vid,nullptr,back,nullptr,FilteringMode);
 +}
 +
 +//----- (th2) -------------------------------------------------------------
@@ -17420,7 +17776,8 @@
 +	int gui_width = IsFullScreen && !BigWin || ScreenWidth == WinWidth ? GUI_Width : (int)((double) WinWidth / ScreenWidth * GUI_Width);
 +	int gui_height = IsFullScreen && !BigWin || ScreenHeight == WinHeight ? GUI_Height : (int)((double) WinHeight / ScreenHeight * GUI_Height);
 +	POINT metaMenuPoint{ ( width - gui_width) / 2, ( height - gui_height) / 2 };
-+	RECT classicRect{ 0, 0, GUI_Width - 1, GUI_Height - 1 };
++	// D3D/DDraw RECT right/bottom are exclusive; include the last pixel row/column.
++	RECT classicRect{ 0, 0, GUI_Width, GUI_Height };
 +	RECT metaMenuRect{ metaMenuPoint.x, metaMenuPoint.y, metaMenuPoint.x + gui_width - 1, metaMenuPoint.y + gui_height - 1 };
 +	int startingX = 0;
 +	int startingY = 0;//gbRunGame ? 0 : updatingPoint.y;
@@ -17469,11 +17826,19 @@
 +		int ok = -1;
 +		bool second = IsSecondWin && (OnlySecondWin || VideoWindowExists || !gbRunGame || LoadingScreenCEL /*Handler1 == LoadingWindowHandler*/);
 +		HRESULT d3dOk = D3D_OK;
++		const bool surfaceFrame=DrawMode==0||!gbRunGame||VideoWindowExists;
++		int srcPitch=(VideoWindowExists||(!gbRunGame&&!LoadingScreenCEL))?ScreenSurfacePitch:WorkingWidth;
++		int srcWidth=gbRunGame&&!VideoWindowExists?ScreenWidth:GUI_Width;
++		int srcHeight=gbRunGame&&!VideoWindowExists?ScreenHeight:GUI_Height;
++		RECT surfaceMenuRect=metaMenuRect;++surfaceMenuRect.right;++surfaceMenuRect.bottom;
++		// Upload/copy first. Storm may present after a palette or dirty-control change;
++		// those complete transfers must not run inside BeginScene/EndScene.
++		if(surfaceFrame){
++			if(!OnlySecondWin)ok=RenderSurface(D3dDevice,VideoSurface,D3dSurface,BackBuffer,startingX,startingY,src,pixelFormat,srcPitch,srcWidth,srcHeight,screenPalette,classicRect,surfaceMenuRect);
++			if(second)ok=RenderSurface(SecDevice,SecVideoSurface,SecD3dSurface,SecBuffer,startingX,startingY,src,pixelFormat,srcPitch,srcWidth,srcHeight,screenPalette,classicRect,surfaceMenuRect)&&ok!=0;
++		}
 +		if( D3D_OK == (d3dOk = (OnlySecondWin ? D3D_OK : D3dDevice->BeginScene()) ) ){
 +			if( second ) SecDevice->BeginScene();
-+			int srcPitch = ( VideoWindowExists || (!gbRunGame && !LoadingScreenCEL/* Handler1 != LoadingWindowHandler*/) ) ? ScreenSurfacePitch : WorkingWidth;
-+			int srcWidth = gbRunGame && !VideoWindowExists ? ScreenWidth : GUI_Width;
-+			int srcHeight = gbRunGame && !VideoWindowExists ? ScreenHeight : GUI_Height;
 +			if( DoMenuScreenShot && !OnlySecondWin ){
 +				ShotPalette = screenPalette;
 +				ShotSrc = src;
@@ -17485,16 +17850,22 @@
 +				SaveScreenShot();
 +				DoMenuScreenShot = 0;
 +			}
-+			if( DrawMode == 0 || !gbRunGame || VideoWindowExists /*|| LoadingScreenCEL*/ ){ // update backbuffer
-+				if( !OnlySecondWin ) ok = RenderSurface( D3dDevice, VideoSurface, D3dSurface, BackBuffer, startingX, startingY, src, pixelFormat, srcPitch, srcWidth, srcHeight, screenPalette, classicRect, metaMenuRect );
-+				if( second         ) ok = RenderSurface( SecDevice, SecVideoSurface, SecD3dSurface, SecBuffer, startingX, startingY, src, pixelFormat, srcPitch, srcWidth, srcHeight, screenPalette, classicRect, metaMenuRect );
-+			} else{ // DrawMode == 1 // draw textured quad
++			if( !surfaceFrame ){ // DrawMode == 1 // draw textured quad
 +				if( !OnlySecondWin ) ok = RenderQuadTexture( D3dDevice, D3dTexture, D3dPalette, VideoSurface   , src );
 +				if( second         ) ok = RenderQuadTexture( SecDevice, SecTexture, SecPalette, SecVideoSurface, src );
 +			}
-+			if( !OnlySecondWin ){ RfdDrawProjectLogo(D3dDevice, metaMenuRect); D3dDevice->EndScene(); }
++			if( !OnlySecondWin ){ if(surfaceFrame)RfdDrawProjectLogo(D3dDevice, metaMenuRect); D3dDevice->EndScene(); }
 +			if( second         ) SecDevice->EndScene();
++			if(!surfaceFrame){
++				if(!OnlySecondWin)ok=ResolveQuadTexture(D3dDevice,VideoSurface,BackBuffer)&&ok!=0;
++				if(second)ok=ResolveQuadTexture(SecDevice,SecVideoSurface,SecBuffer)&&ok!=0;
++				if(!OnlySecondWin&&LoadingScreenCEL&&D3D_OK==D3dDevice->BeginScene()){RfdDrawProjectLogo(D3dDevice,metaMenuRect);D3dDevice->EndScene();}
++			}
++			if(!OnlySecondWin&&gbRunGame==1&&!LoadingScreenCEL&&D3D_OK==D3dDevice->BeginScene()){RfdDrawHdInterface(D3dDevice);D3dDevice->EndScene();}
 +			//if( Vsync && (BigWin || !IsFullScreen) ) DirectDrawPtr->WaitForVerticalBlank( DDWAITVB_BLOCKBEGIN, 0 ); // проба vsync для оконного режим, не очень
++			#if RFD_DEV_QA
++			CaptureMenuQaFrame();
++			#endif
 +			HRESULT pres = OnlySecondWin ? D3D_OK : D3dDevice->Present(NULL, NULL, ( D3dRef && ! gbRunGame && ! VideoWindowExists ) ? DlgHwnd : NULL, NULL);
 +			if( second ) SecDevice->Present( NULL, NULL, SecWnd, NULL );
 +			if( !ok || D3D_OK != pres /*&& !(IsStartTh1 && !Exe::IsMainWindowActive)*/ ){
@@ -21008,7 +21379,7 @@
 +};
 --- a/src/funcs.h
 +++ b/src/funcs.h
-@@ -1,2478 +1,2478 @@
+@@ -1,2478 +1,2481 @@
 -﻿#ifndef _funcs_h_
 -#define _funcs_h_
 -#else
@@ -25575,6 +25946,9 @@
 +void IronmanLevelCleared();
 +int GetSuperGameMode(char* name = 0);
 +const char* getGameModeName( const GAME_MODE gameMode, const GAME_CHANGER GameChanger = GC_0_CONTINUE);
++int RfdRoomCharacterMode();
++bool RfdCharacterRulesMatchRoom(int mode, bool explain = false);
++bool RfdCharacterRulesQa();
 +void UpdateScaleResist(int playerIndex);
 +void CalcResistPercentMelee(int playerIndex);
 +void CalcResistPercentArrow(int playerIndex);
@@ -26426,7 +26800,7 @@
 +};
 --- a/src/GameChangers.cpp
 +++ b/src/GameChangers.cpp
-@@ -1,979 +1,982 @@
+@@ -1,979 +1,983 @@
 -#include "stdafx.h"
 -
 -GAME_CHANGER SelectedGameChanger = GC_0_CONTINUE;
@@ -27408,6 +27782,7 @@
 -}
 +#include "stdafx.h"
 +#include "CommunityProgress.h"
++#include "CommunityHub.h"
 +
 +GAME_CHANGER SelectedGameChanger = GC_0_CONTINUE;
 +
@@ -28317,7 +28692,7 @@
 +        }
 +        else if (HIWORD_IDA(wParam) == BN_DOUBLECLICKED || (ushort)wParam == 1) { // Enter
 +            PlaySoundTitleSelect();
-+            if(!RfdProgressChangerAllowed(int(SelectedGameChanger))) { MessageBoxA(ghMainWnd,"Este modificador ainda nao foi desbloqueado na conta.","Santuario",MB_OK); return 0; }
++            if(!RfdProgressChangerAllowed(int(SelectedGameChanger))) { RfdShowNotice("Santuario","Este modificador ainda nao foi desbloqueado na conta."); return 0; }
 +            SDlgKillTimer(hdlg, 1);
 +            SDlgEndDialog(hdlg, 1);
 +        }
@@ -28335,7 +28710,7 @@
 +        int cursorY = (unsigned int)lParam >> 16;
 +        if (CheckCursorOnButton(hdlg, GetDlgItem(hdlg, ID_OK_BUTTON), cursorX, cursorY)) {
 +            PlaySoundTitleSelect();
-+            if(!RfdProgressChangerAllowed(int(SelectedGameChanger))) { MessageBoxA(ghMainWnd,"Este modificador ainda nao foi desbloqueado na conta.","Santuario",MB_OK); return 0; }
++            if(!RfdProgressChangerAllowed(int(SelectedGameChanger))) { RfdShowNotice("Santuario","Este modificador ainda nao foi desbloqueado na conta."); return 0; }
 +            SDlgKillTimer(hdlg, 1);
 +            SDlgEndDialog(hdlg, 1);
 +        }
@@ -28390,7 +28765,7 @@
 +}
 --- a/src/GameModes.cpp
 +++ b/src/GameModes.cpp
-@@ -1,531 +1,534 @@
+@@ -1,531 +1,592 @@
 -#include "stdafx.h"
 -
 -GAME_MODE GameMode = GM_NORMAL;
@@ -28925,8 +29300,68 @@
 \ No newline at end of file
 +#include "stdafx.h"
 +#include "CommunityProgress.h"
++#include "CommunityHub.h"
 +
 +GAME_MODE GameMode = GM_NORMAL;
++
++int RfdRoomCharacterMode()
++{
++    char roomMode[32] = {};
++    GetEnvironmentVariableA("RFD_ROOM_MODE", roomMode, sizeof(roomMode));
++    return strcmp(roomMode, "coliseum-pvp") == 0 ? GM_COLISEUM : GM_NORMAL;
++}
++
++bool RfdCharacterRulesMatchRoom(int mode, bool explain)
++{
++    if (!RfdOnlineRequested() || mode == RfdRoomCharacterMode()) return true;
++    if (explain) RfdShowNotice("Santuario - Personagem",
++        RfdRoomCharacterMode() == GM_COLISEUM
++        ? "Esta sala usa personagens do Coliseum. Escolha ou crie um personagem de arena. Seu personagem de campanha foi preservado."
++        : "Esta sala usa as regras Normal de campanha cooperativa. Escolha ou crie um personagem Normal. Seu personagem com regras especiais foi preservado.");
++    return false;
++}
++
++bool RfdCharacterRulesQa()
++{
++#if RFD_DEV_QA
++    char test[16] = {}, profile[MAX_PATH] = {};
++    GetEnvironmentVariableA("RFD_ENGINE_QA", test, sizeof(test));
++    GetEnvironmentVariableA("RFD_PROFILE", profile, sizeof(profile));
++    if ((strcmp(test, "options") && strcmp(test, "render")) || !strstr(profile, "engine-qa-")) return false;
++    char oldTicket[64] = {}, oldMode[32] = {};
++    GetEnvironmentVariableA("RFD_ROOM_TICKET", oldTicket, sizeof(oldTicket));
++    GetEnvironmentVariableA("RFD_ROOM_MODE", oldMode, sizeof(oldMode));
++    bool solo = true, campaign = true, arena = true, savedLevel = true;
++    SetEnvironmentVariableA("RFD_ROOM_TICKET", nullptr);
++    for (int mode = 0; mode < 9; ++mode) solo &= RfdCharacterRulesMatchRoom(mode);
++    SetEnvironmentVariableA("RFD_ROOM_TICKET", "isolated-options-fixture");
++    SetEnvironmentVariableA("RFD_ROOM_MODE", "campaign-coop");
++    for (int mode = 0; mode < 9; ++mode) campaign &= RfdCharacterRulesMatchRoom(mode) == (mode == GM_NORMAL);
++    // Exercise the real native serializer/parser used between save loading and the join call.
++    for (int level : {1, 20, 35, 83}) {
++        CharSaveInfo source = {}, selected = {};char description[256] = {};
++        source.Class = PC_0_WARRIOR;source.GameMode = GM_NORMAL;source.Level = level;
++        source.Stats.Strength = source.Stats.Magic = source.Stats.Dexterity = source.Stats.Vitality = 25;
++        savedLevel &= UiCreatePlayerDescription(&source, SaveSignature, description) && GetCharSaveInfo(description, &selected) && selected.Level == level;
++        savedLevel &= RfdProgressHeroDifficultyAllowed(1, int(selected.Level), false) == (level >= 20);
++        savedLevel &= RfdProgressHeroDifficultyAllowed(2, int(selected.Level), false) == (level >= 35);
++        savedLevel &= RfdProgressHeroDifficultyAllowed(8, int(selected.Level), false) == (level >= 83);
++    }
++    SetEnvironmentVariableA("RFD_ROOM_MODE", "coliseum-pvp");
++    for (int mode = 0; mode < 9; ++mode) arena &= RfdCharacterRulesMatchRoom(mode) == (mode == GM_COLISEUM);
++    SetEnvironmentVariableA("RFD_ROOM_TICKET", oldTicket[0] ? oldTicket : nullptr);
++    SetEnvironmentVariableA("RFD_ROOM_MODE", oldMode[0] ? oldMode : nullptr);
++    FILE* report = fopen((std::string(profile) + "\\character-rules-qa.json").c_str(), "w");
++    if (report) {
++        fprintf(report, "{\"passed\":%s,\"soloRulesPreserved\":%s,\"cooperativeNormalOnly\":%s,\"arenaCharactersOnly\":%s,\"selectedHeroLevelFromNativeSaveDescription\":%s,\"heroDifficultyMinimumsEnforced\":%s}",
++            solo && campaign && arena && savedLevel ? "true" : "false", solo ? "true" : "false", campaign ? "true" : "false", arena ? "true" : "false", savedLevel ? "true" : "false", savedLevel ? "true" : "false");
++        fclose(report);
++    }
++    return strcmp(test, "options") == 0;
++#else
++    return false;
++#endif
++}
 +
 +int GameModeTitleList[ 2 ] = { ID_CAPTION, 0 };
 +int GameModeOkCancelList[ 3 ] = { ID_OK_BUTTON, ID_CANCEL_BUTTON, 0 };
@@ -29025,18 +29460,16 @@
 +    switch( gameMode )
 +    {
 +        // TODO: change all meaningless default to specified case
-+        default:/*GM_NORMAL*/    return "Normal mode is a classic set of rules since the original The Hell mod. This is the default difficulty and the intended way to play. For more info, see README file.";
-+        case GM_HARDCORE:	    return "In Hardcore mode death is permanent. If you die, your character file is erased. Level of difficulty is average.";
++        default:/*GM_NORMAL*/    return "Character rules: Normal. Standard campaign rules. Horror to Inferno are separate campaign difficulties, chosen for each journey.";
++        case GM_HARDCORE:	    return "Character rules: Hardcore. Death is permanent and erases this character. Choose campaign difficulty separately for each new journey.";
 +        case GM_IRONMAN:	        return "Ironman rules, bosses drop Identify relicts, repair oils, magic find is"
 +                                               " +100%, increased experience, saving allowed after clearing dungeon levels 4/8/12/16/20/24.";
 +        case GM_NIGHTMARE:	    return "Nightmare: saving allowed only after beating level 24, death is permanent."
 +                                               " Magic find is +100%, bosses drop 2 ID relicts and one oil, increased experience.";
-+        case GM_EASY:	        return "Easy is a variation of Normal. Without features like battle"
-+                                               " lockdowns and inescapable quest locations. Monsters are less aggressive. Recommended for new players.";
++        case GM_EASY:	        return "Character rules: Easy. Less aggressive monsters, no battle lockdowns or inescapable quests. Choose campaign difficulty separately.";
 +        case GM_SURVIVAL:	    return "Survival is a Normal mode variation, no town backtracking, saving is"
 +                                               " allowed once every level. Battle pause is allowed. +50% MF, +(50+CLVL)% XP.";
-+        case GM_HARD:	        return "Hard mode is the most difficult challenge of this mod."
-+                                               " Monsters are aggressive and dangerous. Prepare to get brutalized. Level of difficulty is extreme.";
++        case GM_HARD:	        return "Character rules: Hard. Especially aggressive, dangerous monsters. These rules remain active in every campaign difficulty.";
 +        case GM_SPEEDRUN:        return "Nightmare variation. Saving allowed only after beating level 24,"
 +											   " no Vise, no pause, 200% MF, increased experience, and a timer which stops with your death or His.";
 +    }
@@ -29610,7 +30043,23 @@
  	AnimateDialogTitle( hdlg );
  	SDlgSetTimer( hdlg, 2, 55, 0 );
  	dialupWinText = AllocTextWin();
-@@ -7056,6 +7043,7 @@
+@@ -6549,10 +6536,11 @@
+ 		if( result != 0xFF000000 ){
+ 			break;
+ 		}
+-		bigDialog = IsBigDialog + 1;
+-		if( IsBigDialog++ <= 1 ){
+-			return MessageBoxA( hdlg, lpText, lpCaption, errorDialogType );
+-		}
++		if(IsBigDialog==0){IsBigDialog=1;bigDialog=1;continue;}
++		// Long online/errors are paged in the native notice instead of escaping
++		// fullscreen into an unskinned Windows message box.
++		RfdShowNotice(lpCaption?lpCaption:"Returns from Darkness",lpText);
++		return 1;
+ 	}
+ 	return result;
+ }
+@@ -7056,6 +7044,7 @@
  	switch( Msg ){
  		case WM_INITDIALOG:
  		{
@@ -29618,7 +30067,7 @@
  			char tempBuf[32];
  			if( GameMode == GM_COLISEUM ){
  				LoadStringA( HInstance, STR_80_New_hero_coliseum, tempBuf, 31 );
-@@ -7124,6 +7112,7 @@
+@@ -7124,6 +7113,7 @@
  				SetHeroInfoText( GetParent( hDlg ), &NewSaveInfo, ClassSelectionMode );
  				
  			}else if( HIWORD_IDA(wParam) == BN_DOUBLECLICKED || (ushort)wParam == 1 ){
@@ -29626,7 +30075,7 @@
  				PlaySoundTitleSelect();
  				SDlgKillTimer( hDlg, 1 );
  				SDlgEndDialog( hDlg, GetWindowLongA( GetFocus(), GWL_ID ) );
-@@ -7136,6 +7125,7 @@
+@@ -7136,6 +7126,7 @@
  			break;
  		case WM_LBUTTONDOWN:
  			if( CheckCursorOnButton( hDlg, GetDlgItem( hDlg, ID_OK_BUTTON ), (unsigned __int16) lParam, (unsigned int) lParam >> 16u ) ){
@@ -29634,7 +30083,7 @@
  				PlaySoundTitleSelect();
  				SDlgKillTimer( hDlg, 1 );
  				SDlgEndDialog( hDlg,  GetWindowLongA( GetFocus(), GWL_ID ) );
-@@ -8060,7 +8050,7 @@
+@@ -8060,7 +8051,7 @@
  	InitSelectionAndLoadPentagram( "ui_art\\focus16.pcx" );
  	SDlgSetTimer( hdlg, 1, 55, 0 );
  	InitDialogSurface( hdlg );
@@ -29643,7 +30092,7 @@
  	AnimateDialogTitle( hdlg );
  	SDlgSetTimer( hdlg, 2, 55, 0 );
  	textWin = AllocTextWin();
-@@ -9267,6 +9257,7 @@
+@@ -9267,6 +9258,7 @@
  //----- (2000D6D0) --------------------------------------------------------
  int __stdcall DialogSelectHero( HWND hdlg, unsigned int Msg, WPARAM wParam, LPARAM lParam )
  {
@@ -29651,7 +30100,7 @@
  	XinputVirtualKeyboard();
  
      if( Msg >= 3000 ){
-@@ -9280,7 +9271,7 @@
+@@ -9280,7 +9272,7 @@
  		{
  			MenuLoadCharSlots( hdlg );
  			InitDialogSurface( hdlg );
@@ -29660,16 +30109,65 @@
  			AnimateDialogTitle( hdlg );
  			SDlgSetTimer( hdlg, 2, 55, 0 );
  			TextWin* heroDialogWin = AllocTextWin();
-@@ -13902,4 +13893,4 @@
+@@ -9513,6 +9505,13 @@
+         case MSG_SELECT_GAME_MODE:
+         {
+ 			NewSaveInfo.GameChanger = GC_0_CONTINUE;
++            // Online rules belong to the room; solo still offers the complete ruleset list.
++            if (IsMultiGame == 1 && RfdOnlineRequested()) {
++                GameMode = GAME_MODE(RfdRoomCharacterMode());
++                NewSaveInfo.GameMode = GameMode;
++                PostMessageA(hdlg, MSG_GAME_CHANGERS, 0, 0);
++                return 0;
++            }
+             int selGameModeResult = SDlgDialogBoxParam( HInstance, "SELGAMEMODE_LIST_DIALOG", hdlg, DialogSelectGameMode, lParam );
+             if( selGameModeResult == -1 || selGameModeResult == ID_EXIT_CANCEL_BUTTON ){
+                 PostMessageA( hdlg, MSG_SELECT_TRAITS, 0, 1 );
+@@ -9527,7 +9526,7 @@
+ 		{
+ 			int selGameChangerResult = SDlgDialogBoxParam(HInstance, "SELGAMECHANGER_LIST_DIALOG", hdlg, DialogSelectGameChangers, lParam);
+ 			if (selGameChangerResult == -1 || selGameChangerResult == ID_EXIT_CANCEL_BUTTON) {
+-				PostMessageA(hdlg, MSG_SELECT_GAME_MODE, 0, 1);
++				PostMessageA(hdlg, IsMultiGame == 1 && RfdOnlineRequested() ? MSG_SELECT_TRAITS : MSG_SELECT_GAME_MODE, 0, 1);
+ 			}
+ 			else if (!SelectedGameChanger) {
+ 				PostMessageA(hdlg, MSG_ENTER_NAME, 0, 0);
+@@ -9574,6 +9573,14 @@
+ 			return 0;
+ 
+ 		case MSG_LOAD_GAME:
++			if (IsMultiGame == 1 && RfdOnlineRequested()) {
++				CharSaveInfo* selected = HeroSaveHead;
++				while (selected && _stricmp(selected->Name, SelectedHeroName)) selected = selected->next;
++				if (selected && !RfdCharacterRulesMatchRoom(int(selected->GameMode), true)) {
++					PostMessageA(hdlg, MSG_SELECT_HERO, 0, 0);
++					return 0;
++				}
++			}
+ 			EndDialogSelectHero( hdlg, IsMultiGame == 1 ? 3 : 2 );
+ 			return 0;
+ 		
+@@ -13902,4 +13909,4 @@
  		SMemFree( data, __FILE__, __LINE__, 0 );
  		data = nullptr;
  	}
 -}
 \ No newline at end of file
 +}
+--- a/src/InventoryPanel.cpp
++++ b/src/InventoryPanel.cpp
+@@ -1010,7 +1010,7 @@
+ {
+ 	// вместо захардкоденых констант поставлены предвычесленные с учетом разрешения координаты
+ 
+-	Surface_DrawCEL(InventoryPanelRect.Left + Screen_LeftBorder, InventoryPanelRect.Down + Screen_TopBorder, (int*)InvPanelCEL, 1, InventoryPanelRect.Width);// Тут рисуется сама картинка инвентаря
++	RfdDrawInventoryBackdrop();
+ 
+ 	Player& player = Players[CurrentPlayerIndex];
+ 
 --- a/src/Item.cpp
 +++ b/src/Item.cpp
-@@ -1,3500 +1,3502 @@
+@@ -1,3500 +1,3670 @@
 -﻿#include "stdafx.h"
 -
 -volatile int forceCallforSync;
@@ -33081,6 +33579,170 @@
 -					case AE_ALL_STAT     : each(statAdds)            += e.minVal; break;
 +#include "stdafx.h"
 +#include "CommunityLoot.h"
++#include <wincodec.h>
++
++namespace {
++constexpr int RfdRelicFirstId=4618,RfdRelicFirstGraphic=8880,RfdRelicCount=3;
++const wchar_t *RfdRelicFiles[]={L"last-vigil.png",L"return-lantern.png",L"ashen-covenant.png"};
++std::vector<unsigned char> RfdRelicIcons[RfdRelicCount],RfdRelicGround[RfdRelicCount];
++bool RfdRelicAttempted[RfdRelicCount]={};
++int rfdRelicIndex(const Item &item){return item.UniqueItemIndex>=RfdRelicFirstId&&item.UniqueItemIndex<RfdRelicFirstId+RfdRelicCount?item.UniqueItemIndex-RfdRelicFirstId:-1;}
++std::vector<unsigned char> rfdRelicCel(const std::vector<std::vector<unsigned char>> &frames,int width,int height){
++ std::vector<unsigned char> result((frames.size()+2)*sizeof(unsigned int),0);
++ reinterpret_cast<unsigned int*>(result.data())[0]=unsigned(frames.size());
++ for(size_t frame=0;frame<frames.size();frame++){
++  reinterpret_cast<unsigned int*>(result.data())[frame+1]=unsigned(result.size());
++  // CEL uses a ten-byte clipping header followed by bottom-to-top RLE rows.
++  result.push_back(10);result.push_back(0);for(int i=0;i<8;i++)result.push_back(0);
++  for(int y=height-1;y>=0;y--)for(int x=0;x<width;){
++   const bool solid=frames[frame][y*width+x]!=0;int n=1;
++   while(x+n<width&&n<127&&(frames[frame][y*width+x+n]!=0)==solid)n++;
++   result.push_back(solid?static_cast<unsigned char>(n):static_cast<unsigned char>(256-n));
++   if(solid)result.insert(result.end(),frames[frame].begin()+y*width+x,frames[frame].begin()+y*width+x+n);
++   x+=n;
++  }
++ }
++ reinterpret_cast<unsigned int*>(result.data())[frames.size()+1]=unsigned(result.size());return result;
++}
++bool rfdRelicLoad(int index){
++ if(index<0||index>=RfdRelicCount)return false;
++ if(RfdRelicAttempted[index])return !RfdRelicIcons[index].empty();RfdRelicAttempted[index]=true;
++ wchar_t path[MAX_PATH];GetModuleFileNameW(nullptr,path,MAX_PATH);wchar_t *tail=wcsrchr(path,L'\\');if(!tail)return false;
++ wcscpy(tail+1,L"assets\\original\\items\\");wcscat(path,RfdRelicFiles[index]);
++ HRESULT initialized=CoInitializeEx(nullptr,COINIT_MULTITHREADED);IWICImagingFactory *factory=nullptr;
++ IWICBitmapDecoder *decoder=nullptr;IWICBitmapFrameDecode *frame=nullptr;IWICBitmapScaler *scaler=nullptr;IWICFormatConverter *converter=nullptr;
++ std::vector<unsigned char> rgba(28*28*4);bool ok=false;
++ if(SUCCEEDED(CoCreateInstance(CLSID_WICImagingFactory,nullptr,CLSCTX_INPROC_SERVER,IID_PPV_ARGS(&factory)))&&
++    SUCCEEDED(factory->CreateDecoderFromFilename(path,nullptr,GENERIC_READ,WICDecodeMetadataCacheOnLoad,&decoder))&&
++    SUCCEEDED(decoder->GetFrame(0,&frame))&&SUCCEEDED(factory->CreateBitmapScaler(&scaler))&&
++    SUCCEEDED(scaler->Initialize(frame,28,28,WICBitmapInterpolationModeFant))&&SUCCEEDED(factory->CreateFormatConverter(&converter))&&
++    SUCCEEDED(converter->Initialize(scaler,GUID_WICPixelFormat32bppBGRA,WICBitmapDitherTypeNone,nullptr,0,WICBitmapPaletteTypeCustom))&&
++    SUCCEEDED(converter->CopyPixels(nullptr,28*4,unsigned(rgba.size()),rgba.data())))ok=true;
++ if(converter)converter->Release();if(scaler)scaler->Release();if(frame)frame->Release();if(decoder)decoder->Release();if(factory)factory->Release();if(SUCCEEDED(initialized))CoUninitialize();
++ if(!ok)return false;
++ // Read a fixed game palette rather than a fading menu/current dungeon palette.
++ // Shared UI ramps (32..255) remain stable between the supported dungeon sets.
++ int paletteBytes=0;auto *palette=static_cast<unsigned char*>(LoadFile("Levels\\orig_pals\\town.pal",&paletteBytes));
++ if(!palette||paletteBytes<768){if(palette)FreeMem(palette);return false;}
++ std::vector<unsigned char> icon(28*28,0);
++ for(int p=0;p<28*28;p++)if(rgba[p*4+3]>=64){
++  int best=0x7fffffff;unsigned char color=32;
++  for(int i=32;i<256;i++){
++   int r=int(rgba[p*4+2])-palette[i*3],g=int(rgba[p*4+1])-palette[i*3+1],b=int(rgba[p*4])-palette[i*3+2];
++   int distance=r*r*2+g*g*3+b*b;if(distance<best){best=distance;color=static_cast<unsigned char>(i);}
++  }
++  icon[p]=color;
++ }
++ FreeMem(palette);RfdRelicIcons[index]=rfdRelicCel({icon},28,28);
++ std::vector<std::vector<unsigned char>> ground;
++ for(int f=0;f<12;f++){
++  std::vector<unsigned char> pixels(96*32,0);const int lift=(11-f)/2;
++  for(int y=0;y<18;y++)for(int x=0;x<18;x++)pixels[(13-lift+y)*96+39+x]=icon[(y*28/18)*28+x*28/18];
++  ground.push_back(std::move(pixels));
++ }
++ RfdRelicGround[index]=rfdRelicCel(ground,96,32);return true;
++}
++void rfdRelicDimensions(int index){
++ const int graphic=RfdRelicFirstGraphic+index;
++ ItemWidthTable[graphic+CM_12_ITEMS_PICS_START]=28;ItemHeightTable[graphic+CM_12_ITEMS_PICS_START]=28;
++ ItemFlipTable[graphic]=FL_12_RING;
++}
++void rfdRelicGround(Item &item,bool all){
++ const int index=rfdRelicIndex(item);if(index<0||!rfdRelicLoad(index))return;
++ item.ItemCELFilePtr=reinterpret_cast<char*>(RfdRelicGround[index].data());item.FramesCount=12;
++ if(all){item.AnimWidth=96;item.subOffsetX=16;}
++}
++}
++
++const char *RfdOriginalRelicLore(const Item &item){
++ if(item.MagicLevel!=ML_2_UNIQUE||!item.Identified)return nullptr;
++ switch(item.UniqueItemIndex){
++ case 4618:return "A vigil kept when every other light had failed.";
++ case 4619:return "Its last ember remembers the road to Tristram.";
++ case 4620:return "From the ashes, an oath to return together.";
++ default:return nullptr;
++ }
++}
++
++void RfdOriginalRelicDrop(int bossId,int baseMonsterId,int row,int col,bool sendMsg){
++ // An explicit reward path, outside legacy seeded selection. Only the existing
++ // loot owner executes this call; other peers receive the normal item command.
++ if(GameMode!=GM_NORMAL||Difficulty!=DL_0_HORROR)return;
++ const Player &player=Players[CurrentPlayerIndex];
++ if((player.gameChanger&(BIT(GC_14_CLEAN_HANDS)|BIT(GC_9_NIGHT_KIN)))||HasTrait(CurrentPlayerIndex,TraitId::Barbarian))return;
++ int unique=-1;
++ if(bossId==UM_1_Skeleton_King)unique=4618;
++ else if(bossId==UM_9_The_Butcher)unique=4619;
++ else if(baseMonsterId==BM_110_DIABLO)unique=4620;
++ if(unique<0)return;
++ // Additional rewards must not advance the legacy loot/combat random stream.
++ struct RandomRestore {int seed=RandomSeed,last=LastSeed;u64 seed64=RandomSeed64,last64=LastSeed64;uint count=RandUsingCounter,count64=Rand64UsingCounter;
++  ~RandomRestore(){RandomSeed=seed;LastSeed=last;RandomSeed64=seed64;LastSeed64=last64;RandUsingCounter=count;Rand64UsingCounter=count64;}} restore;
++ LARGE_INTEGER clock;QueryPerformanceCounter(&clock);
++ SetRndSeed(int(u64(clock.QuadPart)^u64(unique)*0x9e3779b97f4a7c15ULL));
++ SpawnUnique(unique,row,col,sendMsg);
++}
++
++bool RfdOriginalRelicQa(){
++#if RFD_DEV_QA
++ char mode[40]={},profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_ENGINE_QA",mode,sizeof(mode));GetEnvironmentVariableA("RFD_PROFILE",profile,sizeof(profile));
++ const bool reload=strcmp(mode,"original-relics-reload")==0;
++ if((strcmp(mode,"original-relics")&&!reload)||strstr(profile,"engine-qa-")==nullptr||gbRunGame!=1)return false;
++ static DWORD start=GetTickCount(),lastReport=0;static int phase=0,ids[3]={-1,-1,-1};
++ static bool guards=false,rngPreserved=true,roundtrip=true,icons=true;const DWORD elapsed=GetTickCount()-start;
++ auto &player=Players[CurrentPlayerIndex];
++ if(reload){
++  if(elapsed<2000)return true;
++  if(phase==0){IsINVPanelVisible=true;IsCHARPanelVisible=true;extern void RfdQueueMenuCapture(const char*);RfdQueueMenuCapture((std::string(profile)+"\\relics-reloaded.bmp").c_str());phase=1;}
++  int inventory[3]={};for(int n=0;n<player.InvItemCount;n++){int id=player.InventorySlots[n].UniqueItemIndex;if(id>=4618&&id<=4620)inventory[id-4618]++;}
++  FILE *file=fopen((std::string(profile)+"\\relics-reload-qa.json").c_str(),"w");if(file){fprintf(file,"{\"reloaded\":true,\"inventory\":[%d,%d,%d]}",inventory[0],inventory[1],inventory[2]);fclose(file);}return true;
++ }
++ if(phase==0&&elapsed>2000){
++  FILE *pal=fopen((std::string(profile)+"\\interface-palette.json").c_str(),"w");if(pal){fprintf(pal,"[");for(int n=0;n<256;n++)fprintf(pal,"%s[%u,%u,%u]",n?",":"",ScreenPalette[n].peRed,ScreenPalette[n].peGreen,ScreenPalette[n].peBlue);fprintf(pal,"]");fclose(pal);}
++  auto previousMode=GameMode;auto previousDifficulty=Difficulty;int before=ItemsCount;
++  GameMode=GM_COLISEUM;Difficulty=DL_0_HORROR;RfdOriginalRelicDrop(UM_1_Skeleton_King,0,player.Row+2,player.Col+2,false);
++  GameMode=GM_NORMAL;Difficulty=DL_1_PURGATORY;RfdOriginalRelicDrop(UM_1_Skeleton_King,0,player.Row+2,player.Col+2,false);
++  guards=ItemsCount==before;Difficulty=DL_0_HORROR;
++  const int boss[]={UM_1_Skeleton_King,UM_9_The_Butcher,-1};
++  for(int i=0;i<3;i++){
++   const int seed=RandomSeed,last=LastSeed;const auto seed64=RandomSeed64,last64=LastSeed64;const auto count=RandUsingCounter,count64=Rand64UsingCounter;
++   RfdOriginalRelicDrop(boss[i],i==2?BM_110_DIABLO:0,player.Row+2,player.Col+i*2,true);
++   rngPreserved=rngPreserved&&seed==RandomSeed&&last==LastSeed&&seed64==RandomSeed64&&last64==LastSeed64&&count==RandUsingCounter&&count64==Rand64UsingCounter;
++   for(int n=0;n<ItemsCount;n++){int index=ItemActive[n];if(Items[index].UniqueItemIndex==4618+i){ids[i]=index;break;}}
++   if(ids[i]<0){roundtrip=false;icons=false;continue;}
++   auto &item=Items[ids[i]];LastItemInfo info={};SaveItem(&info,&item);Item restored={};LoadItem(&info,&restored);
++   FILE *diagnostic=fopen((std::string(profile)+"\\relic-roundtrip.txt").c_str(),"a");if(diagnostic){fprintf(diagnostic,"%d source id=%d seed=%d type=%d graphic=%d vit=%d mag=%d hp=%d mana=%d fire=%d name=%s\n",i,item.UniqueItemIndex,item.seed,item.dropType,item.GraphicValue,item.AddsVitality,item.AddsMagic,item.AddsHitPointsBy64,item.AddsManaBy64,item.resist[ET_1_FIRE],item.FullMagicalItemName);fprintf(diagnostic,"%d loaded id=%d seed=%d type=%d graphic=%d vit=%d mag=%d hp=%d mana=%d fire=%d name=%s\n",i,restored.UniqueItemIndex,restored.seed,restored.dropType,restored.GraphicValue,restored.AddsVitality,restored.AddsMagic,restored.AddsHitPointsBy64,restored.AddsManaBy64,restored.resist[ET_1_FIRE],restored.FullMagicalItemName);fclose(diagnostic);}
++   roundtrip=roundtrip&&restored.UniqueItemIndex==item.UniqueItemIndex&&restored.seed==item.seed&&restored.dropType==item.dropType&&restored.GraphicValue==item.GraphicValue&&
++    strcmp(restored.FullMagicalItemName,item.FullMagicalItemName)==0&&restored.AddsVitality==item.AddsVitality&&restored.AddsMagic==item.AddsMagic&&
++    restored.AddsHitPointsBy64==item.AddsHitPointsBy64&&restored.AddsManaBy64==item.AddsManaBy64&&restored.resist[ET_1_FIRE]==item.resist[ET_1_FIRE];
++   int graphic=item.GraphicValue+CM_12_ITEMS_PICS_START;auto *cel=GetItemSprites(graphic);
++   icons=icons&&item.GraphicValue==8880+i&&graphic==1&&cel==reinterpret_cast<char*>(RfdRelicIcons[i].data())&&
++    item.ItemCELFilePtr==reinterpret_cast<char*>(RfdRelicGround[i].data())&&item.FramesCount==12&&ItemWidthTable[8892+i]==28&&ItemHeightTable[8892+i]==28;
++  }
++  GameMode=previousMode;Difficulty=previousDifficulty;phase=1;IsINVPanelVisible=true;IsCHARPanelVisible=true;
++ }
++ if(phase==1&&elapsed>11000){
++  for(int i=0;i<3;i++)if(ids[i]>=0){
++   if(RfdOnlineRequested())NetSendCmdGItem(true,CMD_40_REQUESTAGITEM,CurrentPlayerIndex,CurrentPlayerIndex,ids[i]);
++   else{InvGetItem(CurrentPlayerIndex,ids[i]);AutoPutCursorToInventoryOrDrop();SetCursorGraphics(CM_1_NORMAL_HAND);}
++  }
++  phase=2;
++ }
++ if(phase==2&&elapsed>14000){UpdatePlayerFile();phase=3;extern void RfdQueueMenuCapture(const char*);RfdQueueMenuCapture((std::string(profile)+"\\relics-inventory.bmp").c_str());}
++ if(phase==1&&elapsed>3500&&elapsed<4000){extern void RfdQueueMenuCapture(const char*);RfdQueueMenuCapture((std::string(profile)+"\\relics-ground.bmp").c_str());}
++ if(elapsed-lastReport>=250){
++  lastReport=elapsed;int ground[3]={},inventory[3]={};
++  for(int n=0;n<ItemsCount;n++){int id=Items[ItemActive[n]].UniqueItemIndex;if(id>=4618&&id<=4620)ground[id-4618]++;}
++  for(int n=0;n<player.InvItemCount;n++){int id=player.InventorySlots[n].UniqueItemIndex;if(id>=4618&&id<=4620)inventory[id-4618]++;}
++  FILE *file=fopen((std::string(profile)+"\\original-relics-qa.json").c_str(),"w");if(file){
++   fprintf(file,"{\"phase\":%d,\"elapsedMs\":%lu,\"guardedDrop\":%s,\"legacyRngPreserved\":%s,\"saveLoadRoundtrip\":%s,\"customCelIconsAndGround\":%s,\"ground\":[%d,%d,%d],\"inventory\":[%d,%d,%d],\"saved\":%s}",phase,elapsed,guards?"true":"false",rngPreserved?"true":"false",roundtrip?"true":"false",icons?"true":"false",ground[0],ground[1],ground[2],inventory[0],inventory[1],inventory[2],phase==3?"true":"false");fclose(file);
++  }
++ }
++ return true;
++#else
++ return false;
++#endif
++}
 +
 +volatile int forceCallforSync;
 +
@@ -33618,6 +34280,10 @@
 +// th2 функция для опциональной подмены графики бутылок на оригинальные
 +char* GetItemSprites( int& spriteId )
 +{
++	const int rfdIndex=spriteId-CM_12_ITEMS_PICS_START-RfdRelicFirstGraphic;
++	if(rfdIndex>=0&&rfdIndex<RfdRelicCount&&rfdRelicLoad(rfdIndex)){
++		rfdRelicDimensions(rfdIndex);spriteId=1;return reinterpret_cast<char*>(RfdRelicIcons[rfdIndex].data());
++	}
 +	extern char UserPotion[64];
 +	if( UserPotionB ){
 +		switch( spriteId - 12 ){
@@ -36665,7 +37331,7 @@
  					case AE_CLVL_HIT                  : accuracy           += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_DAMAGE               : addsDamage         += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_DAMAGE_PERCENT       : damagePercent      += e.minVal + player.CharLevel * e.maxVal / 100; break;
-@@ -3508,13 +3510,13 @@
+@@ -3508,13 +3678,13 @@
  					case AE_CLVL_STUN_RES             : player.stunThreshold[CT_0_STUN] += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_GOLD                 : goldFind           += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_XP                   : xpGainPercent      += e.minVal + player.CharLevel * e.maxVal / 100; break;
@@ -36682,7 +37348,7 @@
  					case AE_CLVL_CRIT_DAMAGE_PERCENT: critPercent  += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_SUMMON_DAMAGE        : { int d = e.minVal + player.CharLevel * e.maxVal / 100; summonDamageMin += d; summonDamageMax += d; } break;
  					case AE_CLVL_SUMMON_DAMAGE_PERCENT: summonDamagePercent += e.minVal + player.CharLevel * e.maxVal / 100; break;
-@@ -3522,4545 +3524,4545 @@
+@@ -3522,4545 +3692,4545 @@
  					case AE_CLVL_SUMMON_AC            : summonAc            += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_SUMMON_HP            : summonHp            += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_SUMMON_HP_PERCENT    : summonHpPercent     += e.minVal + player.CharLevel * e.maxVal / 100; break;
@@ -45759,7 +46425,7 @@
  	case AE_CLVL_HIT                  : minRnd(); maxRnd(); break;
  	case AE_CLVL_DAMAGE               : minRnd(); maxRnd(); break;
  	case AE_CLVL_DAMAGE_PERCENT       : minRnd(); maxRnd(); break;
-@@ -8074,3829 +8076,3829 @@
+@@ -8074,3829 +8244,3840 @@
  	case AE_CLVL_STUN_RES             : minRnd(); maxRnd(); break;
  	case AE_CLVL_GOLD                 : minRnd(); maxRnd(); break;
  	case AE_CLVL_XP                   : minRnd(); maxRnd(); break;
@@ -49859,6 +50525,7 @@
 +	item.FramesCount = Flip_FramesCount[flip];
 +	item.AnimWidth = 96;
 +	item.subOffsetX = 16;
++	rfdRelicGround(item,true);
 +	//item.Identified = 0;
 +	item.dropping = 0;
 +	//item.gottenFromLand = 0; возможно это защита от дублирования в курсоре
@@ -50794,10 +51461,18 @@
 +{
 +	UniqueItem& uniq = UniqueItems[uniqueItemIndex];
 +	Item& item = Items[itemIndex];
++	// These explicit relic rewards are identified. Apply their fixed effects in
++	// that state from the beginning, including on the first drop and recreation.
++	if(uniqueItemIndex>=RfdRelicFirstId&&uniqueItemIndex<RfdRelicFirstId+RfdRelicCount)item.Identified=1;
 +	for( int i = 0; i < uniq.effectCount; i++ ){
 +		Item_ApplyAffix(item, uniq.Effect[i], 0, 0, 1, i, 0, 0, false);
 +	}
 +	if( uniq.uniqueGraphics >= 0 ) item.GraphicValue = uniq.uniqueGraphics;
++	if(uniqueItemIndex>=RfdRelicFirstId&&uniqueItemIndex<RfdRelicFirstId+RfdRelicCount){
++		const int index=uniqueItemIndex-RfdRelicFirstId;
++		if(rfdRelicLoad(index)){rfdRelicDimensions(index);item.GraphicValue=RfdRelicFirstGraphic+index;}
++		item.Identified=1;
++	}
 +
 +	// female classes (Archer / Rogue)
 +	if (is(Players[CurrentPlayerIndex].ClassID, PC_1_ARCHER, PC_4_ROGUE)) {
@@ -51479,6 +52154,7 @@
 +	item.FramesCount = Flip_FramesCount[ItemFlipTable[item.GraphicValue]];
 +	item.AnimWidth = 96;
 +	item.subOffsetX = 16;
++	rfdRelicGround(item,true);
 +	item.dropping = 0;
 +	item.gottenFromLand = 0;
 +	if( flipFlag ){
@@ -51597,6 +52273,7 @@
 +	// нужно таки добавить версию в Item и смотреть на загрузке каждого итема
 +	Item* NewItem = &Items[itemIndex];
 +	NewItem->ItemCELFilePtr = FlipItemCELFiles[ItemFlipTable[NewItem->GraphicValue]];
++	rfdRelicGround(*NewItem,false);
 +}
 +
 +//----- (th3) -------------------------------------------------------------
@@ -53444,7 +54121,7 @@
 +};
 --- a/src/Main.cpp
 +++ b/src/Main.cpp
-@@ -1,5626 +1,5634 @@
+@@ -1,5626 +1,5639 @@
 -﻿#include "stdafx.h"
 -
 -bool MouseMoved = false;
@@ -59074,6 +59751,8 @@
 \ No newline at end of file
 +#include "stdafx.h"
 +#include "CommunityProgress.h"
++#include "CommunityDev.h"
++#include "CommunityRemaster.h"
 +#include "CommunitySession.h"
 +
 +bool MouseMoved = false;
@@ -61149,6 +61828,9 @@
 +	while( gbRunGame ){
 +		RfdProgressTick();
 +		RfdEngineQaTick();
++		#if RFD_DEV_QA
++		RfdOriginalRelicQa();
++		#endif
 +		if(RfdOnlineRequested()&&GetTickCount()-projectLastSave>=10000&&CurrentSaveArchiveHandle==INVALID_HANDLE_VALUE){UpdatePlayerFile();projectLastSave=GetTickCount();}
 +		XinputMain();
 +		AnimateLevelPalette(); // palette cycling
@@ -64708,7 +65390,7 @@
 +}
 --- a/src/MainMenu.cpp
 +++ b/src/MainMenu.cpp
-@@ -1,219 +1,239 @@
+@@ -1,219 +1,250 @@
 -﻿#include "stdafx.h"
 -
 -int MenuMusicIndex = 0;
@@ -64979,6 +65661,8 @@
 +    int v2;  // eax@14
 +    int dialogResult;  // [sp+4h] [bp-4h]@2
 +    StartMenuMusic();
++    if(RfdCharacterRulesQa())return;
++    if(RfdMenuRenderQa())return;
 +    if(RfdProgressQa())return;
 +    if(RfdHubInputQa())return;
 +    v0 = 0;
@@ -65126,6 +65810,15 @@
 +			LoadCharSlots(nullptr);
 +			multiPlayerSelection = HM_3_NETWORK_GAME;
 +			strcpy( HeroName, CharNameSlots[ AutoLoadSlot ] );
++			// A developer/autoload path must enforce the same rules as character selection.
++			HANDLE heroArchive = OpenArchive(false, AutoLoadSlot);
++			if (heroArchive) {
++				uchar* heroData = ReadPlayerInfo(heroArchive);
++				bool validHero = heroData && LoadPlayerInfo(heroData, 0, false);
++				if (heroData) FreeMemZero(heroData);
++				CloseArchiveRead(heroArchive);
++				if (validHero && !RfdCharacterRulesMatchRoom(int(Players[0].gameMode), true)) return 1;
++			}
 +		}else{
 +			if( !UiSelHeroMultDialog(LoadCharSlots, UiCreateHero, DeleteCharSlot, GetStartingStatsByClass, &multiPlayerSelection, HeroName, Enable5Class, Enable6Class) )
 +				TerminateWithError("Can't load multiplayer dialog");
@@ -67832,7 +68525,7 @@
 +}
 --- a/src/Monster.cpp
 +++ b/src/Monster.cpp
-@@ -1,10162 +1,10167 @@
+@@ -1,10162 +1,10168 @@
 -﻿#include "stdafx.h"
 -
 -bool AuraSoundStates[];
@@ -76349,6 +77042,7 @@
 +	if ( (!(player.gameChanger & BIT(GC_14_CLEAN_HANDS))) && (!(player.gameChanger & BIT(GC_9_NIGHT_KIN))) && (!HasTrait(CurrentPlayerIndex, TraitId::Barbarian)) ) {
 +		SpecifiedUniqueDrop(monsterIndex, sendMsg);
 +	}
++	RfdOriginalRelicDrop(bossIndex,monster.SpritePtr->baseMonsterIndex,monster.Row,monster.Col,sendMsg);
 +
 +    if( monster.newBossId ){        
 +        // Special boss drop for non town game modes
@@ -88119,7 +88813,7 @@
  
  	switch (auraIndex)
  	{
-@@ -10455,132 +10460,132 @@
+@@ -10455,132 +10461,132 @@
  	//case AUI_14_:
  	//	break;
  	//
@@ -88373,7 +89067,7 @@
  		for (ushort au = AUI_1_; au < AUI_COUNT; au++)
  		{
  			for (int auraBaseMonsterIndex : Auras[au].baseMonsterIndex)
-@@ -10630,8 +10635,8 @@
+@@ -10630,8 +10636,8 @@
  					}
  				}
  			}
@@ -88384,7 +89078,7 @@
  	for (int i = 0; i < countof(Player::AuraIndex); i++)
  	{
  		if (auraTargetPlayer.AuraIndex[i] == AUI_0_NONE) {
-@@ -10641,1829 +10646,1829 @@
+@@ -10641,1829 +10647,1829 @@
  		AuraCooldown[i]--;
  		LimitToMin(AuraCooldown[i], 0);
  
@@ -92037,7 +92731,7 @@
  			POINT p = { 0, 0 };
  			ClientToScreen(ghMainWnd, &p);
  			RECT windowRect;
-@@ -12474,54 +12479,54 @@
+@@ -12474,54 +12480,54 @@
  			ddbltfx.dwSize = sizeof(ddbltfx);
  			ddbltfx.dwFillColor = 0;
  			ScreenSurface32->Blt(&windowRect, 0, 0, DDBLT_COLORFILL | DDBLT_WAIT, &ddbltfx);
@@ -98231,7 +98925,14 @@
 +}
 --- a/src/multi.cpp
 +++ b/src/multi.cpp
-@@ -726,6 +726,16 @@
+@@ -1,4 +1,6 @@
+ ﻿#include "stdafx.h"
++
++#include "CommunityHub.h"
+ 
+ bool gbSomebodyWonGameKludge = false;
+ TBuffer sgHiPriBuf;
+@@ -726,6 +728,23 @@
  //----- (th2) -------------------------------------------------------------
  bool multi_init_multi( client_info* client_info, user_info* user_info, battle_info* ui_info, bool* pfExitProgram )
  {
@@ -98239,7 +98940,14 @@
 +        RegisterEventHandler(true);
 +        int playerIndex=0;
 +        bool startsWorld=false;
-+        if(!RfdJoinProjectRoom(&playerIndex,&sgGameInitInfo,&startsWorld)) return false;
++        // NetInit built this description from LoadCurrentPlayerInfo for HeroName before clearing Players.
++        // CurCharSaveInfo belongs to the solo difficulty dialog and is not a multiplayer selection.
++        CharSaveInfo selectedHero = {};
++        if(!user_info->playerDescription || !GetCharSaveInfo(user_info->playerDescription,&selectedHero)) {
++            RfdShowNotice("Santuario - Personagem","Nao foi possivel ler o personagem selecionado. Volte e selecione seu personagem novamente.");
++            return false;
++        }
++        if(!RfdJoinProjectRoom(&playerIndex,&sgGameInitInfo,&startsWorld,selectedHero)) return false;
 +        sgbPlayerTurnBitTbl[playerIndex]=startsWorld?0:1;
 +        CurrentPlayerIndex=playerIndex;
 +        MaxCountOfPlayersInGame=PlayersMax_4;
@@ -98336,6 +99044,40 @@
 +     15, 128,   0,   0, 228, 128, 
 +    255, 255,   0,   0
 +};
+--- a/src/Panel.cpp
++++ b/src/Panel.cpp
+@@ -941,6 +941,7 @@
+ 	ParseCELFile(LifeShereImage, 0, 87, 88, currentCELFilePtr, 1, 88);
+ 	ParseCELFile(ManaShereImage, 0, 87, 88, currentCELFilePtr, 2, 88);
+ 	FreeMemZero(currentCELFilePtr);
++	RfdSkinMainPanel();
+ 	TalkPanelMode = 0;
+ 	if( MaxCountOfPlayersInGame != 1 ){ // загружаем второй образ панели, блокировка талк панели для сингла
+ 		currentCELFilePtr = (char*)LoadFile("CtrlPan\\TalkPanl.CEL", NULL);
+@@ -1106,7 +1107,9 @@
+ //----- (00404D06) -------------------------------------------------------- interface
+ void DrawMainPanel()
+ {
++	RfdHdClearSprite(WorkingSurface+(ScreenHeight+Screen_TopBorder-1)*WorkingWidth+Screen_LeftBorder+(ScreenWidth-GUI_Width)/2,GUI_Width,144);
+ 	CopyFromMainPanelToWorkingSurface(0, MainPanelSelector + 16, GUI_Width/*ScreenWidth*/, 128, Screen_LeftBorder, 512);
++	RfdInterfaceTrackMainPanel();
+ 	DrawInfoPanel();
+ }
+ 
+@@ -1146,12 +1149,7 @@
+ {
+ 	for( auto& b: Buttons ){
+ 		if( !b.active ) continue;
+-		if( int pic = b.pic[b.pressed]; pic == -1 ){
+-			CopyFromMainPanelToWorkingSurface(b.x, b.y - 336, b.width, b.height + 1, b.x + Screen_LeftBorder, b.y + Screen_TopBorder);
+-		}else{
+-			if( b.id == B_TIME ){ pic += CurTimeSpeedIndex * 2; }
+-			Surface_DrawCEL(b.x + Screen_LeftBorder + (ScreenWidth - GUI_Width)/2, b.y + 178 + b.yPicOfs + ScreenHeight - GUI_Height, (int*)b.cel, pic, b.width);
+-		}
++		RfdSkinPanelButton(b);
+ 	}
+ }
+ 
 --- /dev/null
 +++ b/src/PerspectiveShader.h
 @@ -0,0 +1,98 @@
@@ -114151,7 +114893,7 @@
  }
 --- a/src/thehell3.rc
 +++ b/src/thehell3.rc
-@@ -1,4430 +1,4442 @@
+@@ -1,4430 +1,4451 @@
 -// Microsoft Visual C++ generated resource script.
 -//
 -#include "resource.h"
@@ -118786,6 +119528,15 @@
 +    PUSHBUTTON      "Quit",ID_EXIT_CANCEL_BUTTON,193,71,50,14
 +END
 +
++RFD_NATIVE_NOTICE DIALOGEX 0, 0, 256, 203
++STYLE DS_SETFONT | WS_POPUP | WS_VISIBLE
++FONT 13, "Times New Roman", 700, 0, 0x1
++BEGIN
++    CTEXT "",ID_CAPTION,28,64,200,18,WS_DISABLED
++    CTEXT "",ID_QUESTION_TEXT,28,86,200,74,WS_DISABLED
++    DEFPUSHBUTTON "OK",ID_YES_OK_BUTTON,96,170,64,16,BS_NOTIFY
++END
++
 +BIGOK_DIALOG DIALOGEX 0, 0, 154, 118
 +STYLE DS_SETFONT | DS_CENTER | WS_POPUP | WS_VISIBLE
 +FONT 13, "Times New Roman", 700, 0, 0x1
@@ -118926,7 +119677,7 @@
 +FONT 13, "Times New Roman", 700, 0, 0x1
 +BEGIN
 +    PUSHBUTTON      "Single Player",ID_MAINMENU_SINGLEPLAYER,26,81-18,204,18,BS_NOTIFY
-+    PUSHBUTTON      "Online do projeto",ID_MAINMENU_MULTIPLAYER,26,99-18,204,18,BS_NOTIFY
++    PUSHBUTTON      "Play Online",ID_MAINMENU_MULTIPLAYER,26,99-18,204,18,BS_NOTIFY
 +    PUSHBUTTON      "Coliseum", ID_MAINMENU_COLISEUM, 26, 99, 204, 18, BS_NOTIFY
 +    PUSHBUTTON      "Replay Intro",ID_MAINMENU_REPLAY_INTRO,26,117,204,18,BS_NOTIFY
 +    PUSHBUTTON      "Support",ID_MAINMENU_SUPPORT,26,135,204,18,BS_NOTIFY
@@ -119439,7 +120190,7 @@
 +
 +// Icon with lowest ID value placed first to ensure application icon
 +// remains consistent on all systems.
-+101                     ICON                    "../res/th3_dev.ico"
++101                     ICON                    "../res/rfd.ico"
 +102                     ICON                    "../res/th3_black.ico"
 +103                     ICON                    "../res/th3_red.ico"
 +104                     ICON                    "../res/th3_scull.ico"
@@ -123024,6 +123775,19 @@
 +    PUSHBUTTON "Voltar",ID_EXIT_CANCEL_BUTTON,130,165,100,18,BS_NOTIFY
 +    CONTROL "",ID_BACKGROUND,"Static",SS_BLACKFRAME | WS_DISABLED,0,0,256,65
 +END
+--- a/src/Tooltip.cpp
++++ b/src/Tooltip.cpp
+@@ -2151,6 +2151,10 @@
+     }
+ 
+     Tooltip_AddLine(namePtr, nameColor);
++    if(const char *lore=RfdOriginalRelicLore(item)){
++        Tooltip_AddLine("Returns from Darkness - The First Vigil", C_3_Gold);
++        Tooltip_AddLine(lore, C_7_Grey);
++    }
+     
+     if( rare ){
+         Tooltip_AddLine("Rare Item", nameColor);
 --- a/src/TownMap.cpp
 +++ b/src/TownMap.cpp
 @@ -1,2796 +1,2799 @@
@@ -131602,6 +132366,35 @@
 +    
 +    return result;
 +}
+--- a/src/UniqueItems.cpp
++++ b/src/UniqueItems.cpp
+@@ -30126,7 +30126,25 @@
+ 			AE_AC,	0,	10,	12,	0,	0,	0,	0,
+ 			AE_MANA_PERCENT,	0,	9,	10,	0,	0,	0,	0,
+ 		},
++// Returns from Darkness - The First Vigil. Append-only IDs and private lines:
++// legacy seeded unique selection cannot discover these explicit rewards.
++{ 4618, "Signet of the Last Vigil", 156, -100, -1, 1, 3, 1600, -1,
++            AE_VIT, 0, 3, 3, 0, 0, 0, 0,
++            AE_HIT_POINTS, 0, 10, 10, 0, 0, 0, 0,
++            AE_RESIST_FIRE, 0, 10, 10, 0, 0, 0, 0,
++        },
++{ 4619, "Lantern of the Return", 159, -101, -1, 1, 3, 2200, -1,
++            AE_MAG, 0, 3, 3, 0, 0, 0, 0,
++            AE_MANA, 0, 10, 10, 0, 0, 0, 0,
++            AE_RESIST_LIGHTNING, 0, 10, 10, 0, 0, 0, 0,
++        },
++{ 4620, "Ashen Covenant", 159, -102, -1, 1, 4, 4000, -1,
++            AE_ALL_STAT, 0, 3, 3, 0, 0, 0, 0,
++            AE_RESIST_All, 0, 10, 10, 0, 0, 0, 0,
++            AE_HIT_POINTS, 0, 15, 15, 0, 0, 0, 0,
++            AE_MANA, 0, 15, 15, 0, 0, 0, 0,
++        },
+ };
+-const int NextNewUniqId = 4618;
++const int NextNewUniqId = 4621;
+ size_t count_UniqueItems = countof(UniqueItemsData);
+ UniqueItem* UniqueItems = UniqueItemsData;
 --- /dev/null
 +++ b/src/VignettingShader.h
 @@ -0,0 +1,140 @@
@@ -131747,7 +132540,7 @@
 +};
 --- a/src/Windows.cpp
 +++ b/src/Windows.cpp
-@@ -1,675 +1,679 @@
+@@ -1,675 +1,703 @@
 -﻿#include "stdafx.h"
 -
 -//----- (0041D2FF) -------------------------------------------------------- FileIO
@@ -132426,6 +133219,25 @@
 +#include "stdafx.h"
 +#include "CommunitySession.h"
 +
++namespace {
++constexpr UINT_PTR RfdMenuRepaintTimer=0x524644;
++BOOL CALLBACK repaintMenuWindow(HWND window,LPARAM){
++    if(window!=ghMainWnd&&IsWindowVisible(window)&&GetWindowThreadProcessId(window,nullptr)==GetCurrentThreadId())
++        RedrawWindow(window,nullptr,nullptr,RDW_INVALIDATE|RDW_ERASE|RDW_ALLCHILDREN|RDW_UPDATENOW);
++	return TRUE;
++}
++}
++// Storm owns top-level popup dialogs, rather than child windows of ghMainWnd.
++// Repaint from the UI queue, independently of mouse input and D3D presentation.
++// Never synchronously dispatch WM_PAINT from the renderer: that re-enters Storm.
++void RfdRepaintMenus(){
++    static bool repainting=false;
++    if(repainting||gbRunGame||VideoWindowExists||!ghMainWnd||IsMainWindowMinimized)return;
++    repainting=true;
++	EnumThreadWindows(GetCurrentThreadId(),repaintMenuWindow,0);
++    repainting=false;
++}
++
 +//----- (0041D2FF) -------------------------------------------------------- FileIO
 +void __fastcall CloseGameArchives(bool exitGame)
 +{
@@ -132875,8 +133687,10 @@
 +			break;
 +		case WM_CREATE:
 +			ghMainWnd = hWnd;
++			SetTimer(hWnd,RfdMenuRepaintTimer,100,nullptr);
 +			break;
 +		case WM_DESTROY:
++			KillTimer(hWnd,RfdMenuRepaintTimer);
 +			CloseGameArchives(1);
 +			ghMainWnd = 0;
 +			PostQuitMessage(0);
@@ -132940,6 +133754,7 @@
 +	#endif
 +	if( IsMainWindowActive ){
 +		RestoreScreenSurface();
++		RfdRepaintMenus();
 +		IsCtrlPressed = GetAsyncKeyState(VK_CONTROL) < 0;
 +		if( ForceMoveOnCtrl ){
 +			ForceMove = IsCtrlPressed;
@@ -132977,6 +133792,8 @@
 +int __stdcall CallHandler1IfExists(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 +{
 +	if(msg==WM_COPYDATA)return RfdHandleControl(wParam,lParam)?1:0;
++	if(msg==WM_TIMER&&wParam==RfdMenuRepaintTimer){RfdRepaintMenus();return 0;}
++	if(msg==WM_SETFOCUS||msg==WM_DISPLAYCHANGE||(msg==WM_SIZE&&wParam!=SIZE_MINIMIZED))RfdRepaintMenus();
 +	int result; // eax@2
 +	RECT rect{0};
 +	static UINT prevMsg = 0;
@@ -133198,9 +134015,9 @@
 +#pragma once
 +
 +#define TH3_REVISION 1265
-+#define THE_HELL_VERSION_INT 0,4,0,0
-+#define THE_HELL_VERSION_STRING "v0.4.0\0"
-+#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.4.0\0"
++#define THE_HELL_VERSION_INT 0,4,1,0
++#define THE_HELL_VERSION_STRING "v0.4.1\0"
++#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.4.1\0"
 +
 +
 +

@@ -23,8 +23,8 @@ using Microsoft.Win32;
 [assembly: AssemblyTitle("Returns from Darkness HD")]
 [assembly: AssemblyProduct("Returns from Darkness HD")]
 [assembly: AssemblyDescription("Cliente e atualizações de Returns from Darkness")]
-[assembly: AssemblyVersion("0.4.0.0")]
-[assembly: AssemblyFileVersion("0.4.0.0")]
+[assembly: AssemblyVersion("0.4.1.0")]
+[assembly: AssemblyFileVersion("0.4.1.0")]
 namespace ReturnsFromDarkness {
  static class Program {
   public static Mutex Instance;
@@ -32,7 +32,7 @@ namespace ReturnsFromDarkness {
   public static string InstanceAccount="";
   public static string InviteAccount(string request){try{if(request==null||!request.StartsWith("rfd://play/"))return "";string text=request.Substring(11);if(text.Length>4096||!Regex.IsMatch(text,@"^[A-Za-z0-9_-]+$"))return "";text=text.Replace('-','+').Replace('_','/');text=text.PadRight((text.Length+3)/4*4,'=');var invite=Json.Deserialize<Dictionary<string,object>>(Encoding.UTF8.GetString(Convert.FromBase64String(text)));object user;if(!invite.TryGetValue("username",out user)||!(user is string))return "";string name=((string)user).ToLowerInvariant();return Regex.IsMatch(name,@"^[a-z][a-z0-9_-]{2,15}$")?name:"";}catch{return "";}}
   public static string RequestAccount(string request){string value=InviteAccount(request);if(value!="")return value;var match=Regex.Match(request??"",@"^rfd://(?:resume/([a-z][a-z0-9_-]{2,15})/[a-f0-9-]{36}(?:\?auth=[A-Za-z0-9_-]{43})?|auth/([a-z][a-z0-9_-]{2,15})/[A-Za-z0-9_-]{43})$");return match.Success?(match.Groups[1].Success?match.Groups[1].Value:match.Groups[2].Value):"";}
-  public static bool RouteAccount(string request){string account=RequestAccount(request);if(account==""||account==InstanceAccount||GameRunning&&(GameAccount=="offline"||GameAccount==account))return false;
+  public static bool RouteAccount(string request){SyncGameAccount();string account=RequestAccount(request);if(account==""||account==InstanceAccount||GameRunning&&(GameAccount=="offline"||GameAccount==account))return false;
    string channel="RfdControl-"+WindowsIdentity.GetCurrent().User.Value+"-"+account;
    try{using(var pipe=new NamedPipeClientStream(".",channel,PipeDirection.Out)){pipe.Connect(150);using(var writer=new StreamWriter(pipe,new UTF8Encoding(false))){writer.WriteLine(request);writer.Flush();}}return true;}catch(IOException){}catch(TimeoutException){}
    if(!GameRunning)return false;Process.Start(new ProcessStartInfo(Assembly.GetExecutingAssembly().Location,"--account "+account+" \""+request+"\""){UseShellExecute=false,CreateNoWindow=true});return true;
@@ -46,11 +46,20 @@ namespace ReturnsFromDarkness {
   [DllImport("user32.dll")] static extern bool ShowWindow(IntPtr window,int command);
   [DllImport("user32.dll")] static extern bool SetForegroundWindow(IntPtr window);
   [DllImport("user32.dll",CharSet=CharSet.Ansi)] static extern IntPtr GetProp(IntPtr window,string name);
+  public static ulong AccountIdentity(string name){ulong hash=14695981039346656037UL;unchecked{foreach(char c in name.ToLowerInvariant())hash=(hash^(byte)c)*1099511628211UL;}return hash;}
+  public static string NativeAccount(IntPtr window){
+   if(window==IntPtr.Zero)return "";var state=GetProp(window,"RFD_ACCOUNT_STATE");if(state==(IntPtr)2)return "offline";if(state!=(IntPtr)1)return "";
+   ulong identity=unchecked((uint)GetProp(window,"RFD_ACCOUNT_HASH_LO").ToInt64())|((ulong)unchecked((uint)GetProp(window,"RFD_ACCOUNT_HASH_HI").ToInt64())<<32);
+   if(GetProp(window,"RFD_ACCOUNT_STATE")!=state)return "";
+   string profiles=Path.Combine(Root,"profiles");try{if(Directory.Exists(profiles))foreach(string path in Directory.GetDirectories(profiles)){string name=Path.GetFileName(path).ToLowerInvariant();if(name!="offline"&&Regex.IsMatch(name,@"^[a-z][a-z0-9_-]{2,15}$")&&AccountIdentity(name)==identity)return name;}}catch(IOException){}catch(UnauthorizedAccessException){}
+   return "";
+  }
+  public static void SyncGameAccount(){if(!GameRunning)return;try{Game.Refresh();string account=NativeAccount(Game.MainWindowHandle);if(account!=""){GameAccount=account;AuthAccount=account=="offline"?"":account;}}catch(InvalidOperationException){} }
   public static string RandomToken(){using(var rng=RandomNumberGenerator.Create()){byte[] b=new byte[32];rng.GetBytes(b);return Convert.ToBase64String(b).TrimEnd('=').Replace('+','-').Replace('/','_');}}
   public static bool GameRunning{get{return Game!=null&&!Game.HasExited;}}
   public static void FocusGame(){if(GameRunning){Game.Refresh();ShowWindow(Game.MainWindowHandle,9);SetForegroundWindow(Game.MainWindowHandle);}}
   public static bool SendRoom(string text){if(!GameRunning)return false;Game.Refresh();if(Game.MainWindowHandle==IntPtr.Zero)return false;byte[] bytes=Encoding.UTF8.GetBytes(ControlToken+"\n"+text);IntPtr memory=Marshal.AllocHGlobal(bytes.Length);try{Marshal.Copy(bytes,0,memory,bytes.Length);var data=new CopyData{tag=(IntPtr)0x52464432,size=bytes.Length,data=memory};IntPtr ack;return SendMessageTimeout(Game.MainWindowHandle,0x4a,(IntPtr)Process.GetCurrentProcess().Id,ref data,2,5000,out ack)!=IntPtr.Zero&&ack==(IntPtr)1;}finally{Marshal.FreeHGlobal(memory);}}
-  public static bool Resume(string request){var match=Regex.Match(request??"",@"^rfd://resume/([a-z][a-z0-9_-]{2,15})/([a-f0-9-]{36})(?:\?auth=[A-Za-z0-9_-]{43})?$");if(!match.Success)return false;string account=match.Groups[1].Value,room=match.Groups[2].Value;if(GameRunning&&GameAccount!=account){Process.Start(new ProcessStartInfo(Assembly.GetExecutingAssembly().Location,"--account "+account+" \""+request+"\""){UseShellExecute=false,CreateNoWindow=true});return true;}if(!GameRunning||GameAccount!=account||GameRoom!=room||Peer==null||Peer.HasExited)throw new Exception(Lang.S("disconnected"));Game.Refresh();if(GetProp(Game.MainWindowHandle,"RFD_GAME_IN_ROOM")==IntPtr.Zero&&!SendRoom(LastRoomControl))throw new Exception(Lang.S("transition"));FocusGame();return true;}
+  public static bool Resume(string request){SyncGameAccount();var match=Regex.Match(request??"",@"^rfd://resume/([a-z][a-z0-9_-]{2,15})/([a-f0-9-]{36})(?:\?auth=[A-Za-z0-9_-]{43})?$");if(!match.Success)return false;string account=match.Groups[1].Value,room=match.Groups[2].Value;if(GameRunning&&GameAccount!=account){Process.Start(new ProcessStartInfo(Assembly.GetExecutingAssembly().Location,"--account "+account+" \""+request+"\""){UseShellExecute=false,CreateNoWindow=true});return true;}if(!GameRunning||GameAccount!=account||GameRoom!=room||Peer==null||Peer.HasExited)throw new Exception(Lang.S("disconnected"));Game.Refresh();if(GetProp(Game.MainWindowHandle,"RFD_GAME_IN_ROOM")==IntPtr.Zero&&!SendRoom(LastRoomControl))throw new Exception(Lang.S("transition"));FocusGame();return true;}
   public static string AuthAccount="";
   static Dictionary<string,DateTime> UsedAuthCodes=new Dictionary<string,DateTime>();
   public const string Realm="https://returns-darkness-realm.oblique-tactical.workers.dev/api/";
@@ -63,7 +72,7 @@ namespace ReturnsFromDarkness {
    string profile=Path.Combine(Root,"profiles",account);Directory.CreateDirectory(profile);byte[] plain=Encoding.UTF8.GetBytes(Json.Serialize(new Dictionary<string,object>{{"user",user},{"token",value}}));byte[] protectedBytes;
    try{protectedBytes=ProtectedData.Protect(plain,null,DataProtectionScope.CurrentUser);}finally{Array.Clear(plain,0,plain.Length);}
    string path=Path.Combine(profile,"native-session.bin"),temp=path+"."+Guid.NewGuid().ToString("N");File.WriteAllBytes(temp,protectedBytes);if(File.Exists(path))File.Replace(temp,path,null);else File.Move(temp,path);AuthAccount=account;File.WriteAllText(Path.Combine(Root,"last-account.txt"),account);
-   if(GameRunning&&!SendRoom("auth\n"+profile))throw new Exception(Lang.S("account"));
+   if(GameRunning){if(!SendRoom("auth\n"+profile))throw new Exception(Lang.S("account"));SyncGameAccount();}
   }
   public static async Task<bool> ApplyNativeSession(string request){
    string account=RequestAccount(request),code="";if(account=="")return false;
@@ -87,6 +96,7 @@ namespace ReturnsFromDarkness {
    if(!uri.StartsWith("rfd://play/")||RequestAccount(uri)!=account)throw new Exception(Lang.S("expired"));Diagnostic("invitation","renewed after preparation");return uri;
   }
   public static async Task OpenCentral(){
+   SyncGameAccount();
    string url=Site+"/central/?lang="+Lang.Language,account=GameRunning&&GameAccount!="offline"?GameAccount:PreferredAccount(),path=Path.Combine(Root,"profiles",account,"native-session.bin");
    try{if(File.Exists(path)){byte[] plain=ProtectedData.Unprotect(File.ReadAllBytes(path),null,DataProtectionScope.CurrentUser);Dictionary<string,object> session;try{session=Json.Deserialize<Dictionary<string,object>>(Encoding.UTF8.GetString(plain));}finally{Array.Clear(plain,0,plain.Length);}object token,user;
     if(session.TryGetValue("token",out token)&&token is string&&Regex.IsMatch((string)token,@"^[A-Za-z0-9_-]{43}$")&&session.TryGetValue("user",out user)&&user is string&&((string)user).ToLowerInvariant()==account){var link=await AccountApi("auth/handoff",new Dictionary<string,object>{{"target","web"}},(string)token);object code;if(link.TryGetValue("code",out code)&&code is string&&Regex.IsMatch((string)code,@"^[A-Za-z0-9_-]{43}$"))url+="#auth="+(string)code;}}}
@@ -119,7 +129,7 @@ namespace ReturnsFromDarkness {
     bool owner;Instance=new Mutex(true,"Local\\"+PipeName,out owner);
     if(!owner){if(!Forward(args.Length>0?args[0]:null).GetAwaiter().GetResult())throw new Exception(Lang.S("busy"));Instance.Dispose();return 0;}
     try{Controller=new Portal(args.Length>0?args[0]:null);Application.Run(Controller);}finally{try{Instance.ReleaseMutex();}catch(ApplicationException){}Instance.Dispose();}return 0;
-   }catch(Exception error){if(args.Length>0&&args[0].StartsWith("--verify"))return 2;MessageBox.Show(Lang.Error(error.Message),"Returns from Darkness",MessageBoxButtons.OK,MessageBoxIcon.Error);return 1;}
+   }catch(Exception error){if(args.Length>0&&args[0].StartsWith("--verify"))return 2;using(var notice=new RealmNotice(Lang.Error(error.Message)))notice.ShowDialog();return 1;}
   }
   public static Dictionary<string,object> Verify(string envelope){
    var value=Json.Deserialize<Dictionary<string,object>>(envelope);
@@ -253,6 +263,15 @@ namespace ReturnsFromDarkness {
   protected override void OnMouseEnter(EventArgs e){hover=true;Invalidate();base.OnMouseEnter(e);}protected override void OnMouseLeave(EventArgs e){hover=false;Invalidate();base.OnMouseLeave(e);}
   protected override void OnPaint(PaintEventArgs e){var rect=new Rectangle(0,0,Width-1,Height-1);Color top=Secondary?Color.FromArgb(37,33,29):Color.FromArgb(hover?139:112,35,25),bottom=Secondary?Color.FromArgb(15,18,21):Color.FromArgb(52,13,13);using(var b=new System.Drawing.Drawing2D.LinearGradientBrush(rect,top,bottom,90f))e.Graphics.FillRectangle(b,rect);using(var p=new Pen(Color.FromArgb(hover?225:135,163,116),1))e.Graphics.DrawRectangle(p,rect);using(var ink=new SolidBrush(Enabled?Color.FromArgb(242,218,177):Color.Gray))using(var align=new StringFormat{Alignment=StringAlignment.Center,LineAlignment=StringAlignment.Center,FormatFlags=Lang.Rtl?StringFormatFlags.DirectionRightToLeft:0})e.Graphics.DrawString(Text,Font,ink,rect,align);if(Focused)ControlPaint.DrawFocusRectangle(e.Graphics,Rectangle.Inflate(rect,-5,-5));}
  }
+ class RealmNotice:Form {
+  public RealmNotice(string message){Text="Returns from Darkness HD";ClientSize=new Size(650,300);StartPosition=FormStartPosition.CenterScreen;FormBorderStyle=FormBorderStyle.FixedDialog;MaximizeBox=false;MinimizeBox=false;BackColor=Color.FromArgb(12,14,17);ForeColor=Color.FromArgb(230,216,185);Font=new Font("Segoe UI",11);RightToLeft=Lang.Rtl?RightToLeft.Yes:RightToLeft.No;DoubleBuffered=true;
+   using(var stream=Assembly.GetExecutingAssembly().GetManifestResourceStream("project.ico")){if(stream!=null)using(var icon=new Icon(stream))Icon=(Icon)icon.Clone();}
+   Controls.Add(new Label{Text="RETURNS FROM DARKNESS",Bounds=new Rectangle(34,30,582,34),Font=new Font("Georgia",19),ForeColor=Color.FromArgb(220,188,129)});
+   Controls.Add(new Label{Text=message,Bounds=new Rectangle(34,94,582,120),AutoEllipsis=true,ForeColor=ForeColor});
+   var close=new RealmButton{Text=Lang.S("close"),Bounds=new Rectangle(416,228,200,42),DialogResult=DialogResult.OK,Font=new Font("Segoe UI",10,FontStyle.Bold)};Controls.Add(close);AcceptButton=close;CancelButton=close;
+  }
+  protected override void OnPaint(PaintEventArgs e){base.OnPaint(e);using(var pen=new Pen(Color.FromArgb(130,103,61)))e.Graphics.DrawRectangle(pen,12,12,ClientSize.Width-25,ClientSize.Height-25);}
+ }
  class Portal:Form {
   Label status,version;Button play,central;Image artwork;Stream artStream,logoStream;System.Drawing.Text.PrivateFontCollection fonts=new System.Drawing.Text.PrivateFontCollection();List<IntPtr> fontMemory=new List<IntPtr>();ProgressBar progress;string request;Dictionary<string,object> manifest;bool loaded=false;readonly Queue<string> requests=new Queue<string>();bool processing=false;NotifyIcon tray;
   Font BrandFont(string resource,float size){using(var stream=Assembly.GetExecutingAssembly().GetManifestResourceStream(resource)){byte[] bytes=new byte[stream.Length];stream.Read(bytes,0,bytes.Length);IntPtr memory=Marshal.AllocCoTaskMem(bytes.Length);Marshal.Copy(bytes,0,memory,bytes.Length);fonts.AddMemoryFont(memory,bytes.Length);fontMemory.Add(memory);string family=resource=="title.ttf"?"Cinzel Decorative":"EB Garamond";return new Font(Array.Find(fonts.Families,f=>f.Name==family)??fonts.Families[fonts.Families.Length-1],size,FontStyle.Regular);}}
@@ -267,10 +286,11 @@ namespace ReturnsFromDarkness {
    play=new RealmButton{Text=Lang.S("play"),Location=new Point(58,469),Size=new Size(300,54),Enabled=false,Font=actionFont};central=new RealmButton{Text=Lang.S("central"),Location=new Point(376,469),Size=new Size(336,54),Font=smallActionFont,Secondary=true};Controls.Add(play);Controls.Add(central);
    status=Copy(Lang.S("preparing"),59,539,880,46,smallBodyFont,muted);progress=new ProgressBar{Style=ProgressBarStyle.Marquee,MarqueeAnimationSpeed=22,Location=new Point(60,590),Size=new Size(980,3)};Controls.Add(progress);
    version=Copy("RETURNS FROM DARKNESS HD",58,630,520,28,smallActionFont,gold);Copy(Lang.S("coop"),708,630,340,28,smallActionFont,muted);
-   tray=new NotifyIcon{Icon=SystemIcons.Application,Text="Returns from Darkness HD",Visible=true};tray.DoubleClick+=(s1,e1)=>Accept("rfd://focus");var menu=new ContextMenuStrip();menu.Items.Add(Lang.S("open"),null,(s1,e1)=>Accept("rfd://focus"));menu.Items.Add(Lang.S("community"),null,(s1,e1)=>Accept("rfd://central"));menu.Items.Add(Lang.S("check"),null,(s1,e1)=>Accept("rfd://prepare"));menu.Items.Add(Lang.S("close"),null,(s1,e1)=>{if(Program.GameRunning){Hide();return;}tray.Visible=false;Close();});tray.ContextMenuStrip=menu;
+   using(var iconStream=Assembly.GetExecutingAssembly().GetManifestResourceStream("project.ico")){if(iconStream!=null)using(var projectIcon=new Icon(iconStream))Icon=(Icon)projectIcon.Clone();}
+   tray=new NotifyIcon{Icon=Icon??SystemIcons.Application,Text="Returns from Darkness HD",Visible=true};tray.DoubleClick+=(s1,e1)=>Accept("rfd://focus");var menu=new ContextMenuStrip();menu.Items.Add(Lang.S("open"),null,(s1,e1)=>Accept("rfd://focus"));menu.Items.Add(Lang.S("community"),null,(s1,e1)=>Accept("rfd://central"));menu.Items.Add(Lang.S("check"),null,(s1,e1)=>Accept("rfd://prepare"));menu.Items.Add(Lang.S("close"),null,(s1,e1)=>{if(Program.GameRunning){Hide();return;}tray.Visible=false;Close();});tray.ContextMenuStrip=menu;
    central.Click+=(s1,e1)=>Accept("rfd://central");play.Click+=(s1,e1)=>Accept(PlayRequest(request));
    FormClosing+=(s1,e1)=>{if(Program.GameRunning){e1.Cancel=true;Hide();}else tray.Dispose();};
-   Shown+=async(s1,e1)=>{if(loaded)return;loaded=true;var listener=Program.Listen();if(request=="--preview"){status.Text=Lang.S("portal");version.Text=Lang.S("preview")+" · v0.3.5";progress.Visible=false;play.Enabled=true;request=null;}else Accept(request??"rfd://prepare");await Task.CompletedTask;};
+   Shown+=async(s1,e1)=>{if(loaded)return;loaded=true;var listener=Program.Listen();if(request=="--preview"){status.Text=Lang.S("portal");version.Text=Lang.S("preview")+" · v"+Assembly.GetExecutingAssembly().GetName().Version.ToString(3);progress.Visible=false;play.Enabled=true;request=null;}else Accept(request??"rfd://prepare");await Task.CompletedTask;};
   }
   public static string PlayRequest(string pending){return pending!=null&&(pending.StartsWith("rfd://play/")||pending.StartsWith("rfd://resume/")||pending.StartsWith("rfd://auth/"))?pending:"rfd://open";}
   public async void Accept(string value){requests.Enqueue(value);if(processing)return;processing=true;play.Enabled=false;progress.Visible=true;

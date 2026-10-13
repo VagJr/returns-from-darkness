@@ -27,11 +27,11 @@
     ],
     "now": [
       "Disponível nesta build",
-      "Cliente Windows com central integrada, salas cooperativas para até quatro pessoas, launcher com atualização automática e personagens separados por conta. O sistema de itens compartilha os drops da sala; o salvamento automático preserva inventário, ouro e evolução neste computador. O Santuário reúne perfis públicos, personagens, retratos, títulos e selos de campanha. Evolua jogando para liberar novas classes, características, modificadores e dificuldades; personagens existentes mantêm suas escolhas. As três primeiras conclusões concedem os dots e o retrato dourado."
+      "Cliente Windows com central integrada, salas cooperativas para até quatro pessoas, launcher com atualização automática e personagens separados por conta. O sistema de itens compartilha os drops da sala; o salvamento automático preserva inventário, ouro e evolução neste computador. O Santuário reúne perfis públicos, personagens, retratos, títulos e selos de campanha. Evolua jogando para liberar novas classes, características, modificadores e dificuldades; personagens existentes mantêm suas escolhas. As três primeiras conclusões concedem os dots e o retrato dourado. A versão 0.4.1 estreia molduras próprias do HUD e inventário, avisos integrados ao jogo e a coleção A Primeira Vigília: três relíquias com ícones e sprites próprios, obtidas de chefes específicos na campanha Normal em Horror. O Santuário ganhou navegação compacta, abas de perfil e uma nova ilustração da comunidade. As superfícies do HUD e do inventário recebem um material próprio em alta definição de pedra escura e ferro envelhecido, preservando a leitura dos itens e controles."
     ],
     "next": [
       "O próximo capítulo",
-      "O próximo escopo é um HUD próprio e uma coleção piloto de itens do projeto, com arte e regras coerentes. A remasterização completa das artes, eventos, migração de anfitrião e ranking competitivo continuam em desenvolvimento."
+      "Continuamos a ampliar as artes e interfaces próprias. Remasterização de todo o mundo, novos eventos, migração de anfitrião e ranking competitivo ainda estão em desenvolvimento."
     ],
     "limits": "A central usa serviços na nuvem; a partida roda nos clientes e exige que o criador permaneça conectado. Personagens são salvos neste computador, com gravação automática e cópia de recuperação. Uma nova sala cria um novo mundo. Artes HD completas, migração de anfitrião e ranking PvP ainda não estão concluídos.",
     "milestones": [
@@ -66,11 +66,11 @@
       ],
       [
         "O jogo inteiro já está remasterizado e a Arena pronta?",
-        "O cliente trabalha com resolução Full HD e melhorias visuais em evolução, preservando os sprites clássicos. A substituição de todas as artes por recursos de maior definição ainda é parcial. O Coliseum existe como desafio no cliente; Arena PvP online, ranking e eventos próprios seguem em validação e desenvolvimento."
+        "O cliente suporta resolução Full HD. A versão 0.4.1 acrescenta molduras próprias e material de pedra e metal em alta definição ao HUD e inventário, além dos ícones e sprites das três relíquias A Primeira Vigília. Os cenários, personagens e monstros ainda preservam grande parte das artes clássicas: a remasterização do mundo inteiro não está pronta. O Coliseum está disponível como desafio do cliente; a Arena PvP competitiva, ranking e eventos próprios continuam em desenvolvimento."
       ],
       [
         "Todo o conteúdo foi criado pelo Returns from Darkness?",
-        "Somos uma edição de comunidade adaptada de Diablo/Hellfire e The Hell 3. Grande parte das classes, áreas, itens e artes vem dessas bases. Returns from Darkness desenvolve a central online, a integração do cliente, a atualização e a progressão do Santuário. Novos elementos próprios serão apresentados conforme forem publicados; a origem das bases está nos créditos."
+        "Somos uma edição de comunidade adaptada de Diablo/Hellfire e The Hell 3, com os créditos das bases preservados. Grande parte das classes, áreas, equipamentos e artes vem dessas bases. Returns from Darkness cria o Santuário, a integração online, a atualização e a progressão de conta, além de ilustrações, emblema, molduras texturizadas do HUD e inventário e as três relíquias A Primeira Vigília. Estes elementos próprios são apresentados como adições ao conteúdo herdado, sem atribuir ao projeto a criação de todo o jogo."
       ]
     ],
     "join": [
@@ -114,11 +114,11 @@
     ],
     "now": [
       "Available in this build",
-      "Windows client with an integrated hub, cooperative rooms for up to four players, automatic updates and separate account profiles. The item system shares room drops; automatic saving preserves inventory, gold and character development on this computer. The Sanctuary brings together public profiles, characters, portraits, titles and campaign seals. Progress through play to unlock new classes, traits, modifiers and difficulties; existing characters keep their choices. The first three campaign completions grant dots and a golden portrait."
+      "Windows client with an integrated hub, cooperative rooms for up to four players, automatic updates and separate account profiles. The item system shares room drops; automatic saving preserves inventory, gold and character development on this computer. The Sanctuary brings together public profiles, characters, portraits, titles and campaign seals. Progress through play to unlock new classes, traits, modifiers and difficulties; existing characters keep their choices. The first three campaign completions grant dots and a golden portrait. Version 0.4.1 introduces project-specific HUD and inventory framing, in-game notices and The First Vigil collection: three relics with original icons and ground sprites, rewarded by specific bosses in Normal campaign mode on Horror. The Sanctuary gains compact navigation, profile tabs and new community artwork. HUD and inventory surfaces receive an original high-definition dark-stone and aged-iron material, keeping items and controls readable."
     ],
     "next": [
       "The next chapter",
-      "The next scope is a project HUD and a pilot item collection with coherent art and rules. Full artwork remastering, events, host migration and competitive rankings remain in development."
+      "We continue expanding original artwork and interfaces. A whole-world remaster, new events, host migration and competitive rankings remain in development."
     ],
     "limits": "The hub uses cloud services; gameplay runs in the clients and requires the room creator to stay connected. Characters save on this computer automatically, with recovery copies. A new room creates a new world. Full HD artwork, host migration and ranked PvP are not yet complete.",
     "milestones": [
@@ -153,11 +153,11 @@
       ],
       [
         "Is the full remaster and Arena finished?",
-        "The client supports Full HD resolution and evolving visual improvements while preserving classic sprites. Higher-definition artwork replacement is still partial. Coliseum exists as a client challenge; online PvP Arena, rankings and project events remain in validation and development."
+        "The client supports Full HD resolution. Version 0.4.1 adds original framing and a high-definition stone-and-metal material to the HUD and inventory, plus the icons and ground sprites of The First Vigil's three relics. Environments, characters and monsters still retain much of their classic artwork: the whole-world remaster is not finished. Coliseum is available as a client challenge; a competitive PvP Arena, rankings and project events remain in development."
       ],
       [
         "Was all the content created by Returns from Darkness?",
-        "We are a community edition adapted from Diablo/Hellfire and The Hell 3. Most classes, areas, items and art come from those foundations. Returns from Darkness develops the online hub, client integration, updates and Sanctuary progression. Original additions will be presented as they are released; foundation credits are retained."
+        "We are a community edition adapted from Diablo/Hellfire and The Hell 3, with foundation credits retained. Most classes, areas, equipment and artwork come from those foundations. Returns from Darkness creates the Sanctuary, online integration, updates and account progression, along with illustrations, an emblem, textured HUD and inventory framing, and The First Vigil's three relics. These original elements are presented as additions to inherited content, without claiming authorship of the whole game."
       ]
     ],
     "join": [
@@ -201,11 +201,11 @@
     ],
     "now": [
       "Disponible en esta versión",
-      "Cliente Windows con central integrada, salas cooperativas de hasta cuatro jugadores, actualizaciones automáticas y perfiles separados. El sistema de objetos comparte los drops de la sala; el guardado automático conserva inventario, oro y evolución en este equipo. El Santuario reúne perfiles públicos, personajes, retratos, títulos y sellos de campaña. Progresa jugando para desbloquear clases, rasgos, modificadores y dificultades; los personajes existentes conservan sus elecciones. Las tres primeras campañas completadas conceden puntos y un retrato dorado."
+      "Cliente Windows con central integrada, salas cooperativas de hasta cuatro jugadores, actualizaciones automáticas y perfiles separados. El sistema de objetos comparte los drops de la sala; el guardado automático conserva inventario, oro y evolución en este equipo. El Santuario reúne perfiles públicos, personajes, retratos, títulos y sellos de campaña. Progresa jugando para desbloquear clases, rasgos, modificadores y dificultades; los personajes existentes conservan sus elecciones. Las tres primeras campañas completadas conceden puntos y un retrato dorado. La versión 0.4.1 presenta marcos propios del HUD e inventario, avisos dentro del juego y la colección La Primera Vigilia: tres reliquias con iconos y sprites originales, obtenidas de jefes específicos en la campaña Normal en Horror. El Santuario incorpora navegación compacta, pestañas de perfil y una nueva ilustración. Las superficies del HUD e inventario reciben un material original de piedra oscura y hierro envejecido en alta definición, manteniendo legibles los objetos y controles."
     ],
     "next": [
       "El próximo capítulo",
-      "El próximo alcance es una interfaz de combate propia y una colección piloto de objetos con arte y reglas coherentes. La remasterización completa del arte, eventos, migración del anfitrión y clasificaciones competitivas siguen en desarrollo."
+      "Seguimos ampliando las artes e interfaces propias. La remasterización de todo el mundo, nuevos eventos, migración del anfitrión y clasificación competitiva siguen en desarrollo."
     ],
     "limits": "La central usa servicios en la nube; la partida depende de los clientes y de que el creador siga conectado. Los personajes se guardan automáticamente en este equipo con copias de recuperación. Cada sala nueva genera otro mundo. El arte HD completo, la migración de anfitrión y el ranking PvP siguen pendientes.",
     "milestones": [
@@ -240,11 +240,11 @@
       ],
       [
         "¿Ya están terminadas la remasterización y la Arena?",
-        "Hay resolución Full HD y mejoras visuales, conservando los sprites clásicos. El reemplazo de todo el arte sigue siendo parcial. Coliseum está disponible como desafío del cliente; Arena PvP online, ranking y eventos siguen en validación y desarrollo."
+        "El cliente admite resolución Full HD. La versión 0.4.1 añade marcos originales y un material de piedra y metal en alta definición al HUD e inventario, además de los iconos y sprites de suelo de las tres reliquias de La Primera Vigilia. Escenarios, personajes y monstruos aún conservan gran parte del arte clásico: la remasterización de todo el mundo no está terminada. Coliseum está disponible como desafío del cliente; la Arena PvP competitiva, las clasificaciones y los eventos propios siguen en desarrollo."
       ],
       [
         "¿Todo el contenido fue creado por Returns from Darkness?",
-        "Somos una edición de comunidad adaptada de Diablo/Hellfire y The Hell 3. Gran parte de las clases, zonas, objetos y arte procede de esas bases. Returns from Darkness desarrolla la central online, integración del cliente, actualizaciones y progresión del Santuario. Las aportaciones propias se presentarán al publicarse; conservamos los créditos de las bases."
+        "Somos una edición de comunidad adaptada de Diablo/Hellfire y The Hell 3, con los créditos de las bases conservados. Gran parte de las clases, zonas, equipos y artes procede de esas bases. Returns from Darkness crea el Santuario, la integración online, las actualizaciones y la progresión de cuenta, junto con ilustraciones, emblema, marcos texturizados de HUD e inventario y las tres reliquias de La Primera Vigilia. Estos elementos originales son adiciones al contenido heredado; no atribuimos al proyecto la creación del juego entero."
       ]
     ],
     "join": [
@@ -288,11 +288,11 @@
     ],
     "now": [
       "Dans cette version",
-      "Client Windows avec portail intégré, salons coopératifs de quatre joueurs, mises à jour automatiques et profils distincts. Le système de butin partage les objets de la partie ; les sauvegardes automatiques préservent inventaire, or et progression sur cet ordinateur. Le Sanctuaire réunit profils publics, personnages, portraits, titres et sceaux de campagne. Progressez en jouant pour débloquer classes, traits, modificateurs et difficultés ; les personnages existants conservent leurs choix. Les trois premières campagnes terminées accordent des points et un portrait doré."
+      "Client Windows avec portail intégré, salons coopératifs de quatre joueurs, mises à jour automatiques et profils distincts. Le système de butin partage les objets de la partie ; les sauvegardes automatiques préservent inventaire, or et progression sur cet ordinateur. Le Sanctuaire réunit profils publics, personnages, portraits, titres et sceaux de campagne. Progressez en jouant pour débloquer classes, traits, modificateurs et difficultés ; les personnages existants conservent leurs choix. Les trois premières campagnes terminées accordent des points et un portrait doré. La version 0.4.1 apporte un habillage propre au HUD et à l’inventaire, des avis dans le jeu et la collection La Première Veille : trois reliques aux icônes et sprites originaux, obtenues auprès de boss précis en campagne Normal, difficulté Horror. Le Sanctuaire reçoit une navigation compacte, des onglets de profil et une nouvelle illustration. Les surfaces du HUD et de l’inventaire reçoivent un matériau original en haute définition de pierre sombre et de fer vieilli, en préservant la lisibilité des objets et des commandes."
     ],
     "next": [
       "Le prochain chapitre",
-      "La prochaine étape est une interface de combat propre au projet et une première collection d’objets à l’art et aux règles cohérents. La refonte complète des illustrations, les événements, la migration de l’hôte et les classements compétitifs restent en développement."
+      "Nous poursuivons la création d’illustrations et d’interfaces originales. La refonte visuelle de tout le monde, les événements, la migration de l’hôte et les classements compétitifs restent en développement."
     ],
     "limits": "Le portail utilise le cloud ; la partie s'exécute dans les clients et son créateur doit rester connecté. Les personnages sont sauvegardés automatiquement sur cet ordinateur avec une copie de récupération. Un nouveau salon crée un nouveau monde. Les visuels HD complets, la migration d'hôte et le classement PvP restent à terminer.",
     "milestones": [
@@ -327,11 +327,11 @@
       ],
       [
         "La remasterisation et l'Arène sont-elles terminées ?",
-        "La résolution Full HD et des améliorations visuelles sont disponibles avec les sprites classiques. Le remplacement de toutes les illustrations reste partiel. Coliseum est un défi du client ; Arène PvP en ligne, classement et événements restent en validation et développement."
+        "Le client prend en charge la résolution Full HD. La version 0.4.1 ajoute un habillage original et un matériau de pierre et de métal en haute définition au HUD et à l’inventaire, ainsi que les icônes et sprites au sol des trois reliques de La Première Veille. Décors, personnages et monstres conservent encore une grande partie des graphismes classiques : la refonte de tout le monde n’est pas terminée. Coliseum est disponible comme défi du client ; l’arène PvP compétitive, les classements et les événements propres au projet restent en développement."
       ],
       [
         "Tout le contenu a-t-il été créé par Returns from Darkness ?",
-        "Nous sommes une édition communautaire adaptée de Diablo/Hellfire et The Hell 3. Une grande partie des classes, zones, objets et illustrations vient de ces bases. Returns from Darkness développe la centrale en ligne, l’intégration du client, les mises à jour et la progression du Sanctuaire. Les créations propres seront présentées à leur sortie ; les crédits des bases sont conservés."
+        "Nous sommes une édition communautaire adaptée de Diablo/Hellfire et de The Hell 3, dont les crédits sont conservés. La plupart des classes, zones, équipements et graphismes viennent de ces bases. Returns from Darkness crée le Sanctuaire, l’intégration en ligne, les mises à jour et la progression du compte, ainsi que des illustrations, un emblème, un habillage texturé du HUD et de l’inventaire et les trois reliques de La Première Veille. Ces éléments originaux complètent le contenu hérité ; nous ne revendiquons pas la création de tout le jeu."
       ]
     ],
     "join": [
@@ -375,11 +375,11 @@
     ],
     "now": [
       "In dieser Version",
-      "Windows-Client mit integrierter Zentrale, Koop-Räumen für vier Spieler, automatischen Updates und getrennten Profilen. Das Beutesystem teilt Drops im Raum; automatisches Speichern erhält Inventar, Gold und Entwicklung auf diesem PC. Das Sanktuario vereint öffentliche Profile, Charaktere, Porträts, Titel und Kampagnensiegel. Schalte durch Spielen Klassen, Eigenschaften, Modifikatoren und Schwierigkeitsgrade frei; vorhandene Charaktere behalten ihre Auswahl. Die ersten drei abgeschlossenen Kampagnen verleihen Punkte und ein goldenes Porträt."
+      "Windows-Client mit integrierter Zentrale, Koop-Räumen für vier Spieler, automatischen Updates und getrennten Profilen. Das Beutesystem teilt Drops im Raum; automatisches Speichern erhält Inventar, Gold und Entwicklung auf diesem PC. Das Sanktuario vereint öffentliche Profile, Charaktere, Porträts, Titel und Kampagnensiegel. Schalte durch Spielen Klassen, Eigenschaften, Modifikatoren und Schwierigkeitsgrade frei; vorhandene Charaktere behalten ihre Auswahl. Die ersten drei abgeschlossenen Kampagnen verleihen Punkte und ein goldenes Porträt. Version 0.4.1 bringt eigene HUD- und Inventarrahmen, Hinweise im Spiel und die Sammlung Die Erste Wacht: drei Relikte mit eigenen Symbolen und Bodensprites, als Belohnung bestimmter Bosse im Kampagnenmodus Normal auf Horror. Das Sanktuario erhält kompakte Navigation, Profilreiter und neue Illustrationen. Die Flächen von HUD und Inventar erhalten ein eigenes hochauflösendes Material aus dunklem Stein und gealtertem Eisen; Gegenstände und Bedienelemente bleiben lesbar."
     ],
     "next": [
       "Das nächste Kapitel",
-      "Als Nächstes folgen ein eigenes Kampf-HUD und eine erste Gegenstandssammlung mit stimmiger Gestaltung und Regeln. Vollständige Grafiküberarbeitung, Ereignisse, Host-Migration und wettbewerbliche Ranglisten bleiben in Entwicklung."
+      "Eigene Grafiken und Oberflächen werden weiter ausgebaut. Die Überarbeitung der gesamten Spielwelt, neue Ereignisse, Host-Migration und Wettbewerbsranglisten sind noch in Entwicklung."
     ],
     "limits": "Die Zentrale nutzt Cloud-Dienste; die Partie läuft in den Clients und der Raumersteller muss verbunden bleiben. Charaktere speichern automatisch mit Sicherungskopien auf diesem PC. Ein neuer Raum erzeugt eine neue Welt. Vollständige HD-Grafik, Host-Wechsel und PvP-Ranglisten sind noch nicht fertig.",
     "milestones": [
@@ -414,11 +414,11 @@
       ],
       [
         "Sind Remaster und Arena fertig?",
-        "Full-HD-Auflösung und visuelle Verbesserungen sind mit klassischen Sprites verfügbar. Der Austausch aller Grafiken ist noch teilweise. Coliseum ist eine Client-Herausforderung; Online-PvP-Arena, Ranglisten und Ereignisse werden noch entwickelt und geprüft."
+        "Der Client unterstützt Full-HD-Auflösung. Version 0.4.1 ergänzt eigene Rahmen und ein hochauflösendes Stein- und Metallmaterial für HUD und Inventar sowie Symbole und Bodensprites der drei Relikte aus Die Erste Wacht. Umgebungen, Figuren und Monster nutzen weiterhin einen großen Teil der klassischen Grafik: Die Überarbeitung der gesamten Welt ist nicht abgeschlossen. Coliseum ist als Herausforderung im Client verfügbar; eine wettbewerbsorientierte PvP-Arena, Ranglisten und eigene Ereignisse sind noch in Entwicklung."
       ],
       [
         "Wurden alle Inhalte von Returns from Darkness erstellt?",
-        "Wir sind eine Community-Edition auf Basis von Diablo/Hellfire und The Hell 3. Viele Klassen, Gebiete, Gegenstände und Grafiken stammen aus diesen Grundlagen. Returns from Darkness entwickelt die Online-Zentrale, Client-Integration, Updates und Sanktuario-Fortschritt. Eigene Ergänzungen werden bei Veröffentlichung vorgestellt; die Quellen bleiben in den Credits genannt."
+        "Wir sind eine auf Diablo/Hellfire und The Hell 3 basierende Community-Edition und behalten die Quellenangaben bei. Die meisten Klassen, Gebiete, Ausrüstungsstücke und Grafiken stammen aus diesen Grundlagen. Returns from Darkness entwickelt das Sanktuario, die Online-Integration, Updates und den Kontofortschritt sowie Illustrationen, ein Emblem, texturierte HUD- und Inventarrahmen und die drei Relikte aus Die Erste Wacht. Diese eigenen Elemente ergänzen übernommene Inhalte; wir beanspruchen nicht die Urheberschaft am gesamten Spiel."
       ]
     ],
     "join": [
@@ -462,11 +462,11 @@
     ],
     "now": [
       "In questa versione",
-      "Client Windows con centrale integrata, stanze cooperative per quattro giocatori, aggiornamenti automatici e profili separati. Il sistema degli oggetti condivide i drop della stanza; il salvataggio automatico conserva inventario, oro e progressi su questo computer. Il Santuario riunisce profili pubblici, personaggi, ritratti, titoli e sigilli della campagna. Gioca e progredisci per sbloccare classi, tratti, modificatori e difficoltà; i personaggi esistenti mantengono le proprie scelte. Le prime tre campagne completate assegnano punti e un ritratto dorato."
+      "Client Windows con centrale integrata, stanze cooperative per quattro giocatori, aggiornamenti automatici e profili separati. Il sistema degli oggetti condivide i drop della stanza; il salvataggio automatico conserva inventario, oro e progressi su questo computer. Il Santuario riunisce profili pubblici, personaggi, ritratti, titoli e sigilli della campagna. Gioca e progredisci per sbloccare classi, tratti, modificatori e difficoltà; i personaggi esistenti mantengono le proprie scelte. Le prime tre campagne completate assegnano punti e un ritratto dorato. La versione 0.4.1 introduce cornici originali per HUD e inventario, avvisi nel gioco e la collezione La Prima Veglia: tre reliquie con icone e sprite propri, ottenute da boss specifici nella campagna Normal a difficoltà Horror. Il Santuario riceve navigazione compatta, schede del profilo e una nuova illustrazione. Le superfici di HUD e inventario ricevono un materiale originale in alta definizione di pietra scura e ferro invecchiato, mantenendo leggibili oggetti e comandi."
     ],
     "next": [
       "Il prossimo capitolo",
-      "Il prossimo obiettivo è un HUD del progetto e una prima collezione di oggetti con arte e regole coerenti. La rimasterizzazione completa della grafica, gli eventi, la migrazione dell’host e le classifiche competitive restano in sviluppo."
+      "Continuiamo ad ampliare grafica e interfacce originali. La rimasterizzazione dell’intero mondo, nuovi eventi, migrazione dell’host e classifiche competitive restano in sviluppo."
     ],
     "limits": "La centrale usa servizi cloud; la partita gira nei client e il creatore deve restare connesso. I personaggi si salvano automaticamente su questo computer con copie di recupero. Una nuova stanza crea un nuovo mondo. Grafica HD completa, migrazione dell'host e classifiche PvP sono ancora da completare.",
     "milestones": [
@@ -501,11 +501,11 @@
       ],
       [
         "Rimasterizzazione e Arena sono complete?",
-        "Ci sono risoluzione Full HD e miglioramenti visivi con gli sprite classici. La sostituzione di tutte le immagini è ancora parziale. Coliseum è una sfida del client; Arena PvP online, classifiche ed eventi restano in validazione e sviluppo."
+        "Il client supporta la risoluzione Full HD. La versione 0.4.1 aggiunge cornici originali e un materiale di pietra e metallo in alta definizione a HUD e inventario, oltre a icone e sprite a terra delle tre reliquie de La Prima Veglia. Ambienti, personaggi e mostri conservano ancora gran parte della grafica classica: la rimasterizzazione di tutto il mondo non è completa. Coliseum è disponibile come sfida nel client; l’Arena PvP competitiva, le classifiche e gli eventi del progetto restano in sviluppo."
       ],
       [
         "Tutti i contenuti sono stati creati da Returns from Darkness?",
-        "Siamo un’edizione della comunità adattata da Diablo/Hellfire e The Hell 3. Gran parte di classi, aree, oggetti e grafica proviene da queste basi. Returns from Darkness sviluppa il portale online, l’integrazione del client, gli aggiornamenti e la progressione del Santuario. Le aggiunte originali saranno presentate al rilascio; i crediti delle basi sono conservati."
+        "Siamo un’edizione della comunità adattata da Diablo/Hellfire e The Hell 3, con i crediti delle basi conservati. Gran parte di classi, aree, equipaggiamenti e grafica proviene da queste basi. Returns from Darkness crea il Santuario, l’integrazione online, gli aggiornamenti e la progressione dell’account, oltre a illustrazioni, emblema, cornici texturizzate di HUD e inventario e le tre reliquie de La Prima Veglia. Questi elementi originali si aggiungono ai contenuti ereditati; non attribuiamo al progetto la creazione dell’intero gioco."
       ]
     ],
     "join": [

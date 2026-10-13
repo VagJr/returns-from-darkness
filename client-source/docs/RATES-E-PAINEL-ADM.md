@@ -1,6 +1,6 @@
 # Auditoria de rates — Returns from Darkness
 
-Base publicada: **0.3.5**, fonte 1.265, dados 1.267. Nenhum rate foi aumentado nesta entrega.
+Base da entrega: **0.4.1**, fonte 1.265, dados 1.267. Os rates globais de experiência e loot ordinário permanecem iguais à 0.4.0. A coleção Primeira Vigília acrescenta três recompensas nomeadas de chefes na campanha Normal/Horror; isso é uma adição de loot, não um multiplicador geral. Veja `COLECAO-PRIMEIRA-VIGILIA.md` para as condições.
 
 ## Acesso à administração
 
@@ -30,7 +30,7 @@ Essa relação compara XP necessária, **não velocidade de evolução**.
 
 ### Não há um multiplicador único em relação ao original
 
-100% neste painel representa a base publicada 0.3.5. Tabelas, teto de nível, XP por dificuldade, raridade e filtros de loot foram alterados separadamente.
+100% neste painel representa a base publicada 0.4.0. Tabelas, teto de nível, XP por dificuldade, raridade e filtros de loot foram alterados separadamente.
 
 ### XP por monstro
 
@@ -78,7 +78,7 @@ Coliseum calcula XP por abate a partir do nível da vítima elevado à quarta po
 
 ### Perdas de XP também alteram a evolução
 
-Forgetful retira 1 + nível² / 10 de XP por segundo. A morte pode consumir ouro; sem ouro suficiente, há uma cobrança de XP por nível, andar e dificuldade. Essas perdas e o apagamento do personagem em modos de morte permanente não são removidos pelos rates de ganho. A cobrança de morte da fonte atual contém uma verificação de saldo depois da subtração; isso pode zerar mais XP do que a cobrança nominal e precisa de correção e teste de jogabilidade próprios.
+Forgetful retira 1 + nível² / 10 de XP por segundo. A morte pode consumir ouro; sem ouro suficiente, há uma cobrança de XP por nível, andar e dificuldade. Essas perdas e o apagamento do personagem em modos de morte permanente não são removidos pelos rates de ganho. A versão 0.4.0 corrige a cobrança de morte para verificar o saldo antes de subtrair: o resultado é o saldo menos a cobrança, limitado a zero. Isso evita subtração sem sinal e a perda adicional do saldo remanescente. Ainda são necessárias sessões de campanha para avaliar o impacto da penalidade no ritmo de evolução.
 
 ## XP por dificuldade
 

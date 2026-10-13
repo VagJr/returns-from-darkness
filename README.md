@@ -12,13 +12,13 @@ Rediscover the classic with deeper character builds, exploration and equipment. 
 
 The Sanctuary recreates the social experience of Diablo’s classic Battle.net: sign in, chat in channels, find players, and create or join multiplayer rooms. It is the Returns from Darkness community’s meeting place to gather your party and continue the adventure in the game.
 
-**Available in this build — v0.4.0**
+**Available in this build — v0.4.1**
 
-Windows client with an integrated hub, cooperative rooms for up to four players, automatic updates and separate account profiles. The item system shares room drops; automatic saving preserves inventory, gold and character development on this computer. The Sanctuary brings together public profiles, characters, portraits, titles and campaign seals. Progress through play to unlock new classes, traits, modifiers and difficulties; existing characters keep their choices. The first three campaign completions grant dots and a golden portrait.
+Windows client with an integrated hub, cooperative rooms for up to four players, automatic updates and separate account profiles. The item system shares room drops; automatic saving preserves inventory, gold and character development on this computer. The Sanctuary brings together public profiles, characters, portraits, titles and campaign seals. Progress through play to unlock new classes, traits, modifiers and difficulties; existing characters keep their choices. The first three campaign completions grant dots and a golden portrait. Version 0.4.1 introduces project-specific HUD and inventory framing, in-game notices and The First Vigil collection: three relics with original icons and ground sprites, rewarded by specific bosses in Normal campaign mode on Horror. The Sanctuary gains compact navigation, profile tabs and new community artwork. HUD and inventory surfaces receive an original high-definition dark-stone and aged-iron material, keeping items and controls readable.
 
 **The next chapter**
 
-The next scope is a project HUD and a pilot item collection with coherent art and rules. Full artwork remastering, events, host migration and competitive rankings remain in development.
+We continue expanding original artwork and interfaces. A whole-world remaster, new events, host migration and competitive rankings remain in development.
 
 The hub uses cloud services; gameplay runs in the clients and requires the room creator to stay connected. Characters save on this computer automatically, with recovery copies. A new room creates a new world. Full HD artwork, host migration and ranked PvP are not yet complete.
 
@@ -52,11 +52,11 @@ Yes. Automatic saves during play and on normal exit preserve inventory, gold and
 
 ### Is the full remaster and Arena finished?
 
-The client supports Full HD resolution and evolving visual improvements while preserving classic sprites. Higher-definition artwork replacement is still partial. Coliseum exists as a client challenge; online PvP Arena, rankings and project events remain in validation and development.
+The client supports Full HD resolution. Version 0.4.1 adds original framing and a high-definition stone-and-metal material to the HUD and inventory, plus the icons and ground sprites of The First Vigil's three relics. Environments, characters and monsters still retain much of their classic artwork: the whole-world remaster is not finished. Coliseum is available as a client challenge; a competitive PvP Arena, rankings and project events remain in development.
 
 ### Was all the content created by Returns from Darkness?
 
-We are a community edition adapted from Diablo/Hellfire and The Hell 3. Most classes, areas, items and art come from those foundations. Returns from Darkness develops the online hub, client integration, updates and Sanctuary progression. Original additions will be presented as they are released; foundation credits are retained.
+We are a community edition adapted from Diablo/Hellfire and The Hell 3, with foundation credits retained. Most classes, areas, equipment and artwork come from those foundations. Returns from Darkness creates the Sanctuary, online integration, updates and account progression, along with illustrations, an emblem, textured HUD and inventory framing, and The First Vigil's three relics. These original elements are presented as additions to inherited content, without claiming authorship of the whole game.
 
 ## The next chapter begins with the community.
 

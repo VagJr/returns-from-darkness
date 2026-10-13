@@ -122,11 +122,13 @@ export class Community {
       if(path==='/api/rooms/create'){
         if(current)fail('Saia da sala atual antes de criar outra.');if(input.contentHash!==this.env.CONTENT_HASH)fail('Pacote de conteúdo incompatível.');
         if(typeof input.name!=='string'||input.name.trim().length<2||input.name.length>40||/[\x00-\x1f]/.test(input.name))fail('Nome de sala inválido.');
-        if(this.rooms().length>=64)fail('Limite de salas atingido.',429);if(!['campaign-coop','coliseum-pvp'].includes(input.mode||'campaign-coop'))fail('Modo inválido.');if(!Number.isInteger(input.difficulty??0)||(input.difficulty??0)<0||(input.difficulty??0)>8)fail('Dificuldade inválida.');
-        const profile=this.progression.get(user);if(!permitsDifficulty(profile,input.difficulty??0))fail('Desbloqueie esta dificuldade antes de criar a sala.',403);
-        if(input.mode==='coliseum-pvp'&&!unlocks(profile).modes.includes(8))fail('Alcance o nível 10 para desbloquear o Coliseum.',403);
+        if(this.rooms().length>=64)fail('Limite de salas atingido.',429);const mode=input.mode||'campaign-coop';if(!['campaign-coop','coliseum-pvp'].includes(mode))fail('Modo inválido.');
+        // Coliseum has fixed arena rules. Ignore a stale campaign selection from older clients.
+        const difficulty=mode==='coliseum-pvp'?0:(input.difficulty??0);if(!Number.isInteger(difficulty)||difficulty<0||difficulty>8)fail('Dificuldade inválida.');
+        const profile=this.progression.get(user);if(!permitsDifficulty(profile,difficulty))fail('Desbloqueie esta dificuldade antes de criar a sala.',403);
+        if(mode==='coliseum-pvp'&&!unlocks(profile).modes.includes(8))fail('Alcance o nível 10 para desbloquear o Coliseum.',403);
         const password=input.password||'';if(typeof password!=='string'||password.length>64)fail('Senha de sala inválida.');
-        const room={id:crypto.randomUUID(),name:input.name.trim(),creator:user,mode:input.mode||'campaign-coop',difficulty:input.difficulty||0,seed:crypto.getRandomValues(new Uint32Array(1))[0],contentHash:this.env.CONTENT_HASH,members:[{user,slot:0}],connected:[],passwordSalt:random(16),passwordHash:null,createdAt:now,updated:now};
+        const room={id:crypto.randomUUID(),name:input.name.trim(),creator:user,mode,difficulty,seed:crypto.getRandomValues(new Uint32Array(1))[0],contentHash:this.env.CONTENT_HASH,members:[{user,slot:0}],connected:[],passwordSalt:random(16),passwordHash:null,createdAt:now,updated:now};
         if(password)room.passwordHash=await passwordKey(password,room.passwordSalt);
         const response=await call(roomStub(this.env,room.id),'/internal/init',room);if(!response.ok)fail('Não foi possível abrir a sala.',503);this.save(room);return json({room:publicRoom(room)});
       }
