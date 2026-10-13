@@ -1,0 +1,12 @@
+Returns from Darkness HD — 0.4.5
+
+Refino da composição da HUD Dark Gothic.
+
+- Removido o retângulo preto do painel antigo sob as áreas transparentes da moldura inferior. O cenário continua desenhado ao redor das esculturas.
+- Chat de partida com a mesma arte, textura e molduras da interface atual. Campo de digitação, seleção de destinatários e fechamento por Esc preservados; corrigidas as coordenadas de clique dos destinatários em resoluções amplas.
+- Encaixe de itens no inventário e cinturão com contornos discretos e preenchimento suave. Indicações de requisitos não atendidos permanecem distintas.
+- Descrições e comparações de itens têm composição própria, sem escurecer/recolorir o fundo temporário do inventário.
+
+Atualização assinada pelo launcher. Personagens permanecem fora da pasta de versões. Multiplayer de até quatro jogadores com salas integradas ao Santuário; a partida é hospedada pelo cliente do criador.
+
+Esta revisão não altera combate, experiência, drops nem desbloqueios. As artes herdadas do mundo continuam presentes; não se anuncia substituição completa das texturas do jogo.

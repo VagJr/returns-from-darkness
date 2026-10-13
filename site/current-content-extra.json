@@ -27,7 +27,7 @@
     ],
     "now": [
       "W tej wersji",
-      "Klient Windows ze zintegrowanym centrum, pokojami kooperacyjnymi dla czterech graczy, automatycznymi aktualizacjami i osobnymi profilami. System przedmiotów współdzieli łupy w pokoju; automatyczny zapis zachowuje ekwipunek, złoto i rozwój na tym PC. Sanktuarium łączy publiczne profile, postacie, portrety, tytuły i pieczęcie kampanii. Graj i rozwijaj się, by odblokować klasy, cechy, modyfikatory i trudności; istniejące postacie zachowują swoje wybory. Pierwsze trzy ukończone kampanie przyznają punkty i złoty portret. Wersja 0.4.1 dodaje własne oprawy HUD i ekwipunku, komunikaty w grze oraz kolekcję Pierwsza Warta: trzy relikwie z autorskimi ikonami i sprite’ami, zdobywane u określonych bossów w kampanii Normal na Horror. Sanktuarium zyskuje zwartą nawigację, zakładki profilu i nową ilustrację. Powierzchnie HUD i ekwipunku otrzymują autorski materiał z ciemnego kamienia i postarzanego żelaza w wysokiej rozdzielczości, zachowując czytelność przedmiotów i przycisków."
+      "Klient Windows ze zintegrowanym centrum, pokojami kooperacyjnymi dla czterech graczy, automatycznymi aktualizacjami i osobnymi profilami. System przedmiotów współdzieli łupy w pokoju; automatyczny zapis zachowuje ekwipunek, złoto i rozwój na tym PC. Sanktuarium łączy publiczne profile, postacie, portrety, tytuły i pieczęcie kampanii. Graj i rozwijaj się, by odblokować klasy, cechy, modyfikatory i trudności; istniejące postacie zachowują swoje wybory. Pierwsze trzy ukończone kampanie przyznają punkty i złoty portret. Wersja 0.4.1 dodaje własne oprawy HUD i ekwipunku, komunikaty w grze oraz kolekcję Pierwsza Warta: trzy relikwie z autorskimi ikonami i sprite’ami, zdobywane u określonych bossów w kampanii Normal na Horror. Sanktuarium zyskuje zwartą nawigację, zakładki profilu i nową ilustrację. Pełne gotyckie ramy, rzeźby strażników i teksturowane powierzchnie tworzą nowy interfejs projektu. Życie i mana mają animowaną ciecz; osiem miejsc na mikstury towarzyszy paskowi doświadczenia."
     ],
     "next": [
       "Następny rozdział",
@@ -114,7 +114,7 @@
     ],
     "now": [
       "В этой версии",
-      "Клиент Windows со встроенным центром, совместными комнатами до четырёх игроков, автообновлением и отдельными профилями. Система предметов разделяет добычу комнаты; автосохранение сохраняет инвентарь, золото и развитие на этом ПК. Санктуарий объединяет открытые профили, персонажей, портреты, титулы и печати кампании. Играйте и развивайтесь, открывая классы, черты, модификаторы и сложности; существующие герои сохраняют свой выбор. Первые три пройденные кампании дают точки и золотой портрет. Версия 0.4.1 добавляет собственное оформление HUD и инвентаря, уведомления в игре и коллекцию «Первая стража»: три реликвии с оригинальными значками и спрайтами, получаемые у определённых боссов в кампании Normal на Horror. В Санктуарии появились компактная навигация, вкладки профиля и новая иллюстрация. Поверхности HUD и инвентаря получают собственный материал тёмного камня и состаренного железа в высоком разрешении, сохраняя читаемость предметов и элементов управления."
+      "Клиент Windows со встроенным центром, совместными комнатами до четырёх игроков, автообновлением и отдельными профилями. Система предметов разделяет добычу комнаты; автосохранение сохраняет инвентарь, золото и развитие на этом ПК. Санктуарий объединяет открытые профили, персонажей, портреты, титулы и печати кампании. Играйте и развивайтесь, открывая классы, черты, модификаторы и сложности; существующие герои сохраняют свой выбор. Первые три пройденные кампании дают точки и золотой портрет. Версия 0.4.1 добавляет собственное оформление HUD и инвентаря, уведомления в игре и коллекцию «Первая стража»: три реликвии с оригинальными значками и спрайтами, получаемые у определённых боссов в кампании Normal на Horror. В Санктуарии появились компактная навигация, вкладки профиля и новая иллюстрация. Полные готические рамы, скульптуры стражей и фактурные поверхности формируют новый интерфейс проекта. Сферы здоровья и маны содержат анимированную жидкость; восемь ячеек зелий расположены рядом с полосой опыта."
     ],
     "next": [
       "Следующая глава",
@@ -201,7 +201,7 @@
     ],
     "now": [
       "У цій версії",
-      "Клієнт Windows із вбудованим центром, спільними кімнатами до чотирьох гравців, автооновленням і окремими профілями. Система предметів розділяє здобич кімнати; автозбереження зберігає інвентар, золото й розвиток на цьому ПК. Санктуарій об’єднує публічні профілі, персонажів, портрети, титули й печатки кампанії. Грайте й розвивайтеся, відкриваючи класи, риси, модифікатори та складності; наявні герої зберігають свій вибір. Перші три пройдені кампанії дають крапки й золотий портрет. Версія 0.4.1 додає власне оформлення HUD та інвентарю, повідомлення в грі й колекцію «Перша варта»: три реліквії з оригінальними значками та спрайтами, які дають певні боси в кампанії Normal на Horror. Санктуарій отримав компактну навігацію, вкладки профілю та нову ілюстрацію. Поверхні HUD та інвентарю отримують власний матеріал темного каменю й зістареного заліза у високій роздільності зі збереженням читабельності предметів і елементів керування."
+      "Клієнт Windows із вбудованим центром, спільними кімнатами до чотирьох гравців, автооновленням і окремими профілями. Система предметів розділяє здобич кімнати; автозбереження зберігає інвентар, золото й розвиток на цьому ПК. Санктуарій об’єднує публічні профілі, персонажів, портрети, титули й печатки кампанії. Грайте й розвивайтеся, відкриваючи класи, риси, модифікатори та складності; наявні герої зберігають свій вибір. Перші три пройдені кампанії дають крапки й золотий портрет. Версія 0.4.1 додає власне оформлення HUD та інвентарю, повідомлення в грі й колекцію «Перша варта»: три реліквії з оригінальними значками та спрайтами, які дають певні боси в кампанії Normal на Horror. Санктуарій отримав компактну навігацію, вкладки профілю та нову ілюстрацію. Повні готичні рами, скульптури вартових і фактурні поверхні формують новий інтерфейс проєкту. Сфери здоров’я та мани містять анімовану рідину; вісім комірок зілля розташовані біля смуги досвіду."
     ],
     "next": [
       "Наступний розділ",
@@ -288,7 +288,7 @@
     ],
     "now": [
       "Bu sürümde",
-      "Entegre merkez, dört kişilik işbirliği odaları, otomatik güncellemeler ve ayrı profiller içeren Windows istemcisi. Eşya sistemi odadaki ganimetleri paylaşır; otomatik kayıt envanteri, altını ve karakter gelişimini bu PC’de korur. Sığınak; herkese açık profilleri, karakterleri, portreleri, unvanları ve sefer mühürlerini birleştirir. Oynayarak ilerleyin; sınıfları, özellikleri, değiştiricileri ve zorlukları açın. Mevcut karakterler seçimlerini korur. İlk üç tamamlanan sefer, noktaları ve altın portreyi kazandırır. 0.4.1 sürümü özgün HUD ve envanter çerçeveleri, oyun içi bildirimler ve İlk Nöbet koleksiyonunu sunar: Horror zorluğunda Normal sefer modundaki belirli bosslardan kazanılan, özgün simge ve yer sprite’larına sahip üç yadigâr. Sığınak daha kompakt gezinme, profil sekmeleri ve yeni bir illüstrasyon kazanır. HUD ve envanter yüzeyleri, eşyaların ve kontrollerin okunabilirliğini koruyan, koyu taş ve yaşlanmış demirden oluşan özgün yüksek çözünürlüklü bir malzeme kazanır."
+      "Entegre merkez, dört kişilik işbirliği odaları, otomatik güncellemeler ve ayrı profiller içeren Windows istemcisi. Eşya sistemi odadaki ganimetleri paylaşır; otomatik kayıt envanteri, altını ve karakter gelişimini bu PC’de korur. Sığınak; herkese açık profilleri, karakterleri, portreleri, unvanları ve sefer mühürlerini birleştirir. Oynayarak ilerleyin; sınıfları, özellikleri, değiştiricileri ve zorlukları açın. Mevcut karakterler seçimlerini korur. İlk üç tamamlanan sefer, noktaları ve altın portreyi kazandırır. 0.4.1 sürümü özgün HUD ve envanter çerçeveleri, oyun içi bildirimler ve İlk Nöbet koleksiyonunu sunar: Horror zorluğunda Normal sefer modundaki belirli bosslardan kazanılan, özgün simge ve yer sprite’larına sahip üç yadigâr. Sığınak daha kompakt gezinme, profil sekmeleri ve yeni bir illüstrasyon kazanır. Eksiksiz gotik çerçeveler, muhafız heykelleri ve dokulu yüzeyler projenin yeni arayüzünü oluşturur. Can ve mana kürelerinde hareketli sıvı bulunur; sekiz iksir yuvası deneyim çubuğunun yanında yer alır."
     ],
     "next": [
       "Sonraki bölüm",
@@ -375,7 +375,7 @@
     ],
     "now": [
       "このビルドで利用可能",
-      "ハブ内蔵Windowsクライアント、最大4人の協力ルーム、自動更新、アカウント別プロフィール。アイテムシステムはルーム内のドロップを共有し、自動保存で所持品、ゴールド、キャラクターの成長をこのPCに保管します。 サンクチュアリには公開プロフィール、キャラクター、肖像、称号、キャンペーンの紋章が集まります。プレイして成長するとクラス、特性、調整要素、難易度が解放されます。既存キャラクターの選択は維持され、最初の3段階のクリアで印と金色の肖像を獲得できます。 バージョン0.4.1では独自のHUD・インベントリ装飾、ゲーム内通知、「最初の守り」のコレクションを追加。独自アイコンと地面スプライトを持つ3つの遺物は、NormalキャンペーンのHorror難易度で特定のボスから入手できます。サンクチュアリはコンパクトなナビゲーション、プロフィールタブ、新しいイラストを備えます。 HUDとインベントリの表面には、暗い石と古びた鉄を表現した独自の高精細素材を使用し、アイテムや操作表示の読みやすさを保ちます。"
+      "ハブ内蔵Windowsクライアント、最大4人の協力ルーム、自動更新、アカウント別プロフィール。アイテムシステムはルーム内のドロップを共有し、自動保存で所持品、ゴールド、キャラクターの成長をこのPCに保管します。 サンクチュアリには公開プロフィール、キャラクター、肖像、称号、キャンペーンの紋章が集まります。プレイして成長するとクラス、特性、調整要素、難易度が解放されます。既存キャラクターの選択は維持され、最初の3段階のクリアで印と金色の肖像を獲得できます。 バージョン0.4.1では独自のHUD・インベントリ装飾、ゲーム内通知、「最初の守り」のコレクションを追加。独自アイコンと地面スプライトを持つ3つの遺物は、NormalキャンペーンのHorror難易度で特定のボスから入手できます。サンクチュアリはコンパクトなナビゲーション、プロフィールタブ、新しいイラストを備えます。 精緻なゴシックの枠、守護者の彫刻、質感のある表面で構成された新しいインターフェース。体力とマナの液体が動き、経験値バーのそばに8個のポーションスロットが並びます。"
     ],
     "next": [
       "次の章",
@@ -462,7 +462,7 @@
     ],
     "now": [
       "이번 빌드에서 이용 가능",
-      "허브가 통합된 Windows 클라이언트, 최대 4인 협동 방, 자동 업데이트, 계정별 프로필. 아이템 시스템은 방의 드롭을 공유하고 자동 저장으로 인벤토리, 금, 캐릭터 성장을 이 PC에 보관합니다. 성역은 공개 프로필, 캐릭터, 초상화, 칭호와 캠페인 인장을 모읍니다. 플레이하며 성장하면 클래스, 특성, 변경 요소와 난이도가 해제됩니다. 기존 캐릭터의 선택은 유지되며, 처음 세 캠페인을 완료하면 점 표시와 황금 초상화를 얻습니다. 0.4.1 버전은 자체 HUD와 인벤토리 장식, 게임 내 알림, 첫 번째 파수 컬렉션을 추가합니다. 독자적인 아이콘과 바닥 스프라이트를 가진 유물 세 개는 Horror 난이도의 Normal 캠페인에서 특정 우두머리에게 얻습니다. 성역에는 간결한 탐색, 프로필 탭과 새 삽화가 추가됩니다. HUD와 인벤토리 표면에는 어두운 돌과 낡은 철을 표현한 독자적인 고해상도 소재가 적용되며, 아이템과 조작 표시의 가독성을 유지합니다."
+      "허브가 통합된 Windows 클라이언트, 최대 4인 협동 방, 자동 업데이트, 계정별 프로필. 아이템 시스템은 방의 드롭을 공유하고 자동 저장으로 인벤토리, 금, 캐릭터 성장을 이 PC에 보관합니다. 성역은 공개 프로필, 캐릭터, 초상화, 칭호와 캠페인 인장을 모읍니다. 플레이하며 성장하면 클래스, 특성, 변경 요소와 난이도가 해제됩니다. 기존 캐릭터의 선택은 유지되며, 처음 세 캠페인을 완료하면 점 표시와 황금 초상화를 얻습니다. 0.4.1 버전은 자체 HUD와 인벤토리 장식, 게임 내 알림, 첫 번째 파수 컬렉션을 추가합니다. 독자적인 아이콘과 바닥 스프라이트를 가진 유물 세 개는 Horror 난이도의 Normal 캠페인에서 특정 우두머리에게 얻습니다. 성역에는 간결한 탐색, 프로필 탭과 새 삽화가 추가됩니다. 정교한 고딕 테두리, 수호자 조각상과 질감 있는 표면으로 새로운 인터페이스를 구성했습니다. 생명력과 마나에는 움직이는 액체가 표시되며, 경험치 막대 옆에 물약 슬롯 8개가 있습니다."
     ],
     "next": [
       "다음 장",
@@ -549,7 +549,7 @@
     ],
     "now": [
       "此版本已提供",
-      "内置大厅的Windows客户端、最多四人的合作房间、自动更新和独立账号档案。物品系统共享房间内的掉落，自动保存将背包、金币和角色成长保存在本机。 庇护之地整合公开资料、角色、头像、称号和战役印记。通过游玩与成长解锁职业、特性、调整项和难度；现有角色保留已选内容。完成前三个难度的战役可获得圆点标记与金色头像。 0.4.1版本加入项目原创HUD与背包边框、游戏内提示和“初次守望”系列：三件拥有原创图标及地面精灵的遗物，可在Horror难度的Normal战役模式中击败指定首领获得。圣所新增紧凑导航、个人资料标签页与社区插画。 HUD与背包表面采用原创的高分辨率暗色石材和旧铁材质，同时保持物品和操作信息清晰可读。"
+      "内置大厅的Windows客户端、最多四人的合作房间、自动更新和独立账号档案。物品系统共享房间内的掉落，自动保存将背包、金币和角色成长保存在本机。 庇护之地整合公开资料、角色、头像、称号和战役印记。通过游玩与成长解锁职业、特性、调整项和难度；现有角色保留已选内容。完成前三个难度的战役可获得圆点标记与金色头像。 0.4.1版本加入项目原创HUD与背包边框、游戏内提示和“初次守望”系列：三件拥有原创图标及地面精灵的遗物，可在Horror难度的Normal战役模式中击败指定首领获得。圣所新增紧凑导航、个人资料标签页与社区插画。 完整的哥特式边框、守护者雕像与细致纹理构成全新的项目界面。生命与法力球呈现流动液体，经验条旁排列着八个药水槽。"
     ],
     "next": [
       "下一篇章",
@@ -636,7 +636,7 @@
     ],
     "now": [
       "في هذا الإصدار",
-      "عميل Windows بمركز مدمج وغرف تعاونية لأربعة لاعبين وتحديث تلقائي وملفات منفصلة للحسابات. يشارك نظام العناصر غنائم الغرفة؛ ويحفظ الحفظ التلقائي المحتويات والذهب وتطور الشخصية على هذا الحاسوب. يجمع الملاذ الملفات العامة والشخصيات والصور والألقاب وأختام الحملة. تقدّم باللعب لفتح الفئات والسمات والمعدّلات والصعوبات؛ تحتفظ الشخصيات الحالية باختياراتها. تمنح أول ثلاث حملات مكتملة النقاط والصورة الذهبية. يقدم الإصدار 0.4.1 إطارات أصلية لواجهة اللعب والمخزون وتنبيهات داخل اللعبة ومجموعة الحراسة الأولى: ثلاث تحف بأيقونات ورسوم أرضية أصلية، يمنحها زعماء محددون في حملة Normal على صعوبة Horror. يحصل الملاذ على تنقل أكثر تنظيماً وتبويبات للملف الشخصي ورسمة جديدة للمجتمع. تكتسب أسطح واجهة اللعب والمخزون مادة أصلية عالية الدقة من الحجر الداكن والحديد المعتّق، مع الحفاظ على وضوح العناصر وأدوات التحكم."
+      "عميل Windows بمركز مدمج وغرف تعاونية لأربعة لاعبين وتحديث تلقائي وملفات منفصلة للحسابات. يشارك نظام العناصر غنائم الغرفة؛ ويحفظ الحفظ التلقائي المحتويات والذهب وتطور الشخصية على هذا الحاسوب. يجمع الملاذ الملفات العامة والشخصيات والصور والألقاب وأختام الحملة. تقدّم باللعب لفتح الفئات والسمات والمعدّلات والصعوبات؛ تحتفظ الشخصيات الحالية باختياراتها. تمنح أول ثلاث حملات مكتملة النقاط والصورة الذهبية. يقدم الإصدار 0.4.1 إطارات أصلية لواجهة اللعب والمخزون وتنبيهات داخل اللعبة ومجموعة الحراسة الأولى: ثلاث تحف بأيقونات ورسوم أرضية أصلية، يمنحها زعماء محددون في حملة Normal على صعوبة Horror. يحصل الملاذ على تنقل أكثر تنظيماً وتبويبات للملف الشخصي ورسمة جديدة للمجتمع. تشكّل الإطارات القوطية الكاملة وتماثيل الحراس والأسطح المزخرفة واجهة المشروع الجديدة. تعرض كرتا الحياة والمانا سائلاً متحركاً، وترافق ثماني خانات للجرعات شريط الخبرة."
     ],
     "next": [
       "الفصل التالي",

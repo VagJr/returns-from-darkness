@@ -3717,7 +3717,7 @@
 +};
 --- /dev/null
 +++ b/src/CommunityHudKit.cpp
-@@ -0,0 +1,296 @@
+@@ -0,0 +1,381 @@
 +#include "stdafx.h"
 +#include "CommunityHudKit.h"
 +#include "CommunityRemaster.h"
@@ -3742,6 +3742,8 @@
 +struct Caption {std::string text;int x,y,width,advance;};
 +std::vector<Caption> captions;
 +bool buttonCaptionsFit=true;int buttonCaptions=0;
++int interactionPhase=-1;
++std::vector<RECT> tooltipRects;
 +#endif
 +IDirect3DDevice9 *owner=nullptr;
 +IDirect3DTexture9 *texture=nullptr,*mask=nullptr;
@@ -3882,9 +3884,47 @@
 +}
 +
 +bool RfdKitReady(){return load();}
++void RfdKitInteractionQa(){
++#if RFD_DEV_QA
++ char mode[40]={},profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_ENGINE_QA",mode,sizeof(mode));GetEnvironmentVariableA("RFD_PROFILE",profile,sizeof(profile));
++ if(strcmp(mode,"hud-interactions")||!strstr(profile,"engine-qa-")||gbRunGame!=1)return;
++ static DWORD start=GetTickCount();static int phase=0;static bool checked=false,recipients=true,input=true;
++ static const char *names[]={"hud","world","inventory","ring-valid","ring-invalid","belt","tooltip-world","tooltip-inventory","chat","chat-closed","grid"};
++ interactionPhase=phase;
++ std::string file=std::string(profile)+"\\"+names[phase]+".bmp";
++ if(GetFileAttributesA(file.c_str())!=INVALID_FILE_ATTRIBUTES){if(phase<10){phase++;start=GetTickCount();}else{
++  FILE *f=fopen((std::string(profile)+"\\hud-interactions-qa.json").c_str(),"w");if(f){fprintf(f,"{\"fixtureOnly\":true,\"actualNativeRendering\":true,\"recipientHitboxes\":%s,\"chatEditingAndEscape\":%s,\"frames\":11}",recipients?"true":"false",input?"true":"false");fclose(f);}return;}}
++ interactionPhase=phase;
++ Tooltip_Clear();Cur.InventoryCellID=-1;Cur.MonsterID=-1;Cur.playerIndex=-1;Cur.ItemID=-1;Cur.ObjectIndex=-1;CursorX=30;CursorY=30;
++ auto &player=Players[CurrentPlayerIndex];player.ItemOnCursor.ItemCode=IC_M1_NONE;SetCursorGraphics(CM_1_NORMAL_HAND);
++ IsCHARPanelVisible=false;IsINVPanelVisible=(phase>=2&&phase<=4)||phase==7||phase==10;IsInterface=phase!=1;
++ if(phase==3||phase==4){
++  SetPlayerHandItem(player.ItemOnCursor,BI_156_RING);player.ItemOnCursor.IsReqMet=phase==3;
++  SetCursorGraphics(player.ItemOnCursor.GraphicValue+CM_12_ITEMS_PICS_START);
++  auto &s=InvSlots[IS_1_LeftRing];CursorX=s.Left-Screen_LeftBorder+5;CursorY=s.Top-Screen_TopBorder+5;
++ }
++ if(phase==5){SetPlayerHandItem(player.ItemOnCursor,BI_24_POTION_OF_HEALING);player.ItemOnCursor.IsReqMet=true;SetCursorGraphics(player.ItemOnCursor.GraphicValue+CM_12_ITEMS_PICS_START);
++  CursorX=InvSlots[IS_11_8_Belt].Left-Screen_LeftBorder;CursorY=InvSlots[IS_11_8_Belt].Down-Screen_TopBorder-20;}
++ if(phase==10){SetPlayerHandItem(player.ItemOnCursor,BI_17_HUGE_AXE);player.ItemOnCursor.IsReqMet=true;SetCursorGraphics(player.ItemOnCursor.GraphicValue+CM_12_ITEMS_PICS_START);
++  CursorX=InvSlots[IS_10_7_Inventory].Left-Screen_LeftBorder+4*29+5;CursorY=InvSlots[IS_10_7_Inventory].Top-Screen_TopBorder+20;}
++ if(phase==6||phase==7){CursorX=InventoryPanelRect.Left+140;CursorY=InventoryPanelRect.Top+240;
++  Tooltip_ShowItemInfo(IS_10_7_Inventory);Tooltip_SetOffsetTop();}
++ if(phase==8){
++  if(!TalkPanelMode){int previous=MaxCountOfPlayersInGame;MaxCountOfPlayersInGame=4;OpenTalkPanel();MaxCountOfPlayersInGame=previous;}
++  strcpy_s(TalkPanelMessage,"Returns from Darkness - party chat");
++  if(!checked){checked=true;int oldX=CursorX,oldY=CursorY;for(int p=0,row=0;p<4;p++){if(p==CurrentPlayerIndex)continue;
++   bool previous=MayPlayersTalk[p]!=0;CursorX=(ScreenWidth-GUI_Width)/2+200;CursorY=ScreenHeight-59+18*row+8;
++   recipients=recipients&&TalkPanel_CheckMouseClick();TalkPanel_LButtonUp();recipients=recipients&&((MayPlayersTalk[p]!=0)!=previous);TalkPanel_LButtonUp();recipients=recipients&&((MayPlayersTalk[p]!=0)==previous);row++;}
++   PutNewCharInTalkPanelPromt('!');HandleTalkPanelControlKeys(VK_8_BACKSPACE_KEY);input=strcmp(TalkPanelMessage,"Returns from Darkness - party chat")==0;
++   CursorX=oldX;CursorY=oldY;}
++ }
++ if(phase==9&&TalkPanelMode){HandleTalkPanelControlKeys(VK_27_ESC_KEY);input=input&&!TalkPanelMode;}
++ if(GetTickCount()-start>1200){extern void RfdQueueMenuCapture(const char*);RfdQueueMenuCapture((std::string(profile)+"\\"+names[phase]+".bmp").c_str());}
++#endif
++}
 +void RfdKitBegin(){sprites.clear();
 +#if RFD_DEV_QA
-+ captions.clear();buttonCaptionsFit=true;buttonCaptions=0;
++ captions.clear();tooltipRects.clear();buttonCaptionsFit=true;buttonCaptions=0;
 +#endif
 + const size_t size=size_t(ScreenWidth)*ScreenHeight;expected.assign(size,0);visible.assign(size,0);}
 +void RfdKitClearPixel(void *destination){int x,y;if(gbRunGame==1&&location(destination,x,y)&&visible.size()==size_t(ScreenWidth)*ScreenHeight)visible[size_t(y)*ScreenWidth+x]=0;}
@@ -3905,6 +3945,43 @@
 + nine(KIT_BUTTON,x+205,ScreenHeight-96,246,4,7,1);
 + nine(KIT_SLOT,x+562,ScreenHeight-65,64,62,12,5);
 + sprite(KIT_SEAL,x+582,ScreenHeight-46,24,24);
++}
++void RfdKitTalkPanel(){
++ const int x=(ScreenWidth-GUI_Width)/2;
++ leather(x+175,ScreenHeight-120,300,112);
++ nine(KIT_MESSAGE,x+170,ScreenHeight-125,310,122,20,5,false);
++ // Preserve the native three-line input and recipient hitboxes. The chat
++ // replaces the center recess, never the surrounding sculptures or orbs.
++ leather(x+190,ScreenHeight-112,269,39);
++ nine(KIT_MESSAGE,x+185,ScreenHeight-117,279,49,20,4,false);
++}
++void RfdKitTalkRecipient(int row,bool enabled,bool pressed){
++ const int x=(ScreenWidth-GUI_Width)/2+172,y=ScreenHeight-59+row*18;
++ nine(KIT_BUTTON,x,y,61,17,7,3);
++ DrawLevelInfoText(x+7,y+13,enabled?(pressed?"SEND":"ON"):"OFF",enabled?C_3_Gold:C_7_Grey,1);
++}
++bool RfdKitSlotHighlight(int left,int down,int width,int height,int gradient,bool placement){
++ if(!loaded||gbRunGame!=1||width<=0||height<=0)return false;
++ const int x=left-Screen_LeftBorder,y=down-Screen_TopBorder-height+1;
++ if(x<0||y<0||x+width>ScreenWidth||y+height>ScreenHeight||visible.empty())return false;
++ // Other inherited windows retain their own renderer. Only kit slots use
++ // this restrained glass tint; native icons continue to clear the mask.
++ if(!visible[size_t(y+height/2)*ScreenWidth+x+width/2])return false;
++ if(!placement&&gradient==blColor.main)return true;
++ DWORD color=gradient==blColor.notavailable?0xad4a42:gradient==blColor.overslot?0xb09a71:gradient==blColor.cooked?0xa48c68:0x778b96;
++ sprites.push_back({KIT_SLOT,x,y,width,height,RfdKitSources[KIT_SLOT],(placement?0xfb000000:0xfa000000)|color});
++ return true;
++}
++bool RfdKitTooltip(int x,int y,int width,int height){
++ if(!loaded||gbRunGame!=1)return false;
++#if RFD_DEV_QA
++ tooltipRects.push_back({x,y,width,height});
++#endif
++ // A tooltip owns its background. Palette darkening of the inventory's
++ // temporary fallback produced solid colored blocks and erased its art.
++ leather(x,y,width,height);
++ nine(KIT_MESSAGE,x,y,width,height,20,4,false);
++ return true;
 +}
 +void RfdKitConfigureButtons(){
 + if(!load())return;
@@ -3979,6 +4056,14 @@
 + if(!loaded||gbRunGame!=1||LoadingScreenCEL||VideoWindowExists||sprites.empty())return;
 +#if RFD_DEV_QA
 + validateNativeControls();
++ if(interactionPhase>=0){
++  char profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_PROFILE",profile,MAX_PATH);
++  FILE *f=fopen((std::string(profile)+"\\frame-"+std::to_string(interactionPhase)+".json").c_str(),"w");if(f){
++   fprintf(f,"{\"screen\":[%d,%d],\"inventory\":[%d,%d,%d,%d],\"highlights\":[",ScreenWidth,ScreenHeight,InventoryPanelRect.Left,InventoryPanelRect.Top,InventoryPanelRect.Width,InventoryPanelRect.Heigth);
++   bool first=true;for(auto &s:sprites)if((s.tint>>24)==251){fprintf(f,"%s{\"rect\":[%d,%d,%d,%d],\"rgb\":%lu}",first?"":",",s.x,s.y,s.w,s.h,s.tint&0xffffff);first=false;}
++   fputs("],\"tooltips\":[",f);for(size_t i=0;i<tooltipRects.size();i++){auto &r=tooltipRects[i];fprintf(f,"%s[%ld,%ld,%ld,%ld]",i?",":"",r.left,r.top,r.right,r.bottom);}fputs("]}",f);fclose(f);
++  }
++ }
 +#endif
 + if(owner!=device){release();owner=device;}
 + if(!texture){
@@ -3996,12 +4081,12 @@
 + mask->UnlockRect(0);
 + IDirect3DStateBlock9 *state=nullptr;if(FAILED(device->CreateStateBlock(D3DSBT_ALL,&state)))return;state->Capture();
 + D3DVIEWPORT9 view{};device->GetViewport(&view);float sx=float(view.Width)/ScreenWidth,sy=float(view.Height)/ScreenHeight;
-+ struct Vertex {float x,y,z,rhw;DWORD color;float u,v,mu,mv;};std::vector<Vertex> batch;batch.reserve(sprites.size()*6);
-+ auto vertex=[&](const Sprite &s,int px,int py,float u,float v){return Vertex{view.X+px*sx-.5f,view.Y+py*sy-.5f,0,1,s.tint,u/AtlasSize,v/AtlasSize,float(px)/ScreenWidth,float(py)/ScreenHeight};};
++ struct Vertex {float x,y,z,rhw;DWORD color;float u,v,mu,mv,lx,ly,w,h;};std::vector<Vertex> batch;batch.reserve(sprites.size()*6);
++ auto vertex=[&](const Sprite &s,int px,int py,float u,float v){return Vertex{view.X+px*sx-.5f,view.Y+py*sy-.5f,0,1,s.tint,u/AtlasSize,v/AtlasSize,float(px)/ScreenWidth,float(py)/ScreenHeight,float(px-s.x),float(py-s.y),float(s.w),float(s.h)};};
 + for(const auto &s:sprites){auto r=s.source;
 +  Vertex a=vertex(s,s.x,s.y,float(r.x),float(r.y)),b=vertex(s,s.x+s.w,s.y,float(r.x+r.w),float(r.y)),c=vertex(s,s.x,s.y+s.h,float(r.x),float(r.y+r.h)),d=vertex(s,s.x+s.w,s.y+s.h,float(r.x+r.w),float(r.y+r.h));
 +  batch.insert(batch.end(),{a,b,c,c,b,d});}
-+ device->SetVertexShader(nullptr);device->SetPixelShader(shader);device->SetFVF(D3DFVF_XYZRHW|D3DFVF_DIFFUSE|D3DFVF_TEX2);
++ device->SetVertexShader(nullptr);device->SetPixelShader(shader);device->SetFVF(D3DFVF_XYZRHW|D3DFVF_DIFFUSE|D3DFVF_TEX3|D3DFVF_TEXCOORDSIZE4(2));
 + device->SetTexture(0,texture);device->SetTexture(1,mask);
 + auto hud=RfdKitSources[KIT_HUD];float atlasOrigin[4]={float(hud.x),float(hud.y),0,0};device->SetPixelShaderConstantF(0,atlasOrigin,1);
 + auto inv=RfdKitSources[KIT_INV_FRAME];float invAtlasOrigin[4]={float(inv.x),float(inv.y),0,0};device->SetPixelShaderConstantF(1,invAtlasOrigin,1);
@@ -4016,13 +4101,17 @@
 +}
 --- /dev/null
 +++ b/src/CommunityHudKit.h
-@@ -0,0 +1,14 @@
+@@ -0,0 +1,19 @@
 +#pragma once
 +bool RfdKitReady();
 +void RfdKitBegin();
 +void RfdKitClearPixel(void *destination);
 +void RfdKitClearSprite(void *destination,int width,int height);
 +void RfdKitMainPanel();
++void RfdKitTalkPanel();
++void RfdKitTalkRecipient(int row,bool enabled,bool pressed);
++bool RfdKitSlotHighlight(int left,int down,int width,int height,int gradient,bool placement);
++bool RfdKitTooltip(int x,int y,int width,int height);
 +void RfdKitConfigureButtons();
 +bool RfdKitButton(Button &button);
 +void RfdKitRecordButtonCaption(Button &button,int width);
@@ -4031,20 +4120,28 @@
 +void RfdKitWeaponTabs();
 +void RfdKitCharacter();
 +void RfdKitRender(LPDIRECT3DDEVICE9 device);
++void RfdKitInteractionQa();
 --- /dev/null
 +++ b/src/CommunityHudKit.hlsl
-@@ -0,0 +1,25 @@
+@@ -0,0 +1,32 @@
 +// One sprite batch, original RGBA artwork; mask preserves native text/items.
 +sampler2D artwork : register(s0);
 +sampler2D coverage : register(s1);
 +float4 hudOrigin : register(c0);
 +float4 invOrigin : register(c1);
 +float4 leatherRect : register(c2);
-+float4 main_hud_kit(float2 uv:TEXCOORD0,float2 screenUV:TEXCOORD1,float4 tint:COLOR0):COLOR0 {
++float4 main_hud_kit(float2 uv:TEXCOORD0,float2 screenUV:TEXCOORD1,float4 local:TEXCOORD2,float4 tint:COLOR0):COLOR0 {
++ float mask=tex2D(coverage,screenUV).a;
++ if(tint.a<.990){
++  float2 distance=min(local.xy,local.zw-local.xy);
++  float edge=1-smoothstep(1,2.5,min(distance.x,distance.y));
++  bool placement=tint.a>.982;
++  return float4(tint.rgb,(placement?lerp(.065,.48,edge):lerp(.025,.18,edge))*mask);
++ }
 + float4 pixel=tex2D(artwork,uv)*tint;
 + float2 atlasPixel=uv*2048;
 + if(all(atlasPixel>=leatherRect.xy)&&all(atlasPixel<leatherRect.xy+leatherRect.zw))pixel.rgb=min(pixel.rgb*1.4+.006,1);
-+ pixel.a*=tex2D(coverage,screenUV).a;
++ pixel.a*=mask;
 + if(tint.a<.999&&tint.a>.994){
 +  float2 p=uv*2048-hudOrigin.xy;
 +  if((p.x>=360&&p.x<=902&&p.y>=25&&p.y<=112)||
@@ -4061,7 +4158,7 @@
 +}
 --- /dev/null
 +++ b/src/CommunityHudKitShader.h
-@@ -0,0 +1,376 @@
+@@ -0,0 +1,450 @@
 +#if 0
 +//
 +// Generated by Microsoft (R) HLSL Shader Compiler 10.1
@@ -4087,80 +4184,100 @@
 +//
 +
 +    ps_3_0
-+    def c3, 1.39999998, 0.00600000005, -0.999000013, -0.994000018
-+    def c4, 2048, 1, 0, 0.994000018
-+    def c5, 902, 112, 1250, 242
-+    def c6, -61, -81, 156, 235
-+    def c7, 92, 482, 603, 138
-+    def c8, 0.850000024, -51, -623, 638
-+    def c9, -70, -92, -263, -45
-+    def c10, -360, -25, -1124, -60
++    def c3, -2, 3, 0.981999993, 2048
++    def c4, 0.414999992, 0.155000001, 0.0649999976, 0.0250000004
++    def c5, 0.99000001, -1, 0.666666687, 1
++    def c6, 1, 0, 1.39999998, 0.00600000005
++    def c7, -0.999000013, -0.994000018, 0.994000018, 0.850000024
++    def c8, 902, 112, 1250, 242
++    def c9, -61, -81, 156, 235
++    def c10, 92, 482, 603, 138
++    def c11, -51, -623, 638, 0
++    def c12, -70, -92, -263, -45
++    def c13, -360, -25, -1124, -60
 +    dcl_texcoord v0.xy
 +    dcl_texcoord1 v1.xy
-+    dcl_color v2
++    dcl_texcoord2 v2
++    dcl_color v3
 +    dcl_2d s0
 +    dcl_2d s1
-+    add r0.xy, c2.zwzw, c2
-+    mad r0.xy, v0, c4.x, -r0
-+    cmp r0.xy, r0, c4.z, c4.y
-+    mul r0.x, r0.y, r0.x
-+    mov r1.x, c4.x
-+    mad r0.yz, v0.xxyw, r1.x, -c2.xxyw
-+    cmp r0.yz, r0, c4.y, c4.z
-+    mul r0.y, r0.z, r0.y
-+    mul r0.x, r0.x, r0.y
-+    texld r2, v0, s0
-+    mul r2, r2, v2
-+    mad r0.yzw, r2.xxyz, c3.x, c3.y
-+    min r1.yzw, c4.y, r0
-+    cmp oC0.xyz, -r0.x, r2, r1.yzww
-+    mad r0.xy, v0, r1.x, -c1
-+    add r3, -r0.yxyx, c7
-+    add r4, r0.yyxx, c9
-+    mad r0.z, r3.x, -c8.x, r4_abs.z
-+    cmp r0.w, r4.x, -c4.y, -c4.z
-+    cmp r0.z, r0.z, c4.z, r0.w
-+    cmp r0.z, r4.y, c4.z, r0.z
-+    cmp r0.z, r0.z, c4.y, c4.z
-+    cmp r0.z, r3.z, r0.z, c4.z
-+    cmp r0.z, r4.x, r0.z, c4.z
-+    cmp r0.z, r3.y, r0.z, c4.z
-+    cmp r0.z, r4.w, r0.z, c4.z
-+    add r0.w, -r0.y, c8.w
-+    add r0.xy, r0, c8.yzzw
-+    cmp r0.w, r0.w, c4.y, c4.z
-+    cmp r0.y, r0.y, r0.w, c4.z
-+    cmp r0.y, r3.w, r0.y, c4.z
-+    cmp r0.x, r0.x, r0.y, c4.z
-+    add r0.x, r0.x, r0.z
-+    mad r0.yz, v0.xxyw, r1.x, -c0.xxyw
-+    add r1, -r0.yzyz, c5
-+    cmp r1.yw, r1, c4.y, c4.z
-+    add r3, r0.yzyz, c10
-+    cmp r1.yw, r3, r1, c4.z
-+    cmp r1.xy, r1.xzzw, r1.ywzw, c4.z
-+    cmp r1.xy, r3.xzzw, r1, c4.z
-+    add r0.w, r1.y, r1.x
-+    cmp r0.w, -r0.w, c4.z, c4.y
-+    add r1.xy, -r0.yzzw, c6.zwzw
-+    add r0.yz, r0, c6.xxyw
-+    cmp r1.y, r1.y, c4.y, c4.z
-+    cmp r0.z, r0.z, r1.y, c4.z
-+    cmp r0.z, r1.x, r0.z, c4.z
-+    cmp r0.y, r0.y, r0.z, c4.z
-+    add r0.y, r0.y, r0.w
-+    texld r1, v1, s1
-+    mul r0.z, r1.w, r2.w
-+    cmp r0.y, -r0.y, r0.z, c4.z
-+    add r0.w, c4.w, -v2.w
-+    cmp r0.w, r0.w, -c4.z, -c4.y
-+    add r1.xy, c3.zwzw, v2.w
-+    cmp r0.w, r1.x, c4.z, r0.w
-+    cmp r0.y, r0.w, r0.z, r0.y
-+    cmp r0.x, -r0.x, r0.y, c4.z
-+    cmp oC0.w, r1.y, r0.y, r0.x
++    texld r0, v1, s1
++    if_lt v3.w, c5.x
++      add r0.xy, -v2, v2.zwzw
++      min r1.xy, r0, v2
++      min r0.x, r1.y, r1.x
++      add r0.x, r0.x, c5.y
++      mul_sat r0.x, r0.x, c5.z
++      mad r0.y, r0.x, c3.x, c3.y
++      mul r0.x, r0.x, r0.x
++      mad r0.x, r0.y, -r0.x, c5.w
++      add r0.y, c3.z, -v3.w
++      mad r0.xz, r0.x, c4.xyyw, c4.zyww
++      cmp r0.x, r0.y, r0.z, r0.x
++      mul oC0.w, r0.w, r0.x
++      mov oC0.xyz, v3
++    else
++      texld r1, v0, s0
++      mul r1, r1, v3
++      mov r2.w, c3.w
++      mad r0.xy, v0, r2.w, -c2
++      cmp r0.xy, r0, c6.x, c6.y
++      mul r0.x, r0.y, r0.x
++      add r0.yz, c2.xzww, c2.xxyw
++      mad r0.yz, v0.xxyw, c3.w, -r0
++      cmp r0.yz, r0, c6.y, c6.x
++      mul r0.y, r0.z, r0.y
++      mul r0.x, r0.y, r0.x
++      mad r2.xyz, r1, c6.z, c6.w
++      min r3.xyz, c5.w, r2
++      cmp oC0.xyz, -r0.x, r1, r3
++      mul r0.x, r0.w, r1.w
++      add r0.yz, c7.xxyw, v3.w
++      add r0.w, c7.z, -v3.w
++      mad r1.xy, v0, r2.w, -c0
++      add r3, r1.xyxy, c13
++      add r4, -r1.xyxy, c8
++      cmp r1.zw, r4.xyyw, c6.x, c6.y
++      cmp r1.zw, r3.xyyw, r1, c6.y
++      cmp r1.zw, r4.xyxz, r1, c6.y
++      cmp r1.zw, r3.xyxz, r1, c6.y
++      add r1.z, r1.w, r1.z
++      cmp r1.z, -r1.z, c6.y, c6.x
++      add r2.xy, r1, c9
++      add r1.xy, -r1, c9.zwzw
++      cmp r1.y, r1.y, c6.x, c6.y
++      cmp r1.y, r2.y, r1.y, c6.y
++      cmp r1.x, r1.x, r1.y, c6.y
++      cmp r1.x, r2.x, r1.x, c6.y
++      add r1.x, r1.x, r1.z
++      cmp r1.x, -r1.x, r0.x, c6.y
++      cmp r0.w, r0.w, -c6.y, -c6.x
++      cmp r0.y, r0.y, c6.y, r0.w
++      cmp r0.x, r0.y, r0.x, r1.x
++      mad r0.yw, v0.xxzy, r2.w, -c1.xxzy
++      add r1, r0.wwyy, c12
++      add r2, -r0.wywy, c10
++      mad r1.z, r2.x, -c7.w, r1_abs.z
++      cmp r2.x, r1.x, -c6.x, -c6.y
++      cmp r1.z, r1.z, c6.y, r2.x
++      cmp r1.y, r1.y, c6.y, r1.z
++      cmp r1.y, r1.y, c6.x, c6.y
++      cmp r1.y, r2.z, r1.y, c6.y
++      cmp r1.x, r1.x, r1.y, c6.y
++      cmp r1.x, r2.y, r1.x, c6.y
++      cmp r1.x, r1.w, r1.x, c6.y
++      add r1.yz, r0.xyww, c11.xxyw
++      add r0.y, -r0.w, c11.z
++      cmp r0.y, r0.y, c6.x, c6.y
++      cmp r0.y, r1.z, r0.y, c6.y
++      cmp r0.y, r2.w, r0.y, c6.y
++      cmp r0.y, r1.y, r0.y, c6.y
++      add r0.y, r0.y, r1.x
++      cmp r0.y, -r0.y, r0.x, c6.y
++      cmp oC0.w, r0.z, r0.x, r0.y
++    endif
 +
-+// approximately 59 instruction slots used (2 texture, 57 arithmetic)
++// approximately 77 instruction slots used (2 texture, 75 arithmetic)
 +#endif
 +
 +const BYTE g_ps30_main_hud_kit[] =
@@ -4215,34 +4332,46 @@
 +    114,  32,  49,  48,  46,  49, 
 +      0, 171, 171, 171,  81,   0, 
 +      0,   5,   3,   0,  15, 160, 
-+     51,  51, 179,  63, 166, 155, 
-+    196,  59, 119, 190, 127, 191, 
-+    201, 118, 126, 191,  81,   0, 
++      0,   0,   0, 192,   0,   0, 
++     64,  64,  90, 100, 123,  63, 
++      0,   0,   0,  69,  81,   0, 
 +      0,   5,   4,   0,  15, 160, 
-+      0,   0,   0,  69,   0,   0, 
-+    128,  63,   0,   0,   0,   0, 
-+    201, 118, 126,  63,  81,   0, 
++    225, 122, 212,  62,  82, 184, 
++     30,  62, 184,  30, 133,  61, 
++    205, 204, 204,  60,  81,   0, 
 +      0,   5,   5,   0,  15, 160, 
++    164, 112, 125,  63,   0,   0, 
++    128, 191, 171, 170,  42,  63, 
++      0,   0, 128,  63,  81,   0, 
++      0,   5,   6,   0,  15, 160, 
++      0,   0, 128,  63,   0,   0, 
++      0,   0,  51,  51, 179,  63, 
++    166, 155, 196,  59,  81,   0, 
++      0,   5,   7,   0,  15, 160, 
++    119, 190, 127, 191, 201, 118, 
++    126, 191, 201, 118, 126,  63, 
++    154, 153,  89,  63,  81,   0, 
++      0,   5,   8,   0,  15, 160, 
 +      0, 128,  97,  68,   0,   0, 
 +    224,  66,   0,  64, 156,  68, 
 +      0,   0, 114,  67,  81,   0, 
-+      0,   5,   6,   0,  15, 160, 
++      0,   5,   9,   0,  15, 160, 
 +      0,   0, 116, 194,   0,   0, 
 +    162, 194,   0,   0,  28,  67, 
 +      0,   0, 107,  67,  81,   0, 
-+      0,   5,   7,   0,  15, 160, 
++      0,   5,  10,   0,  15, 160, 
 +      0,   0, 184,  66,   0,   0, 
 +    241,  67,   0, 192,  22,  68, 
 +      0,   0,  10,  67,  81,   0, 
-+      0,   5,   8,   0,  15, 160, 
-+    154, 153,  89,  63,   0,   0, 
-+     76, 194,   0, 192,  27, 196, 
-+      0, 128,  31,  68,  81,   0, 
-+      0,   5,   9,   0,  15, 160, 
++      0,   5,  11,   0,  15, 160, 
++      0,   0,  76, 194,   0, 192, 
++     27, 196,   0, 128,  31,  68, 
++      0,   0,   0,   0,  81,   0, 
++      0,   5,  12,   0,  15, 160, 
 +      0,   0, 140, 194,   0,   0, 
 +    184, 194,   0, 128, 131, 195, 
 +      0,   0,  52, 194,  81,   0, 
-+      0,   5,  10,   0,  15, 160, 
++      0,   5,  13,   0,  15, 160, 
 +      0,   0, 180, 195,   0,   0, 
 +    200, 193,   0, 128, 140, 196, 
 +      0,   0, 112, 194,  31,   0, 
@@ -4250,193 +4379,235 @@
 +      0,   0,   3, 144,  31,   0, 
 +      0,   2,   5,   0,   1, 128, 
 +      1,   0,   3, 144,  31,   0, 
-+      0,   2,  10,   0,   0, 128, 
++      0,   2,   5,   0,   2, 128, 
 +      2,   0,  15, 144,  31,   0, 
++      0,   2,  10,   0,   0, 128, 
++      3,   0,  15, 144,  31,   0, 
 +      0,   2,   0,   0,   0, 144, 
 +      0,   8,  15, 160,  31,   0, 
 +      0,   2,   0,   0,   0, 144, 
-+      1,   8,  15, 160,   2,   0, 
-+      0,   3,   0,   0,   3, 128, 
-+      2,   0, 238, 160,   2,   0, 
-+    228, 160,   4,   0,   0,   4, 
-+      0,   0,   3, 128,   0,   0, 
-+    228, 144,   4,   0,   0, 160, 
-+      0,   0, 228, 129,  88,   0, 
-+      0,   4,   0,   0,   3, 128, 
-+      0,   0, 228, 128,   4,   0, 
-+    170, 160,   4,   0,  85, 160, 
++      1,   8,  15, 160,  66,   0, 
++      0,   3,   0,   0,  15, 128, 
++      1,   0, 228, 144,   1,   8, 
++    228, 160,  41,   0,   4,   2, 
++      3,   0, 255, 144,   5,   0, 
++      0, 160,   2,   0,   0,   3, 
++      0,   0,   3, 128,   2,   0, 
++    228, 145,   2,   0, 238, 144, 
++     10,   0,   0,   3,   1,   0, 
++      3, 128,   0,   0, 228, 128, 
++      2,   0, 228, 144,  10,   0, 
++      0,   3,   0,   0,   1, 128, 
++      1,   0,  85, 128,   1,   0, 
++      0, 128,   2,   0,   0,   3, 
++      0,   0,   1, 128,   0,   0, 
++      0, 128,   5,   0,  85, 160, 
 +      5,   0,   0,   3,   0,   0, 
-+      1, 128,   0,   0,  85, 128, 
-+      0,   0,   0, 128,   1,   0, 
-+      0,   2,   1,   0,   1, 128, 
-+      4,   0,   0, 160,   4,   0, 
-+      0,   4,   0,   0,   6, 128, 
-+      0,   0, 208, 144,   1,   0, 
-+      0, 128,   2,   0, 208, 161, 
-+     88,   0,   0,   4,   0,   0, 
-+      6, 128,   0,   0, 228, 128, 
-+      4,   0,  85, 160,   4,   0, 
-+    170, 160,   5,   0,   0,   3, 
-+      0,   0,   2, 128,   0,   0, 
-+    170, 128,   0,   0,  85, 128, 
++     17, 128,   0,   0,   0, 128, 
++      5,   0, 170, 160,   4,   0, 
++      0,   4,   0,   0,   2, 128, 
++      0,   0,   0, 128,   3,   0, 
++      0, 160,   3,   0,  85, 160, 
 +      5,   0,   0,   3,   0,   0, 
 +      1, 128,   0,   0,   0, 128, 
-+      0,   0,  85, 128,  66,   0, 
-+      0,   3,   2,   0,  15, 128, 
++      0,   0,   0, 128,   4,   0, 
++      0,   4,   0,   0,   1, 128, 
++      0,   0,  85, 128,   0,   0, 
++      0, 129,   5,   0, 255, 160, 
++      2,   0,   0,   3,   0,   0, 
++      2, 128,   3,   0, 170, 160, 
++      3,   0, 255, 145,   4,   0, 
++      0,   4,   0,   0,   5, 128, 
++      0,   0,   0, 128,   4,   0, 
++    212, 160,   4,   0, 246, 160, 
++     88,   0,   0,   4,   0,   0, 
++      1, 128,   0,   0,  85, 128, 
++      0,   0, 170, 128,   0,   0, 
++      0, 128,   5,   0,   0,   3, 
++      0,   8,   8, 128,   0,   0, 
++    255, 128,   0,   0,   0, 128, 
++      1,   0,   0,   2,   0,   8, 
++      7, 128,   3,   0, 228, 144, 
++     42,   0,   0,   0,  66,   0, 
++      0,   3,   1,   0,  15, 128, 
 +      0,   0, 228, 144,   0,   8, 
 +    228, 160,   5,   0,   0,   3, 
-+      2,   0,  15, 128,   2,   0, 
-+    228, 128,   2,   0, 228, 144, 
++      1,   0,  15, 128,   1,   0, 
++    228, 128,   3,   0, 228, 144, 
++      1,   0,   0,   2,   2,   0, 
++      8, 128,   3,   0, 255, 160, 
 +      4,   0,   0,   4,   0,   0, 
-+     14, 128,   2,   0, 144, 128, 
-+      3,   0,   0, 160,   3,   0, 
-+     85, 160,  10,   0,   0,   3, 
-+      1,   0,  14, 128,   4,   0, 
-+     85, 160,   0,   0, 228, 128, 
++      3, 128,   0,   0, 228, 144, 
++      2,   0, 255, 128,   2,   0, 
++    228, 161,  88,   0,   0,   4, 
++      0,   0,   3, 128,   0,   0, 
++    228, 128,   6,   0,   0, 160, 
++      6,   0,  85, 160,   5,   0, 
++      0,   3,   0,   0,   1, 128, 
++      0,   0,  85, 128,   0,   0, 
++      0, 128,   2,   0,   0,   3, 
++      0,   0,   6, 128,   2,   0, 
++    248, 160,   2,   0, 208, 160, 
++      4,   0,   0,   4,   0,   0, 
++      6, 128,   0,   0, 208, 144, 
++      3,   0, 255, 160,   0,   0, 
++    228, 129,  88,   0,   0,   4, 
++      0,   0,   6, 128,   0,   0, 
++    228, 128,   6,   0,  85, 160, 
++      6,   0,   0, 160,   5,   0, 
++      0,   3,   0,   0,   2, 128, 
++      0,   0, 170, 128,   0,   0, 
++     85, 128,   5,   0,   0,   3, 
++      0,   0,   1, 128,   0,   0, 
++     85, 128,   0,   0,   0, 128, 
++      4,   0,   0,   4,   2,   0, 
++      7, 128,   1,   0, 228, 128, 
++      6,   0, 170, 160,   6,   0, 
++    255, 160,  10,   0,   0,   3, 
++      3,   0,   7, 128,   5,   0, 
++    255, 160,   2,   0, 228, 128, 
 +     88,   0,   0,   4,   0,   8, 
 +      7, 128,   0,   0,   0, 129, 
-+      2,   0, 228, 128,   1,   0, 
-+    249, 128,   4,   0,   0,   4, 
-+      0,   0,   3, 128,   0,   0, 
-+    228, 144,   1,   0,   0, 128, 
-+      1,   0, 228, 161,   2,   0, 
-+      0,   3,   3,   0,  15, 128, 
-+      0,   0,  17, 129,   7,   0, 
-+    228, 160,   2,   0,   0,   3, 
-+      4,   0,  15, 128,   0,   0, 
-+      5, 128,   9,   0, 228, 160, 
-+      4,   0,   0,   4,   0,   0, 
-+      4, 128,   3,   0,   0, 128, 
-+      8,   0,   0, 161,   4,   0, 
-+    170, 139,  88,   0,   0,   4, 
-+      0,   0,   8, 128,   4,   0, 
-+      0, 128,   4,   0,  85, 161, 
-+      4,   0, 170, 161,  88,   0, 
-+      0,   4,   0,   0,   4, 128, 
-+      0,   0, 170, 128,   4,   0, 
-+    170, 160,   0,   0, 255, 128, 
-+     88,   0,   0,   4,   0,   0, 
-+      4, 128,   4,   0,  85, 128, 
-+      4,   0, 170, 160,   0,   0, 
-+    170, 128,  88,   0,   0,   4, 
-+      0,   0,   4, 128,   0,   0, 
-+    170, 128,   4,   0,  85, 160, 
-+      4,   0, 170, 160,  88,   0, 
-+      0,   4,   0,   0,   4, 128, 
-+      3,   0, 170, 128,   0,   0, 
-+    170, 128,   4,   0, 170, 160, 
-+     88,   0,   0,   4,   0,   0, 
-+      4, 128,   4,   0,   0, 128, 
-+      0,   0, 170, 128,   4,   0, 
-+    170, 160,  88,   0,   0,   4, 
-+      0,   0,   4, 128,   3,   0, 
-+     85, 128,   0,   0, 170, 128, 
-+      4,   0, 170, 160,  88,   0, 
-+      0,   4,   0,   0,   4, 128, 
-+      4,   0, 255, 128,   0,   0, 
-+    170, 128,   4,   0, 170, 160, 
-+      2,   0,   0,   3,   0,   0, 
-+      8, 128,   0,   0,  85, 129, 
-+      8,   0, 255, 160,   2,   0, 
-+      0,   3,   0,   0,   3, 128, 
-+      0,   0, 228, 128,   8,   0, 
-+    233, 160,  88,   0,   0,   4, 
-+      0,   0,   8, 128,   0,   0, 
-+    255, 128,   4,   0,  85, 160, 
-+      4,   0, 170, 160,  88,   0, 
-+      0,   4,   0,   0,   2, 128, 
-+      0,   0,  85, 128,   0,   0, 
-+    255, 128,   4,   0, 170, 160, 
-+     88,   0,   0,   4,   0,   0, 
-+      2, 128,   3,   0, 255, 128, 
-+      0,   0,  85, 128,   4,   0, 
-+    170, 160,  88,   0,   0,   4, 
++      1,   0, 228, 128,   3,   0, 
++    228, 128,   5,   0,   0,   3, 
 +      0,   0,   1, 128,   0,   0, 
-+      0, 128,   0,   0,  85, 128, 
-+      4,   0, 170, 160,   2,   0, 
-+      0,   3,   0,   0,   1, 128, 
-+      0,   0,   0, 128,   0,   0, 
-+    170, 128,   4,   0,   0,   4, 
-+      0,   0,   6, 128,   0,   0, 
-+    208, 144,   1,   0,   0, 128, 
-+      0,   0, 208, 161,   2,   0, 
-+      0,   3,   1,   0,  15, 128, 
-+      0,   0, 153, 129,   5,   0, 
-+    228, 160,  88,   0,   0,   4, 
-+      1,   0,  10, 128,   1,   0, 
-+    228, 128,   4,   0,  85, 160, 
-+      4,   0, 170, 160,   2,   0, 
-+      0,   3,   3,   0,  15, 128, 
-+      0,   0, 153, 128,  10,   0, 
-+    228, 160,  88,   0,   0,   4, 
-+      1,   0,  10, 128,   3,   0, 
-+    228, 128,   1,   0, 228, 128, 
-+      4,   0, 170, 160,  88,   0, 
-+      0,   4,   1,   0,   3, 128, 
-+      1,   0, 232, 128,   1,   0, 
-+    237, 128,   4,   0, 170, 160, 
-+     88,   0,   0,   4,   1,   0, 
-+      3, 128,   3,   0, 232, 128, 
-+      1,   0, 228, 128,   4,   0, 
-+    170, 160,   2,   0,   0,   3, 
-+      0,   0,   8, 128,   1,   0, 
-+     85, 128,   1,   0,   0, 128, 
-+     88,   0,   0,   4,   0,   0, 
-+      8, 128,   0,   0, 255, 129, 
-+      4,   0, 170, 160,   4,   0, 
-+     85, 160,   2,   0,   0,   3, 
++    255, 128,   1,   0, 255, 128, 
++      2,   0,   0,   3,   0,   0, 
++      6, 128,   7,   0, 208, 160, 
++      3,   0, 255, 144,   2,   0, 
++      0,   3,   0,   0,   8, 128, 
++      7,   0, 170, 160,   3,   0, 
++    255, 145,   4,   0,   0,   4, 
 +      1,   0,   3, 128,   0,   0, 
-+    233, 129,   6,   0, 238, 160, 
-+      2,   0,   0,   3,   0,   0, 
-+      6, 128,   0,   0, 228, 128, 
-+      6,   0, 208, 160,  88,   0, 
++    228, 144,   2,   0, 255, 128, 
++      0,   0, 228, 161,   2,   0, 
++      0,   3,   3,   0,  15, 128, 
++      1,   0,  68, 128,  13,   0, 
++    228, 160,   2,   0,   0,   3, 
++      4,   0,  15, 128,   1,   0, 
++     68, 129,   8,   0, 228, 160, 
++     88,   0,   0,   4,   1,   0, 
++     12, 128,   4,   0, 212, 128, 
++      6,   0,   0, 160,   6,   0, 
++     85, 160,  88,   0,   0,   4, 
++      1,   0,  12, 128,   3,   0, 
++    212, 128,   1,   0, 228, 128, 
++      6,   0,  85, 160,  88,   0, 
++      0,   4,   1,   0,  12, 128, 
++      4,   0, 132, 128,   1,   0, 
++    228, 128,   6,   0,  85, 160, 
++     88,   0,   0,   4,   1,   0, 
++     12, 128,   3,   0, 132, 128, 
++      1,   0, 228, 128,   6,   0, 
++     85, 160,   2,   0,   0,   3, 
++      1,   0,   4, 128,   1,   0, 
++    255, 128,   1,   0, 170, 128, 
++     88,   0,   0,   4,   1,   0, 
++      4, 128,   1,   0, 170, 129, 
++      6,   0,  85, 160,   6,   0, 
++      0, 160,   2,   0,   0,   3, 
++      2,   0,   3, 128,   1,   0, 
++    228, 128,   9,   0, 228, 160, 
++      2,   0,   0,   3,   1,   0, 
++      3, 128,   1,   0, 228, 129, 
++      9,   0, 238, 160,  88,   0, 
 +      0,   4,   1,   0,   2, 128, 
-+      1,   0,  85, 128,   4,   0, 
-+     85, 160,   4,   0, 170, 160, 
-+     88,   0,   0,   4,   0,   0, 
-+      4, 128,   0,   0, 170, 128, 
-+      1,   0,  85, 128,   4,   0, 
-+    170, 160,  88,   0,   0,   4, 
-+      0,   0,   4, 128,   1,   0, 
-+      0, 128,   0,   0, 170, 128, 
-+      4,   0, 170, 160,  88,   0, 
-+      0,   4,   0,   0,   2, 128, 
-+      0,   0,  85, 128,   0,   0, 
-+    170, 128,   4,   0, 170, 160, 
-+      2,   0,   0,   3,   0,   0, 
-+      2, 128,   0,   0,  85, 128, 
-+      0,   0, 255, 128,  66,   0, 
-+      0,   3,   1,   0,  15, 128, 
-+      1,   0, 228, 144,   1,   8, 
-+    228, 160,   5,   0,   0,   3, 
-+      0,   0,   4, 128,   1,   0, 
-+    255, 128,   2,   0, 255, 128, 
-+     88,   0,   0,   4,   0,   0, 
-+      2, 128,   0,   0,  85, 129, 
-+      0,   0, 170, 128,   4,   0, 
-+    170, 160,   2,   0,   0,   3, 
-+      0,   0,   8, 128,   4,   0, 
-+    255, 160,   2,   0, 255, 145, 
++      1,   0,  85, 128,   6,   0, 
++      0, 160,   6,   0,  85, 160, 
++     88,   0,   0,   4,   1,   0, 
++      2, 128,   2,   0,  85, 128, 
++      1,   0,  85, 128,   6,   0, 
++     85, 160,  88,   0,   0,   4, 
++      1,   0,   1, 128,   1,   0, 
++      0, 128,   1,   0,  85, 128, 
++      6,   0,  85, 160,  88,   0, 
++      0,   4,   1,   0,   1, 128, 
++      2,   0,   0, 128,   1,   0, 
++      0, 128,   6,   0,  85, 160, 
++      2,   0,   0,   3,   1,   0, 
++      1, 128,   1,   0,   0, 128, 
++      1,   0, 170, 128,  88,   0, 
++      0,   4,   1,   0,   1, 128, 
++      1,   0,   0, 129,   0,   0, 
++      0, 128,   6,   0,  85, 160, 
 +     88,   0,   0,   4,   0,   0, 
 +      8, 128,   0,   0, 255, 128, 
-+      4,   0, 170, 161,   4,   0, 
-+     85, 161,   2,   0,   0,   3, 
-+      1,   0,   3, 128,   3,   0, 
-+    238, 160,   2,   0, 255, 144, 
-+     88,   0,   0,   4,   0,   0, 
-+      8, 128,   1,   0,   0, 128, 
-+      4,   0, 170, 160,   0,   0, 
-+    255, 128,  88,   0,   0,   4, 
++      6,   0,  85, 161,   6,   0, 
++      0, 161,  88,   0,   0,   4, 
 +      0,   0,   2, 128,   0,   0, 
-+    255, 128,   0,   0, 170, 128, 
-+      0,   0,  85, 128,  88,   0, 
++     85, 128,   6,   0,  85, 160, 
++      0,   0, 255, 128,  88,   0, 
 +      0,   4,   0,   0,   1, 128, 
-+      0,   0,   0, 129,   0,   0, 
-+     85, 128,   4,   0, 170, 160, 
-+     88,   0,   0,   4,   0,   8, 
-+      8, 128,   1,   0,  85, 128, 
 +      0,   0,  85, 128,   0,   0, 
-+      0, 128, 255, 255,   0,   0
++      0, 128,   1,   0,   0, 128, 
++      4,   0,   0,   4,   0,   0, 
++     10, 128,   0,   0,  96, 144, 
++      2,   0, 255, 128,   1,   0, 
++     96, 161,   2,   0,   0,   3, 
++      1,   0,  15, 128,   0,   0, 
++     95, 128,  12,   0, 228, 160, 
++      2,   0,   0,   3,   2,   0, 
++     15, 128,   0,   0, 119, 129, 
++     10,   0, 228, 160,   4,   0, 
++      0,   4,   1,   0,   4, 128, 
++      2,   0,   0, 128,   7,   0, 
++    255, 161,   1,   0, 170, 139, 
++     88,   0,   0,   4,   2,   0, 
++      1, 128,   1,   0,   0, 128, 
++      6,   0,   0, 161,   6,   0, 
++     85, 161,  88,   0,   0,   4, 
++      1,   0,   4, 128,   1,   0, 
++    170, 128,   6,   0,  85, 160, 
++      2,   0,   0, 128,  88,   0, 
++      0,   4,   1,   0,   2, 128, 
++      1,   0,  85, 128,   6,   0, 
++     85, 160,   1,   0, 170, 128, 
++     88,   0,   0,   4,   1,   0, 
++      2, 128,   1,   0,  85, 128, 
++      6,   0,   0, 160,   6,   0, 
++     85, 160,  88,   0,   0,   4, 
++      1,   0,   2, 128,   2,   0, 
++    170, 128,   1,   0,  85, 128, 
++      6,   0,  85, 160,  88,   0, 
++      0,   4,   1,   0,   1, 128, 
++      1,   0,   0, 128,   1,   0, 
++     85, 128,   6,   0,  85, 160, 
++     88,   0,   0,   4,   1,   0, 
++      1, 128,   2,   0,  85, 128, 
++      1,   0,   0, 128,   6,   0, 
++     85, 160,  88,   0,   0,   4, 
++      1,   0,   1, 128,   1,   0, 
++    255, 128,   1,   0,   0, 128, 
++      6,   0,  85, 160,   2,   0, 
++      0,   3,   1,   0,   6, 128, 
++      0,   0, 244, 128,  11,   0, 
++    208, 160,   2,   0,   0,   3, 
++      0,   0,   2, 128,   0,   0, 
++    255, 129,  11,   0, 170, 160, 
++     88,   0,   0,   4,   0,   0, 
++      2, 128,   0,   0,  85, 128, 
++      6,   0,   0, 160,   6,   0, 
++     85, 160,  88,   0,   0,   4, 
++      0,   0,   2, 128,   1,   0, 
++    170, 128,   0,   0,  85, 128, 
++      6,   0,  85, 160,  88,   0, 
++      0,   4,   0,   0,   2, 128, 
++      2,   0, 255, 128,   0,   0, 
++     85, 128,   6,   0,  85, 160, 
++     88,   0,   0,   4,   0,   0, 
++      2, 128,   1,   0,  85, 128, 
++      0,   0,  85, 128,   6,   0, 
++     85, 160,   2,   0,   0,   3, 
++      0,   0,   2, 128,   0,   0, 
++     85, 128,   1,   0,   0, 128, 
++     88,   0,   0,   4,   0,   0, 
++      2, 128,   0,   0,  85, 129, 
++      0,   0,   0, 128,   6,   0, 
++     85, 160,  88,   0,   0,   4, 
++      0,   8,   8, 128,   0,   0, 
++    170, 128,   0,   0,   0, 128, 
++      0,   0,  85, 128,  43,   0, 
++      0,   0, 255, 255,   0,   0
 +};
 --- /dev/null
 +++ b/src/CommunityLoot.cpp
@@ -13647,7 +13818,7 @@
  
 --- a/src/Draw.cpp
 +++ b/src/Draw.cpp
-@@ -1,2139 +1,2148 @@
+@@ -1,2139 +1,2150 @@
 -﻿#include "stdafx.h"
 -
 -int         FullMask[] = { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 };
@@ -15789,6 +15960,7 @@
 -
 +#include "stdafx.h"
 +#include "CommunityRemaster.h"
++#include "CommunityHudKit.h"
 +
 +int         FullMask[] = { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 };
 +
@@ -17808,6 +17980,7 @@
 +//----- (0046AF66) --------------------------------------------------------
 +void MainDrawFunc()
 +{
++	RfdKitInteractionQa();
 +	AspectX = (float) WinWidth / ScreenWidth;
 +	AspectY = (float) WinHeight / ScreenHeight;
 +	if( gbRunGame ){
@@ -32673,7 +32846,7 @@
  // This might be the function handling splitting gold piles. (drawing the window)
 --- a/src/Item.cpp
 +++ b/src/Item.cpp
-@@ -1,3500 +1,3671 @@
+@@ -1,3500 +1,3674 @@
 -﻿#include "stdafx.h"
 -
 -volatile int forceCallforSync;
@@ -36085,6 +36258,7 @@
 -					case AE_ALL_STAT     : each(statAdds)            += e.minVal; break;
 +#include "stdafx.h"
 +#include "CommunityLoot.h"
++#include "CommunityHudKit.h"
 +#include <wincodec.h>
 +
 +namespace {
@@ -36971,6 +37145,7 @@
 +//----- (0041E5F8) --------------------------------------------------------
 +void __fastcall ShadowItemSlot( int leftPosition, int downPosition, ushort picWidth, ushort picHeight, uint8_t mark )
 +{
++	if(RfdKitSlotHighlight(leftPosition,downPosition,picWidth,picHeight,mark?mark==1?blColor.cooked:blColor.notavailable:blColor.main,false))return;
 +	uchar* dstPtr = (uchar*)&WorkingSurface[leftPosition] + YOffsetHashTable[downPosition];
 +	uint8_t curColor = mark ? mark == 1 ? blColor.cooked : blColor.notavailable : blColor.main;
 +	for( ushort i = picHeight, ie = 0; i > ie; --i ){
@@ -36992,6 +37167,7 @@
 +//----- (th2) -------------------------------------------------------------
 +void __fastcall CustomShadowItemSlot(int xPosition, int yPosition, ushort width, ushort height, int colorGradient, uint8_t stroke)
 +{
++	if(RfdKitSlotHighlight(xPosition,yPosition,width,height,colorGradient,true))return;
 +	int frameBorderColor = (colorGradient & 0b11110000) + 5; // цвет рамки
 +	uchar* dstPtr = (uchar*)&WorkingSurface[xPosition] + YOffsetHashTable[yPosition];
 +	if (stroke == 1) {
@@ -37093,7 +37269,7 @@
 +	if( TalkPanelMode ){
 +		return;
 +	}
-+	CopyFromMainPanelToWorkingSurface(205, 21, 232, 28, 269 + (Screen_LeftBorder - 64), 517);
++	if(!RfdKitReady())CopyFromMainPanelToWorkingSurface(205, 21, 232, 28, 269 + (Screen_LeftBorder - 64), 517);
 +	RfdDrawBeltFrames();
 +
 +	for( int i = 0; i < IS_8_Belt_Count; ++i ){
@@ -39838,7 +40014,7 @@
  					case AE_CLVL_HIT                  : accuracy           += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_DAMAGE               : addsDamage         += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_DAMAGE_PERCENT       : damagePercent      += e.minVal + player.CharLevel * e.maxVal / 100; break;
-@@ -3508,13 +3679,13 @@
+@@ -3508,13 +3682,13 @@
  					case AE_CLVL_STUN_RES             : player.stunThreshold[CT_0_STUN] += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_GOLD                 : goldFind           += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_XP                   : xpGainPercent      += e.minVal + player.CharLevel * e.maxVal / 100; break;
@@ -39855,7 +40031,7 @@
  					case AE_CLVL_CRIT_DAMAGE_PERCENT: critPercent  += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_SUMMON_DAMAGE        : { int d = e.minVal + player.CharLevel * e.maxVal / 100; summonDamageMin += d; summonDamageMax += d; } break;
  					case AE_CLVL_SUMMON_DAMAGE_PERCENT: summonDamagePercent += e.minVal + player.CharLevel * e.maxVal / 100; break;
-@@ -3522,4545 +3693,4545 @@
+@@ -3522,4545 +3696,4545 @@
  					case AE_CLVL_SUMMON_AC            : summonAc            += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_SUMMON_HP            : summonHp            += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_SUMMON_HP_PERCENT    : summonHpPercent     += e.minVal + player.CharLevel * e.maxVal / 100; break;
@@ -48932,7 +49108,7 @@
  	case AE_CLVL_HIT                  : minRnd(); maxRnd(); break;
  	case AE_CLVL_DAMAGE               : minRnd(); maxRnd(); break;
  	case AE_CLVL_DAMAGE_PERCENT       : minRnd(); maxRnd(); break;
-@@ -8074,3829 +8245,3840 @@
+@@ -8074,3829 +8248,3840 @@
  	case AE_CLVL_STUN_RES             : minRnd(); maxRnd(); break;
  	case AE_CLVL_GOLD                 : minRnd(); maxRnd(); break;
  	case AE_CLVL_XP                   : minRnd(); maxRnd(); break;
@@ -101553,7 +101729,7 @@
 +};
 --- a/src/Panel.cpp
 +++ b/src/Panel.cpp
-@@ -1,2548 +1,2484 @@
+@@ -1,2548 +1,2483 @@
 -﻿#include "stdafx.h"
 -
 -const int DAMAGED_ITEMS_PICS_WIDTH = 32;
@@ -105147,8 +105323,10 @@
 +//----- (00404D06) -------------------------------------------------------- interface
 +void DrawMainPanel()
 +{
-+	RfdHdClearSprite(WorkingSurface+(ScreenHeight+Screen_TopBorder-1)*WorkingWidth+Screen_LeftBorder+(ScreenWidth-GUI_Width)/2,GUI_Width,144);
-+	CopyFromMainPanelToWorkingSurface(0, MainPanelSelector + 16, GUI_Width/*ScreenWidth*/, 128, Screen_LeftBorder, 512);
++	if(!RfdKitReady()){
++	 RfdHdClearSprite(WorkingSurface+(ScreenHeight+Screen_TopBorder-1)*WorkingWidth+Screen_LeftBorder+(ScreenWidth-GUI_Width)/2,GUI_Width,144);
++	 CopyFromMainPanelToWorkingSurface(0, MainPanelSelector + 16, GUI_Width/*ScreenWidth*/, 128, Screen_LeftBorder, 512);
++	}
 +	RfdInterfaceTrackMainPanel();
 +	DrawInfoPanel();
 +}
@@ -105190,6 +105368,7 @@
 +{
 +	for( auto& b: Buttons ){
 +		if( !b.active ) continue;
++		if(RfdKitReady()&&TalkPanelMode&&(b.id==B_TALK||b.id==B_PVP||b.id==B_TIME))continue;
 +		RfdSkinPanelButton(b);
 +	}
 +}
@@ -105263,6 +105442,7 @@
 +void CheckMainPanelRegion()
 +{
 +	for( auto& b: Buttons ){
++		if(RfdKitReady()&&TalkPanelMode&&(b.id==B_TALK||b.id==B_PVP||b.id==B_TIME))continue;
 +		if( b.active && CursorIntoMainPanelButton(b) ){ // Если мышкой попали в кнопку
 +			ButtonPress(b);// Делаем её нажатой
 +			return;
@@ -106238,6 +106418,8 @@
 +		return;
 +	}
 +	int startX = 111 + Screen_LeftBorder; // th 175
++	if(RfdKitReady())RfdKitTalkPanel();
++	else{
 +	CopyFromMainPanelToWorkingSurface(175, MainPanelSelector + 20, 294, 5, 175 + Screen_LeftBorder, 516); // Самая верхняя линия
 +	for( int i = 0; i < 10; i++ ){
 +		CopyFromMainPanelToWorkingSurface((i >> 1) + 175, i + MainPanelSelector + 25, 293 - i, 1, (i >> 1) + 175 + Screen_LeftBorder, i + 521);
@@ -106257,6 +106439,7 @@
 +		++v4;
 +	}while( v4 < 10 );
 +	CopyFromMainPanelToWorkingSurface(170, MainPanelSelector + 80, 310, 55, 170 + Screen_LeftBorder, 576);
++	}
 +	v5 = TalkPanelMessage;
 +	v6 = 0;
 +	do{
@@ -106280,6 +106463,11 @@
 +		v1 += sizeof(Player);
 +		if( v1 >= (sizeof(Player) * 4) )
 +			return;
++	}
++	if(RfdKitReady()){
++	 RfdKitTalkRecipient(v7,MayPlayersTalk[v11]!=0,TalkPanelButtonState[v7]!=0);
++	 v8=MayPlayersTalk[v11]?3:2;
++	 goto LABEL_19;
 +	}
 +	if( MayPlayersTalk[v11] ) // fixed absolute offset (cmp byte ptr [eax+4D12C0h], 0)
 +	{
@@ -106360,6 +106548,7 @@
 +			TalkPanelButtonState[0] = buttonIndex == 0;
 +			TalkPanelButtonState[1] = buttonIndex == 1;
 +			TalkPanelButtonState[2] = buttonIndex == 2;
++			return true;
 +		}
 +	}
 +
@@ -106377,24 +106566,10 @@
 +	TalkPanelButtonState[1] = 0;
 +	TalkPanelButtonState[2] = 0;
 +
-+	if( CursorX >= 172 && CursorY >= 421 && CursorX <= 233 && CursorY <= 475 ){
-+		int v1 = (CursorY - 421) / 18;
-+		__int64 v2 = (CursorY - 421) % 18; //  *((_DWORD*)&v2 + 1) 
-+		
-+		do{
-+			if( v1 == -1 ){
-+				break;
-+			}
-+			if( *((uint*)&v2 + 1) != CurrentPlayerIndex ){
-+				--v1;
-+			}
-+			++*((uint*)&v2 + 1);
-+		}while( *((uint*)&v2 + 1) < 4 );
-+		
-+		if( *((uint*)&v2 + 1) <= 4 ){
-+			//MayPlayersTalk[*((_DWORD*)&v2 + 1)] = MayPlayersTalk[*((_DWORD*)&v2 + 1)] == 0;
-+			MayPlayersTalk[v2] = (MayPlayersTalk[v2] == false);
-+		}
++	for(int player=0,row=0;player<4;player++){
++	 if(player==CurrentPlayerIndex)continue;
++	 if(CursorIntoTalkPanelButton(row)){MayPlayersTalk[player]=!MayPlayersTalk[player];return;}
++	 row++;
 +	}
 +}
 +
@@ -131329,7 +131504,44 @@
 +END
 --- a/src/Tooltip.cpp
 +++ b/src/Tooltip.cpp
-@@ -2151,6 +2151,10 @@
+@@ -1,4 +1,6 @@
+ ﻿#include "stdafx.h"
++
++#include "CommunityHudKit.h"
+ 
+ enum Tooltip_Param
+ {
+@@ -173,7 +175,8 @@
+     SetupDisplayObject(tooltipRect, x, y, width, height);
+     
+     // DrawTransparentBackground( tooltipRect.Left + Screen_LeftBorder, tooltipRect.Down + Screen_TopBorder, tooltipRect.Width, tooltipRect.Heigth, NO_BORDER, NO_BORDER, BACKGROUND_COLOR, BORDER_COLOR );
+-    DrawBoxTransparent(tooltipRect.Left, tooltipRect.Top, tooltipRect.Width, tooltipRect.Heigth);
++    if(!RfdKitTooltip(tooltipRect.Left,tooltipRect.Top,tooltipRect.Width,tooltipRect.Heigth))
++        DrawBoxTransparent(tooltipRect.Left, tooltipRect.Top, tooltipRect.Width, tooltipRect.Heigth);
+ 
+     for( int i = 0, ie = TooltipLines.size(); i != ie; ++i ){
+         const TooltipLine& line = TooltipLines[i];
+@@ -218,7 +221,8 @@
+     SetupDisplayObject(tooltipRect, x, y, width, height);
+ 
+     // DrawTransparentBackground( tooltipRect.Left + Screen_LeftBorder, tooltipRect.Down + Screen_TopBorder, tooltipRect.Width, tooltipRect.Heigth, NO_BORDER, NO_BORDER, BACKGROUND_COLOR, BORDER_COLOR );
+-    DrawBoxTransparent(tooltipRect.Left, tooltipRect.Top, tooltipRect.Width, tooltipRect.Heigth);
++    if(!RfdKitTooltip(tooltipRect.Left,tooltipRect.Top,tooltipRect.Width,tooltipRect.Heigth))
++        DrawBoxTransparent(tooltipRect.Left, tooltipRect.Top, tooltipRect.Width, tooltipRect.Heigth);
+ 
+     for (int i = 0, ie = TooltipLines_2.size(); i != ie; ++i) {
+         const TooltipLine& line = TooltipLines_2[i];
+@@ -261,7 +265,8 @@
+     SetupDisplayObject(tooltipRect, x, y, width, height);
+ 
+     // DrawTransparentBackground( tooltipRect.Left + Screen_LeftBorder, tooltipRect.Down + Screen_TopBorder, tooltipRect.Width, tooltipRect.Heigth, NO_BORDER, NO_BORDER, BACKGROUND_COLOR, BORDER_COLOR );
+-    DrawBoxTransparent(tooltipRect.Left, tooltipRect.Top, tooltipRect.Width, tooltipRect.Heigth);
++    if(!RfdKitTooltip(tooltipRect.Left,tooltipRect.Top,tooltipRect.Width,tooltipRect.Heigth))
++        DrawBoxTransparent(tooltipRect.Left, tooltipRect.Top, tooltipRect.Width, tooltipRect.Heigth);
+ 
+     for (int i = 0, ie = TooltipLines_3.size(); i != ie; ++i) {
+         const TooltipLine& line = TooltipLines_3[i];
+@@ -2151,6 +2156,10 @@
      }
  
      Tooltip_AddLine(namePtr, nameColor);
@@ -141746,9 +141958,9 @@
 +#pragma once
 +
 +#define TH3_REVISION 1265
-+#define THE_HELL_VERSION_INT 0,4,4,0
-+#define THE_HELL_VERSION_STRING "v0.4.4\0"
-+#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.4.4\0"
++#define THE_HELL_VERSION_INT 0,4,5,0
++#define THE_HELL_VERSION_STRING "v0.4.5\0"
++#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.4.5\0"
 +
 +
 +
