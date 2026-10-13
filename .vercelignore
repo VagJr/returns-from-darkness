@@ -1,11 +1,8 @@
 .git
-.github
-docs
+.vercel
+.env*
 github-public
 outreach
-*.py
-site/*.py
-site/*.ps1
-
-community-bot
-
+__pycache__
+*.pyc
+site/preview*

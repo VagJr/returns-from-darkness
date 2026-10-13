@@ -7,7 +7,7 @@
  const skip='#messages,#users,#channels,.room strong,.party-slot strong,#identity,#welcome,#room-name,#room-detail,#home-room,script,style,option';
  window.rfdT=text=>packs[language]?.[text]||text;
  function translate(){
-  document.documentElement.lang=language;document.documentElement.dir=language==='ar'?'rtl':'ltr';
+  document.title=(packs[language]?.['Santuário']||'Sanctuary')+' · Returns from Darkness';if(document.getElementById('identity').textContent==='Minha conta')document.getElementById('identity').textContent=window.rfdT('Minha conta');document.documentElement.lang=language;document.documentElement.dir=language==='ar'?'rtl':'ltr';
   const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
   for(let node;node=walker.nextNode();){
    if(node.parentElement?.closest(skip))continue;
