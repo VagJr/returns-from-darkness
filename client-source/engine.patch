@@ -2765,7 +2765,7 @@
 +	GetSaveArchivePath(buffer, MAX_PATH, heroSlot, true);
 +	if(RfdOnlineRequested()){
 +  projectSaveTarget=buffer;projectPendingSave=projectSaveTarget+".pending";
-+  if(GetFileAttributesA(buffer)!=INVALID_FILE_ATTRIBUTES&&!CopyFileA(buffer,projectPendingSave.c_str(),FALSE)){AddWorldMessage("Unable to prepare character checkpoint. Previous save preserved.");return false;}
++  if(GetFileAttributesA(buffer)!=INVALID_FILE_ATTRIBUTES&&!CopyFileA(buffer,projectPendingSave.c_str(),FALSE)){projectPendingSave.clear();AddWorldMessage("Unable to prepare character checkpoint. Previous save preserved.");return false;}
 +  if(!MpqOpenArchive(projectPendingSave.data(),false,heroSlot)){projectPendingSave.clear();return false;}return true;
 + }
 + return MpqOpenArchive(buffer, false, heroSlot);
@@ -3283,7 +3283,7 @@
 +int __stdcall hubDialog(HWND dlg,unsigned int msg,WPARAM w,LPARAM l){
 + if(msg==WM_TIMER&&RfdControlPending()){SDlgEndDialog(dlg,99);return 0;}
 + if(msg==WM_COMMAND&&!HIWORD(w)){int id=LOWORD(w);if(id==1)id=GetDlgCtrlID(GetFocus());if(id==2){SDlgEndDialog(dlg,7);return 0;}for(int i=0;i<7;i++)if(id==ids[i]){SDlgEndDialog(dlg,i+1);return 0;}}
-+ int value=DialogMainMenu(dlg,msg,w,l);if(msg==WM_INITDIALOG){DeleteElementListData(dlg,MainMenuButtonList);for(int i=0;i<7;i++)SetDlgItemTextA(dlg,ids[i],labels[i].c_str());InitButtonListText(dlg,MainMenuButtonList,6,1);}return value;
++ int value=DialogMainMenu(dlg,msg,w,l);if(msg==WM_INITDIALOG){DeleteElementListData(dlg,MainMenuButtonList);for(int i=0;i<7;i++){SetDlgItemTextA(dlg,ids[i],labels[i].c_str());EnableWindow(GetDlgItem(dlg,ids[i]),!labels[i].empty());}InitButtonListText(dlg,MainMenuButtonList,6,1);SetFocus(GetDlgItem(dlg,ids[0]));}return value;
 +}
 +int menu(){LoadFonts();return SDlgDialogBoxParam(HInstance,"MAINMENU_DIALOG2",ghMainWnd,hubDialog,0);}
 +bool form(const char *caption,char *name,int nameSize,char *password,int passSize){title=caption;int result=0;UiLogonDialog(ghMainWnd,&result,name,nameSize,password,passSize);title="Online do projeto";return result==1;}
@@ -138522,9 +138522,9 @@
 +#pragma once
 +
 +#define TH3_REVISION 1265
-+#define THE_HELL_VERSION_INT 0,3,1,0
-+#define THE_HELL_VERSION_STRING "v0.3.1\0"
-+#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.3.1\0"
++#define THE_HELL_VERSION_INT 0,3,2,0
++#define THE_HELL_VERSION_STRING "v0.3.2\0"
++#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.3.2\0"
 +
 +
 +

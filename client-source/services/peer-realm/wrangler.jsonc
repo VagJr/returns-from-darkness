@@ -6,8 +6,8 @@
   "workers_dev": true,
   "vars": {
     "SITE_ORIGIN": "https://returns-from-darkness.vercel.app",
-    "CLIENT_VERSION": "0.3.1",
-    "CONTENT_HASH": "770b6dd58c6a7fe83cb4f271a574a88b4c462e0911fea74ab6777b789ed156ca",
+    "CLIENT_VERSION": "0.3.2",
+    "CONTENT_HASH": "e0420c582512a1c974baf05bc060f9c333622169b6e5fa565e4f842f422fb997",
     "MIGRATION_ENABLED": "false"
   },
   "durable_objects": {
