@@ -28,7 +28,7 @@ As 14 páginas existentes têm títulos próprios para Diablo 1 online/cooperati
 5. Guias que resolvem dúvidas: como formar grupo, versões compatíveis, anfitrião, salvamento e diferença entre servidor comunitário e partida. Atualizar junto das mudanças de funcionamento.
 6. Releases e devlogs: publicar capturas reais e relatos verificáveis, com links para os guias relevantes, na própria comunidade e em destinos que permitam projetos. Sem compra de backlinks, spam ou publicidade em anúncios de outros mods.
 7. Bing Webmaster Tools: após verificar o Google, pode importar a propriedade ou verificar diretamente. Checar a conta e os termos antes de qualquer cadastro. Não foi presumido um cadastro já concluído.
-8. IndexNow: pode ajudar nos buscadores participantes depois de configurar uma chave e enviar URLs de fato novas/alteradas. Não equivale a indexação Google e não substitui Search Console.
+8. IndexNow: configurado com chave pública preservada pelo build; 20 URLs enviadas em 13/10/2026, com resposta HTTP 202 (aceitas para processamento). Não equivale a indexação Google e não substitui Search Console. Reenviar somente páginas novas ou alteradas usando tools/submit-indexnow.py.
 9. Medição: acompanhar consultas, impressões, cliques, país e páginas no Search Console. Uma visita ao site não prova entrada no Discord; medir cliques de saída ou usar convites específicos por origem quando isso for implementado.
 
 ## Pesquisa e fontes oficiais
@@ -44,3 +44,14 @@ Buscas exploratórias mostraram interesse por multiplayer, Battle.net clássico,
 ## Verificação
 
 O arquivo Google recebido pela conta do responsável é mantido em site/verification e copiado pelo build para a raiz pública. Não remover após a verificação. A validação técnica roda com python tools/verify-search.py. Resultados da propriedade, sitemap e solicitações devem ser registrados após o retorno do Google.
+
+### Resultado de 13/10/2026
+
+- Propriedade https://returns-from-darkness.vercel.app/ cadastrada e verificada no Google Search Console.
+- sitemap.xml processado pelo Google: 20 páginas encontradas; última leitura em 13/10/2026. Páginas encontradas no sitemap não significam páginas já indexadas.
+- Inspeção da home: Google ainda não reconhecia o URL. A solicitação individual de indexação foi recusada por cota diária excedida; não registrar como solicitação aceita. Pode ser tentada novamente após a renovação da cota.
+- Publicação na Vercel concluída; sitemap, arquivo de verificação e guias prioritários responderam HTTP 200. Validação local das 20 URLs passou.
+- IndexNow recebeu as 20 URLs com HTTP 202. Recebimento não confirma indexação nos buscadores participantes. Bing Webmaster Tools ainda não foi cadastrado.
+- Próxima medição: cobertura/indexação, impressões e consultas no Search Console quando houver dados. Não há garantia de prazo, posição ou quantidade de visitantes.
+
+Referências: [solicitar novo rastreamento ao Google](https://developers.google.com/search/docs/crawling-indexing/ask-google-to-recrawl) e [documentação do IndexNow](https://www.indexnow.org/documentation).
