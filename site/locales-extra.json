@@ -43,7 +43,7 @@
     ],
     "online": [
       "Spotkanie przed przygodą.",
-      "Centralna społeczność, kanały czatu i wiele pokoi dla maksymalnie czterech graczy. Inspiracją jest klasyczny Battle.net; integracja wykorzystuje własne usługi oparte na PvPGN i DevilutionX."
+      "Centralna społeczność, kanały czatu i pokoje dla maksymalnie czterech graczy. Zbierz drużynę w duchu klasycznego Battle.net."
     ],
     "flow": [
       "Zaloguj się",
@@ -53,11 +53,11 @@
     ],
     "now": [
       "Co działa dziś",
-      "Lokalna wersja 0.1.6 integruje logowanie, kanały, czat i pokoje w kliencie. Graficzne wejście do Tristram potwierdzono w 0.1.4 i 0.1.5; nowy natywny proces jest nadal sprawdzany. Warsztat obsługuje edycję tabel, import sprite’ów i przygotowanie zawartości."
+      "Centralna społeczność, kanały czatu i pokoje dla maksymalnie czterech graczy. Zbierz drużynę w duchu klasycznego Battle.net."
     ],
     "next": [
       "Następny krok",
-      "Sprawdzić rozgrywkę z dwoma klientami graficznymi, późne dołączanie i odejście gospodarza; rozwijać grafikę HD oraz zabezpieczyć i przetestować połączenia zewnętrzne przed otwarciem."
+      "Chcemy zachować atmosferę Diablo 1 i otworzyć nowe drogi: serwer społeczności, odnowioną grafikę i wspólne przygody."
     ],
     "limits": "Test sieci nie jest pełną graficzną rozgrywką czterech osób. Zapisy i symulacja nadal pozostają po stronie klientów. Serwer nie jest otwarty publicznie.",
     "journal": [
@@ -169,7 +169,7 @@
     ],
     "online": [
       "Встреча перед приключением.",
-      "Единое сообщество, каналы чата и несколько комнат до четырёх игроков каждая. Источник вдохновения — классическая Battle.net; интеграция использует собственные службы на основе PvPGN и DevilutionX."
+      "Единое сообщество, каналы чата и комнаты до четырёх игроков. Соберите группу и подготовьтесь к путешествию в духе классической Battle.net."
     ],
     "flow": [
       "Войдите в аккаунт",
@@ -179,11 +179,11 @@
     ],
     "now": [
       "Что работает сегодня",
-      "Локальная версия 0.1.6 включает вход, каналы, чат и комнаты прямо в клиенте. Графический вход в Тристрам подтверждён в 0.1.4 и 0.1.5; новый встроенный сценарий ещё проверяется. Мастерская позволяет редактировать таблицы, импортировать спрайты и готовить контент."
+      "Единое сообщество, каналы чата и комнаты до четырёх игроков. Соберите группу и подготовьтесь к путешествию в духе классической Battle.net."
     ],
     "next": [
       "Следующий шаг",
-      "Проверить игру с двумя графическими клиентами, поздний вход и выход создателя; развивать HD-переработку и защитить и проверить внешние подключения перед открытием сервера."
+      "Мы хотим сохранить атмосферу Diablo 1 и открыть новые пути: сервер сообщества, обновлённую графику и совместные приключения."
     ],
     "limits": "Сетевой тест не равен полной графической игре четырёх человек. Сохранения и симуляция по-прежнему находятся на клиентах. Сервер пока не открыт для публики.",
     "journal": [
@@ -295,7 +295,7 @@
     ],
     "online": [
       "Зустріч перед пригодою.",
-      "Єдина спільнота, канали чату й кілька кімнат до чотирьох гравців кожна. Натхнення — класична Battle.net; інтеграція використовує власні служби на основі PvPGN та DevilutionX."
+      "Єдина спільнота, канали чату й кімнати до чотирьох гравців. Зберіть команду та підготуйтеся до подорожі в дусі класичної Battle.net."
     ],
     "flow": [
       "Увійдіть в акаунт",
@@ -305,11 +305,11 @@
     ],
     "now": [
       "Що працює сьогодні",
-      "Локальна версія 0.1.6 інтегрує вхід, канали, чат і кімнати в клієнт. Графічний вхід у Трістрам підтверджено у 0.1.4 і 0.1.5; новий вбудований сценарій ще перевіряється. Майстерня підтримує редагування таблиць, імпорт спрайтів і підготовку контенту."
+      "Єдина спільнота, канали чату й кімнати до чотирьох гравців. Зберіть команду та підготуйтеся до подорожі в дусі класичної Battle.net."
     ],
     "next": [
       "Наступний крок",
-      "Перевірити гру з двома графічними клієнтами, пізній вхід і вихід творця; розвивати HD-переробку та захистити й перевірити зовнішні з’єднання перед відкриттям сервера."
+      "Ми хочемо зберегти атмосферу Diablo 1 та відкрити нові шляхи: сервер спільноти, оновлену графіку й спільні пригоди."
     ],
     "limits": "Мережевий тест не дорівнює повній графічній грі чотирьох людей. Збереження та симуляція досі на клієнтах. Сервер не відкрито для публіки.",
     "journal": [
@@ -421,7 +421,7 @@
     ],
     "online": [
       "Maceradan önce buluşma.",
-      "Merkezi bir topluluk, sohbet kanalları ve en fazla dörder kişilik odalar. Buluşma deneyimi klasik Battle.net'ten esinleniyor; entegrasyon PvPGN ve DevilutionX üzerine kurulu özel hizmetleri kullanıyor."
+      "Merkezi bir topluluk, sohbet kanalları ve en fazla dört kişilik odalar. Klasik Battle.net ruhuyla grubunu topla ve yolculuğa hazırlan."
     ],
     "flow": [
       "Hesabına giriş yap",
@@ -431,11 +431,11 @@
     ],
     "now": [
       "Bugün çalışanlar",
-      "Yerel 0.1.6 sürümü giriş, kanallar, sohbet ve odaları istemciye entegre eder. Tristram’a grafik arayüzle giriş 0.1.4 ve 0.1.5 sürümlerinde doğrulandı; yeni yerel akış hâlâ test ediliyor. Atölye tablo düzenleme, sprite aktarma ve içerik hazırlamayı destekler."
+      "Merkezi bir topluluk, sohbet kanalları ve en fazla dört kişilik odalar. Klasik Battle.net ruhuyla grubunu topla ve yolculuğa hazırlan."
     ],
     "next": [
       "Sonraki adım",
-      "İki grafik istemciyle oyunları, geç katılmayı ve kurucunun ayrılmasını doğrulamak; HD yenilemesini geliştirmek ve sunucuyu açmadan önce dış bağlantıları güvenli hâle getirip test etmek."
+      "Diablo 1'in atmosferini koruyup yeni yollar açmak istiyoruz: topluluk sunucusu, yenilenmiş grafikler ve birlikte yaşanacak maceralar."
     ],
     "limits": "Ağ testi, dört kişinin oynadığı tam bir grafik oyun oturumu değildir. Kayıtlar ve simülasyon hâlâ istemcilerde tutuluyor. Sunucu henüz halka açık değil.",
     "journal": [
@@ -547,7 +547,7 @@
     ],
     "online": [
       "冒険の前に、集まる場所を。",
-      "共通のコミュニティ、チャットチャンネル、各最大 4 人の複数ルーム。往年の Battle.net を参考に、PvPGN と DevilutionX を軸とした独自サービスを統合します。"
+      "共通のコミュニティ、チャットチャンネル、最大4人のルーム。往年のBattle.netの雰囲気で仲間を集め、冒険の準備をしましょう。"
     ],
     "flow": [
       "アカウントでログイン",
@@ -557,11 +557,11 @@
     ],
     "now": [
       "現在できること",
-      "ローカル版0.1.6ではログイン、チャンネル、チャット、ルームをクライアントに統合しています。0.1.4と0.1.5で画面付きのTristramへの入場を確認しました。新しいネイティブの操作手順は検証中です。制作ツールではテーブル編集、スプライトのインポート、コンテンツの準備ができます。"
+      "共通のコミュニティ、チャットチャンネル、最大4人のルーム。往年のBattle.netの雰囲気で仲間を集め、冒険の準備をしましょう。"
     ],
     "next": [
       "次のステップ",
-      "画面付きクライアント2台でのプレイ、途中参加、ホスト退出を検証します。HD改修を進め、サーバー公開前に外部接続の保護とテストを行います。"
+      "Diablo 1 の雰囲気を守りながら、コミュニティサーバー、刷新したグラフィック、仲間と楽しめる冒険へと道を広げます。"
     ],
     "limits": "ネットワークテストは 4 人での完全な画面付きプレイの検証ではありません。セーブとシミュレーションはまだクライアント側です。サーバーは一般公開されていません。",
     "journal": [
@@ -673,7 +673,7 @@
     ],
     "online": [
       "모험 전에 만나는 곳.",
-      "하나의 커뮤니티, 채팅 채널, 각 최대 4명인 여러 방. 옛 Battle.net에서 영감을 얻고 PvPGN과 DevilutionX를 중심으로 자체 서비스를 통합합니다."
+      "하나의 커뮤니티, 채팅 채널, 최대 4명의 방. 클래식 Battle.net의 분위기 속에서 동료를 모으고 여정을 준비하세요."
     ],
     "flow": [
       "계정으로 로그인",
@@ -683,11 +683,11 @@
     ],
     "now": [
       "현재 작동하는 기능",
-      "로컬 버전 0.1.6은 로그인, 채널, 채팅, 방을 클라이언트에 통합합니다. 0.1.4와 0.1.5에서 그래픽 화면으로 트리스트럼에 진입한 것을 확인했으며 새 네이티브 흐름은 검증 중입니다. 제작 도구는 테이블 편집, 스프라이트 가져오기, 콘텐츠 준비를 지원합니다."
+      "하나의 커뮤니티, 채팅 채널, 최대 4명의 방. 클래식 Battle.net의 분위기 속에서 동료를 모으고 여정을 준비하세요."
     ],
     "next": [
       "다음 단계",
-      "그래픽 클라이언트 두 대로 플레이, 늦은 참가, 방장 퇴장을 검증하고 HD 개편을 확장합니다. 서버 공개 전에 외부 연결을 보호하고 테스트합니다."
+      "Diablo 1의 분위기를 지키며 새로운 길을 열고자 합니다. 커뮤니티 서버, 새로워진 그래픽, 함께 나눌 모험을 준비합니다."
     ],
     "limits": "네트워크 테스트는 4명의 완전한 그래픽 플레이 검증이 아닙니다. 저장과 시뮬레이션은 아직 클라이언트에 있습니다. 서버는 일반에 공개되지 않았습니다.",
     "journal": [
@@ -799,7 +799,7 @@
     ],
     "online": [
       "冒险开始前的相聚。",
-      "一个集中社区、聊天频道以及每间最多四人的多个房间。聚会体验参考经典 Battle.net，技术整合采用围绕 PvPGN 和 DevilutionX 构建的自有服务。"
+      "集中社区、聊天频道和最多四人的房间。传承经典Battle.net的氛围，召集队友，准备踏上旅程。"
     ],
     "flow": [
       "登录账号",
@@ -809,11 +809,11 @@
     ],
     "now": [
       "当前已实现",
-      "本地版本0.1.6已将登录、频道、聊天和房间整合进客户端。0.1.4和0.1.5已确认可通过图形界面进入崔斯特瑞姆；新的原生流程仍在验证中。制作工具支持编辑数据表、导入精灵图和准备内容。"
+      "集中社区、聊天频道和最多四人的房间。传承经典Battle.net的氛围，召集队友，准备踏上旅程。"
     ],
     "next": [
       "下一步",
-      "验证两个图形客户端共同游戏、中途加入及房主退出；继续推进HD重制，并在开放服务器前保护和测试外部连接。"
+      "我们希望保留 Diablo 1 的氛围，并开辟新道路：社区服务器、焕新的画面以及可以共同探索的冒险。"
     ],
     "limits": "网络测试不等于四人的完整图形游戏验证。存档与模拟仍在客户端执行。服务器尚未向公众开放。",
     "journal": [
@@ -925,7 +925,7 @@
     ],
     "online": [
       "اللقاء قبل المغامرة.",
-      "مجتمع مركزي وقنوات دردشة وغرف متعددة، لكل منها أربعة لاعبين كحد أقصى. يستلهم اللقاء Battle.net الكلاسيكية، بينما يستخدم التكامل خدمات خاصة مبنية حول PvPGN وDevilutionX."
+      "مجتمع مركزي وقنوات دردشة وغرف لأربعة لاعبين كحد أقصى. اجمع فريقك واستعد للرحلة بروح Battle.net الكلاسيكية."
     ],
     "flow": [
       "سجّل الدخول",
@@ -935,11 +935,11 @@
     ],
     "now": [
       "ما يعمل اليوم",
-      "يدمج الإصدار المحلي 0.1.6 تسجيل الدخول والقنوات والدردشة والغرف داخل العميل. تأكد الدخول الرسومي إلى تريسترام في الإصدارين 0.1.4 و0.1.5، ولا يزال المسار المدمج الجديد قيد التحقق. تدعم الورشة تعديل الجداول واستيراد الرسومات وتحضير المحتوى."
+      "مجتمع مركزي وقنوات دردشة وغرف لأربعة لاعبين كحد أقصى. اجمع فريقك واستعد للرحلة بروح Battle.net الكلاسيكية."
     ],
     "next": [
       "الخطوة التالية",
-      "التحقق من اللعب بعميلين رسوميّين والانضمام المتأخر وخروج منشئ الغرفة، وتوسيع إعادة العمل بدقة HD وتأمين الاتصالات الخارجية واختبارها قبل فتح الخادم."
+      "نريد الحفاظ على أجواء Diablo 1 وفتح مسارات جديدة: خادم للمجتمع، ورسوم مجدّدة، ومغامرات نخوضها معًا."
     ],
     "limits": "لا يعادل الاختبار الشبكي جلسة رسومية كاملة لأربعة أشخاص. لا تزال ملفات الحفظ والمحاكاة لدى العملاء. الخادم غير مفتوح للجمهور.",
     "journal": [

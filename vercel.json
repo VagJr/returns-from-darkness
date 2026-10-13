@@ -33,5 +33,11 @@
     }
   ],
   "installCommand": "",
-  "framework": null
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/realm/:path*",
+      "destination": "https://insulation-neighbor-engines-authentication.trycloudflare.com/public/:path*"
+    }
+  ]
 }
