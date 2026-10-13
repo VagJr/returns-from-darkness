@@ -1,4 +1,4 @@
-# Returns from Darkness 0.3.5
+# Returns from Darkness 0.3.6
 
 Native peer transport, launcher, serverless community and engine patch used by this release.
 Apply `engine.patch` to the published TH3 1.265 source. Keep ORIGINAL-SOURCE-README.txt with redistributions.
@@ -6,7 +6,7 @@ Place the patched engine in `candidates/thehell3`. Configure Win32 MSVC v145, Wi
 
 The companion uses libdatachannel v0.24.6 (commit 6b1e2e620f1e37f0eafeee702eaea0043cb305fd) with recursive submodules and Mbed TLS mbedtls-3.6.5 (commit e185d7fd85499c8ce5ca2a54f5cf8fe7dbe3f8df). Clone both official repositories to native/vendor/libdatachannel and native/vendor/mbedtls. Configure native/peer-bridge with CMake for Windows x64 and compile target RfdPeer, Release.
 
-Compile launcher/Launcher.cs for .NET Framework 4 with WinForms, Drawing, Security, Web.Extensions and IO.Compression assemblies. Embed launcher/assets/sanctuary.jpg, logo.gif, title.ttf and body.ttf using those resource names, plus update-public.xml as update-public.xml. Keep font OFL notices in the package. Installer additionally embeds initial.zip. The signing private key is never included.
+Compile launcher/Launcher.cs and launcher/Lang.cs for .NET Framework 4 with WinForms, Drawing, Security, Web.Extensions and IO.Compression assemblies. Embed launcher/assets/sanctuary.jpg, logo.gif, title.ttf and body.ttf using those resource names, plus update-public.xml as update-public.xml. Keep font OFL notices in the package. Installer additionally embeds initial.zip. The signing private key is never included.
 
 Each room creator runs the native game and companion. The original deterministic turn protocol remains reliable and ordered. Direct WebRTC uses DTLS/SCTP, MTU 1200, bounded queues and event-driven local I/O. A Cloudflare WebSocket relay handles restrictive networks after 15 seconds. Signaling alone can disconnect without terminating established direct gameplay. Cloud relay requires the service to remain reachable and consumes Cloudflare quotas.
 

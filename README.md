@@ -12,7 +12,7 @@ Rediscover the classic with deeper character builds, exploration and equipment. 
 
 A community hub with accounts, chat channels and rooms for up to four players. Find your group on the website or in the client hub and prepare the next journey. The hub stays in the cloud; players host their games.
 
-**Available in this build — v0.3.5**
+**Available in this build — v0.3.6**
 
 Windows client with an integrated hub, cooperative rooms for up to four players, automatic updates and separate account profiles. The item system shares room drops; automatic saving preserves inventory, gold and character development on this computer.
 

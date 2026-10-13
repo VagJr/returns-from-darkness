@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -22,8 +23,8 @@ using Microsoft.Win32;
 [assembly: AssemblyTitle("Returns from Darkness HD")]
 [assembly: AssemblyProduct("Returns from Darkness HD")]
 [assembly: AssemblyDescription("Cliente e atualizações de Returns from Darkness")]
-[assembly: AssemblyVersion("0.3.5.0")]
-[assembly: AssemblyFileVersion("0.3.5.0")]
+[assembly: AssemblyVersion("0.3.6.0")]
+[assembly: AssemblyFileVersion("0.3.6.0")]
 namespace ReturnsFromDarkness {
  static class Program {
   public static Mutex Instance;
@@ -55,7 +56,7 @@ namespace ReturnsFromDarkness {
   public const string Realm="https://returns-darkness-realm.oblique-tactical.workers.dev/api/";
   public static string PreferredAccount(){if(AuthAccount!="")return AuthAccount;if(InstanceAccount!="")return InstanceAccount;string path=Path.Combine(Root,"last-account.txt");if(File.Exists(path)){string name=File.ReadAllText(path).Trim();if(Regex.IsMatch(name,@"^[a-z][a-z0-9_-]{2,15}$"))return name;}return "offline";}
   public static async Task<Dictionary<string,object>> AccountApi(string route,Dictionary<string,object> input,string token){
-   using(var web=new WebClient()){web.Encoding=Encoding.UTF8;web.Headers[HttpRequestHeader.ContentType]="application/json";if(token!=null)web.Headers[HttpRequestHeader.Authorization]="Bearer "+token;string response=await web.UploadStringTaskAsync(Realm+route,Json.Serialize(input));return Json.Deserialize<Dictionary<string,object>>(response);}
+   using(var web=new TimedWebClient()){web.Encoding=Encoding.UTF8;web.Headers[HttpRequestHeader.ContentType]="application/json";if(token!=null)web.Headers[HttpRequestHeader.Authorization]="Bearer "+token;string response=await Bounded(web.UploadStringTaskAsync(Realm+route,Json.Serialize(input)),web,30000);return Json.Deserialize<Dictionary<string,object>>(response);}
   }
   public static void StoreNativeSession(string account,Dictionary<string,object> session){
    object user,value;if(!session.TryGetValue("username",out user)||!(user is string)||!session.TryGetValue("sessionToken",out value)||!(value is string)||((string)user).ToLowerInvariant()!=account||!Regex.IsMatch((string)value,@"^[A-Za-z0-9_-]{43}$"))throw new Exception(Lang.S("account"));
@@ -72,6 +73,19 @@ namespace ReturnsFromDarkness {
    if(code!=""){if(!Regex.IsMatch(code,@"^[A-Za-z0-9_-]{43}$"))throw new Exception(Lang.S("account"));DateTime used;if(UsedAuthCodes.TryGetValue(account+":"+code,out used)&&used>DateTime.UtcNow.AddMinutes(-2))return auth.Success;var result=await AccountApi("auth/redeem",new Dictionary<string,object>{{"code",code},{"target","client"},{"username",account}},null);StoreNativeSession(account,result);foreach(var key in new List<string>(UsedAuthCodes.Keys))if(UsedAuthCodes[key]<DateTime.UtcNow.AddMinutes(-2))UsedAuthCodes.Remove(key);UsedAuthCodes[account+":"+code]=DateTime.UtcNow;}
    return auth.Success;
   }
+  public static async Task<string> RenewInvitation(string request,Dictionary<string,object> manifest){
+   if(request==null||!request.StartsWith("rfd://play/"))return request;
+   if(request.Length>4107||!Regex.IsMatch(request.Substring(11),@"^[A-Za-z0-9_-]+$"))throw new Exception(Lang.S("invite"));
+   string encoded=request.Substring(11).Replace('-','+').Replace('_','/');encoded=encoded.PadRight((encoded.Length+3)/4*4,'=');var invite=Json.Deserialize<Dictionary<string,object>>(Encoding.UTF8.GetString(Convert.FromBase64String(encoded)));
+   foreach(string field in new[]{"contentHash","expires","username","roomId","signalUrl","transport"})if(!invite.ContainsKey(field))throw new Exception(Lang.S("invite"));
+   if((string)invite["contentHash"]!=(string)manifest["contentHash"]||(string)invite["signalUrl"]!=(string)manifest["signalUrl"]||(string)invite["transport"]!="webrtc"||!Regex.IsMatch((string)invite["roomId"],@"^[a-f0-9-]{36}$"))throw new Exception(Lang.S("expired"));
+   if(Convert.ToInt64(invite["expires"])>=DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()+30000)return request;
+   string account=((string)invite["username"]).ToLowerInvariant();if(!Regex.IsMatch(account,@"^[a-z][a-z0-9_-]{2,15}$"))throw new Exception(Lang.S("invite"));
+   byte[] plain=ProtectedData.Unprotect(File.ReadAllBytes(Path.Combine(Root,"profiles",account,"native-session.bin")),null,DataProtectionScope.CurrentUser);Dictionary<string,object> session;try{session=Json.Deserialize<Dictionary<string,object>>(Encoding.UTF8.GetString(plain));}finally{Array.Clear(plain,0,plain.Length);}
+   if(!String.Equals((string)session["user"],account,StringComparison.OrdinalIgnoreCase))throw new Exception(Lang.S("account"));
+   var refreshed=await AccountApi("launch",new Dictionary<string,object>{{"roomId",invite["roomId"]}},(string)session["token"]);string uri=(string)refreshed["launchUri"];
+   if(!uri.StartsWith("rfd://play/")||RequestAccount(uri)!=account)throw new Exception(Lang.S("expired"));Diagnostic("invitation","renewed after preparation");return uri;
+  }
   public static async Task OpenCentral(){
    string url=Site+"/central/?lang="+Lang.Language,account=GameRunning&&GameAccount!="offline"?GameAccount:PreferredAccount(),path=Path.Combine(Root,"profiles",account,"native-session.bin");
    try{if(File.Exists(path)){byte[] plain=ProtectedData.Unprotect(File.ReadAllBytes(path),null,DataProtectionScope.CurrentUser);Dictionary<string,object> session;try{session=Json.Deserialize<Dictionary<string,object>>(Encoding.UTF8.GetString(plain));}finally{Array.Clear(plain,0,plain.Length);}object token,user;
@@ -85,6 +99,12 @@ namespace ReturnsFromDarkness {
   public const string Site="https://returns-from-darkness.vercel.app";
   public static string Root=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"ReturnsFromDarkness");
   public static JavaScriptSerializer Json=new JavaScriptSerializer{MaxJsonLength=1048576};
+  public static void Diagnostic(string stage,string detail){try{string folder=Path.Combine(Root,"diagnostics");Directory.CreateDirectory(folder);detail=Regex.Replace(detail,@"(?:rfd|https?)://\S+|[A-Za-z0-9_-]{43}","[redacted]");File.AppendAllText(Path.Combine(folder,"launcher.log"),DateTime.UtcNow.ToString("o")+" | "+stage+" | "+detail.Replace("\r"," ").Replace("\n"," ")+Environment.NewLine);}catch(IOException){}catch(UnauthorizedAccessException){}}
+  public static void Stage(Label status,string key){status.Text=Lang.S(key);Diagnostic(key,"started");}
+  sealed class TimedWebClient:WebClient {protected override WebRequest GetWebRequest(Uri address){var request=base.GetWebRequest(address);request.Timeout=30000;var http=request as HttpWebRequest;if(http!=null)http.ReadWriteTimeout=30000;return request;}}
+  static void CancelPending(Task task,WebClient client){client.CancelAsync();task.ContinueWith(t=>{var observed=t.Exception;},TaskContinuationOptions.OnlyOnFaulted|TaskContinuationOptions.ExecuteSynchronously);}
+  static async Task<T> Bounded<T>(Task<T> task,WebClient client,int milliseconds){if(await Task.WhenAny(task,Task.Delay(milliseconds))!=task){CancelPending(task,client);throw new TimeoutException(Lang.S("connection"));}return await task;}
+  static async Task Bounded(Task task,WebClient client,int milliseconds){if(await Task.WhenAny(task,Task.Delay(milliseconds))!=task){CancelPending(task,client);throw new TimeoutException(Lang.S("connection"));}await task;}
   [DllImport("kernel32.dll",CharSet=CharSet.Unicode,SetLastError=true)] static extern bool CreateHardLink(string link,string existing,IntPtr reserved);
   [STAThread] public static int Main(string[] args){
    ServicePointManager.SecurityProtocol=SecurityProtocolType.Tls12;
@@ -131,14 +151,14 @@ namespace ReturnsFromDarkness {
    string marker=Path.Combine(Root,"current.json");if(File.Exists(marker))return;
    using(var resource=Assembly.GetExecutingAssembly().GetManifestResourceStream("initial.zip")){
     if(resource==null)return;string archive=Path.Combine(Root,"initial.zip");using(var output=File.Create(archive))resource.CopyTo(output);
-    string versionDir=Path.Combine(Root,"versions","0.3.5");Extract(archive,versionDir);
+    string versionDir=Path.Combine(Root,"versions","0.3.6");Extract(archive,versionDir);
     string envelope=File.ReadAllText(Path.Combine(versionDir,"release.json"));var manifest=Verify(envelope);CheckFiles(versionDir,manifest);Activate(envelope);File.Delete(archive);
    }
   }
   public static void Activate(string envelope){string pointer=Path.Combine(Root,"current.json"),temp=pointer+".new";File.WriteAllText(temp,envelope,Encoding.UTF8);if(File.Exists(pointer))File.Replace(temp,pointer,pointer+".previous");else File.Move(temp,pointer);}
   public static void Register(){
    string exe=Path.Combine(Root,"ReturnsFromDarkness.exe"),pointer=Path.Combine(Root,"current.json");
-   if(File.Exists(pointer)){var current=Verify(File.ReadAllText(pointer));string directory=Path.Combine(Root,"versions",(string)current["version"]);CheckFiles(directory,current);if(current.ContainsKey("launcher")){exe=SafePath(directory,(string)current["launcher"]);string stable=Path.Combine(Root,"ReturnsFromDarkness.exe");if(!File.Exists(stable)||Hash(stable)!=Hash(exe)){try{File.Copy(exe,stable,true);}catch(IOException){}}}}
+   if(File.Exists(pointer)){try{var current=Verify(File.ReadAllText(pointer));string directory=Path.Combine(Root,"versions",(string)current["version"]);if(current.ContainsKey("launcher")){string candidate=SafePath(directory,(string)current["launcher"]);bool trusted=false;foreach(var entry in (System.Collections.IEnumerable)current["files"]){var file=(Dictionary<string,object>)entry;if((string)file["path"]==(string)current["launcher"]&&File.Exists(candidate)&&Hash(candidate)==(string)file["sha256"])trusted=true;}if(trusted){exe=candidate;string stable=Path.Combine(Root,"ReturnsFromDarkness.exe");if(!File.Exists(stable)||Hash(stable)!=Hash(exe)){try{File.Copy(exe,stable,true);}catch(IOException){}}}}}catch(IOException){Diagnostic("registration","package will be repaired by updater");}catch(ArgumentException){Diagnostic("registration","invalid installed pointer");}}
    using(var key=Registry.CurrentUser.CreateSubKey(@"Software\Classes\rfd")){key.SetValue("","Returns from Darkness");key.SetValue("URL Protocol","");using(var command=key.CreateSubKey(@"shell\open\command"))command.SetValue("","\""+exe+"\" \"%1\"");}
   }
   public static async Task<Dictionary<string,object>> Update(Label status){
@@ -148,20 +168,31 @@ namespace ReturnsFromDarkness {
    using(gate)return await UpdateCore(status);
   }
   static async Task<Dictionary<string,object>> UpdateCore(Label status){
-   string envelope;using(var web=new WebClient()){web.Encoding=Encoding.UTF8;status.Text=Lang.S("checking");web.Headers[HttpRequestHeader.CacheControl]="no-cache";envelope=await web.DownloadStringTaskAsync(Site+"/downloads/latest.json?check="+DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());}
+   string envelope;using(var web=new TimedWebClient()){web.Encoding=Encoding.UTF8;status.Text=Lang.S("checking");web.Headers[HttpRequestHeader.CacheControl]="no-cache";envelope=await Bounded(web.DownloadStringTaskAsync(Site+"/downloads/latest.json?check="+DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()),web,30000);}
    var manifest=Verify(envelope);string pointer=Path.Combine(Root,"current.json");if(File.Exists(pointer)){var installed=Verify(File.ReadAllText(pointer));if(new Version((string)manifest["version"])<new Version((string)installed["version"]))throw new Exception(Lang.S("older"));}string directory=Path.Combine(Root,"versions",(string)manifest["version"]);
-   if(File.Exists(Path.Combine(directory,(string)manifest["executable"]))){CheckFiles(directory,manifest);Activate(envelope);return manifest;}
+   if(File.Exists(Path.Combine(directory,(string)manifest["executable"]))){try{CheckFiles(directory,manifest);Activate(envelope);return manifest;}catch(Exception error){Diagnostic("update-repair",error.GetType().Name);if(GameRunning)throw new Exception(Lang.S("restart"));}}
    
    var uri=new Uri((string)manifest["archiveUrl"]);if(uri.Scheme!="https"||uri.Host!="github.com"||!uri.AbsolutePath.StartsWith("/VagJr/returns-from-darkness/releases/download/"))throw new Exception(Lang.S("package"));
-   string archive=Path.Combine(Root,"update-"+manifest["version"]+".zip");using(var web=new WebClient()){web.DownloadProgressChanged+=(s,e)=>status.Text=Lang.S("updating")+" "+e.ProgressPercentage+"%";await web.DownloadFileTaskAsync(uri,archive);}
+   string archive=Path.Combine(Root,"update-"+manifest["version"]+".zip");using(var web=new TimedWebClient()){web.DownloadProgressChanged+=(s,e)=>status.Text=Lang.S("updating")+" "+e.ProgressPercentage+"%";await Bounded(web.DownloadFileTaskAsync(uri,archive),web,180000);}
    if(Hash(archive)!=(string)manifest["archiveSha256"])throw new Exception(Lang.S("download"));
-   string stage=directory+"-staging-"+Guid.NewGuid().ToString("N");Extract(archive,stage);CheckFiles(stage,manifest);Directory.Move(stage,directory);Activate(envelope);File.Delete(archive);return manifest;
+   string stage=directory+"-staging-"+Guid.NewGuid().ToString("N");Extract(archive,stage);CheckFiles(stage,manifest);string backup=null;if(Directory.Exists(directory)){if(GameRunning)throw new Exception(Lang.S("restart"));backup=directory+"-recovery-"+Guid.NewGuid().ToString("N");Directory.Move(directory,backup);}try{Directory.Move(stage,directory);Activate(envelope);}catch{if(backup!=null&&!Directory.Exists(directory))Directory.Move(backup,directory);throw;}File.Delete(archive);Diagnostic("update","verified and activated "+manifest["version"]);return manifest;
   }
-  public static void ImportData(string filename){
+  public static async Task ImportData(string filename,Label status){
    string data=Path.Combine(Root,"data");Directory.CreateDirectory(data);string target=Path.Combine(data,filename);if(File.Exists(target))return;
    string[] paths={@"C:\diabloHD\runtime\thehell3\bin",@"C:\Program Files\GOG Galaxy\Games\Diablo",@"C:\GOG Games\Diablo"};
-   foreach(string folder in paths){string candidate=Path.Combine(folder,filename);if(File.Exists(candidate)){File.Copy(candidate,target);return;}}
-   using(var dialog=new OpenFileDialog{Title=Lang.S("select")+" "+filename,Filter=filename+"|"+filename,CheckFileExists=true}){if(dialog.ShowDialog()!=DialogResult.OK)throw new Exception(Lang.S("pendingData"));File.Copy(dialog.FileName,target);}
+   string source=null;foreach(string folder in paths){string candidate=Path.Combine(folder,filename);if(File.Exists(candidate)){source=candidate;break;}}
+   if(source==null){Stage(status,"selectData");if(Controller!=null){Controller.Show();Controller.Activate();}using(var dialog=new OpenFileDialog{Title=Lang.S("select")+" "+filename,Filter=filename+"|"+filename,CheckFileExists=true}){if(dialog.ShowDialog(Controller)!=DialogResult.OK)throw new Exception(Lang.S("pendingData")+" "+filename);source=dialog.FileName;}}
+   Stage(status,"importingData");string temporary=target+".import-"+Guid.NewGuid().ToString("N");try{await Task.Run(()=>File.Copy(source,temporary));File.Move(temporary,target);Diagnostic("data-import",filename+" completed");}finally{if(File.Exists(temporary))File.Delete(temporary);}
+  }
+  public static void ValidateData(string directory,Dictionary<string,object> manifest){
+   foreach(string name in new[]{"DIABDAT.MPQ","TH3data.mor"}){string file=Path.Combine(directory,name);if(!File.Exists(file))throw new Exception(Lang.S("pendingData")+" "+name);if(new FileInfo(file).Length<100000000)throw new Exception(Lang.S("invalidData")+" "+name);}
+   // Full editions contain an MPQ header; the shareware/spawn archive is not compatible.
+   using(var stream=File.OpenRead(Path.Combine(directory,"DIABDAT.MPQ"))){bool found=false;var bytes=new byte[4];for(int block=0;block<2048&&stream.Position+4<=stream.Length;block++){stream.Position=block*512L;if(stream.Read(bytes,0,4)==4&&bytes[0]==77&&bytes[1]==80&&bytes[2]==81&&bytes[3]==26){found=true;break;}}if(!found)throw new Exception(Lang.S("invalidData")+" DIABDAT.MPQ");}
+   if(Hash(Path.Combine(directory,"TH3data.mor"))!=(string)manifest["dataSha256"])throw new Exception(Lang.S("dataMismatch"));
+  }
+  public static async Task PrepareData(string directory,Dictionary<string,object> manifest,Label status){
+   Stage(status,"checkingData");foreach(string filename in new[]{"DIABDAT.MPQ","TH3data.mor"}){await ImportData(filename,status);string source=Path.Combine(Root,"data",filename),target=Path.Combine(directory,filename);if(!File.Exists(target)){Stage(status,"importingData");await Task.Run(()=>{if(!CreateHardLink(target,source,IntPtr.Zero))File.Copy(source,target);});}}
+   Stage(status,"checkingData");await Task.Run(()=>ValidateData(directory,manifest));Diagnostic("game-data","compatible");
   }
   public static bool RefreshLauncher(Dictionary<string,object> manifest,string request){
    Register();if(!manifest.ContainsKey("launcher"))return false;string next=SafePath(Path.Combine(Root,"versions",(string)manifest["version"]),(string)manifest["launcher"]);
@@ -171,8 +202,8 @@ namespace ReturnsFromDarkness {
   public static async Task Launch(Dictionary<string,object> manifest,string request,Label status){
    if(GameRunning&&(request==null||request=="rfd://focus")){FocusGame();return;}
    string directory=Path.Combine(Root,"versions",(string)manifest["version"]);CheckFiles(directory,manifest);
-   foreach(string filename in new[]{"DIABDAT.MPQ","TH3data.mor"}){ImportData(filename);string source=Path.Combine(Root,"data",filename),target=Path.Combine(directory,filename);if(!File.Exists(target)&&!CreateHardLink(target,source,IntPtr.Zero))File.Copy(source,target);}
-   if(Hash(Path.Combine(directory,"TH3data.mor"))!=(string)manifest["dataSha256"])throw new Exception(Lang.S("dataMismatch"));
+   await PrepareData(directory,manifest,status);
+   request=await RenewInvitation(request,manifest);
    var info=new ProcessStartInfo(Path.Combine(directory,(string)manifest["executable"])){WorkingDirectory=directory,UseShellExecute=false};info.EnvironmentVariables["RFD_PORTAL_URL"]=Site+"/central/?lang="+Lang.Language;info.EnvironmentVariables["RFD_UI_LANGUAGE"]=Lang.Language;info.EnvironmentVariables["RFD_CONTENT_HASH"]=(string)manifest["contentHash"];
    string account=PreferredAccount();Dictionary<string,object> invite=null;Process peer=null;
    if(request!=null&&request.StartsWith("rfd://play/")){
@@ -191,14 +222,14 @@ namespace ReturnsFromDarkness {
     string ready=Path.Combine(profile,"peer-"+Guid.NewGuid().ToString("N")+".json");
     var companion=new ProcessStartInfo(SafePath(directory,(string)manifest["peerExecutable"])){WorkingDirectory=directory,UseShellExecute=false,CreateNoWindow=true};
     companion.EnvironmentVariables["RFD_PEER_SIGNAL_HOST"]=new Uri((string)manifest["signalUrl"]).Host;companion.EnvironmentVariables["RFD_PEER_ROOM_ID"]=(string)invite["roomId"];companion.EnvironmentVariables["RFD_PEER_TICKET"]=(string)invite["ticket"];companion.EnvironmentVariables["RFD_PEER_LOCAL_TICKET"]=localTicket;companion.EnvironmentVariables["RFD_PEER_HASH"]=(string)manifest["contentHash"];companion.EnvironmentVariables["RFD_PEER_READY"]=ready;companion.EnvironmentVariables["RFD_PEER_STATS"]=Path.Combine(profile,"network-status.json");
-    peer=Process.Start(companion);status.Text=Lang.S("connecting");var deadline=DateTime.UtcNow.AddSeconds(50);Dictionary<string,object> connected=null;
+    Program.Diagnostic("peer-start",(string)manifest["version"]);peer=Process.Start(companion);status.Text=Lang.S("connecting");var deadline=DateTime.UtcNow.AddSeconds(50);Dictionary<string,object> connected=null;
     try{while(DateTime.UtcNow<deadline){
       if(File.Exists(ready)){try{connected=Json.Deserialize<Dictionary<string,object>>(File.ReadAllText(ready));}catch(ArgumentException){}catch(IOException){}if(connected!=null){if((string)connected["state"]=="error")throw new Exception((string)connected["error"]);if((string)connected["state"]=="ready")break;}}
-      if(peer.HasExited)throw new Exception(Lang.S("connection"));await Task.Delay(100);
+      if(peer.HasExited){Diagnostic("peer-exit",peer.ExitCode.ToString());throw new Exception(Lang.S("connection"));}await Task.Delay(100);
      }
      if(connected==null||(string)connected["state"]!="ready")throw new Exception(Lang.S("connection"));
      int port=Convert.ToInt32(connected["port"]);if(port<1||port>65535)throw new Exception(Lang.S("connection"));
-     info.EnvironmentVariables["RFD_ROOM_HOST"]="127.0.0.1";info.EnvironmentVariables["RFD_ROOM_PORT"]=port.ToString();info.EnvironmentVariables["RFD_ROOM_TICKET"]=localTicket;info.EnvironmentVariables["RFD_ROOM_MODE"]=connected.ContainsKey("mode")?(string)connected["mode"]:"campaign-coop";
+     info.EnvironmentVariables["RFD_ROOM_HOST"]="127.0.0.1";info.EnvironmentVariables["RFD_ROOM_PORT"]=port.ToString();info.EnvironmentVariables["RFD_ROOM_TICKET"]=localTicket;info.EnvironmentVariables["RFD_ROOM_MODE"]=connected.ContainsKey("mode")?(string)connected["mode"]:"campaign-coop";info.EnvironmentVariables["RFD_ROOM_ID"]=(string)invite["roomId"];if(!connected.ContainsKey("username")||!String.Equals((string)connected["username"],(string)invite["username"],StringComparison.OrdinalIgnoreCase))throw new Exception(Lang.S("invite"));int roomDifficulty=connected.ContainsKey("difficulty")?Convert.ToInt32(connected["difficulty"]):0;if(roomDifficulty<0||roomDifficulty>8)throw new Exception(Lang.S("invite"));info.EnvironmentVariables["RFD_ROOM_DIFFICULTY"]=roomDifficulty.ToString(CultureInfo.InvariantCulture);
     }catch{if(!peer.HasExited)peer.Kill();throw;}finally{if(File.Exists(ready))File.Delete(ready);}
    }
    try{
@@ -207,7 +238,8 @@ namespace ReturnsFromDarkness {
       if(!SendRoom(roomText))throw new Exception(Lang.S("transition"));
     }else{
       ControlToken=RandomToken();info.EnvironmentVariables["RFD_CONTROL_TOKEN"]=ControlToken;info.EnvironmentVariables["RFD_CONTROL_PID"]=Process.GetCurrentProcess().Id.ToString();
-      Game=Process.Start(info);Game.EnableRaisingEvents=true;Game.Exited+=(s,e)=>{if(Controller!=null&&!Controller.IsDisposed)Controller.BeginInvoke(new Action(()=>{if(Peer!=null&&!Peer.HasExited)Peer.Kill();GameRoom="";GameAccount="";LastRoomControl="";Controller.Show();}));};
+      Stage(status,"openingGame");Game=Process.Start(info);Diagnostic("game-start",(string)manifest["version"]);Game.EnableRaisingEvents=true;Game.Exited+=(s,e)=>{if(Controller!=null&&!Controller.IsDisposed)Controller.BeginInvoke(new Action(()=>{if(Peer!=null&&!Peer.HasExited)Peer.Kill();GameRoom="";GameAccount="";LastRoomControl="";Controller.Show();}));};
+      for(int wait=0;wait<200;wait++){if(Game.HasExited){Diagnostic("native-exit",Game.ExitCode.ToString("X8"));throw new Exception(Lang.S("nativeExit"));}Game.Refresh();if(Game.MainWindowHandle!=IntPtr.Zero)break;await Task.Delay(100);}
     }
     Peer=peer;LastRoomControl=roomText;GameRoom=invite==null?"":(string)invite["roomId"];GameAccount=account;FocusGame();status.Text=Lang.S("chooseHero");
    }catch{if(peer!=null&&!peer.HasExited)peer.Kill();throw;}
@@ -236,20 +268,20 @@ namespace ReturnsFromDarkness {
    tray=new NotifyIcon{Icon=SystemIcons.Application,Text="Returns from Darkness HD",Visible=true};tray.DoubleClick+=(s1,e1)=>Accept("rfd://focus");var menu=new ContextMenuStrip();menu.Items.Add(Lang.S("open"),null,(s1,e1)=>Accept("rfd://focus"));menu.Items.Add(Lang.S("community"),null,(s1,e1)=>Accept("rfd://central"));menu.Items.Add(Lang.S("check"),null,(s1,e1)=>Accept("rfd://prepare"));menu.Items.Add(Lang.S("close"),null,(s1,e1)=>{if(Program.GameRunning){Hide();return;}tray.Visible=false;Close();});tray.ContextMenuStrip=menu;
    central.Click+=(s1,e1)=>Accept("rfd://central");play.Click+=(s1,e1)=>Accept(request??"rfd://open");
    FormClosing+=(s1,e1)=>{if(Program.GameRunning){e1.Cancel=true;Hide();}else tray.Dispose();};
-   Shown+=async(s1,e1)=>{if(loaded)return;loaded=true;var listener=Program.Listen();if(request=="--preview"){status.Text=Lang.S("portal");version.Text=Lang.S("preview")+" · v0.3.5";progress.Visible=false;play.Enabled=true;request=null;}else Accept(request??"rfd://prepare");await Task.CompletedTask;};
+   Shown+=async(s1,e1)=>{if(loaded)return;loaded=true;var listener=Program.Listen();if(request=="--preview"){status.Text=Lang.S("portal");version.Text=Lang.S("preview")+" · v0.3.6";progress.Visible=false;play.Enabled=true;request=null;}else Accept(request??"rfd://prepare");await Task.CompletedTask;};
   }
   public async void Accept(string value){requests.Enqueue(value);if(processing)return;processing=true;play.Enabled=false;progress.Visible=true;
    try{while(requests.Count>0){string next=requests.Dequeue();try{
     if(Program.RouteAccount(next))continue;
     if(next=="rfd://central"||next=="rfd://central/"){await Program.OpenCentral();continue;}
     manifest=await Program.Update(status);if(Program.RefreshLauncher(manifest,next)){tray.Dispose();Close();return;}
-    bool authenticated=await Program.ApplyNativeSession(next);
+    Program.Stage(status,"signingIn");bool authenticated=await Program.ApplyNativeSession(next);
     if(Program.Resume(next)){Hide();continue;}
     if(Program.GameRunning&&(authenticated||next=="rfd://focus"||next=="rfd://open")){Program.FocusGame();Hide();continue;}
     if(authenticated)next="rfd://open";
     version.Text="RETURNS FROM DARKNESS HD · v"+manifest["version"];if(next=="rfd://prepare"){status.Text=Lang.S("ready");Show();continue;}if(next=="rfd://focus")next=null;
     await Program.Launch(manifest,next=="rfd://open"?null:next,status);request=null;Hide();
-   }catch(Exception error){status.Text=Lang.Error(error.Message);Show();Activate();}}}finally{processing=false;play.Enabled=true;progress.Visible=false;}
+   }catch(Exception error){Program.Diagnostic("launch-failed",error.GetType().Name+": "+error.Message);status.Text=Lang.Error(error.Message);Show();Activate();}}}finally{processing=false;play.Enabled=true;progress.Visible=false;}
   }
  }
 }
