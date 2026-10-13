@@ -23,8 +23,8 @@ using Microsoft.Win32;
 [assembly: AssemblyTitle("Returns from Darkness HD")]
 [assembly: AssemblyProduct("Returns from Darkness HD")]
 [assembly: AssemblyDescription("Cliente e atualizações de Returns from Darkness")]
-[assembly: AssemblyVersion("0.3.6.0")]
-[assembly: AssemblyFileVersion("0.3.6.0")]
+[assembly: AssemblyVersion("0.3.7.0")]
+[assembly: AssemblyFileVersion("0.3.7.0")]
 namespace ReturnsFromDarkness {
  static class Program {
   public static Mutex Instance;
@@ -266,10 +266,11 @@ namespace ReturnsFromDarkness {
    status=Copy(Lang.S("preparing"),59,539,880,46,smallBodyFont,muted);progress=new ProgressBar{Style=ProgressBarStyle.Marquee,MarqueeAnimationSpeed=22,Location=new Point(60,590),Size=new Size(980,3)};Controls.Add(progress);
    version=Copy("RETURNS FROM DARKNESS HD",58,630,520,28,smallActionFont,gold);Copy(Lang.S("coop"),708,630,340,28,smallActionFont,muted);
    tray=new NotifyIcon{Icon=SystemIcons.Application,Text="Returns from Darkness HD",Visible=true};tray.DoubleClick+=(s1,e1)=>Accept("rfd://focus");var menu=new ContextMenuStrip();menu.Items.Add(Lang.S("open"),null,(s1,e1)=>Accept("rfd://focus"));menu.Items.Add(Lang.S("community"),null,(s1,e1)=>Accept("rfd://central"));menu.Items.Add(Lang.S("check"),null,(s1,e1)=>Accept("rfd://prepare"));menu.Items.Add(Lang.S("close"),null,(s1,e1)=>{if(Program.GameRunning){Hide();return;}tray.Visible=false;Close();});tray.ContextMenuStrip=menu;
-   central.Click+=(s1,e1)=>Accept("rfd://central");play.Click+=(s1,e1)=>Accept(request??"rfd://open");
+   central.Click+=(s1,e1)=>Accept("rfd://central");play.Click+=(s1,e1)=>Accept(PlayRequest(request));
    FormClosing+=(s1,e1)=>{if(Program.GameRunning){e1.Cancel=true;Hide();}else tray.Dispose();};
-   Shown+=async(s1,e1)=>{if(loaded)return;loaded=true;var listener=Program.Listen();if(request=="--preview"){status.Text=Lang.S("portal");version.Text=Lang.S("preview")+" · v0.3.6";progress.Visible=false;play.Enabled=true;request=null;}else Accept(request??"rfd://prepare");await Task.CompletedTask;};
+   Shown+=async(s1,e1)=>{if(loaded)return;loaded=true;var listener=Program.Listen();if(request=="--preview"){status.Text=Lang.S("portal");version.Text=Lang.S("preview")+" · v0.3.7";progress.Visible=false;play.Enabled=true;request=null;}else Accept(request??"rfd://prepare");await Task.CompletedTask;};
   }
+  public static string PlayRequest(string pending){return pending!=null&&(pending.StartsWith("rfd://play/")||pending.StartsWith("rfd://resume/")||pending.StartsWith("rfd://auth/"))?pending:"rfd://open";}
   public async void Accept(string value){requests.Enqueue(value);if(processing)return;processing=true;play.Enabled=false;progress.Visible=true;
    try{while(requests.Count>0){string next=requests.Dequeue();try{
     if(Program.RouteAccount(next))continue;
@@ -279,7 +280,7 @@ namespace ReturnsFromDarkness {
     if(Program.Resume(next)){Hide();continue;}
     if(Program.GameRunning&&(authenticated||next=="rfd://focus"||next=="rfd://open")){Program.FocusGame();Hide();continue;}
     if(authenticated)next="rfd://open";
-    version.Text="RETURNS FROM DARKNESS HD · v"+manifest["version"];if(next=="rfd://prepare"){status.Text=Lang.S("ready");Show();continue;}if(next=="rfd://focus")next=null;
+    version.Text="RETURNS FROM DARKNESS HD · v"+manifest["version"];if(next=="rfd://prepare"){request=null;status.Text=Lang.S("ready");Show();continue;}if(next=="rfd://focus")next=null;
     await Program.Launch(manifest,next=="rfd://open"?null:next,status);request=null;Hide();
    }catch(Exception error){Program.Diagnostic("launch-failed",error.GetType().Name+": "+error.Message);status.Text=Lang.Error(error.Message);Show();Activate();}}}finally{processing=false;play.Enabled=true;progress.Visible=false;}
   }
