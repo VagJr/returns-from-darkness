@@ -1,5 +1,5 @@
 // Fixed destination: callers cannot select a server or reach local administration.
-const UPSTREAM='https://insulation-neighbor-engines-authentication.trycloudflare.com/public/';
+const UPSTREAM='https://returns-darkness-realm.oblique-tactical.workers.dev/';
 const ORIGIN='https://returns-from-darkness.vercel.app';
 const reads=new Set(['health','state']);
 const writes=new Set(['login','register','channel','chat','rooms/create','rooms/join','rooms/leave','logout','native/connect','launch']);
