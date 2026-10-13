@@ -1,0 +1,922 @@
+{
+  "project": "Dark Gothic HUD - Diablo-like UI assets",
+  "version": "1.0",
+  "language": "pt-BR",
+  "source_canvas_size": [
+    1672,
+    941
+  ],
+  "file_format": "PNG RGBA transparency",
+  "important": "Os textos e ícones do sprite completo são pixels. Para dados atualizáveis use as versões *_vazio_editavel.",
+  "assets": [
+    {
+      "id": "painel_personagem_completo",
+      "file": "01_PAINEIS/painel_personagem_completo.png",
+      "category": "panel",
+      "description": "Painel de atributos completo com texto ilustrativo embutido.",
+      "size": [
+        502,
+        687
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        18,
+        5,
+        502,
+        687
+      ]
+    },
+    {
+      "id": "painel_inventario_completo",
+      "file": "01_PAINEIS/painel_inventario_completo.png",
+      "category": "panel",
+      "description": "Inventário completo com equipamentos ilustrativos e grade.",
+      "size": [
+        526,
+        683
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        516,
+        8,
+        526,
+        683
+      ]
+    },
+    {
+      "id": "hud_inferior_completo",
+      "file": "01_PAINEIS/hud_inferior_completo.png",
+      "category": "hud",
+      "description": "HUD inferior completo: vida, mana, hotbar, menus e moldura.",
+      "size": [
+        1278,
+        256
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        27,
+        675,
+        1278,
+        256
+      ]
+    },
+    {
+      "id": "moldura_horizontal_larga",
+      "file": "02_MOLDURAS/moldura_horizontal_larga.png",
+      "category": "frame",
+      "description": "Moldura horizontal grande com couro preto, fissuras e cabeça demoníaca.",
+      "size": [
+        508,
+        193
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1060,
+        7,
+        508,
+        193
+      ]
+    },
+    {
+      "id": "moldura_retangular_media",
+      "file": "02_MOLDURAS/moldura_retangular_media.png",
+      "category": "frame",
+      "description": "Painel retangular vazio para quests, inventário secundário, chat e mapas.",
+      "size": [
+        424,
+        243
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1047,
+        204,
+        424,
+        243
+      ]
+    },
+    {
+      "id": "faixa_pentagrama",
+      "file": "02_MOLDURAS/faixa_pentagrama.png",
+      "category": "bar",
+      "description": "Faixa medieval com pentagrama central.",
+      "size": [
+        420,
+        93
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1045,
+        458,
+        420,
+        93
+      ]
+    },
+    {
+      "id": "faixa_rubi",
+      "file": "02_MOLDURAS/faixa_rubi.png",
+      "category": "bar",
+      "description": "Faixa medieval escura com rubis vermelhos nas extremidades.",
+      "size": [
+        429,
+        86
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1046,
+        557,
+        429,
+        86
+      ]
+    },
+    {
+      "id": "barra_atalhos_5_icones",
+      "file": "05_ORBES_BARRAS/barra_atalhos_5_icones.png",
+      "category": "hotbar",
+      "description": "Barra com cinco ícones e contornos góticos ilustrativos.",
+      "size": [
+        296,
+        69
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1265,
+        659,
+        296,
+        69
+      ]
+    },
+    {
+      "id": "painel_selo_pentagrama",
+      "file": "02_MOLDURAS/painel_selo_pentagrama.png",
+      "category": "frame",
+      "description": "Placa quadrada com selo arcano.",
+      "size": [
+        154,
+        127
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1307,
+        741,
+        154,
+        127
+      ]
+    },
+    {
+      "id": "faixa_botoes_vazia",
+      "file": "02_MOLDURAS/faixa_botoes_vazia.png",
+      "category": "bar",
+      "description": "Faixa horizontal escura vazia.",
+      "size": [
+        191,
+        73
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1461,
+        734,
+        191,
+        73
+      ]
+    },
+    {
+      "id": "medalhao_pentagrama",
+      "file": "04_BOTOES_ICONS/medalhao_pentagrama.png",
+      "category": "ornament",
+      "description": "Medalhão decorativo arcano.",
+      "size": [
+        60,
+        60
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1492,
+        820,
+        60,
+        60
+      ]
+    },
+    {
+      "id": "ornamento_cabeca_demonio",
+      "file": "04_BOTOES_ICONS/ornamento_cabeca_demonio.png",
+      "category": "ornament",
+      "description": "Cabeça demoníaca decorativa.",
+      "size": [
+        80,
+        71
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1566,
+        808,
+        80,
+        71
+      ]
+    },
+    {
+      "id": "barra_filigree_inferior",
+      "file": "02_MOLDURAS/barra_filigree_inferior.png",
+      "category": "bar",
+      "description": "Rodapé filigranado para composições.",
+      "size": [
+        350,
+        50
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1307,
+        875,
+        350,
+        50
+      ]
+    },
+    {
+      "id": "slot_equipamento_quadrado",
+      "file": "03_SLOTS/slot_equipamento_quadrado.png",
+      "category": "slot",
+      "description": "Slot de equipamento quadrado vazio.",
+      "size": [
+        89,
+        93
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1481,
+        203,
+        89,
+        93
+      ]
+    },
+    {
+      "id": "slot_equipamento_alto",
+      "file": "03_SLOTS/slot_equipamento_alto.png",
+      "category": "slot",
+      "description": "Slot vertical de equipamento vazio.",
+      "size": [
+        82,
+        99
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1485,
+        297,
+        82,
+        99
+      ]
+    },
+    {
+      "id": "slot_redondo",
+      "file": "03_SLOTS/slot_redondo.png",
+      "category": "slot",
+      "description": "Slot circular gótico vazio.",
+      "size": [
+        84,
+        83
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1484,
+        397,
+        84,
+        83
+      ]
+    },
+    {
+      "id": "slot_vertical_longo",
+      "file": "03_SLOTS/slot_vertical_longo.png",
+      "category": "slot",
+      "description": "Slot vertical longo vazio.",
+      "size": [
+        77,
+        163
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1487,
+        481,
+        77,
+        163
+      ]
+    },
+    {
+      "id": "botao_fechar",
+      "file": "04_BOTOES_ICONS/botao_fechar.png",
+      "category": "button",
+      "description": "Botão de fechar janela: X vermelho.",
+      "size": [
+        52,
+        52
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1581,
+        25,
+        52,
+        52
+      ]
+    },
+    {
+      "id": "botao_horizontal_A",
+      "file": "04_BOTOES_ICONS/botao_horizontal_A.png",
+      "category": "button",
+      "description": "Botão horizontal de metal variante A.",
+      "size": [
+        75,
+        41
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1579,
+        91,
+        75,
+        41
+      ]
+    },
+    {
+      "id": "botao_horizontal_B",
+      "file": "04_BOTOES_ICONS/botao_horizontal_B.png",
+      "category": "button",
+      "description": "Botão horizontal de metal variante B.",
+      "size": [
+        75,
+        43
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1579,
+        147,
+        75,
+        43
+      ]
+    },
+    {
+      "id": "botao_runa_olhos",
+      "file": "04_BOTOES_ICONS/botao_runa_olhos.png",
+      "category": "button",
+      "description": "Botão decorado com olhos de rubi.",
+      "size": [
+        69,
+        48
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1580,
+        209,
+        69,
+        48
+      ]
+    },
+    {
+      "id": "botao_romano_I",
+      "file": "04_BOTOES_ICONS/botao_romano_I.png",
+      "category": "button",
+      "description": "Botão numerado I.",
+      "size": [
+        75,
+        54
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1580,
+        276,
+        75,
+        54
+      ]
+    },
+    {
+      "id": "botao_romano_II",
+      "file": "04_BOTOES_ICONS/botao_romano_II.png",
+      "category": "button",
+      "description": "Botão numerado II.",
+      "size": [
+        75,
+        53
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1580,
+        340,
+        75,
+        53
+      ]
+    },
+    {
+      "id": "botao_romano_III",
+      "file": "04_BOTOES_ICONS/botao_romano_III.png",
+      "category": "button",
+      "description": "Botão numerado III.",
+      "size": [
+        75,
+        53
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1580,
+        404,
+        75,
+        53
+      ]
+    },
+    {
+      "id": "icone_espada",
+      "file": "04_BOTOES_ICONS/icone_espada.png",
+      "category": "icon",
+      "description": "Ícone espada dentro de botão redondo.",
+      "size": [
+        72,
+        75
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1582,
+        467,
+        72,
+        75
+      ]
+    },
+    {
+      "id": "icone_pocao",
+      "file": "04_BOTOES_ICONS/icone_pocao.png",
+      "category": "icon",
+      "description": "Ícone poção rubra.",
+      "size": [
+        72,
+        73
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1582,
+        547,
+        72,
+        73
+      ]
+    },
+    {
+      "id": "icone_escudo",
+      "file": "04_BOTOES_ICONS/icone_escudo.png",
+      "category": "icon",
+      "description": "Ícone escudo de aço.",
+      "size": [
+        75,
+        77
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        1581,
+        626,
+        75,
+        77
+      ]
+    },
+    {
+      "id": "orbe_vida_vermelha",
+      "file": "05_ORBES_BARRAS/orbe_vida_vermelha.png",
+      "category": "orb",
+      "description": "Globo circular isolado com aro metálico; o valor dinâmico deve vir do código.",
+      "size": [
+        198,
+        206
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        209,
+        705,
+        198,
+        206
+      ],
+      "center_local": [
+        95,
+        98
+      ],
+      "radius_px": 91
+    },
+    {
+      "id": "orbe_mana_azul",
+      "file": "05_ORBES_BARRAS/orbe_mana_azul.png",
+      "category": "orb",
+      "description": "Globo circular isolado com aro metálico; o valor dinâmico deve vir do código.",
+      "size": [
+        198,
+        206
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        923,
+        705,
+        198,
+        206
+      ],
+      "center_local": [
+        94,
+        98
+      ],
+      "radius_px": 91
+    },
+    {
+      "id": "hotbar_central_com_slots",
+      "file": "05_ORBES_BARRAS/hotbar_central_com_slots.png",
+      "category": "hotbar",
+      "description": "Barra de atalhos central. Pode conter pixéis sobrepostos das peças adjacentes.",
+      "size": [
+        344,
+        88
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        469,
+        699,
+        344,
+        88
+      ]
+    },
+    {
+      "id": "painel_mensagens_hud",
+      "file": "05_ORBES_BARRAS/painel_mensagens_hud.png",
+      "category": "hud_fragment",
+      "description": "Painel longo de mensagens/atalhos que fica entre os orbes.",
+      "size": [
+        520,
+        122
+      ],
+      "transparent": false,
+      "atlas_bbox_xywh": [
+        398,
+        774,
+        520,
+        122
+      ]
+    },
+    {
+      "id": "menu_personagem_char",
+      "file": "04_BOTOES_ICONS/menu_personagem_char.png",
+      "category": "button",
+      "description": "Botão recortado do HUD; legenda ilustrativa rasterizada.",
+      "size": [
+        83,
+        36
+      ],
+      "transparent": false,
+      "atlas_bbox_xywh": [
+        91,
+        761,
+        83,
+        36
+      ]
+    },
+    {
+      "id": "menu_missoes_quests",
+      "file": "04_BOTOES_ICONS/menu_missoes_quests.png",
+      "category": "button",
+      "description": "Botão recortado do HUD; legenda ilustrativa rasterizada.",
+      "size": [
+        83,
+        36
+      ],
+      "transparent": false,
+      "atlas_bbox_xywh": [
+        91,
+        797,
+        83,
+        36
+      ]
+    },
+    {
+      "id": "menu_mapa_map",
+      "file": "04_BOTOES_ICONS/menu_mapa_map.png",
+      "category": "button",
+      "description": "Botão recortado do HUD; legenda ilustrativa rasterizada.",
+      "size": [
+        83,
+        35
+      ],
+      "transparent": false,
+      "atlas_bbox_xywh": [
+        91,
+        833,
+        83,
+        35
+      ]
+    },
+    {
+      "id": "menu_principal",
+      "file": "04_BOTOES_ICONS/menu_principal.png",
+      "category": "button",
+      "description": "Botão recortado do HUD; legenda ilustrativa rasterizada.",
+      "size": [
+        83,
+        36
+      ],
+      "transparent": false,
+      "atlas_bbox_xywh": [
+        91,
+        867,
+        83,
+        36
+      ]
+    },
+    {
+      "id": "menu_inventario_inv",
+      "file": "04_BOTOES_ICONS/menu_inventario_inv.png",
+      "category": "button",
+      "description": "Botão recortado do HUD; legenda ilustrativa rasterizada.",
+      "size": [
+        81,
+        35
+      ],
+      "transparent": false,
+      "atlas_bbox_xywh": [
+        1159,
+        761,
+        81,
+        35
+      ]
+    },
+    {
+      "id": "menu_magias_spells",
+      "file": "04_BOTOES_ICONS/menu_magias_spells.png",
+      "category": "button",
+      "description": "Botão recortado do HUD; legenda ilustrativa rasterizada.",
+      "size": [
+        81,
+        39
+      ],
+      "transparent": false,
+      "atlas_bbox_xywh": [
+        1159,
+        796,
+        81,
+        39
+      ]
+    },
+    {
+      "id": "frame9_superior_esquerdo",
+      "file": "06_NINE_SLICE/frame9_superior_esquerdo.png",
+      "category": "slice",
+      "description": "Fragmento nine-slice da moldura retangular; corners sem deformação.",
+      "size": [
+        54,
+        54
+      ],
+      "transparent": true,
+      "nine_slice_group": "frame9",
+      "edge_px": 54,
+      "grid": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "frame9_superior_centro",
+      "file": "06_NINE_SLICE/frame9_superior_centro.png",
+      "category": "slice",
+      "description": "Fragmento nine-slice da moldura retangular; corners sem deformação.",
+      "size": [
+        316,
+        54
+      ],
+      "transparent": true,
+      "nine_slice_group": "frame9",
+      "edge_px": 54,
+      "grid": [
+        1,
+        0
+      ]
+    },
+    {
+      "id": "frame9_superior_direito",
+      "file": "06_NINE_SLICE/frame9_superior_direito.png",
+      "category": "slice",
+      "description": "Fragmento nine-slice da moldura retangular; corners sem deformação.",
+      "size": [
+        54,
+        54
+      ],
+      "transparent": true,
+      "nine_slice_group": "frame9",
+      "edge_px": 54,
+      "grid": [
+        2,
+        0
+      ]
+    },
+    {
+      "id": "frame9_meio_esquerdo",
+      "file": "06_NINE_SLICE/frame9_meio_esquerdo.png",
+      "category": "slice",
+      "description": "Fragmento nine-slice da moldura retangular; corners sem deformação.",
+      "size": [
+        54,
+        135
+      ],
+      "transparent": true,
+      "nine_slice_group": "frame9",
+      "edge_px": 54,
+      "grid": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "frame9_centro",
+      "file": "06_NINE_SLICE/frame9_centro.png",
+      "category": "slice",
+      "description": "Fragmento nine-slice da moldura retangular; corners sem deformação.",
+      "size": [
+        316,
+        135
+      ],
+      "transparent": false,
+      "nine_slice_group": "frame9",
+      "edge_px": 54,
+      "grid": [
+        1,
+        1
+      ]
+    },
+    {
+      "id": "frame9_meio_direito",
+      "file": "06_NINE_SLICE/frame9_meio_direito.png",
+      "category": "slice",
+      "description": "Fragmento nine-slice da moldura retangular; corners sem deformação.",
+      "size": [
+        54,
+        135
+      ],
+      "transparent": true,
+      "nine_slice_group": "frame9",
+      "edge_px": 54,
+      "grid": [
+        2,
+        1
+      ]
+    },
+    {
+      "id": "frame9_inferior_esquerdo",
+      "file": "06_NINE_SLICE/frame9_inferior_esquerdo.png",
+      "category": "slice",
+      "description": "Fragmento nine-slice da moldura retangular; corners sem deformação.",
+      "size": [
+        54,
+        54
+      ],
+      "transparent": true,
+      "nine_slice_group": "frame9",
+      "edge_px": 54,
+      "grid": [
+        0,
+        2
+      ]
+    },
+    {
+      "id": "frame9_inferior_centro",
+      "file": "06_NINE_SLICE/frame9_inferior_centro.png",
+      "category": "slice",
+      "description": "Fragmento nine-slice da moldura retangular; corners sem deformação.",
+      "size": [
+        316,
+        54
+      ],
+      "transparent": true,
+      "nine_slice_group": "frame9",
+      "edge_px": 54,
+      "grid": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "frame9_inferior_direito",
+      "file": "06_NINE_SLICE/frame9_inferior_direito.png",
+      "category": "slice",
+      "description": "Fragmento nine-slice da moldura retangular; corners sem deformação.",
+      "size": [
+        54,
+        54
+      ],
+      "transparent": true,
+      "nine_slice_group": "frame9",
+      "edge_px": 54,
+      "grid": [
+        2,
+        2
+      ]
+    },
+    {
+      "id": "painel_personagem_vazio_editavel",
+      "file": "01_PAINEIS/painel_personagem_vazio_editavel.png",
+      "category": "panel",
+      "description": "Versão sem textos, sem atributos fixos; integra labels e números com DOM ou canvas.",
+      "size": [
+        502,
+        687
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        18,
+        5,
+        502,
+        687
+      ],
+      "live_text": true
+    },
+    {
+      "id": "painel_inventario_vazio_editavel",
+      "file": "01_PAINEIS/painel_inventario_vazio_editavel.png",
+      "category": "panel",
+      "description": "Inventário sem itens e textos; áreas de equipamento e células podem receber sprites do jogo.",
+      "size": [
+        526,
+        683
+      ],
+      "transparent": true,
+      "atlas_bbox_xywh": [
+        516,
+        8,
+        526,
+        683
+      ],
+      "live_items": true,
+      "inventory_grid": {
+        "xywh": [
+          62,
+          355,
+          400,
+          225
+        ],
+        "columns": 10,
+        "rows": 5,
+        "cell_size": [
+          40,
+          45
+        ]
+      }
+    },
+    {
+      "id": "moldura_personagem_sobreposta",
+      "file": "02_MOLDURAS/moldura_personagem_sobreposta.png",
+      "category": "frame",
+      "description": "Moldura original com interior totalmente transparente para compor por cima do próprio conteúdo.",
+      "size": [
+        502,
+        687
+      ],
+      "transparent": true
+    },
+    {
+      "id": "moldura_inventario_sobreposta",
+      "file": "02_MOLDURAS/moldura_inventario_sobreposta.png",
+      "category": "frame",
+      "description": "Moldura original sem miolo; desenhe slots, itens e textos por baixo.",
+      "size": [
+        526,
+        683
+      ],
+      "transparent": true
+    },
+    {
+      "id": "botao_icone_sem_texto",
+      "file": "04_BOTOES_ICONS/botao_icone_sem_texto.png",
+      "category": "button",
+      "description": "Botão sem legenda: use texto HTML ou canvas.",
+      "size": [
+        75,
+        41
+      ],
+      "transparent": true
+    }
+  ],
+  "recommended_layout_1672x941": {
+    "character": {
+      "asset": "painel_personagem_vazio_editavel",
+      "x": 200,
+      "y": 62,
+      "width": 445
+    },
+    "inventory": {
+      "asset": "painel_inventario_vazio_editavel",
+      "x": 1040,
+      "y": 63,
+      "width": 436
+    },
+    "bottom_hud": {
+      "asset": "hud_inferior_completo",
+      "x": 419,
+      "y": 746,
+      "width": 850
+    }
+  },
+  "controls": {
+    "toggle_character": "C",
+    "toggle_inventory": "I"
+  },
+  "rendering": {
+    "scaling": "image-rendering: auto; transform via parent for pixel-consistent layout",
+    "layer_order": [
+      "gamecanvas",
+      "panels",
+      "dynamic text & items",
+      "tooltips"
+    ],
+    "responsive": "Use viewport ratio 1672x941 and scale globally by min(windowW/1672,windowH/941)."
+  }
+}

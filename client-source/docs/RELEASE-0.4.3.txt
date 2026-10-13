@@ -1,0 +1,9 @@
+Returns from Darkness HD 0.4.3 — Dark Gothic HUD
+
+The new interface integrates the project owner's Dark Gothic HUD Kit, including the complete carved frames, demonic crowns, guardian sculptures, textured message recess and eight live potion slots. The character panel separates labels from numeric fields; the inventory retains all 70 native cells and all equipment positions. Artwork and hit areas move together.
+
+Animated health and mana liquids remain adapted from the 48-frame Tchernobog resource atlases. Independent fill masks follow actual game values, with empty-to-full endpoint handling and complete kit sculptures. Decorative source images do not supply gameplay values: sample items, fixed numbers and sample potion pictures are removed from composition.
+
+The runtime uses one 2048×2048 RGBA atlas, transparent gutters, one-time decoding and a shared sprite batch. Native item icons, text and cursor remain above the artwork. Pixel-grid inspection checks frame proportions, visible bounds, text columns and the native slot geometry; the lower inventory rails and pentagram remain intact around the live gold label.
+
+This release preserves Sanctuary accounts, account unlocks, creator-hosted rooms, local character saves and signed automatic updates. Global experience and ordinary item-drop tables remain unchanged. The website gallery shows real captures of the current client alongside separately identified concept art. It does not claim a complete replacement of all world textures or authoritative ranked PvP.

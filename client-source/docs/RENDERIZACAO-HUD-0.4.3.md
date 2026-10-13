@@ -1,0 +1,13 @@
+# Integração do Dark Gothic HUD Kit — 0.4.3
+
+O pacote fornecido pelo proprietário do projeto contém 52 PNGs. Os originais foram preservados byte a byte em `content/original/hud-kit/source`; `integration.json` registra dimensões, transparência, regiões úteis e SHA-256. O atlas runtime 2048×2048 contém 24 peças com margens transparentes de dois pixels, sem repintar os arquivos fornecidos. `tools/prepare-gothic-hud-kit.py` reproduz o atlas e `CommunityHudAtlas.h`.
+
+Personagem e inventário usam as molduras completas, incluindo coroas e ornamentos inferiores. As proporções são mantidas; o inventário conserva as dez colunas e sete linhas da engine, embora a ilustração do kit mostre cinco linhas. Os slots de equipamentos, a grade e as áreas de interação partem das mesmas coordenadas nativas. Amostras ilustrativas de valores e itens são excluídas da composição. O recorte do texto de ouro preserva as duas travessas e o pentagrama; a ponta da coroa é preservada ao remover as amostras do cabeçalho.
+
+A parte central inferior usa couro/metal texturizado do pacote, com bordas ornamentadas. O cinturão tem oito células independentes e uma moldura contínua. Os botões funcionais mantêm os comandos do jogo e recebem áreas visuais e de clique alinhadas. Nomes, atributos, valores, itens e cursor continuam sendo desenhados pelo jogo sobre a arte RGBA, com uma máscara de oclusão que impede o painel HD de cobri-los.
+
+As esculturas e molduras dos vasos são do kit fornecido. O líquido continua proveniente dos atlases de 48 quadros do Tchernobog, com máscara elíptica própria, preenchimento independente e transição visual. Cada canvas original de 256×256 possui aproximadamente 110 pixels úteis de líquido; não se apresenta essa adaptação como novo detalhe líquido nativo de 256 pixels. O material de ardósia da versão anterior permanece como fallback se o atlas novo estiver ausente.
+
+`tools/audit-hud-kit-layout.py` confere as coordenadas efetivamente enfileiradas pelo cliente e cria grades de cinco pixels, com linhas principais a cada 25 pixels, sobre capturas reais do renderizador. As ampliações servem à inspeção de acabamento; não fazem parte do cliente distribuído. O teste nativo verifica abertura/fechamento pelos botões reais, compatibilidade dos 70 slots, oito posições do cinturão e quatro botões de atributos. Também se verifica o preenchimento de vida/mana de vazio a máximo e a animação entre quadros.
+
+Esta entrega altera a interface e sua composição. Artes herdadas de cenário, monstros e personagens continuam presentes; não representa um remaster completo de todas as texturas do mundo. A publicação e instalação da versão dependem da conclusão dos relatórios gráficos, multiplayer, assinatura e atualização correspondentes.

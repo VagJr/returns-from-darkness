@@ -1,0 +1,1198 @@
+{
+  "source": "User-provided Dark Gothic HUD Kit 1.0",
+  "sourceCanvas": [
+    1672,
+    941
+  ],
+  "filesInspected": [
+    {
+      "file": "00_ATLAS_E_PREVIEWS/ATLAS_ORIGINAL_TRANSPARENTE.png",
+      "size": [
+        1672,
+        941
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        18,
+        1,
+        1659,
+        931
+      ],
+      "sha256": "776129039d29c8060a0686018b5186166e95f050229a3fd2af2ecf032c0b1048"
+    },
+    {
+      "file": "01_PAINEIS/hud_inferior_completo.png",
+      "size": [
+        1278,
+        256
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        1277,
+        255
+      ],
+      "sha256": "07873f38989d4a84b37f84ef97826813b140b183e5e5cf4aafac276984c05052"
+    },
+    {
+      "file": "01_PAINEIS/painel_inventario_completo.png",
+      "size": [
+        526,
+        683
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        525,
+        681
+      ],
+      "sha256": "fd858485498016af6605f24c74a5675e48e2dc9a359a717435e1cb74e7289715"
+    },
+    {
+      "file": "01_PAINEIS/painel_inventario_vazio_editavel.png",
+      "size": [
+        526,
+        683
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        525,
+        681
+      ],
+      "sha256": "97856ad84425ff33a3e2a31fa304ab456206009b1853938dc249c5e07a89259b"
+    },
+    {
+      "file": "01_PAINEIS/painel_personagem_completo.png",
+      "size": [
+        502,
+        687
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        501,
+        685
+      ],
+      "sha256": "c5c3715e053757aca9f36c14d57a5f2c8378ead48712ce515128a195aa26e365"
+    },
+    {
+      "file": "01_PAINEIS/painel_personagem_vazio_editavel.png",
+      "size": [
+        502,
+        687
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        501,
+        685
+      ],
+      "sha256": "ab34241e7e4028a70c919af251996c31ee7cddc5f1643c048ba74f6ab93e277b"
+    },
+    {
+      "file": "02_MOLDURAS/barra_filigree_inferior.png",
+      "size": [
+        350,
+        50
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        349,
+        49
+      ],
+      "sha256": "b0b051bb41ddc2e786da3149d38694aacdbd26e1ede2c2680331b42997038056"
+    },
+    {
+      "file": "02_MOLDURAS/faixa_botoes_vazia.png",
+      "size": [
+        191,
+        73
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        190,
+        71
+      ],
+      "sha256": "8ed21e9f3728168a0317ef15dcbedc99a266382f78eadc9b7c647701342c0a7f"
+    },
+    {
+      "file": "02_MOLDURAS/faixa_pentagrama.png",
+      "size": [
+        420,
+        93
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        2,
+        419,
+        92
+      ],
+      "sha256": "720f34cb03e9b8f30363eb80afc4ce39643e1665258bb4b1f07576130ac91a01"
+    },
+    {
+      "file": "02_MOLDURAS/faixa_rubi.png",
+      "size": [
+        429,
+        86
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        2,
+        428,
+        84
+      ],
+      "sha256": "09c95da8315b6c2e96a05704f4baf25afb43249321250a27949109c53c27191c"
+    },
+    {
+      "file": "02_MOLDURAS/moldura_horizontal_larga.png",
+      "size": [
+        508,
+        193
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        507,
+        191
+      ],
+      "sha256": "8ac8588106056140658cdd6d475f24c8c8bc14ccb8f13abb3a64841efddb9d12"
+    },
+    {
+      "file": "02_MOLDURAS/moldura_inventario_sobreposta.png",
+      "size": [
+        526,
+        683
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        525,
+        681
+      ],
+      "sha256": "dc611aa4963420bf702cac33876cd778055a006cba4f1a5afa2bd85cfe2402f4"
+    },
+    {
+      "file": "02_MOLDURAS/moldura_personagem_sobreposta.png",
+      "size": [
+        502,
+        687
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        501,
+        685
+      ],
+      "sha256": "1abb0e6b5d7f2de0f0f6ee5e4179ba5256a2088f698373f87c50d2af48aecab8"
+    },
+    {
+      "file": "02_MOLDURAS/moldura_retangular_media.png",
+      "size": [
+        424,
+        243
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        2,
+        423,
+        241
+      ],
+      "sha256": "8345a84b5e7950b72f5cc39cc35e129547ae22c73815c67218376b3d48ff0eeb"
+    },
+    {
+      "file": "02_MOLDURAS/painel_selo_pentagrama.png",
+      "size": [
+        154,
+        127
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        153,
+        126
+      ],
+      "sha256": "c758ee728a7597ad279d8b462d84ad64e5ab2d1dc10fb0ed4caec974dbb887ef"
+    },
+    {
+      "file": "03_SLOTS/slot_equipamento_alto.png",
+      "size": [
+        82,
+        99
+      ],
+      "alpha": [
+        0,
+        254
+      ],
+      "visibleBox": [
+        1,
+        1,
+        81,
+        98
+      ],
+      "sha256": "590fcb1645321135dc6244314d61184776c979c4551e1f3d96ded13db2c01bc6"
+    },
+    {
+      "file": "03_SLOTS/slot_equipamento_quadrado.png",
+      "size": [
+        89,
+        93
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        2,
+        88,
+        92
+      ],
+      "sha256": "160004cc42f205fee8f4a6560a5c36ccfcd191be948bd1b2668626c6acf15cac"
+    },
+    {
+      "file": "03_SLOTS/slot_redondo.png",
+      "size": [
+        84,
+        83
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        83,
+        82
+      ],
+      "sha256": "0b5460e28a1c9df677a8861041913ac5f8a3b1a14fd3636fb678b73e0eb81802"
+    },
+    {
+      "file": "03_SLOTS/slot_vertical_longo.png",
+      "size": [
+        77,
+        163
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        76,
+        162
+      ],
+      "sha256": "2f7232786107c2bc5b0ced837389bbbc84a3e84251f8ec510563b90ba8efb7dc"
+    },
+    {
+      "file": "04_BOTOES_ICONS/botao_fechar.png",
+      "size": [
+        52,
+        52
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        2,
+        1,
+        51,
+        51
+      ],
+      "sha256": "44e3c0d86d90ea0d47d42f2315eabd5f895ec21890b4ad74eb453be80c7103bb"
+    },
+    {
+      "file": "04_BOTOES_ICONS/botao_horizontal_A.png",
+      "size": [
+        75,
+        41
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        74,
+        40
+      ],
+      "sha256": "8b1914b69ae6a516b3b9bf7a03787d1bb7a03d4ef592fd15e360e8531da99350"
+    },
+    {
+      "file": "04_BOTOES_ICONS/botao_horizontal_B.png",
+      "size": [
+        75,
+        43
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        74,
+        41
+      ],
+      "sha256": "4b21cc3adeb2170f24220df9e4e00e7973a4c81a583c4162c92947859341b3dc"
+    },
+    {
+      "file": "04_BOTOES_ICONS/botao_icone_sem_texto.png",
+      "size": [
+        75,
+        41
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        74,
+        40
+      ],
+      "sha256": "8b1914b69ae6a516b3b9bf7a03787d1bb7a03d4ef592fd15e360e8531da99350"
+    },
+    {
+      "file": "04_BOTOES_ICONS/botao_romano_I.png",
+      "size": [
+        75,
+        54
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        74,
+        53
+      ],
+      "sha256": "2eb4e90f5f0442ba81336064fd43c680c08ae861acf5e5baf940fed76cd74186"
+    },
+    {
+      "file": "04_BOTOES_ICONS/botao_romano_II.png",
+      "size": [
+        75,
+        53
+      ],
+      "alpha": [
+        0,
+        254
+      ],
+      "visibleBox": [
+        1,
+        1,
+        74,
+        51
+      ],
+      "sha256": "7f98ed262150149fefcf48a848a58e7347db941ab4fac104a157604b1dd2c4ef"
+    },
+    {
+      "file": "04_BOTOES_ICONS/botao_romano_III.png",
+      "size": [
+        75,
+        53
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        2,
+        74,
+        51
+      ],
+      "sha256": "4a91ff7686fbbd80daf771005a7c8b2a554df99ec5228ec373be50aa6d0b750c"
+    },
+    {
+      "file": "04_BOTOES_ICONS/botao_runa_olhos.png",
+      "size": [
+        69,
+        48
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        68,
+        46
+      ],
+      "sha256": "08777640cc6473f904c56fd4460c222491547508f7ea213f15270de9da315654"
+    },
+    {
+      "file": "04_BOTOES_ICONS/icone_escudo.png",
+      "size": [
+        75,
+        77
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        74,
+        76
+      ],
+      "sha256": "95cf73e4f668c56d801f8a9fcaa89edfe9adaf530fec856680e2afb79b3462a4"
+    },
+    {
+      "file": "04_BOTOES_ICONS/icone_espada.png",
+      "size": [
+        72,
+        75
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        71,
+        74
+      ],
+      "sha256": "8f1d8b5931d4427d292b35312f3959ac2e344ed28bcf0d3fc442073065f8b1e7"
+    },
+    {
+      "file": "04_BOTOES_ICONS/icone_pocao.png",
+      "size": [
+        72,
+        73
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        2,
+        71,
+        71
+      ],
+      "sha256": "a162230e58643ff73ffd0b1f0fe3fc287da18b183a1733788b182a723354028b"
+    },
+    {
+      "file": "04_BOTOES_ICONS/medalhao_pentagrama.png",
+      "size": [
+        60,
+        60
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        59,
+        59
+      ],
+      "sha256": "a11ce628703ab665e5d05dbb3b9cecac61426dd8d423b4c54a6ae826c0e8a7ba"
+    },
+    {
+      "file": "04_BOTOES_ICONS/menu_inventario_inv.png",
+      "size": [
+        81,
+        35
+      ],
+      "alpha": [
+        251,
+        253
+      ],
+      "visibleBox": [
+        0,
+        0,
+        81,
+        35
+      ],
+      "sha256": "6896abfd6997198f23ebb0bbd056d5128a1ffc09607e958e23817c53e3182451"
+    },
+    {
+      "file": "04_BOTOES_ICONS/menu_magias_spells.png",
+      "size": [
+        81,
+        39
+      ],
+      "alpha": [
+        251,
+        253
+      ],
+      "visibleBox": [
+        0,
+        0,
+        81,
+        39
+      ],
+      "sha256": "4bdb9cb8b3f7267574090839ca29ad32e0acc32b7981b20d2b86022bd0032fe7"
+    },
+    {
+      "file": "04_BOTOES_ICONS/menu_mapa_map.png",
+      "size": [
+        83,
+        35
+      ],
+      "alpha": [
+        252,
+        253
+      ],
+      "visibleBox": [
+        0,
+        0,
+        83,
+        35
+      ],
+      "sha256": "fe771e499d141a184035e8d27679b20d18e3004468e90c105dad1ba9d8a0fbb2"
+    },
+    {
+      "file": "04_BOTOES_ICONS/menu_missoes_quests.png",
+      "size": [
+        83,
+        36
+      ],
+      "alpha": [
+        252,
+        253
+      ],
+      "visibleBox": [
+        0,
+        0,
+        83,
+        36
+      ],
+      "sha256": "d875d8f8d121da7209fd33ea67d31577e60c8d2748c75b6397de659b355063ef"
+    },
+    {
+      "file": "04_BOTOES_ICONS/menu_personagem_char.png",
+      "size": [
+        83,
+        36
+      ],
+      "alpha": [
+        252,
+        253
+      ],
+      "visibleBox": [
+        0,
+        0,
+        83,
+        36
+      ],
+      "sha256": "bab49f67c41387bbe3cd4cad3f1ee3bc30a4761c183f35a1dab96ee6d5bd85c3"
+    },
+    {
+      "file": "04_BOTOES_ICONS/menu_principal.png",
+      "size": [
+        83,
+        36
+      ],
+      "alpha": [
+        252,
+        254
+      ],
+      "visibleBox": [
+        0,
+        0,
+        83,
+        36
+      ],
+      "sha256": "2649db5e01886d8d6e34dc9915b96eb1585ff4bdb52daa1c8c578cad3422c453"
+    },
+    {
+      "file": "04_BOTOES_ICONS/ornamento_cabeca_demonio.png",
+      "size": [
+        80,
+        71
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        79,
+        70
+      ],
+      "sha256": "4f8409b18e1eb3e3dd49b35142255d16f745930b6271ab62036771a68cb00670"
+    },
+    {
+      "file": "05_ORBES_BARRAS/barra_atalhos_5_icones.png",
+      "size": [
+        296,
+        69
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        1,
+        1,
+        295,
+        68
+      ],
+      "sha256": "318d4fed54b5091e25379e47271571f373ee5c0abc4e98240c8ca26e43ad611a"
+    },
+    {
+      "file": "05_ORBES_BARRAS/hotbar_central_com_slots.png",
+      "size": [
+        344,
+        88
+      ],
+      "alpha": [
+        0,
+        254
+      ],
+      "visibleBox": [
+        0,
+        12,
+        344,
+        88
+      ],
+      "sha256": "373769b3f9907a3d0457a78f6b5fd5942af313583e8e542833bd3c8fb2559b91"
+    },
+    {
+      "file": "05_ORBES_BARRAS/orbe_mana_azul.png",
+      "size": [
+        198,
+        206
+      ],
+      "alpha": [
+        0,
+        254
+      ],
+      "visibleBox": [
+        3,
+        7,
+        186,
+        190
+      ],
+      "sha256": "7a0c532038b187251c1ca9b78aebbe560f05a4caf353b2699e068bf9f8bd38fa"
+    },
+    {
+      "file": "05_ORBES_BARRAS/orbe_vida_vermelha.png",
+      "size": [
+        198,
+        206
+      ],
+      "alpha": [
+        0,
+        254
+      ],
+      "visibleBox": [
+        4,
+        7,
+        187,
+        190
+      ],
+      "sha256": "4dbafca06aa0e1038a285123a81f9cb34ca4687e15644a3b8fd6c42b79111806"
+    },
+    {
+      "file": "05_ORBES_BARRAS/painel_mensagens_hud.png",
+      "size": [
+        520,
+        122
+      ],
+      "alpha": [
+        247,
+        253
+      ],
+      "visibleBox": [
+        0,
+        0,
+        520,
+        122
+      ],
+      "sha256": "de98673c410fd5864b5996e172517cb9f38785cf771465787a56c342059bba59"
+    },
+    {
+      "file": "06_NINE_SLICE/frame9_centro.png",
+      "size": [
+        316,
+        135
+      ],
+      "alpha": [
+        250,
+        253
+      ],
+      "visibleBox": [
+        0,
+        0,
+        316,
+        135
+      ],
+      "sha256": "453416f4bfe32b7650545d38cf63c878ff276ee54d5f90e3f74466378eb04bf2"
+    },
+    {
+      "file": "06_NINE_SLICE/frame9_inferior_centro.png",
+      "size": [
+        316,
+        54
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        0,
+        0,
+        316,
+        51
+      ],
+      "sha256": "8fddb8bb39a213cae0c1e788957bff97ae229747f98619255bb12ff1b8b87018"
+    },
+    {
+      "file": "06_NINE_SLICE/frame9_inferior_direito.png",
+      "size": [
+        54,
+        54
+      ],
+      "alpha": [
+        0,
+        254
+      ],
+      "visibleBox": [
+        0,
+        0,
+        50,
+        52
+      ],
+      "sha256": "cf3de4f3a42085c825876933f76eed563cbf93554b31f8cc43cc089a0bbcc54c"
+    },
+    {
+      "file": "06_NINE_SLICE/frame9_inferior_esquerdo.png",
+      "size": [
+        54,
+        54
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        4,
+        0,
+        54,
+        52
+      ],
+      "sha256": "ed98db5d395e187548f3ca8337fb510da0542926da704ecdcf6baede6063b10e"
+    },
+    {
+      "file": "06_NINE_SLICE/frame9_meio_direito.png",
+      "size": [
+        54,
+        135
+      ],
+      "alpha": [
+        0,
+        253
+      ],
+      "visibleBox": [
+        0,
+        0,
+        53,
+        135
+      ],
+      "sha256": "16474786707976127b6d8adff1b54b27295e0702c964abe6cf529528af02309d"
+    },
+    {
+      "file": "06_NINE_SLICE/frame9_meio_esquerdo.png",
+      "size": [
+        54,
+        135
+      ],
+      "alpha": [
+        0,
+        253
+      ],
+      "visibleBox": [
+        1,
+        0,
+        54,
+        135
+      ],
+      "sha256": "1fdb3f3e2d7b9bda9021922b46385273882635df400eedd0d560dacd45c86832"
+    },
+    {
+      "file": "06_NINE_SLICE/frame9_superior_centro.png",
+      "size": [
+        316,
+        54
+      ],
+      "alpha": [
+        0,
+        253
+      ],
+      "visibleBox": [
+        0,
+        8,
+        316,
+        54
+      ],
+      "sha256": "16d2c9e4c377745e244efceb99221f5e0f1948bbd20dfb731a9fc0ab4e6f01e7"
+    },
+    {
+      "file": "06_NINE_SLICE/frame9_superior_direito.png",
+      "size": [
+        54,
+        54
+      ],
+      "alpha": [
+        0,
+        255
+      ],
+      "visibleBox": [
+        0,
+        2,
+        49,
+        54
+      ],
+      "sha256": "4c9f74aaf09a13e6d6ee98dca31964beac7669db625600fc9dc7ca01e07dab68"
+    },
+    {
+      "file": "06_NINE_SLICE/frame9_superior_esquerdo.png",
+      "size": [
+        54,
+        54
+      ],
+      "alpha": [
+        0,
+        253
+      ],
+      "visibleBox": [
+        5,
+        2,
+        54,
+        54
+      ],
+      "sha256": "968eaf396d4da1dedb904c487cf5ccbacb3a75fb2e71a90a8e2c684228619c95"
+    }
+  ],
+  "atlasSize": [
+    2048,
+    2048
+  ],
+  "atlasSha256": "becbfee17e6fcdb5be1da24666e2acd9938439e48f67e08959ddce0ecd3489fe",
+  "sprites": [
+    {
+      "id": "CHAR_FRAME",
+      "file": "02_MOLDURAS/moldura_personagem_sobreposta.png",
+      "xywh": [
+        2,
+        2,
+        502,
+        687
+      ]
+    },
+    {
+      "id": "INV_FRAME",
+      "file": "02_MOLDURAS/moldura_inventario_sobreposta.png",
+      "xywh": [
+        508,
+        2,
+        526,
+        683
+      ]
+    },
+    {
+      "id": "HUD",
+      "file": "01_PAINEIS/hud_inferior_completo.png",
+      "xywh": [
+        2,
+        693,
+        1278,
+        256
+      ]
+    },
+    {
+      "id": "TALL_SLOT",
+      "file": "03_SLOTS/slot_vertical_longo.png",
+      "xywh": [
+        1284,
+        693,
+        77,
+        163
+      ]
+    },
+    {
+      "id": "FRAME_C",
+      "file": "06_NINE_SLICE/frame9_centro.png",
+      "xywh": [
+        1365,
+        693,
+        316,
+        135
+      ]
+    },
+    {
+      "id": "FRAME_ML",
+      "file": "06_NINE_SLICE/frame9_meio_esquerdo.png",
+      "xywh": [
+        1685,
+        693,
+        54,
+        135
+      ]
+    },
+    {
+      "id": "FRAME_MR",
+      "file": "06_NINE_SLICE/frame9_meio_direito.png",
+      "xywh": [
+        1743,
+        693,
+        54,
+        135
+      ]
+    },
+    {
+      "id": "MESSAGE",
+      "file": "05_ORBES_BARRAS/painel_mensagens_hud.png",
+      "xywh": [
+        2,
+        953,
+        520,
+        122
+      ]
+    },
+    {
+      "id": "SLOT",
+      "file": "03_SLOTS/slot_equipamento_quadrado.png",
+      "xywh": [
+        526,
+        953,
+        89,
+        93
+      ]
+    },
+    {
+      "id": "HOTBAR_FRAME",
+      "file": "02_MOLDURAS/faixa_botoes_vazia.png",
+      "xywh": [
+        619,
+        953,
+        191,
+        73
+      ]
+    },
+    {
+      "id": "CROWN",
+      "file": "04_BOTOES_ICONS/ornamento_cabeca_demonio.png",
+      "xywh": [
+        814,
+        953,
+        80,
+        71
+      ]
+    },
+    {
+      "id": "SEAL",
+      "file": "04_BOTOES_ICONS/medalhao_pentagrama.png",
+      "xywh": [
+        898,
+        953,
+        60,
+        60
+      ]
+    },
+    {
+      "id": "FRAME_TC",
+      "file": "06_NINE_SLICE/frame9_superior_centro.png",
+      "xywh": [
+        962,
+        953,
+        316,
+        54
+      ]
+    },
+    {
+      "id": "FRAME_BC",
+      "file": "06_NINE_SLICE/frame9_inferior_centro.png",
+      "xywh": [
+        1282,
+        953,
+        316,
+        54
+      ]
+    },
+    {
+      "id": "ROMAN_I",
+      "file": "04_BOTOES_ICONS/botao_romano_I.png",
+      "xywh": [
+        1602,
+        953,
+        75,
+        54
+      ]
+    },
+    {
+      "id": "FRAME_TL",
+      "file": "06_NINE_SLICE/frame9_superior_esquerdo.png",
+      "xywh": [
+        1681,
+        953,
+        54,
+        54
+      ]
+    },
+    {
+      "id": "FRAME_TR",
+      "file": "06_NINE_SLICE/frame9_superior_direito.png",
+      "xywh": [
+        1739,
+        953,
+        54,
+        54
+      ]
+    },
+    {
+      "id": "FRAME_BL",
+      "file": "06_NINE_SLICE/frame9_inferior_esquerdo.png",
+      "xywh": [
+        1797,
+        953,
+        54,
+        54
+      ]
+    },
+    {
+      "id": "FRAME_BR",
+      "file": "06_NINE_SLICE/frame9_inferior_direito.png",
+      "xywh": [
+        1855,
+        953,
+        54,
+        54
+      ]
+    },
+    {
+      "id": "ROMAN_II",
+      "file": "04_BOTOES_ICONS/botao_romano_II.png",
+      "xywh": [
+        1913,
+        953,
+        75,
+        53
+      ]
+    },
+    {
+      "id": "ROMAN_III",
+      "file": "04_BOTOES_ICONS/botao_romano_III.png",
+      "xywh": [
+        2,
+        1079,
+        75,
+        53
+      ]
+    },
+    {
+      "id": "GRID_CELL",
+      "file": "01_PAINEIS/painel_inventario_vazio_editavel.png",
+      "xywh": [
+        81,
+        1079,
+        40,
+        45
+      ]
+    },
+    {
+      "id": "BUTTON",
+      "file": "04_BOTOES_ICONS/botao_horizontal_A.png",
+      "xywh": [
+        125,
+        1079,
+        75,
+        41
+      ]
+    },
+    {
+      "id": "GOLD_WELL",
+      "file": "02_MOLDURAS/moldura_inventario_sobreposta.png",
+      "xywh": [
+        204,
+        1079,
+        36,
+        17
+      ]
+    }
+  ],
+  "sourceArtworkModified": false,
+  "corrections": [
+    "The sample inventory has 10x5 cells; the native inventory retains 10x7.",
+    "The blue glass center is approximately (112,98), not the manifest (94,98).",
+    "Illustrative fixed items, numerical fields and potion pictures are not runtime game state."
+  ]
+}
