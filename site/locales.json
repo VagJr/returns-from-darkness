@@ -84,7 +84,7 @@
     "faq": [
       [
         "Preciso ter o Diablo original?",
-        "Sim. Os jogadores precisarão usar os arquivos de sua própria instalação. O projeto não distribui DIABDAT.MPQ nem os dados comerciais do jogo."
+        "A central da comunidade já está acessível no site. O cliente 0.2.4 está disponível para testes; o acesso às partidas externas ainda precisa de validação. A remasterização visual continua em desenvolvimento."
       ],
       [
         "Já posso jogar no servidor público?",
@@ -210,7 +210,7 @@
     "faq": [
       [
         "Do I need the original Diablo?",
-        "Yes. Players will need files from their own installation. The project does not distribute DIABDAT.MPQ or commercial game data."
+        "The community central is available on the website. Client 0.2.4 is available for testing; gameplay from external networks still needs validation. Visual remastering remains in development."
       ],
       [
         "Can I play on the public server yet?",
