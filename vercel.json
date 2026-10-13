@@ -30,6 +30,15 @@
           "value": "public, max-age=86400"
         }
       ]
+    },
+    {
+      "source": "/downloads/latest.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0"
+        }
+      ]
     }
   ],
   "installCommand": "",

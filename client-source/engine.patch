@@ -3248,7 +3248,7 @@
 +}
 --- /dev/null
 +++ b/src/CommunityHub.cpp
-@@ -0,0 +1,60 @@
+@@ -0,0 +1,101 @@
 +#include "stdafx.h"
 +#include "CommunityHub.h"
 +#pragma pack(push,8)
@@ -3263,17 +3263,34 @@
 +extern int LoadFonts();
 +extern int __fastcall InitButtonListText(HWND,int*,int,int);
 +extern int MainMenuButtonList[8];
++extern bool MainMainMenu;
++extern void __fastcall InitEditElems(HWND,int*,int);
++extern void __fastcall DrawEnterDialog(HWND,int*,int);
++extern void __fastcall SetYesNoButtonListProc(HWND,int*);
++extern char ZeroString_;
++extern char GameVersion[];
++extern int VersionList[];
++extern void __fastcall CheckPressKey(HWND,int);
++extern BOOL PhasedFadeInProcess();
++extern void __fastcall SetFadeTimer(HWND);
++extern BOOL __stdcall SetSystemCursor();
++extern void __fastcall InitDialogSurface(HWND);
++extern void DeleteDialogTitleAnim();
++extern void *TitleDialogSurface;
++extern int AnimTitleWidth,AnimTitleHeight;
 +namespace {
 +std::string token,username,title="Online do projeto";std::array<std::string,7> labels;
++char *formName=nullptr,*formPassword=nullptr;int formNameSize=0,formPasswordSize=0;
++int formTexts[]={ID_CAPTION,1040,1041,0},formEdits[]={1028,1029,0},formButtons[]={ID_OK_BUTTON,ID_EXIT_CANCEL_BUTTON,0};
 +const int ids[]={ID_MAINMENU_SINGLEPLAYER,ID_MAINMENU_MULTIPLAYER,ID_MAINMENU_COLISEUM,ID_MAINMENU_REPLAY_INTRO,ID_MAINMENU_SUPPORT,ID_MAINMENU_CREDITS,ID_EXIT_CANCEL_BUTTON};
-+std::string storage(){char root[MAX_PATH];GetEnvironmentVariableA("LOCALAPPDATA",root,sizeof(root));return std::string(root)+"\\ReturnsFromDarkness\\native-session.bin";}
++std::string storage(bool reading){char profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_PROFILE",profile,sizeof(profile));if(!reading&&!username.empty()){char root[MAX_PATH];GetEnvironmentVariableA("LOCALAPPDATA",root,sizeof(root));std::string path=std::string(root)+"\\ReturnsFromDarkness\\profiles\\"+username;std::transform(path.begin(),path.end(),path.begin(),[](unsigned char c){return char(tolower(c));});CreateDirectoryA(path.c_str(),nullptr);return path+"\\native-session.bin";}return std::string(profile)+"\\native-session.bin";}
 +void remember(bool read){
-+ if(read){FILE *f=fopen(storage().c_str(),"rb");if(!f)return;fseek(f,0,SEEK_END);long size=ftell(f);rewind(f);if(size<1||size>8192){fclose(f);return;}std::vector<BYTE> bytes(size);fread(bytes.data(),1,size,f);fclose(f);DATA_BLOB input{DWORD(size),bytes.data()},out{};
++ if(read){token.clear();username.clear();FILE *f=fopen(storage(true).c_str(),"rb");if(!f)return;fseek(f,0,SEEK_END);long size=ftell(f);rewind(f);if(size<1||size>8192){fclose(f);return;}std::vector<BYTE> bytes(size);fread(bytes.data(),1,size,f);fclose(f);DATA_BLOB input{DWORD(size),bytes.data()},out{};
 +  if(CryptUnprotectData(&input,nullptr,nullptr,nullptr,nullptr,CRYPTPROTECT_UI_FORBIDDEN,&out)){try{auto j=HubJson::parse(std::string((char*)out.pbData,out.cbData));token=j.at("token");username=j.at("user");}catch(...){}LocalFree(out.pbData);}
-+ }else{std::string text=HubJson({{"token",token},{"user",username}}).dump();DATA_BLOB input{DWORD(text.size()),(BYTE*)text.data()},out{};if(CryptProtectData(&input,L"Returns from Darkness",nullptr,nullptr,nullptr,CRYPTPROTECT_UI_FORBIDDEN,&out)){FILE *f=fopen(storage().c_str(),"wb");if(f){fwrite(out.pbData,1,out.cbData,f);fclose(f);}LocalFree(out.pbData);}}
++ }else{std::string text=HubJson({{"token",token},{"user",username}}).dump();DATA_BLOB input{DWORD(text.size()),(BYTE*)text.data()},out{};if(CryptProtectData(&input,L"Returns from Darkness",nullptr,nullptr,nullptr,CRYPTPROTECT_UI_FORBIDDEN,&out)){FILE *f=fopen(storage(false).c_str(),"wb");if(f){fwrite(out.pbData,1,out.cbData,f);fclose(f);}LocalFree(out.pbData);}}
 +}
 +HubJson api(const std::wstring &route,const HubJson &body=nullptr){
-+ HINTERNET session=WinHttpOpen(L"RFD-NativeHub/0.3.1",WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY,nullptr,nullptr,0);if(!session)throw std::runtime_error("A central nao respondeu.");
++ HINTERNET session=WinHttpOpen(L"RFD-NativeHub/0.3.3",WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY,nullptr,nullptr,0);if(!session)throw std::runtime_error("A central nao respondeu.");
 + WinHttpSetTimeouts(session,5000,5000,5000,12000);HINTERNET conn=WinHttpConnect(session,L"returns-darkness-realm.oblique-tactical.workers.dev",443,0),req=conn?WinHttpOpenRequest(conn,body.is_null()?L"GET":L"POST",(L"/api/"+route).c_str(),nullptr,nullptr,nullptr,WINHTTP_FLAG_SECURE):nullptr;
 + std::string text=body.is_null()?"":body.dump();std::wstring header=L"Content-Type: application/json\r\nAuthorization: Bearer "+std::wstring(token.begin(),token.end())+L"\r\n";std::string response;DWORD status=0,length=sizeof(status),received=0;char buffer[4096];bool ok=req&&WinHttpSendRequest(req,header.c_str(),DWORD(header.size()),text.empty()?nullptr:text.data(),DWORD(text.size()),DWORD(text.size()),0)&&WinHttpReceiveResponse(req,nullptr);
 + if(ok){WinHttpQueryHeaders(req,WINHTTP_QUERY_STATUS_CODE|WINHTTP_QUERY_FLAG_NUMBER,nullptr,&status,&length,nullptr);while(WinHttpReadData(req,buffer,sizeof(buffer),&received)&&received){response.append(buffer,received);if(response.size()>262144){ok=false;break;}}}
@@ -3285,25 +3302,49 @@
 + if(msg==WM_COMMAND&&!HIWORD(w)){int id=LOWORD(w);if(id==1)id=GetDlgCtrlID(GetFocus());if(id==2){SDlgEndDialog(dlg,7);return 0;}for(int i=0;i<7;i++)if(id==ids[i]){SDlgEndDialog(dlg,i+1);return 0;}}
 + int value=DialogMainMenu(dlg,msg,w,l);if(msg==WM_INITDIALOG){DeleteElementListData(dlg,MainMenuButtonList);for(int i=0;i<7;i++){SetDlgItemTextA(dlg,ids[i],labels[i].c_str());EnableWindow(GetDlgItem(dlg,ids[i]),!labels[i].empty());}InitButtonListText(dlg,MainMenuButtonList,6,1);SetFocus(GetDlgItem(dlg,ids[0]));}return value;
 +}
-+int menu(){LoadFonts();return SDlgDialogBoxParam(HInstance,"MAINMENU_DIALOG2",ghMainWnd,hubDialog,0);}
-+bool form(const char *caption,char *name,int nameSize,char *password,int passSize){title=caption;int result=0;UiLogonDialog(ghMainWnd,&result,name,nameSize,password,passSize);title="Online do projeto";return result==1;}
-+void launch(const HubJson &room){auto result=api(L"launch",{{"roomId",room.at("id")}});std::string uri=result.at("launchUri");if(uri.rfind("rfd://play/",0)!=0&&uri!="rfd://focus")throw std::runtime_error("Convite da sala invalido.");ShellExecuteA(ghMainWnd,"open",uri.c_str(),nullptr,nullptr,SW_SHOWNORMAL);}
++int menu(){LoadFonts();MainMainMenu=true;int result=SDlgDialogBoxParam(HInstance,"MAINMENU_DIALOG2",ghMainWnd,hubDialog,0);MainMainMenu=false;return result;}
++int __stdcall formDialog(HWND dlg,unsigned int msg,WPARAM w,LPARAM l){
++ if(msg==WM_INITDIALOG){
++  TextWin *data=AllocTextWin();SetWindowLongA(dlg,GWL_USERDATA,(LONG)data);
++  LoadDialogBackground(dlg,0,&ZeroString_,-1,1,"ui_art\\mainmenu.pcx",&data->surface,&data->size,0);CheckPressKey(dlg,1);InitDialogSurface(dlg);if(TitleDialogSurface)memset(TitleDialogSurface,0,AnimTitleWidth*AnimTitleHeight);
++  for(int id:formEdits)if(id){RECT r;GetWindowRect(GetDlgItem(dlg,id),&r);ScreenToClient(dlg,(POINT*)&r);ScreenToClient(dlg,(POINT*)&r.right);r.left=std::max(0L,r.left);r.top=std::max(0L,r.top);r.right=std::min(LONG(data->size.cx),r.right);r.bottom=std::min(LONG(data->size.cy),r.bottom);for(int y=r.top;y<r.bottom;y++)for(int x=r.left;x<r.right;x++)if(y==r.top||y==r.bottom-1||x==r.left||x==r.right-1)data->surface[y*data->size.cx+x]=199;}
++  SetDlgItemTextA(dlg,ID_CAPTION,title.c_str());SetDlgItemTextA(dlg,ID_VERSION_TEXT,GameVersion);
++  InitTextElemList(dlg,formTexts,2);InitTextElemList(dlg,VersionList,1);InitEditElems(dlg,formEdits,2);InitButtonListText(dlg,formButtons,4,0);
++  InitSelectionAndLoadPentagram("ui_art\\focus.pcx");SetYesNoButtonListProc(dlg,formButtons);
++  SendMessageA(GetDlgItem(dlg,1028),MSG_LIMIT,formNameSize-1,0);SendMessageA(GetDlgItem(dlg,1029),MSG_LIMIT,formPasswordSize-1,0);
++  SetPropA(GetDlgItem(dlg,1029),"RFD_PASSWORD",reinterpret_cast<HANDLE>(1));SDlgSetTimer(dlg,1,55,0);SetFocus(GetDlgItem(dlg,1028));PostMessageA(dlg,MSG_BEGIN_FADE,0,0);return 0;
++ }
++ if(msg==WM_DESTROY){CheckFadeTimer();DeleteDialogTitleAnim();DeletePentagram();DeleteElementListData(dlg,formTexts);DeleteElementListData(dlg,formEdits);DeleteElementListData(dlg,formButtons);DeleteElementListData(dlg,VersionList);DeleteWinData((TextWin*)GetWindowLongA(dlg,GWL_USERDATA));SetWindowLongA(dlg,GWL_USERDATA,0);SetSystemCursor();}
++ if(msg==MSG_BEGIN_FADE){if(!PhasedFadeInProcess())SetFadeTimer(dlg);return 0;}
++ if(msg==WM_TIMER){if(RfdControlPending()){SDlgEndDialog(dlg,2);return 0;}if(w==1){DrawEnterDialog(dlg,formEdits,2);AnimateSelectionPentagram(dlg,GetFocus());for(int id:formEdits)if(id)InvalidateRect(GetDlgItem(dlg,id),nullptr,FALSE);}return 0;}
++ if(msg==WM_COMMAND){int id=LOWORD(w),event=HIWORD(w);
++  if((id==1028||id==1029)&&(event==1||event==3)){DrawEnterDialog(dlg,formEdits,2);return 0;}
++  if(event==BN_SETFOCUS&&id!=1028&&id!=1029){SelectButton((HWND)l);return 0;}
++  if(!event){if(id==1){if(GetFocus()==GetDlgItem(dlg,1028)){SetFocus(GetDlgItem(dlg,1029));return 0;}id=ID_OK_BUTTON;}
++   if(id==ID_OK_BUTTON){GetWindowTextA(GetDlgItem(dlg,1028),formName,formNameSize);GetWindowTextA(GetDlgItem(dlg,1029),formPassword,formPasswordSize);CheckFadeTimer();SDlgEndDialog(dlg,1);return 0;}
++   if(id==2){CheckFadeTimer();SDlgEndDialog(dlg,2);return 0;}
++  }
++ }
++ return SDlgDefDialogProc_(dlg,msg,w,l);
++}
++bool form(const char *caption,char *name,int nameSize,char *password,int passSize){title=caption;formName=name;formPassword=password;formNameSize=nameSize;formPasswordSize=passSize;LoadFonts();MainMainMenu=true;int result=SDlgDialogBoxParam(HInstance,"RFD_ONLINE_FORM",ghMainWnd,formDialog,0);MainMainMenu=false;formName=formPassword=nullptr;title="Online do projeto";return result==1;}
++void launch(const HubJson &room){auto result=api(L"launch",{{"roomId",room.at("id")}});std::string uri=result.at("launchUri");if(uri.rfind("rfd://play/",0)!=0&&uri.rfind("rfd://resume/",0)!=0&&uri!="rfd://focus")throw std::runtime_error("Convite da sala invalido.");ShellExecuteA(ghMainWnd,"open",uri.c_str(),nullptr,nullptr,SW_SHOWNORMAL);}
 +}
 +const char *RfdHubFormTitle(){return title.c_str();}
 +int RfdShowRoomHub(){
 + remember(true);size_t page=0;char hash[65]={};GetEnvironmentVariableA("RFD_CONTENT_HASH",hash,sizeof(hash));
 + for(;;){try{
 +  if(RfdControlPending())return 1;
-+  if(token.empty()){labels={"Entrar na conta","Criar conta","Central da comunidade","","","","Voltar"};int choice=menu();if(choice==7||choice<1)return 1;if(choice==99)return 1;if(choice==3){RfdOpenProjectLobby();continue;}if(choice!=1&&choice!=2)continue;
++  if(token.empty()){labels={"Entrar na conta","Criar conta","Comunidade","","","","Voltar"};int choice=menu();if(choice==7||choice<1)return 1;if(choice==99)return 1;if(choice==3){RfdOpenProjectLobby();continue;}if(choice!=1&&choice!=2)continue;
 +   char name[17]={},password[65]={};if(!form(choice==1?"Entrar na conta":"Criar conta",name,sizeof(name),password,sizeof(password)))continue;
 +   auto login=api(choice==1?L"login":L"register",{{"username",name},{"password",password}});SecureZeroMemory(password,sizeof(password));token=login.at("sessionToken");username=name;remember(false);continue;
 +  }
 +  auto state=api(L"state");std::vector<HubJson> rooms;HubJson current=nullptr;for(auto &room:state.at("rooms")){rooms.push_back(room);for(auto &player:room.at("players"))if(_stricmp(player.at("user").get<std::string>().c_str(),username.c_str())==0)current=room;}
 +  if(!current.is_null()){
-+   labels={"Entrar na partida","Sair da sala","Atualizar","Central da comunidade","Trocar conta","","Voltar"};int choice=menu();if(choice==7||choice<1||choice==99)return 1;if(choice==1){launch(current);continue;}if(choice==2){api(L"rooms/leave",{{"roomId",current.at("id")}});continue;}if(choice==4){RfdOpenProjectLobby();continue;}if(choice==5){api(L"logout",HubJson::object());token.clear();remember(false);}continue;
++   labels={"Entrar na partida","Sair da sala","Atualizar","Comunidade","Trocar conta","","Voltar"};int choice=menu();if(choice==7||choice<1||choice==99)return 1;if(choice==1){launch(current);continue;}if(choice==2){api(L"rooms/leave",{{"roomId",current.at("id")}});continue;}if(choice==4){RfdOpenProjectLobby();continue;}if(choice==5){api(L"logout",HubJson::object());token.clear();remember(false);}continue;
 +  }
-+  if(page*3>=rooms.size())page=0;labels={"Criar sala","Nenhuma sala","","","Proxima pagina / Atualizar","Central da comunidade","Voltar"};
-+  for(size_t i=0;i<3&&page*3+i<rooms.size();i++){auto &room=rooms[page*3+i];labels[i+1]=room.at("name").get<std::string>().substr(0,24)+" "+std::to_string(room.at("players").size())+"/4";}
++  if(page*3>=rooms.size())page=0;labels={"Criar sala","Nenhuma sala","","","Mais salas / Atualizar","Comunidade","Voltar"};
++  for(size_t i=0;i<3&&page*3+i<rooms.size();i++){auto &room=rooms[page*3+i];labels[i+1]=room.at("name").get<std::string>().substr(0,17)+" "+std::to_string(room.at("players").size())+"/4";}
 +  int choice=menu();if(choice==7||choice<1||choice==99)return 1;if(choice==6){RfdOpenProjectLobby();continue;}if(choice==5){page++;continue;}
 +  if(choice==1){char name[49]={},password[65]={};if(!form("Criar sala",name,sizeof(name),password,sizeof(password)))continue;auto created=api(L"rooms/create",{{"name",name},{"password",password},{"contentHash",hash}});SecureZeroMemory(password,sizeof(password));launch(created.at("room"));continue;}
 +  size_t index=page*3+choice-2;if(choice>=2&&choice<=4&&index<rooms.size()){auto &room=rooms[index];char name[49]={},password[65]={};if(room.value("locked",false)&&!form("Senha da sala",name,sizeof(name),password,sizeof(password)))continue;api(L"rooms/join",{{"roomId",room.at("id")},{"password",password},{"contentHash",hash}});SecureZeroMemory(password,sizeof(password));launch(room);}
@@ -3649,10 +3690,12 @@
 +const char *RfdWindowTitle();
 --- /dev/null
 +++ b/src/CommunityVisual.cpp
-@@ -0,0 +1,75 @@
+@@ -0,0 +1,80 @@
 +#include "stdafx.h"
 +#include <wincodec.h>
 +extern bool MainMainMenu;
++extern bool RfdMenuFooter(unsigned char*,int,int);
++extern PALETTEENTRY MenuPalette[256];
 +
 +namespace {
 +void refreshMenus(){
@@ -3667,6 +3710,7 @@
 + RedrawWindow(dialog,nullptr,nullptr,RDW_INVALIDATE|RDW_ERASE|RDW_ALLCHILDREN);
 +}
 +IDirect3DTexture9 *logo=nullptr;
++IDirect3DTexture9 *footer=nullptr;
 +std::vector<IDirect3DTexture9*> logoFrames;
 +IDirect3DDevice9 *owner=nullptr;
 +bool attempted=false;
@@ -3703,10 +3747,10 @@
 +
 +void RfdDrawProjectLogo(LPDIRECT3DDEVICE9 dev,const RECT &menuRect){
 + refreshMenus();
-+ if((!MainMainMenu&&!LoadingScreenCEL)||VideoWindowExists||(gbRunGame&&!LoadingScreenCEL))return;
-+ if(owner!=dev){for(auto texture:logoFrames)texture->Release();logoFrames.clear();logo=nullptr;owner=dev;attempted=false;}
-+ if(!attempted){attempted=true;loadLogo(dev);}if(!logo)return;
-+ logo=logoFrames[(GetTickCount()/80)%logoFrames.size()];
++ if(VideoWindowExists||(gbRunGame&&!LoadingScreenCEL))return;
++ if(owner!=dev){for(auto texture:logoFrames)texture->Release();logoFrames.clear();logo=nullptr;if(footer){footer->Release();footer=nullptr;}owner=dev;attempted=false;}
++ if(!footer&&!gbRunGame){std::vector<unsigned char> pixels(512*24);if(RfdMenuFooter(pixels.data(),512,24)&&SUCCEEDED(dev->CreateTexture(512,24,1,0,D3DFMT_A8R8G8B8,D3DPOOL_MANAGED,&footer,nullptr))){D3DLOCKED_RECT locked;if(SUCCEEDED(footer->LockRect(0,&locked,nullptr,0))){for(int y=0;y<24;y++)for(int x=0;x<512;x++){unsigned char value=pixels[y*512+x];auto &color=MenuPalette[value];unsigned int intensity=std::max(60u,(unsigned(color.peRed)+color.peGreen+color.peBlue)/3);((DWORD*)((char*)locked.pBits+y*locked.Pitch))[x]=value?0xc0000000|(intensity<<16)|(intensity<<8)|intensity:0;}footer->UnlockRect(0);}}}
++ if(MainMainMenu||LoadingScreenCEL){if(!attempted){attempted=true;loadLogo(dev);}if(logo)logo=logoFrames[(GetTickCount()/80)%logoFrames.size()];}
 + IDirect3DStateBlock9 *state=nullptr;if(FAILED(dev->CreateStateBlock(D3DSBT_ALL,&state)))return;
 + state->Capture();
 + const float sx=float(menuRect.right-menuRect.left+1)/640.0f;
@@ -3722,7 +3766,9 @@
 + dev->SetTextureStageState(0,D3DTSS_ALPHAOP,D3DTOP_SELECTARG1);dev->SetTextureStageState(0,D3DTSS_ALPHAARG1,D3DTA_TEXTURE);
 + dev->SetTextureStageState(1,D3DTSS_COLOROP,D3DTOP_DISABLE);
 + dev->SetSamplerState(0,D3DSAMP_MINFILTER,D3DTEXF_LINEAR);dev->SetSamplerState(0,D3DSAMP_MAGFILTER,D3DTEXF_LINEAR);
-+ dev->SetFVF(D3DFVF_XYZRHW|D3DFVF_DIFFUSE|D3DFVF_TEX1);dev->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,2,quad,sizeof(Vertex));
++ dev->SetFVF(D3DFVF_XYZRHW|D3DFVF_DIFFUSE|D3DFVF_TEX1);
++ if(logo&&(MainMainMenu||LoadingScreenCEL))dev->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,2,quad,sizeof(Vertex));
++ if(footer&&!gbRunGame){D3DVIEWPORT9 viewport;dev->GetViewport(&viewport);const float left=20.f,bottom=float(viewport.Height)-18.f,top=bottom-24.f;Vertex line[]={{left,top,0,1,0xffffffff,0,0},{left+512,top,0,1,0xffffffff,1,0},{left,bottom,0,1,0xffffffff,0,1},{left+512,bottom,0,1,0xffffffff,1,1}};dev->SetTexture(0,footer);dev->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,2,line,sizeof(Vertex));}
 + state->Apply();state->Release();
 +}
 --- a/src/Config.cpp
@@ -25910,7 +25956,7 @@
 +};
 --- a/src/Hell.cpp
 +++ b/src/Hell.cpp
-@@ -1,13905 +1,13910 @@
+@@ -1,13905 +1,13925 @@
 -﻿#include "stdafx.h"
 -
 -// hellfrui.dll sources
@@ -39815,7 +39861,7 @@
 -		SMemFree( data, __FILE__, __LINE__, 0 );
 -		data = nullptr;
 -	}
-+#include "stdafx.h"
+-}+﻿#include "stdafx.h"
 +#include "CommunityHub.h"
 +
 +// hellfrui.dll sources
@@ -40285,6 +40331,13 @@
 +unsigned __int8 *PopupDataSurface;
 +unsigned __int8 *ButtonDataSurface;
 +char GameVersion[ 64 ];
++
++bool RfdMenuFooter(unsigned char *pixels,int width,int height){
++    if(!Font16s.fontLoaded||!GameVersion[0])return false;
++    TextWin target={};target.surface=pixels;target.size.cx=width;target.size.cy=height;
++    memset(pixels,0,width*height);DiabloFont *previous=CurFont;SetCurFont(1);
++    DrawFontString((unsigned char*)GameVersion,&target,0,0);CurFont=previous;return true;
++}
 +int UnusedMaybeFps; // weak
 +int DialResult; // weak
 +int DialupGameServerPresent; // weak
@@ -43921,6 +43974,7 @@
 +	if( dlgData ){
 +		if( dlgData->surface ){
 +			GetWindowTextA( hdlg_1, winText, 255 );
++            if(GetPropA(hdlg_1,"RFD_PASSWORD")){size_t masked=strlen(winText);if(SendMessageA(hdlg_1,MSG_CURSOR,0,0)&&masked)masked--;for(size_t i=0;i<masked;i++)winText[i]='*';}
 +			len = strlen( winText );
 +			pentaWidth = GetPentagramWidth();
 +			spaceWidth = GetSpaceWidth() + pentaWidth;
@@ -44491,6 +44545,12 @@
 +//----- (200072E0) --------------------------------------------------------
 +int __fastcall AnimateSelectionPentagram( HWND hdlg, HWND curButton )
 +{
++	// Editable fields use smaller bitmap surfaces than the animated menu markers.
++	// Storm blitters do not clip negative offsets, so only animate real menu buttons.
++	if(curButton){
++		TextWin *data=(TextWin *)GetWindowLongA(curButton,GWL_USERDATA);
++		if(!data||data->size.cy<PentagramDrawHeight||data->size.cx<2*PentagramDrawWidth)return 0;
++	}
 +	HWND curButton_1; // edi@1
 +	HWND dlg; // ebx@1
 +	int result; // eax@2
@@ -45458,6 +45518,7 @@
 +					return 0;
 +				}
 +				if( wParam == 2 ){
++					ResetButtonText(hdlg,MainMenuButtonList,6,1);
 +					AnimateDialogTitle( hdlg );
 +					return 0;
 +				}
@@ -53724,7 +53785,8 @@
 +		SMemFree( data, __FILE__, __LINE__, 0 );
 +		data = nullptr;
 +	}
- }--- a/src/Item.cpp
++}
+--- a/src/Item.cpp
 +++ b/src/Item.cpp
 @@ -1,3500 +1,3502 @@
 -﻿#include "stdafx.h"
@@ -122494,7 +122556,7 @@
  #include <dbghelp.h>
 --- a/src/thehell3.rc
 +++ b/src/thehell3.rc
-@@ -1,4430 +1,4430 @@
+@@ -1,4430 +1,4442 @@
 -// Microsoft Visual C++ generated resource script.
 -//
 -#include "resource.h"
@@ -127261,7 +127323,6 @@
 +    PUSHBUTTON      "History",1128,26,117,204,18,BS_NOTIFY
 +    PUSHBUTTON      "Credits",ID_MAINMENU_CREDITS,26,135,204,18,BS_NOTIFY
 +	PUSHBUTTON      "Exit",ID_EXIT_CANCEL_BUTTON,26,153,204,18,BS_NOTIFY
-+    LTEXT           "",ID_VERSION_TEXT,7,187,242,9,WS_DISABLED
 +    CONTROL         "",ID_BACKGROUND,"Static",SS_BLACKFRAME | WS_DISABLED,0,0,256,65
 +END
 +
@@ -127276,7 +127337,6 @@
 +    PUSHBUTTON      "Support",ID_MAINMENU_SUPPORT,26,135,204,18,BS_NOTIFY
 +    PUSHBUTTON      "Credits",ID_MAINMENU_CREDITS,26,153,204,18,BS_NOTIFY
 +    PUSHBUTTON      "Exit",ID_EXIT_CANCEL_BUTTON,26,171,204,18,BS_NOTIFY
-+    LTEXT           "",ID_VERSION_TEXT,7,187,242,9,WS_DISABLED
 +    CONTROL         "",ID_BACKGROUND,"Static",SS_BLACKFRAME | WS_DISABLED,0,0,256,65
 +END
 +
@@ -131355,6 +131415,20 @@
 +/////////////////////////////////////////////////////////////////////////////
 +#endif    // not APSTUDIO_INVOKED
 +
++
++RFD_ONLINE_FORM DIALOGEX 0, 0, 256, 203
++STYLE DS_SETFONT | WS_POPUP | WS_VISIBLE
++FONT 13, "Times New Roman", 700, 0, 0x1
++BEGIN
++    CTEXT "Online do projeto",ID_CAPTION,26,65,204,14,WS_DISABLED
++    LTEXT "Nome",1040,42,84,172,14,WS_DISABLED
++    CONTROL "",1028,"DIABLOEDIT",WS_TABSTOP,36,100,184,16
++    LTEXT "Senha",1041,42,119,172,14,WS_DISABLED
++    CONTROL "",1029,"DIABLOEDIT",WS_TABSTOP,36,135,184,16
++    PUSHBUTTON "Confirmar",ID_OK_BUTTON,26,165,100,18,BS_NOTIFY
++    PUSHBUTTON "Voltar",ID_EXIT_CANCEL_BUTTON,130,165,100,18,BS_NOTIFY
++    CONTROL "",ID_BACKGROUND,"Static",SS_BLACKFRAME | WS_DISABLED,0,0,256,65
++END
 --- a/src/TownMap.cpp
 +++ b/src/TownMap.cpp
 @@ -1,2796 +1,2799 @@
@@ -138481,6 +138555,15 @@
        <SuppressStartupBanner>true</SuppressStartupBanner>
        <GenerateDebugInformation>true</GenerateDebugInformation>
        <SubSystem>Windows</SubSystem>
+@@ -98,7 +99,7 @@
+       <StackReserveSize>10485760</StackReserveSize>
+       <DelayLoadDLLs>ddraw.dll;xinput9_1_0.dll</DelayLoadDLLs>
+       <ProgramDatabaseFile>$(IntDir)$(TargetName).pdb</ProgramDatabaseFile>
+-      <GenerateMapFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateMapFile>
++      <GenerateMapFile>true</GenerateMapFile>
+     </Link>
+     <Bscmake>
+       <SuppressStartupBanner>true</SuppressStartupBanner>
 @@ -119,6 +120,12 @@
      <FxCompile />
    </ItemDefinitionGroup>
@@ -138522,9 +138605,9 @@
 +#pragma once
 +
 +#define TH3_REVISION 1265
-+#define THE_HELL_VERSION_INT 0,3,2,0
-+#define THE_HELL_VERSION_STRING "v0.3.2\0"
-+#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.3.2\0"
++#define THE_HELL_VERSION_INT 0,3,3,0
++#define THE_HELL_VERSION_STRING "v0.3.3\0"
++#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.3.3\0"
 +
 +
 +

@@ -1,0 +1,500 @@
+{
+  "pt-BR": {
+    "summary": "Retorne a Tristram em uma aventura ampliada: 29 caminhos de personagem, milhares de equipamentos, magias, talentos e desafios. Reúna até quatro jogadores na central online e continue a jornada no cliente Windows de Returns from Darkness HD.",
+    "facts": [
+      "Cliente disponível · Em evolução",
+      "Até 4 jogadores por partida",
+      "Gratuito · Não comercial"
+    ],
+    "vision": [
+      "Alguns lugares nunca deixam de chamar.",
+      "O silêncio de Tristram. A porta da catedral. A sensação de descer mais um andar com amigos.",
+      "Uma comunidade para reencontrar o clássico com mais possibilidades de construção de personagem, exploração e equipamentos. A central reúne contas, chat e salas; cada grupo vive sua própria aventura, com a identidade de Returns from Darkness."
+    ],
+    "pillars": [
+      [
+        "29 caminhos",
+        "Seis arquétipos e 29 classes e especializações. Combine atributos, talentos e características para desenvolver seu estilo de combate."
+      ],
+      [
+        "Um arsenal profundo",
+        "Mais de 2.500 bases de equipamentos, afixos, raridades, gemas e melhorias. Organize seu acervo no baú ampliado e experimente novas combinações."
+      ],
+      [
+        "Mais desafios",
+        "Magias, chefes, criaturas, missões e áreas ampliam a jornada. Regras como Hardcore, Ironman e Survival, além do Coliseum, oferecem outros desafios no cliente."
+      ]
+    ],
+    "now": [
+      "Disponível nesta build",
+      "Cliente Windows com central integrada, salas cooperativas para até quatro pessoas, launcher com atualização automática e personagens separados por conta. O sistema de itens compartilha os drops da sala; o salvamento automático preserva inventário, ouro e evolução neste computador."
+    ],
+    "next": [
+      "O próximo capítulo",
+      "Ampliar a remasterização visual com materiais e artes coerentes, melhorar as ferramentas de conteúdo e validar partidas externas, Coliseum online, Arena PvP e eventos da comunidade."
+    ],
+    "limits": "A central usa serviços na nuvem; a partida roda nos clientes e exige que o criador permaneça conectado. Personagens são salvos neste computador, com gravação automática e cópia de recuperação. Uma nova sala cria um novo mundo. Artes HD completas, migração de anfitrião e ranking PvP ainda não estão concluídos.",
+    "milestones": [
+      [
+        "A comunidade está online",
+        "Conta, canais, chat e salas estão no site. O projeto não depende do computador do administrador ligado para manter a central acessível.",
+        "Disponível"
+      ],
+      [
+        "Uma jornada mais ampla",
+        "29 caminhos de personagem, equipamentos, talentos, magias e desafios compõem o cliente atual. O menu de salas e a identidade visual seguem integrados à experiência.",
+        "No cliente"
+      ],
+      [
+        "O retorno continua",
+        "Full HD, melhorias de materiais e logo animada já fazem parte da direção visual. A remasterização de todas as artes e a Arena das Cinzas continuam em produção.",
+        "Em desenvolvimento"
+      ]
+    ],
+    "faq": [
+      [
+        "Como começar a jogar?",
+        "Baixe o cliente Windows na central, entre na conta e crie ou escolha uma sala. O botão da sala abre o jogo; o hub interno também dá acesso à comunidade. O launcher verifica a versão mais recente antes de iniciar uma nova partida e importa os arquivos de jogo compatíveis da sua instalação."
+      ],
+      [
+        "É preciso manter um servidor no meu PC?",
+        "A central de contas, chat e salas permanece na nuvem. A partida é hospedada pelo cliente do criador da sala, com conexão direta quando possível e retransmissão em redes restritivas. O criador precisa permanecer no jogo; sair encerra a partida do grupo."
+      ],
+      [
+        "Meu personagem fica salvo?",
+        "Sim. O cliente salva automaticamente durante a jornada e ao sair normalmente, mantendo inventário, ouro e evolução em um perfil por conta neste computador. Os saves ficam separados das atualizações. Não há sincronização de personagens entre computadores; o mundo de uma sala não é persistente."
+      ],
+      [
+        "O jogo inteiro já está remasterizado e a Arena pronta?",
+        "O cliente trabalha com resolução Full HD e melhorias visuais em evolução, preservando os sprites clássicos. A substituição de todas as artes por recursos de maior definição ainda é parcial. O Coliseum existe como desafio no cliente; Arena PvP online, ranking e eventos próprios seguem em validação e desenvolvimento."
+      ]
+    ],
+    "join": [
+      "O próximo capítulo começa com a comunidade.",
+      "Entre na central para conversar, reunir seu grupo e abrir uma partida. No Discord, acompanhe as atualizações e compartilhe suas experiências de jogo."
+    ],
+    "pending": [
+      "Convite em preparação",
+      "Código disponível no GitHub"
+    ],
+    "online": [
+      "O encontro antes da aventura.",
+      "Uma central de comunidade com contas, canais de conversa e salas para até quatro jogadores. Encontre seu grupo no site ou no hub do cliente e prepare a próxima jornada. A central fica na nuvem; as partidas são hospedadas pelos próprios jogadores."
+    ]
+  },
+  "en": {
+    "summary": "Return to Tristram for an expanded adventure: 29 character paths, thousands of equipment bases, spells, talents and challenges. Gather up to four players in the online community hub and continue your journey in the Returns from Darkness HD Windows client.",
+    "facts": [
+      "Client available · In development",
+      "Up to 4 players per game",
+      "Free · Non-commercial"
+    ],
+    "vision": [
+      "Some places never stop calling.",
+      "The silence of Tristram. The cathedral door. The feeling of descending one more floor with friends.",
+      "Rediscover the classic with deeper character builds, exploration and equipment. Accounts, chat and rooms meet in one community hub; each group has its own adventure under the Returns from Darkness identity."
+    ],
+    "pillars": [
+      [
+        "29 character paths",
+        "Six archetypes and 29 classes and specializations. Combine attributes, talents and traits to develop your combat style."
+      ],
+      [
+        "A deeper arsenal",
+        "Over 2,500 equipment bases, affixes, rarities, gems and upgrades. Organize your collection in an expanded stash and discover new combinations."
+      ],
+      [
+        "More challenges",
+        "Spells, bosses, creatures, quests and areas expand the journey. Rules such as Hardcore, Ironman and Survival, plus the Coliseum, offer additional client challenges."
+      ]
+    ],
+    "now": [
+      "Available in this build",
+      "Windows client with an integrated hub, cooperative rooms for up to four players, automatic updates and separate account profiles. The item system shares room drops; automatic saving preserves inventory, gold and character development on this computer."
+    ],
+    "next": [
+      "The next chapter",
+      "Expand the visual remaster with coherent materials and artwork, improve content tools and validate external games, online Coliseum, PvP Arena and community events."
+    ],
+    "limits": "The hub uses cloud services; gameplay runs in the clients and requires the room creator to stay connected. Characters save on this computer automatically, with recovery copies. A new room creates a new world. Full HD artwork, host migration and ranked PvP are not yet complete.",
+    "milestones": [
+      [
+        "The community is online",
+        "Accounts, channels, chat and rooms are on the website. Keeping the hub accessible does not require the administrator's PC to stay on.",
+        "Available"
+      ],
+      [
+        "An expanded journey",
+        "29 character paths, equipment, talents, spells and challenges are part of the current client. The room menu and project identity continue to join the experience.",
+        "In the client"
+      ],
+      [
+        "The return continues",
+        "Full HD, material improvements and an animated logo shape the visual direction. Remastering all artwork and the Ashen Arena remain in development.",
+        "In development"
+      ]
+    ],
+    "faq": [
+      [
+        "How do I start?",
+        "Download the Windows client from the hub, sign in and create or choose a room. The room button opens the game, and the internal hub also connects to the community. The launcher checks for the latest version before a new game and imports compatible game files from your installation."
+      ],
+      [
+        "Do I need a server running on my PC?",
+        "Accounts, chat and room discovery stay in the cloud. The room creator's client hosts gameplay, using a direct connection when possible and a relay on restrictive networks. The creator must stay in the game; leaving ends the group's session."
+      ],
+      [
+        "Is my character saved?",
+        "Yes. Automatic saves during play and on normal exit preserve inventory, gold and character development in a separate account profile on this computer. Updates keep saves separate. Characters do not sync across computers, and the room world is not persistent."
+      ],
+      [
+        "Is the full remaster and Arena finished?",
+        "The client supports Full HD resolution and evolving visual improvements while preserving classic sprites. Higher-definition artwork replacement is still partial. Coliseum exists as a client challenge; online PvP Arena, rankings and project events remain in validation and development."
+      ]
+    ],
+    "join": [
+      "The next chapter begins with the community.",
+      "Visit the hub to chat, gather your group and open a game. Follow updates and share your gameplay experiences on Discord."
+    ],
+    "pending": [
+      "Invite being prepared",
+      "Source available on GitHub"
+    ],
+    "online": [
+      "The gathering before the adventure.",
+      "A community hub with accounts, chat channels and rooms for up to four players. Find your group on the website or in the client hub and prepare the next journey. The hub stays in the cloud; players host their games."
+    ]
+  },
+  "es": {
+    "summary": "Regresa a Tristram en una aventura ampliada: 29 caminos de personaje, miles de equipos, hechizos, talentos y desafíos. Reúne hasta cuatro jugadores en la central online y continúa en el cliente Windows de Returns from Darkness HD.",
+    "facts": [
+      "Cliente disponible · En evolución",
+      "Hasta 4 jugadores por partida",
+      "Gratis · No comercial"
+    ],
+    "vision": [
+      "Algunos lugares nunca dejan de llamar.",
+      "El silencio de Tristram. La puerta de la catedral. Descender un piso más con amigos.",
+      "Redescubre el clásico con más opciones de personaje, exploración y equipo. Cuentas, chat y salas se reúnen en la central; cada grupo vive su propia aventura con la identidad de Returns from Darkness."
+    ],
+    "pillars": [
+      [
+        "29 caminos",
+        "Seis arquetipos y 29 clases y especializaciones. Combina atributos, talentos y rasgos para definir tu combate."
+      ],
+      [
+        "Un arsenal profundo",
+        "Más de 2.500 bases de equipo, afijos, rarezas, gemas y mejoras. Organiza tu colección en el alijo ampliado."
+      ],
+      [
+        "Más desafíos",
+        "Hechizos, jefes, criaturas, misiones y zonas amplían el viaje. Hardcore, Ironman, Survival y Coliseum ofrecen desafíos adicionales en el cliente."
+      ]
+    ],
+    "now": [
+      "Disponible en esta versión",
+      "Cliente Windows con central integrada, salas cooperativas de hasta cuatro jugadores, actualizaciones automáticas y perfiles separados. El sistema de objetos comparte los drops de la sala; el guardado automático conserva inventario, oro y evolución en este equipo."
+    ],
+    "next": [
+      "El próximo capítulo",
+      "Ampliar la remasterización con arte coherente, mejorar las herramientas y validar partidas externas, Coliseum online, Arena PvP y eventos."
+    ],
+    "limits": "La central usa servicios en la nube; la partida depende de los clientes y de que el creador siga conectado. Los personajes se guardan automáticamente en este equipo con copias de recuperación. Cada sala nueva genera otro mundo. El arte HD completo, la migración de anfitrión y el ranking PvP siguen pendientes.",
+    "milestones": [
+      [
+        "La comunidad está online",
+        "Cuentas, canales, chat y salas están en el sitio, sin necesitar el PC del administrador encendido.",
+        "Disponible"
+      ],
+      [
+        "Una aventura ampliada",
+        "29 caminos de personaje, equipos, talentos, hechizos y desafíos forman parte del cliente actual.",
+        "En el cliente"
+      ],
+      [
+        "El regreso continúa",
+        "Full HD, mejoras de materiales y logo animado definen la dirección visual. La remasterización de todas las artes y Arena de las Cenizas siguen en desarrollo.",
+        "En desarrollo"
+      ]
+    ],
+    "faq": [
+      [
+        "¿Cómo empezar?",
+        "Descarga el cliente Windows, inicia sesión y crea o elige una sala. El botón de la sala abre el juego y la central interna conecta con la comunidad. El launcher comprueba la versión antes de una partida nueva e importa los archivos compatibles de tu instalación."
+      ],
+      [
+        "¿Necesito un servidor en mi PC?",
+        "Cuentas, chat y salas permanecen en la nube. El cliente del creador aloja la partida mediante conexión directa o retransmisión en redes restrictivas. El creador debe seguir jugando; al salir termina la sesión del grupo."
+      ],
+      [
+        "¿Mi personaje se guarda?",
+        "Sí. El guardado automático durante el juego y al salir normalmente conserva inventario, oro y evolución en un perfil por cuenta en este equipo. Los saves están separados de las actualizaciones. No se sincronizan entre equipos y el mundo de la sala no es persistente."
+      ],
+      [
+        "¿Ya están terminadas la remasterización y la Arena?",
+        "Hay resolución Full HD y mejoras visuales, conservando los sprites clásicos. El reemplazo de todo el arte sigue siendo parcial. Coliseum está disponible como desafío del cliente; Arena PvP online, ranking y eventos siguen en validación y desarrollo."
+      ]
+    ],
+    "join": [
+      "El próximo capítulo empieza con la comunidad.",
+      "Entra en la central para conversar, reunir tu grupo y abrir una partida. Sigue las novedades y comparte tu experiencia en Discord."
+    ],
+    "pending": [
+      "Invitación en preparación",
+      "Código disponible en GitHub"
+    ],
+    "online": [
+      "El encuentro antes de la aventura.",
+      "Una central con cuentas, canales de chat y salas para hasta cuatro jugadores. Encuentra tu grupo en el sitio o en el cliente. La central permanece en la nube y los jugadores alojan las partidas."
+    ]
+  },
+  "fr": {
+    "summary": "Retrouvez Tristram dans une aventure enrichie : 29 voies de personnage, des milliers d'équipements, des sorts, talents et défis. Réunissez jusqu'à quatre joueurs dans le portail en ligne et poursuivez sur le client Windows Returns from Darkness HD.",
+    "facts": [
+      "Client disponible · En évolution",
+      "Jusqu'à 4 joueurs par partie",
+      "Gratuit · Non commercial"
+    ],
+    "vision": [
+      "Certains lieux ne cessent jamais d'appeler.",
+      "Le silence de Tristram. La porte de la cathédrale. Descendre un étage de plus entre amis.",
+      "Redécouvrez le classique avec davantage de choix de personnage, d'exploration et d'équipement. Comptes, discussion et salons se retrouvent dans un portail commun ; chaque groupe vit sa propre aventure sous l'identité Returns from Darkness."
+    ],
+    "pillars": [
+      [
+        "29 voies",
+        "Six archétypes et 29 classes et spécialisations. Associez attributs, talents et traits pour définir votre style."
+      ],
+      [
+        "Un arsenal varié",
+        "Plus de 2 500 bases d'équipement, affixes, raretés, gemmes et améliorations. Organisez votre collection dans un coffre agrandi."
+      ],
+      [
+        "De nouveaux défis",
+        "Sorts, boss, créatures, quêtes et zones enrichissent le voyage. Hardcore, Ironman, Survival et Coliseum proposent d'autres défis dans le client."
+      ]
+    ],
+    "now": [
+      "Dans cette version",
+      "Client Windows avec portail intégré, salons coopératifs de quatre joueurs, mises à jour automatiques et profils distincts. Le système de butin partage les objets de la partie ; les sauvegardes automatiques préservent inventaire, or et progression sur cet ordinateur."
+    ],
+    "next": [
+      "Le prochain chapitre",
+      "Étendre la remasterisation avec des visuels cohérents, améliorer les outils et valider les parties externes, Coliseum en ligne, l'Arène PvP et les événements."
+    ],
+    "limits": "Le portail utilise le cloud ; la partie s'exécute dans les clients et son créateur doit rester connecté. Les personnages sont sauvegardés automatiquement sur cet ordinateur avec une copie de récupération. Un nouveau salon crée un nouveau monde. Les visuels HD complets, la migration d'hôte et le classement PvP restent à terminer.",
+    "milestones": [
+      [
+        "La communauté est en ligne",
+        "Comptes, canaux, discussion et salons sont sur le site, sans dépendre du PC de l'administrateur allumé.",
+        "Disponible"
+      ],
+      [
+        "Une aventure enrichie",
+        "29 voies de personnage, équipements, talents, sorts et défis font partie du client actuel.",
+        "Dans le client"
+      ],
+      [
+        "Le retour se poursuit",
+        "Full HD, matériaux améliorés et logo animé guident les visuels. La remasterisation de toutes les illustrations et l'Arène des Cendres restent en production.",
+        "En développement"
+      ]
+    ],
+    "faq": [
+      [
+        "Comment commencer ?",
+        "Téléchargez le client Windows, connectez-vous et créez ou choisissez un salon. Son bouton ouvre le jeu ; le portail interne rejoint aussi la communauté. Le launcher vérifie la dernière version avant une nouvelle partie et importe les fichiers compatibles de votre installation."
+      ],
+      [
+        "Faut-il un serveur sur mon PC ?",
+        "Comptes, discussion et salons restent dans le cloud. Le client du créateur héberge la partie, en connexion directe ou via un relais sur les réseaux restrictifs. Le créateur doit rester dans le jeu ; son départ termine la session du groupe."
+      ],
+      [
+        "Mon personnage est-il sauvegardé ?",
+        "Oui. Les sauvegardes automatiques et la sortie normale conservent inventaire, or et progression dans un profil par compte sur cet ordinateur, séparé des mises à jour. Il n'y a pas de synchronisation entre ordinateurs et le monde du salon n'est pas persistant."
+      ],
+      [
+        "La remasterisation et l'Arène sont-elles terminées ?",
+        "La résolution Full HD et des améliorations visuelles sont disponibles avec les sprites classiques. Le remplacement de toutes les illustrations reste partiel. Coliseum est un défi du client ; Arène PvP en ligne, classement et événements restent en validation et développement."
+      ]
+    ],
+    "join": [
+      "Le prochain chapitre commence avec la communauté.",
+      "Rejoignez le portail pour discuter, réunir votre groupe et lancer une partie. Suivez les mises à jour et partagez votre expérience sur Discord."
+    ],
+    "pending": [
+      "Invitation en préparation",
+      "Sources disponibles sur GitHub"
+    ],
+    "online": [
+      "Se retrouver avant l'aventure.",
+      "Un portail avec comptes, canaux de discussion et salons de quatre joueurs. Retrouvez votre groupe sur le site ou dans le client. Le portail reste dans le cloud ; les joueurs hébergent les parties."
+    ]
+  },
+  "de": {
+    "summary": "Kehre für ein erweitertes Abenteuer nach Tristram zurück: 29 Charakterwege, Tausende Ausrüstungsgrundtypen, Zauber, Talente und Herausforderungen. Versammle bis zu vier Spieler in der Online-Zentrale und spiele im Windows-Client von Returns from Darkness HD.",
+    "facts": [
+      "Client verfügbar · In Entwicklung",
+      "Bis zu 4 Spieler pro Partie",
+      "Kostenlos · Nicht kommerziell"
+    ],
+    "vision": [
+      "Manche Orte hören niemals auf zu rufen.",
+      "Tristrams Stille. Das Tor der Kathedrale. Noch eine Ebene tiefer mit Freunden.",
+      "Entdecke den Klassiker mit mehr Charakteraufbau, Erkundung und Ausrüstung. Konten, Chat und Räume kommen in einer Zentrale zusammen; jede Gruppe erlebt ihr eigenes Abenteuer mit der Identität von Returns from Darkness."
+    ],
+    "pillars": [
+      [
+        "29 Charakterwege",
+        "Sechs Archetypen und 29 Klassen und Spezialisierungen. Kombiniere Attribute, Talente und Eigenschaften für deinen Kampfstil."
+      ],
+      [
+        "Ein tieferes Arsenal",
+        "Über 2.500 Ausrüstungsgrundtypen, Affixe, Seltenheiten, Edelsteine und Verbesserungen. Verwalte deine Sammlung im erweiterten Lager."
+      ],
+      [
+        "Mehr Herausforderungen",
+        "Zauber, Bosse, Kreaturen, Aufgaben und Gebiete erweitern die Reise. Hardcore, Ironman, Survival und Coliseum bieten weitere Herausforderungen im Client."
+      ]
+    ],
+    "now": [
+      "In dieser Version",
+      "Windows-Client mit integrierter Zentrale, Koop-Räumen für vier Spieler, automatischen Updates und getrennten Profilen. Das Beutesystem teilt Drops im Raum; automatisches Speichern erhält Inventar, Gold und Entwicklung auf diesem PC."
+    ],
+    "next": [
+      "Das nächste Kapitel",
+      "Die visuelle Überarbeitung mit stimmigen Materialien ausbauen, Werkzeuge verbessern und externe Partien, Online-Coliseum, PvP-Arena und Ereignisse prüfen."
+    ],
+    "limits": "Die Zentrale nutzt Cloud-Dienste; die Partie läuft in den Clients und der Raumersteller muss verbunden bleiben. Charaktere speichern automatisch mit Sicherungskopien auf diesem PC. Ein neuer Raum erzeugt eine neue Welt. Vollständige HD-Grafik, Host-Wechsel und PvP-Ranglisten sind noch nicht fertig.",
+    "milestones": [
+      [
+        "Die Gemeinschaft ist online",
+        "Konten, Kanäle, Chat und Räume sind auf der Website erreichbar, ohne eingeschalteten Administrator-PC.",
+        "Verfügbar"
+      ],
+      [
+        "Eine größere Reise",
+        "29 Charakterwege, Ausrüstung, Talente, Zauber und Herausforderungen gehören zum aktuellen Client.",
+        "Im Client"
+      ],
+      [
+        "Die Rückkehr geht weiter",
+        "Full HD, Materialverbesserungen und animiertes Logo prägen die Optik. Die Überarbeitung aller Grafiken und die Aschenarena sind weiterhin in Produktion.",
+        "In Entwicklung"
+      ]
+    ],
+    "faq": [
+      [
+        "Wie beginne ich?",
+        "Lade den Windows-Client herunter, melde dich an und erstelle oder wähle einen Raum. Der Raumknopf öffnet das Spiel; auch die interne Zentrale führt zur Gemeinschaft. Der Launcher prüft vor einer neuen Partie die aktuelle Version und importiert passende Spieldateien aus deiner Installation."
+      ],
+      [
+        "Brauche ich einen Server auf meinem PC?",
+        "Konten, Chat und Räume bleiben in der Cloud. Der Client des Raumerstellers hostet die Partie, direkt oder mit Relay in eingeschränkten Netzwerken. Der Ersteller muss im Spiel bleiben; sein Austritt beendet die Gruppenpartie."
+      ],
+      [
+        "Wird mein Charakter gespeichert?",
+        "Ja. Automatisches Speichern und normales Beenden erhalten Inventar, Gold und Fortschritt in einem Kontoprofil auf diesem PC, getrennt von Updates. Es gibt keine Synchronisierung zwischen PCs und die Raumwelt ist nicht persistent."
+      ],
+      [
+        "Sind Remaster und Arena fertig?",
+        "Full-HD-Auflösung und visuelle Verbesserungen sind mit klassischen Sprites verfügbar. Der Austausch aller Grafiken ist noch teilweise. Coliseum ist eine Client-Herausforderung; Online-PvP-Arena, Ranglisten und Ereignisse werden noch entwickelt und geprüft."
+      ]
+    ],
+    "join": [
+      "Das nächste Kapitel beginnt mit der Gemeinschaft.",
+      "Besuche die Zentrale zum Chatten, zur Gruppensuche und zum Starten einer Partie. Verfolge Updates und teile deine Erfahrungen auf Discord."
+    ],
+    "pending": [
+      "Einladung in Vorbereitung",
+      "Quellcode auf GitHub verfügbar"
+    ],
+    "online": [
+      "Der Treffpunkt vor dem Abenteuer.",
+      "Eine Zentrale mit Konten, Chatkanälen und Räumen für vier Spieler. Finde deine Gruppe auf der Website oder im Client. Die Zentrale bleibt in der Cloud; die Spieler hosten ihre Partien."
+    ]
+  },
+  "it": {
+    "summary": "Torna a Tristram per un'avventura ampliata: 29 percorsi del personaggio, migliaia di equipaggiamenti, magie, talenti e sfide. Riunisci fino a quattro giocatori nella centrale online e continua nel client Windows Returns from Darkness HD.",
+    "facts": [
+      "Client disponibile · In evoluzione",
+      "Fino a 4 giocatori per partita",
+      "Gratuito · Non commerciale"
+    ],
+    "vision": [
+      "Certi luoghi non smettono mai di chiamare.",
+      "Il silenzio di Tristram. La porta della cattedrale. Un piano più in basso insieme agli amici.",
+      "Riscopri il classico con più possibilità di sviluppo, esplorazione ed equipaggiamento. Account, chat e stanze si incontrano nella centrale; ogni gruppo vive la propria avventura con l'identità Returns from Darkness."
+    ],
+    "pillars": [
+      [
+        "29 percorsi",
+        "Sei archetipi e 29 classi e specializzazioni. Combina attributi, talenti e tratti per definire il tuo stile."
+      ],
+      [
+        "Un arsenale profondo",
+        "Oltre 2.500 basi di equipaggiamento, affissi, rarità, gemme e miglioramenti. Organizza la collezione nel deposito ampliato."
+      ],
+      [
+        "Più sfide",
+        "Magie, boss, creature, missioni e aree ampliano il viaggio. Hardcore, Ironman, Survival e Coliseum offrono altre sfide nel client."
+      ]
+    ],
+    "now": [
+      "In questa versione",
+      "Client Windows con centrale integrata, stanze cooperative per quattro giocatori, aggiornamenti automatici e profili separati. Il sistema degli oggetti condivide i drop della stanza; il salvataggio automatico conserva inventario, oro e progressi su questo computer."
+    ],
+    "next": [
+      "Il prossimo capitolo",
+      "Ampliare la rimasterizzazione con materiali coerenti, migliorare gli strumenti e validare partite esterne, Coliseum online, Arena PvP ed eventi."
+    ],
+    "limits": "La centrale usa servizi cloud; la partita gira nei client e il creatore deve restare connesso. I personaggi si salvano automaticamente su questo computer con copie di recupero. Una nuova stanza crea un nuovo mondo. Grafica HD completa, migrazione dell'host e classifiche PvP sono ancora da completare.",
+    "milestones": [
+      [
+        "La comunità è online",
+        "Account, canali, chat e stanze sono sul sito, senza richiedere il PC dell'amministratore acceso.",
+        "Disponibile"
+      ],
+      [
+        "Un viaggio più ampio",
+        "29 percorsi del personaggio, equipaggiamenti, talenti, magie e sfide fanno parte del client attuale.",
+        "Nel client"
+      ],
+      [
+        "Il ritorno continua",
+        "Full HD, materiali migliorati e logo animato definiscono la direzione visiva. La rimasterizzazione di tutte le immagini e l'Arena delle Ceneri restano in produzione.",
+        "In sviluppo"
+      ]
+    ],
+    "faq": [
+      [
+        "Come iniziare?",
+        "Scarica il client Windows, accedi e crea o scegli una stanza. Il pulsante della stanza apre il gioco; anche la centrale interna porta alla comunità. Il launcher controlla l'ultima versione prima di una nuova partita e importa i file compatibili dalla tua installazione."
+      ],
+      [
+        "Serve un server sul mio PC?",
+        "Account, chat e stanze restano nel cloud. Il client del creatore ospita la partita, con connessione diretta oppure relay su reti restrittive. Il creatore deve restare nel gioco; la sua uscita termina la sessione del gruppo."
+      ],
+      [
+        "Il personaggio viene salvato?",
+        "Sì. Salvataggi automatici e uscita normale mantengono inventario, oro e progressi in un profilo per account su questo computer, separato dagli aggiornamenti. Non c'è sincronizzazione tra computer e il mondo della stanza non è persistente."
+      ],
+      [
+        "Rimasterizzazione e Arena sono complete?",
+        "Ci sono risoluzione Full HD e miglioramenti visivi con gli sprite classici. La sostituzione di tutte le immagini è ancora parziale. Coliseum è una sfida del client; Arena PvP online, classifiche ed eventi restano in validazione e sviluppo."
+      ]
+    ],
+    "join": [
+      "Il prossimo capitolo inizia con la comunità.",
+      "Entra nella centrale per conversare, trovare il gruppo e aprire una partita. Segui gli aggiornamenti e condividi la tua esperienza su Discord."
+    ],
+    "pending": [
+      "Invito in preparazione",
+      "Codice disponibile su GitHub"
+    ],
+    "online": [
+      "L'incontro prima dell'avventura.",
+      "Una centrale con account, canali di chat e stanze per quattro giocatori. Trova il gruppo sul sito o nel client. La centrale resta nel cloud; i giocatori ospitano le partite."
+    ]
+  }
+}

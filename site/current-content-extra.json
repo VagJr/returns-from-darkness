@@ -1,0 +1,666 @@
+{
+  "pl": {
+    "summary": "Wróć do Tristram w rozbudowanej przygodzie: 29 ścieżek postaci, tysiące rodzajów wyposażenia, czary, talenty i wyzwania. Zbierz do czterech graczy w centrum online i kontynuuj w kliencie Windows Returns from Darkness HD.",
+    "facts": [
+      "Klient dostępny · W rozwoju",
+      "Do 4 graczy w rozgrywce",
+      "Bezpłatny · Niekomercyjny"
+    ],
+    "vision": [
+      "Niektóre miejsca nigdy nie przestają wzywać.",
+      "Cisza Tristram. Drzwi katedry. Jeszcze jedno piętro w dół z przyjaciółmi.",
+      "Odkryj klasykę z większym wyborem rozwoju postaci, eksploracji i wyposażenia. Konta, czat i pokoje spotykają się w centrum społeczności; każda grupa przeżywa własną przygodę w Returns from Darkness."
+    ],
+    "pillars": [
+      [
+        "29 ścieżek",
+        "Sześć archetypów i 29 klas oraz specjalizacji. Łącz atrybuty, talenty i cechy, by stworzyć styl walki."
+      ],
+      [
+        "Bogatszy arsenał",
+        "Ponad 2500 baz wyposażenia, afiksy, rzadkości, klejnoty i ulepszenia. Porządkuj kolekcję w powiększonej skrytce."
+      ],
+      [
+        "Więcej wyzwań",
+        "Czary, bossowie, stworzenia, zadania i obszary rozwijają przygodę. Hardcore, Ironman, Survival i Coliseum oferują dodatkowe wyzwania w kliencie."
+      ]
+    ],
+    "now": [
+      "W tej wersji",
+      "Klient Windows ze zintegrowanym centrum, pokojami kooperacyjnymi dla czterech graczy, automatycznymi aktualizacjami i osobnymi profilami. System przedmiotów współdzieli łupy w pokoju; automatyczny zapis zachowuje ekwipunek, złoto i rozwój na tym PC."
+    ],
+    "next": [
+      "Następny rozdział",
+      "Rozwijać spójną oprawę remastera, ulepszać narzędzia i sprawdzać rozgrywkę zewnętrzną, Coliseum online, Arenę PvP oraz wydarzenia."
+    ],
+    "limits": "Centrum korzysta z chmury; gra działa w klientach i twórca pokoju musi pozostać połączony. Postacie zapisują się automatycznie na tym komputerze z kopiami odzyskiwania. Nowy pokój tworzy nowy świat. Pełne grafiki HD, migracja hosta i ranking PvP nie są jeszcze gotowe.",
+    "milestones": [
+      [
+        "Społeczność jest online",
+        "Konta, kanały, czat i pokoje są na stronie, niezależnie od włączonego komputera administratora.",
+        "Dostępne"
+      ],
+      [
+        "Rozbudowana przygoda",
+        "29 ścieżek postaci, wyposażenie, talenty, czary i wyzwania znajdują się w obecnym kliencie.",
+        "W kliencie"
+      ],
+      [
+        "Powrót trwa",
+        "Full HD, ulepszone materiały i animowane logo wyznaczają oprawę. Remaster wszystkich grafik i Arena Popiołów pozostają w produkcji.",
+        "W rozwoju"
+      ]
+    ],
+    "faq": [
+      [
+        "Jak zacząć?",
+        "Pobierz klienta Windows, zaloguj się i utwórz lub wybierz pokój. Przycisk pokoju otwiera grę; centrum wewnętrzne także prowadzi do społeczności. Launcher sprawdza najnowszą wersję przed nową grą i importuje zgodne pliki z twojej instalacji."
+      ],
+      [
+        "Czy potrzebuję serwera na PC?",
+        "Konta, czat i pokoje pozostają w chmurze. Klient twórcy pokoju hostuje grę bezpośrednio lub przez przekaźnik w ograniczonych sieciach. Twórca musi pozostać w grze; jego wyjście kończy sesję grupy."
+      ],
+      [
+        "Czy postać się zapisuje?",
+        "Tak. Zapis automatyczny i normalne wyjście zachowują ekwipunek, złoto i rozwój w osobnym profilu konta na tym komputerze, poza aktualizacjami. Nie ma synchronizacji między komputerami, a świat pokoju nie jest trwały."
+      ],
+      [
+        "Czy remaster i Arena są gotowe?",
+        "Dostępne są Full HD i ulepszenia wizualne z klasycznymi sprite'ami. Wymiana wszystkich grafik nadal jest częściowa. Coliseum jest wyzwaniem klienta; Arena PvP online, rankingi i wydarzenia pozostają w rozwoju i testach."
+      ]
+    ],
+    "join": [
+      "Następny rozdział zaczyna się od społeczności.",
+      "Wejdź do centrum, rozmawiaj, znajdź grupę i otwórz grę. Śledź aktualizacje i dziel się wrażeniami na Discordzie."
+    ],
+    "pending": [
+      "Zaproszenie w przygotowaniu",
+      "Kod dostępny na GitHub"
+    ],
+    "online": [
+      "Spotkanie przed przygodą.",
+      "Centrum z kontami, kanałami czatu i pokojami dla czterech graczy. Znajdź grupę na stronie lub w kliencie. Centrum pozostaje w chmurze, a gracze hostują swoje gry."
+    ]
+  },
+  "ru": {
+    "summary": "Вернитесь в Тристрам: 29 путей развития персонажа, тысячи основ экипировки, заклинания, таланты и испытания. Соберите до четырёх игроков в онлайн-центре и продолжите приключение в клиенте Returns from Darkness HD для Windows.",
+    "facts": [
+      "Клиент доступен · В разработке",
+      "До 4 игроков в игре",
+      "Бесплатно · Некоммерческий проект"
+    ],
+    "vision": [
+      "Некоторые места никогда не перестают звать.",
+      "Тишина Тристрама. Врата собора. Ещё один этаж вниз вместе с друзьями.",
+      "Откройте классику заново с более глубоким развитием персонажа, исследованием и экипировкой. Аккаунты, чат и комнаты объединены в центре сообщества; каждая группа проживает собственное приключение в Returns from Darkness."
+    ],
+    "pillars": [
+      [
+        "29 путей",
+        "Шесть архетипов и 29 классов и специализаций. Сочетайте характеристики, таланты и черты для своего стиля боя."
+      ],
+      [
+        "Богатый арсенал",
+        "Более 2500 основ экипировки, свойства, редкости, самоцветы и улучшения. Храните коллекцию в расширенном сундуке."
+      ],
+      [
+        "Больше испытаний",
+        "Заклинания, боссы, существа, задания и области расширяют путешествие. Hardcore, Ironman, Survival и Coliseum предлагают другие испытания в клиенте."
+      ]
+    ],
+    "now": [
+      "В этой версии",
+      "Клиент Windows со встроенным центром, совместными комнатами до четырёх игроков, автообновлением и отдельными профилями. Система предметов разделяет добычу комнаты; автосохранение сохраняет инвентарь, золото и развитие на этом ПК."
+    ],
+    "next": [
+      "Следующая глава",
+      "Расширять визуальный ремастер согласованными материалами, улучшать инструменты и проверять внешние игры, онлайн-Coliseum, PvP-арену и события."
+    ],
+    "limits": "Центр использует облако; игра работает в клиентах, и создатель комнаты должен оставаться подключённым. Персонажи автоматически сохраняются на этом ПК с резервными копиями. Новая комната создаёт новый мир. Полная HD-графика, перенос хоста и рейтинговый PvP ещё не завершены.",
+    "milestones": [
+      [
+        "Сообщество онлайн",
+        "Аккаунты, каналы, чат и комнаты доступны на сайте без включённого ПК администратора.",
+        "Доступно"
+      ],
+      [
+        "Расширенное приключение",
+        "29 путей персонажа, экипировка, таланты, заклинания и испытания входят в текущий клиент.",
+        "В клиенте"
+      ],
+      [
+        "Возвращение продолжается",
+        "Full HD, улучшенные материалы и анимированный логотип определяют визуальный стиль. Ремастер всей графики и Арена Пепла ещё в производстве.",
+        "В разработке"
+      ]
+    ],
+    "faq": [
+      [
+        "Как начать?",
+        "Скачайте клиент Windows, войдите и создайте или выберите комнату. Кнопка комнаты открывает игру; встроенный центр тоже ведёт в сообщество. Лаунчер проверяет новую версию перед началом игры и импортирует совместимые файлы из вашей установки."
+      ],
+      [
+        "Нужен ли сервер на моём ПК?",
+        "Аккаунты, чат и комнаты остаются в облаке. Клиент создателя комнаты размещает игру напрямую или через ретранслятор в ограниченных сетях. Создатель должен оставаться в игре; его выход завершает сессию группы."
+      ],
+      [
+        "Сохраняется ли персонаж?",
+        "Да. Автосохранение и обычный выход сохраняют инвентарь, золото и развитие в профиле аккаунта на этом ПК, отдельно от обновлений. Синхронизации между ПК нет; мир комнаты не сохраняется постоянно."
+      ],
+      [
+        "Ремастер и Арена уже готовы?",
+        "Есть разрешение Full HD и визуальные улучшения с классическими спрайтами. Замена всей графики пока частичная. Coliseum доступен как испытание клиента; онлайн-PvP-арена, рейтинги и события ещё разрабатываются и проверяются."
+      ]
+    ],
+    "join": [
+      "Следующая глава начинается с сообщества.",
+      "Войдите в центр, общайтесь, собирайте группу и открывайте игру. Следите за обновлениями и делитесь впечатлениями в Discord."
+    ],
+    "pending": [
+      "Приглашение готовится",
+      "Код доступен на GitHub"
+    ],
+    "online": [
+      "Встреча перед приключением.",
+      "Центр сообщества с аккаунтами, каналами чата и комнатами для четырёх игроков. Найдите группу на сайте или в клиенте. Центр остаётся в облаке, а игры размещают сами игроки."
+    ]
+  },
+  "uk": {
+    "summary": "Поверніться до Трістрама: 29 шляхів розвитку персонажа, тисячі основ спорядження, закляття, таланти й випробування. Зберіть до чотирьох гравців в онлайн-центрі та продовжуйте в клієнті Returns from Darkness HD для Windows.",
+    "facts": [
+      "Клієнт доступний · У розробці",
+      "До 4 гравців у грі",
+      "Безкоштовно · Некомерційний проєкт"
+    ],
+    "vision": [
+      "Деякі місця ніколи не перестають кликати.",
+      "Тиша Трістрама. Брама собору. Ще один поверх униз разом із друзями.",
+      "Відкрийте класику з ширшим розвитком персонажа, дослідженням і спорядженням. Облікові записи, чат і кімнати об'єднані в центрі спільноти; кожна група має власну пригоду в Returns from Darkness."
+    ],
+    "pillars": [
+      [
+        "29 шляхів",
+        "Шість архетипів і 29 класів та спеціалізацій. Поєднуйте характеристики, таланти й риси для свого стилю бою."
+      ],
+      [
+        "Багатий арсенал",
+        "Понад 2500 основ спорядження, властивості, рідкості, самоцвіти та поліпшення. Упорядковуйте колекцію в розширеній скрині."
+      ],
+      [
+        "Більше випробувань",
+        "Закляття, боси, істоти, завдання та області розширюють подорож. Hardcore, Ironman, Survival і Coliseum додають інші випробування в клієнті."
+      ]
+    ],
+    "now": [
+      "У цій версії",
+      "Клієнт Windows із вбудованим центром, спільними кімнатами до чотирьох гравців, автооновленням і окремими профілями. Система предметів розділяє здобич кімнати; автозбереження зберігає інвентар, золото й розвиток на цьому ПК."
+    ],
+    "next": [
+      "Наступний розділ",
+      "Розширювати візуальний ремастер узгодженими матеріалами, поліпшувати інструменти й перевіряти зовнішні ігри, онлайн-Coliseum, PvP-арену та події."
+    ],
+    "limits": "Центр використовує хмару; гра працює в клієнтах і творець кімнати має залишатися підключеним. Персонажі автоматично зберігаються на цьому ПК з копіями відновлення. Нова кімната створює новий світ. Повна HD-графіка, перенесення хоста та рейтинг PvP ще не завершені.",
+    "milestones": [
+      [
+        "Спільнота онлайн",
+        "Облікові записи, канали, чат і кімнати доступні на сайті без увімкненого ПК адміністратора.",
+        "Доступно"
+      ],
+      [
+        "Розширена пригода",
+        "29 шляхів персонажа, спорядження, таланти, закляття й випробування входять до поточного клієнта.",
+        "У клієнті"
+      ],
+      [
+        "Повернення триває",
+        "Full HD, поліпшені матеріали й анімований логотип визначають вигляд. Ремастер усієї графіки та Арена Попелу ще у виробництві.",
+        "У розробці"
+      ]
+    ],
+    "faq": [
+      [
+        "Як почати?",
+        "Завантажте клієнт Windows, увійдіть і створіть або виберіть кімнату. Кнопка кімнати відкриває гру; вбудований центр також веде до спільноти. Лаунчер перевіряє нову версію перед новою грою й імпортує сумісні файли з вашої інсталяції."
+      ],
+      [
+        "Чи потрібен сервер на моєму ПК?",
+        "Облікові записи, чат і кімнати залишаються в хмарі. Клієнт творця кімнати розміщує гру напряму або через ретранслятор в обмежених мережах. Творець має залишатися в грі; його вихід завершує сесію групи."
+      ],
+      [
+        "Чи зберігається персонаж?",
+        "Так. Автозбереження й звичайний вихід зберігають інвентар, золото та розвиток у профілі облікового запису на цьому ПК, окремо від оновлень. Синхронізації між ПК немає; світ кімнати не є постійним."
+      ],
+      [
+        "Ремастер і Арена вже готові?",
+        "Є роздільність Full HD та візуальні поліпшення з класичними спрайтами. Заміна всієї графіки поки часткова. Coliseum доступний як випробування клієнта; онлайн-PvP-арена, рейтинги й події ще розробляються та перевіряються."
+      ]
+    ],
+    "join": [
+      "Наступний розділ починається зі спільноти.",
+      "Увійдіть до центру, спілкуйтеся, збирайте групу й відкривайте гру. Стежте за оновленнями та діліться враженнями в Discord."
+    ],
+    "pending": [
+      "Запрошення готується",
+      "Код доступний на GitHub"
+    ],
+    "online": [
+      "Зустріч перед пригодою.",
+      "Центр спільноти з обліковими записами, каналами чату й кімнатами для чотирьох гравців. Знайдіть групу на сайті або в клієнті. Центр залишається в хмарі, а ігри розміщують самі гравці."
+    ]
+  },
+  "tr": {
+    "summary": "Genişletilmiş bir macera için Tristram'a dön: 29 karakter yolu, binlerce ekipman temeli, büyüler, yetenekler ve mücadeleler. Çevrimiçi merkezde dört oyuncuya kadar bir grup kur ve Returns from Darkness HD Windows istemcisinde devam et.",
+    "facts": [
+      "İstemci mevcut · Geliştiriliyor",
+      "Oyun başına en fazla 4 oyuncu",
+      "Ücretsiz · Ticari değil"
+    ],
+    "vision": [
+      "Bazı yerler çağırmayı hiç bırakmaz.",
+      "Tristram'ın sessizliği. Katedralin kapısı. Arkadaşlarla bir kat daha aşağı inmek.",
+      "Daha kapsamlı karakter gelişimi, keşif ve ekipmanla klasiği yeniden keşfet. Hesaplar, sohbet ve odalar topluluk merkezinde buluşur; her grup Returns from Darkness'ta kendi macerasını yaşar."
+    ],
+    "pillars": [
+      [
+        "29 karakter yolu",
+        "Altı arketip ve 29 sınıf ve uzmanlık. Nitelikleri, yetenekleri ve özellikleri birleştirerek savaş tarzını oluştur."
+      ],
+      [
+        "Derin bir cephanelik",
+        "2.500'den fazla ekipman temeli, ek özellikler, nadirlikler, mücevherler ve geliştirmeler. Koleksiyonunu genişletilmiş depoda düzenle."
+      ],
+      [
+        "Daha fazla mücadele",
+        "Büyüler, bosslar, yaratıklar, görevler ve bölgeler yolculuğu genişletir. Hardcore, Ironman, Survival ve Coliseum istemcide ek mücadeleler sunar."
+      ]
+    ],
+    "now": [
+      "Bu sürümde",
+      "Entegre merkez, dört kişilik işbirliği odaları, otomatik güncellemeler ve ayrı profiller içeren Windows istemcisi. Eşya sistemi odadaki ganimetleri paylaşır; otomatik kayıt envanteri, altını ve karakter gelişimini bu PC’de korur."
+    ],
+    "next": [
+      "Sonraki bölüm",
+      "Tutarlı görsellerle remasterı genişletmek, araçları iyileştirmek ve dış ağ oyunlarını, çevrimiçi Coliseum'u, PvP Arenası'nı ve etkinlikleri doğrulamak."
+    ],
+    "limits": "Merkez bulut hizmetlerini kullanır; oyun istemcilerde çalışır ve oda kurucusu bağlı kalmalıdır. Karakterler bu bilgisayarda kurtarma kopyalarıyla otomatik kaydedilir. Yeni oda yeni bir dünya oluşturur. Tam HD görseller, ev sahibi geçişi ve PvP sıralaması henüz tamamlanmadı.",
+    "milestones": [
+      [
+        "Topluluk çevrimiçi",
+        "Hesaplar, kanallar, sohbet ve odalar, yöneticinin PC'si açık olmadan sitede erişilebilir.",
+        "Mevcut"
+      ],
+      [
+        "Genişletilmiş yolculuk",
+        "29 karakter yolu, ekipman, yetenekler, büyüler ve mücadeleler mevcut istemcinin parçasıdır.",
+        "İstemcide"
+      ],
+      [
+        "Dönüş sürüyor",
+        "Full HD, geliştirilmiş malzemeler ve hareketli logo görsel yönü belirler. Tüm görsellerin yenilenmesi ve Kül Arenası hâlâ geliştirme aşamasında.",
+        "Geliştiriliyor"
+      ]
+    ],
+    "faq": [
+      [
+        "Nasıl başlarım?",
+        "Windows istemcisini indir, giriş yap ve oda oluştur veya seç. Oda düğmesi oyunu açar; dahili merkez de topluluğa erişir. Başlatıcı yeni oyundan önce son sürümü kontrol eder ve kurulumundaki uyumlu oyun dosyalarını içe aktarır."
+      ],
+      [
+        "PC'mde sunucu gerekir mi?",
+        "Hesaplar, sohbet ve odalar bulutta kalır. Oda kurucusunun istemcisi oyunu doğrudan ya da kısıtlı ağlarda aktarma üzerinden barındırır. Kurucu oyunda kalmalıdır; çıkması grubun oturumunu bitirir."
+      ],
+      [
+        "Karakterim kaydedilir mi?",
+        "Evet. Otomatik kayıt ve normal çıkış; envanteri, altını ve gelişimi bu PC'de hesap profiline kaydeder, güncellemelerden ayrı tutar. Bilgisayarlar arasında eşitleme yoktur; oda dünyası kalıcı değildir."
+      ],
+      [
+        "Remaster ve Arena tamam mı?",
+        "Klasik sprite'larla Full HD çözünürlük ve görsel iyileştirmeler mevcut. Tüm görsellerin değiştirilmesi hâlâ kısmidir. Coliseum istemcide bir mücadeledir; çevrimiçi PvP Arenası, sıralamalar ve etkinlikler geliştiriliyor ve doğrulanıyor."
+      ]
+    ],
+    "join": [
+      "Sonraki bölüm toplulukla başlar.",
+      "Sohbet etmek, grup toplamak ve oyun açmak için merkeze gir. Discord'da güncellemeleri izle ve deneyimlerini paylaş."
+    ],
+    "pending": [
+      "Davet hazırlanıyor",
+      "Kaynak kod GitHub'da mevcut"
+    ],
+    "online": [
+      "Maceradan önce buluşma.",
+      "Hesaplar, sohbet kanalları ve dört oyuncuya kadar odalar sunan topluluk merkezi. Grubunu sitede veya istemcide bul. Merkez bulutta kalır; oyunları oyuncular barındırır."
+    ]
+  },
+  "ja": {
+    "summary": "拡張された冒険へ、トリストラムに帰ろう。29のキャラクター育成ルート、数千の装備ベース、魔法、才能、挑戦が待っています。オンラインハブで最大4人の仲間を集め、Returns from Darkness HDのWindowsクライアントで旅を続けましょう。",
+    "facts": [
+      "クライアント公開中・開発継続中",
+      "1ゲーム最大4人",
+      "無料・非商用"
+    ],
+    "vision": [
+      "いつまでも呼び続ける場所がある。",
+      "トリストラムの静寂。大聖堂の扉。仲間ともう一階深くへ。",
+      "多彩な育成、探索、装備とともに名作を再発見。アカウント、チャット、ルームがコミュニティハブに集まり、各グループがReturns from Darknessの世界で自分たちの冒険を楽しめます。"
+    ],
+    "pillars": [
+      [
+        "29の育成ルート",
+        "6つの系統と29のクラス・専門職。能力値、才能、特性を組み合わせ、自分の戦闘スタイルを作りましょう。"
+      ],
+      [
+        "奥深い装備",
+        "2,500以上の装備ベース、追加効果、レアリティ、宝石、強化。拡張された倉庫でコレクションを整理できます。"
+      ],
+      [
+        "さらなる挑戦",
+        "魔法、ボス、クリーチャー、クエスト、エリアが冒険を広げます。Hardcore、Ironman、Survival、Coliseumなどの挑戦もクライアントにあります。"
+      ]
+    ],
+    "now": [
+      "このビルドで利用可能",
+      "ハブ内蔵Windowsクライアント、最大4人の協力ルーム、自動更新、アカウント別プロフィール。アイテムシステムはルーム内のドロップを共有し、自動保存で所持品、ゴールド、キャラクターの成長をこのPCに保管します。"
+    ],
+    "next": [
+      "次の章",
+      "統一感のある素材と画像でリマスターを拡張し、制作ツールを改善。外部ネットワークでのゲーム、オンラインColiseum、PvPアリーナ、イベントを検証します。"
+    ],
+    "limits": "ハブはクラウドサービスを利用し、ゲームは各クライアントで実行されるため、ルーム作成者は接続を維持する必要があります。キャラクターはこのPCに自動保存され、復元用コピーも作成されます。新しいルームは新しい世界を生成します。全画像のHD化、ホスト移行、PvPランキングは未完成です。",
+    "milestones": [
+      [
+        "コミュニティはオンライン",
+        "アカウント、チャンネル、チャット、ルームをサイトから利用できます。管理者のPCを起動し続ける必要はありません。",
+        "利用可能"
+      ],
+      [
+        "広がる冒険",
+        "29の育成ルート、装備、才能、魔法、挑戦が現在のクライアントに含まれます。",
+        "クライアント内"
+      ],
+      [
+        "帰還は続く",
+        "Full HD、素材の改善、アニメーションロゴが新しい見た目の方向性です。全画像のリマスターと灰のアリーナは制作中です。",
+        "開発中"
+      ]
+    ],
+    "faq": [
+      [
+        "どう始めればいいですか？",
+        "Windowsクライアントをダウンロードし、ログインしてルームを作成または選択します。ルームのボタンでゲームが開き、ゲーム内ハブからもコミュニティにアクセスできます。ランチャーは新しいゲームの前に最新版を確認し、インストール済みの互換ゲームファイルを取り込みます。"
+      ],
+      [
+        "自分のPCでサーバーが必要ですか？",
+        "アカウント、チャット、ルーム一覧はクラウドにあります。ルーム作成者のクライアントがゲームをホストし、直接接続または制限のあるネットワーク向けの中継を使います。作成者がゲームを退出すると、グループのセッションが終了します。"
+      ],
+      [
+        "キャラクターは保存されますか？",
+        "はい。プレイ中の自動保存と通常終了で、所持品、ゴールド、成長をこのPCのアカウント別プロフィールに保存します。更新とは別に保管されます。PC間の同期はなく、ルームの世界は永続ではありません。"
+      ],
+      [
+        "リマスターとアリーナは完成していますか？",
+        "Full HD解像度と見た目の改善を利用でき、従来のスプライトも保持しています。全画像の高精細化はまだ一部です。Coliseumはクライアント内の挑戦として存在し、オンラインPvPアリーナ、ランキング、イベントは検証・開発中です。"
+      ]
+    ],
+    "join": [
+      "次の章はコミュニティから始まる。",
+      "ハブで会話し、仲間を集め、ゲームを開きましょう。Discordで更新を追い、プレイ体験を共有できます。"
+    ],
+    "pending": [
+      "招待を準備中",
+      "ソースコードはGitHubで公開中"
+    ],
+    "online": [
+      "冒険の前に、集まる場所を。",
+      "アカウント、チャットチャンネル、最大4人のルームを備えたコミュニティハブ。サイトやゲーム内ハブで仲間を見つけましょう。ハブはクラウドにあり、ゲームはプレイヤーがホストします。"
+    ]
+  },
+  "ko": {
+    "summary": "확장된 모험을 위해 트리스트럼으로 돌아오세요. 29가지 캐릭터 성장 경로, 수천 가지 장비 기반, 마법, 특성, 도전이 기다립니다. 온라인 허브에서 최대 4명의 동료를 모아 Returns from Darkness HD Windows 클라이언트에서 여정을 이어가세요.",
+    "facts": [
+      "클라이언트 공개 · 개발 진행 중",
+      "게임당 최대 4명",
+      "무료 · 비상업적 프로젝트"
+    ],
+    "vision": [
+      "어떤 장소는 언제나 우리를 부릅니다.",
+      "트리스트럼의 고요함. 대성당의 문. 친구와 함께 한 층 더 깊이 내려가는 순간.",
+      "더 다양한 성장, 탐험, 장비로 고전을 다시 만나세요. 계정, 채팅, 방은 커뮤니티 허브에서 연결되며 각 그룹은 Returns from Darkness에서 자신만의 모험을 즐깁니다."
+    ],
+    "pillars": [
+      [
+        "29가지 성장 경로",
+        "6개 계열과 29개 직업 및 전문화. 능력치, 재능, 특성을 조합해 전투 스타일을 만드세요."
+      ],
+      [
+        "깊이 있는 장비",
+        "2,500개 이상의 장비 기반, 부가 효과, 희귀도, 보석, 강화. 확장된 보관함에서 수집품을 정리하세요."
+      ],
+      [
+        "더 많은 도전",
+        "마법, 보스, 생물, 퀘스트, 지역이 모험을 확장합니다. Hardcore, Ironman, Survival, Coliseum도 클라이언트의 도전 요소입니다."
+      ]
+    ],
+    "now": [
+      "이번 빌드에서 이용 가능",
+      "허브가 통합된 Windows 클라이언트, 최대 4인 협동 방, 자동 업데이트, 계정별 프로필. 아이템 시스템은 방의 드롭을 공유하고 자동 저장으로 인벤토리, 금, 캐릭터 성장을 이 PC에 보관합니다."
+    ],
+    "next": [
+      "다음 장",
+      "일관된 소재와 이미지로 리마스터를 확장하고 제작 도구를 개선합니다. 외부 네트워크 플레이, 온라인 Coliseum, PvP 아레나, 이벤트를 검증합니다."
+    ],
+    "limits": "허브는 클라우드 서비스를 사용하며 게임은 각 클라이언트에서 실행되므로 방 생성자는 연결을 유지해야 합니다. 캐릭터는 이 PC에 자동 저장되며 복구 사본을 만듭니다. 새 방은 새 세계를 생성합니다. 전체 HD 이미지, 호스트 이전, PvP 랭킹은 아직 완성되지 않았습니다.",
+    "milestones": [
+      [
+        "커뮤니티가 온라인에 있습니다",
+        "계정, 채널, 채팅, 방을 사이트에서 이용할 수 있으며 관리자 PC가 켜져 있을 필요가 없습니다.",
+        "이용 가능"
+      ],
+      [
+        "확장된 여정",
+        "29가지 성장 경로, 장비, 재능, 마법, 도전이 현재 클라이언트에 포함됩니다.",
+        "클라이언트 내"
+      ],
+      [
+        "귀환은 계속됩니다",
+        "Full HD, 소재 개선, 움직이는 로고가 시각적 방향을 만듭니다. 전체 이미지 리마스터와 잿빛 아레나는 제작 중입니다.",
+        "개발 중"
+      ]
+    ],
+    "faq": [
+      [
+        "어떻게 시작하나요?",
+        "Windows 클라이언트를 다운로드하고 로그인한 뒤 방을 만들거나 선택하세요. 방 버튼으로 게임을 열고 게임 내부 허브에서도 커뮤니티에 접근할 수 있습니다. 런처는 새 게임 전에 최신 버전을 확인하고 설치된 게임의 호환 파일을 가져옵니다."
+      ],
+      [
+        "PC에서 서버를 실행해야 하나요?",
+        "계정, 채팅, 방 목록은 클라우드에 있습니다. 방 생성자의 클라이언트가 직접 연결 또는 제한된 네트워크용 중계로 게임을 호스팅합니다. 생성자가 게임을 나가면 그룹 세션이 종료됩니다."
+      ],
+      [
+        "캐릭터가 저장되나요?",
+        "네. 플레이 중 자동 저장과 정상 종료로 인벤토리, 금, 성장을 이 PC의 계정별 프로필에 보관하며 업데이트와 분리됩니다. PC 간 동기화는 없고 방 세계는 영구적이지 않습니다."
+      ],
+      [
+        "리마스터와 아레나는 완성됐나요?",
+        "Full HD 해상도와 시각적 개선을 제공하면서 고전 스프라이트를 유지합니다. 전체 고해상도 이미지 교체는 아직 일부만 적용됐습니다. Coliseum은 클라이언트 도전으로 존재하며 온라인 PvP 아레나, 랭킹, 이벤트는 검증 및 개발 중입니다."
+      ]
+    ],
+    "join": [
+      "다음 장은 커뮤니티에서 시작됩니다.",
+      "허브에서 대화하고 그룹을 모아 게임을 여세요. Discord에서 업데이트를 확인하고 경험을 공유할 수 있습니다."
+    ],
+    "pending": [
+      "초대 준비 중",
+      "GitHub에서 소스 공개"
+    ],
+    "online": [
+      "모험 전에 만나는 곳.",
+      "계정, 채팅 채널, 최대 4인 방을 제공하는 커뮤니티 허브입니다. 사이트나 클라이언트에서 동료를 찾으세요. 허브는 클라우드에 있고 게임은 플레이어가 호스팅합니다."
+    ]
+  },
+  "zh-CN": {
+    "summary": "重返崔斯特姆，开启扩展冒险：29条角色成长路线、数千种装备基础、法术、天赋和挑战。在线社区大厅支持最多四人组队，在Returns from Darkness HD Windows客户端中继续旅程。",
+    "facts": [
+      "客户端已发布 · 持续开发",
+      "每局最多4人",
+      "免费 · 非商业项目"
+    ],
+    "vision": [
+      "有些地方从未停止呼唤。",
+      "崔斯特姆的寂静。大教堂的门。和朋友一起再深入一层。",
+      "以更丰富的角色成长、探索和装备重新体验经典。账号、聊天和房间汇聚在社区大厅；每个队伍都在Returns from Darkness中拥有自己的冒险。"
+    ],
+    "pillars": [
+      [
+        "29条成长路线",
+        "六个基础体系与29个职业及专精。组合属性、天赋和特性，打造自己的战斗风格。"
+      ],
+      [
+        "丰富的装备",
+        "超过2,500种装备基础、词缀、稀有度、宝石和强化。扩展储物箱让收藏更容易整理。"
+      ],
+      [
+        "更多挑战",
+        "法术、首领、生物、任务和区域扩展了旅程。Hardcore、Ironman、Survival和Coliseum提供客户端内的额外挑战。"
+      ]
+    ],
+    "now": [
+      "此版本已提供",
+      "内置大厅的Windows客户端、最多四人的合作房间、自动更新和独立账号档案。物品系统共享房间内的掉落，自动保存将背包、金币和角色成长保存在本机。"
+    ],
+    "next": [
+      "下一篇章",
+      "用一致的素材和美术扩展重制效果，改进创作工具，验证外部网络游戏、在线Coliseum、PvP竞技场和社区活动。"
+    ],
+    "limits": "大厅使用云服务，游戏运行于客户端，因此房间创建者必须保持连接。角色在本机自动保存并保留恢复副本。新房间生成新世界。完整HD美术、主机迁移和PvP排名尚未完成。",
+    "milestones": [
+      [
+        "社区已上线",
+        "网站提供账号、频道、聊天和房间，不需要管理员电脑持续开机。",
+        "已提供"
+      ],
+      [
+        "扩展的旅程",
+        "当前客户端包含29条角色路线、装备、天赋、法术和挑战。",
+        "客户端内"
+      ],
+      [
+        "归来仍在继续",
+        "Full HD、材质改进和动态标志构成视觉方向。全部美术重制和灰烬竞技场仍在制作中。",
+        "开发中"
+      ]
+    ],
+    "faq": [
+      [
+        "如何开始？",
+        "下载Windows客户端，登录后创建或选择房间。房间按钮可打开游戏，游戏内大厅也可访问社区。启动器在开始新游戏前检查最新版，并从已有安装中导入兼容的游戏文件。"
+      ],
+      [
+        "我需要在电脑上运行服务器吗？",
+        "账号、聊天和房间列表留在云端。创建者的客户端通过直接连接或受限网络的中继来主持游戏。创建者需要留在游戏中；退出会结束队伍会话。"
+      ],
+      [
+        "角色会保存吗？",
+        "会。游戏中的自动保存和正常退出会把背包、金币和成长保存到本机的独立账号档案，与更新文件分开存放。不支持跨电脑同步，房间世界也不是持久世界。"
+      ],
+      [
+        "完整重制和竞技场完成了吗？",
+        "客户端支持Full HD分辨率和视觉改进，并保留经典精灵图。全部高清美术替换仍只完成了一部分。Coliseum已作为客户端挑战存在；在线PvP竞技场、排名和活动仍在开发和验证中。"
+      ]
+    ],
+    "join": [
+      "下一篇章从社区开始。",
+      "进入大厅聊天、寻找队友并创建游戏。在Discord关注更新，分享游玩体验。"
+    ],
+    "pending": [
+      "邀请正在准备",
+      "源码已在GitHub公开"
+    ],
+    "online": [
+      "冒险开始前的相聚。",
+      "社区大厅提供账号、聊天频道和最多四人的房间。在网站或游戏内大厅寻找队友。大厅运行在云端，游戏由玩家主持。"
+    ]
+  },
+  "ar": {
+    "summary": "عُد إلى تريسترام في مغامرة موسعة: 29 مسارًا للشخصية وآلاف قواعد المعدات والتعاويذ والمواهب والتحديات. اجمع ما يصل إلى أربعة لاعبين في مركز المجتمع عبر الإنترنت، وتابع الرحلة في عميل Returns from Darkness HD لنظام Windows.",
+    "facts": [
+      "العميل متاح · قيد التطوير",
+      "حتى 4 لاعبين في المباراة",
+      "مجاني · غير تجاري"
+    ],
+    "vision": [
+      "بعض الأماكن لا تتوقف عن النداء.",
+      "صمت تريسترام. باب الكاتدرائية. النزول طابقًا آخر مع الأصدقاء.",
+      "اكتشف اللعبة الكلاسيكية بخيارات أوسع لتطوير الشخصيات والاستكشاف والمعدات. الحسابات والدردشة والغرف تجتمع في مركز المجتمع؛ ولكل مجموعة مغامرتها الخاصة في Returns from Darkness."
+    ],
+    "pillars": [
+      [
+        "29 مسارًا",
+        "ستة أنماط أساسية و29 فئة وتخصصًا. اجمع السمات والمواهب والخصائص لتطوير أسلوب القتال."
+      ],
+      [
+        "ترسانة أوسع",
+        "أكثر من 2500 قاعدة للمعدات وخصائص ودرجات ندرة وأحجار وترقيات. نظّم مجموعتك في مخزن موسع."
+      ],
+      [
+        "تحديات أكثر",
+        "التعاويذ والزعماء والمخلوقات والمهام والمناطق توسع الرحلة. توفر Hardcore وIronman وSurvival وColiseum تحديات إضافية داخل العميل."
+      ]
+    ],
+    "now": [
+      "في هذا الإصدار",
+      "عميل Windows بمركز مدمج وغرف تعاونية لأربعة لاعبين وتحديث تلقائي وملفات منفصلة للحسابات. يشارك نظام العناصر غنائم الغرفة؛ ويحفظ الحفظ التلقائي المحتويات والذهب وتطور الشخصية على هذا الحاسوب."
+    ],
+    "next": [
+      "الفصل التالي",
+      "توسيع التحسين البصري بمواد ورسوم متناسقة وتحسين الأدوات والتحقق من اللعب عبر شبكات خارجية وColiseum عبر الإنترنت وحلبة PvP وفعاليات المجتمع."
+    ],
+    "limits": "يستخدم المركز خدمات سحابية؛ تعمل المباراة في أجهزة اللاعبين ويجب أن يبقى منشئ الغرفة متصلًا. تُحفظ الشخصيات تلقائيًا على هذا الحاسوب مع نسخ للاستعادة. الغرفة الجديدة تنشئ عالمًا جديدًا. الرسوم عالية الدقة الكاملة ونقل المضيف وتصنيف PvP لم تكتمل بعد.",
+    "milestones": [
+      [
+        "المجتمع متصل",
+        "الحسابات والقنوات والدردشة والغرف متاحة على الموقع دون حاجة إلى بقاء حاسوب المسؤول يعمل.",
+        "متاح"
+      ],
+      [
+        "رحلة موسعة",
+        "29 مسارًا للشخصيات ومعدات ومواهب وتعاويذ وتحديات ضمن العميل الحالي.",
+        "داخل العميل"
+      ],
+      [
+        "العودة مستمرة",
+        "دقة Full HD وتحسين المواد والشعار المتحرك تحدد الاتجاه البصري. تحسين جميع الرسوم وحلبة الرماد ما زالا قيد الإنتاج.",
+        "قيد التطوير"
+      ]
+    ],
+    "faq": [
+      [
+        "كيف أبدأ؟",
+        "نزّل عميل Windows وسجّل الدخول وأنشئ غرفة أو اخترها. يفتح زر الغرفة اللعبة، ويتيح المركز الداخلي الوصول إلى المجتمع. يتحقق المشغّل من أحدث إصدار قبل مباراة جديدة ويستورد ملفات اللعبة المتوافقة من تثبيتك."
+      ],
+      [
+        "هل أحتاج خادمًا على حاسوبي؟",
+        "تبقى الحسابات والدردشة والغرف في السحابة. يستضيف عميل منشئ الغرفة المباراة باتصال مباشر أو عبر وسيط في الشبكات المقيدة. يجب أن يبقى المنشئ داخل اللعبة؛ خروجه ينهي جلسة المجموعة."
+      ],
+      [
+        "هل تُحفظ شخصيتي؟",
+        "نعم. يحفظ الحفظ التلقائي والخروج الطبيعي المحتويات والذهب والتطور في ملف منفصل لكل حساب على هذا الحاسوب، بعيدًا عن التحديثات. لا توجد مزامنة بين الحواسيب، وعالم الغرفة ليس دائمًا."
+      ],
+      [
+        "هل اكتمل التحسين البصري والحلبة؟",
+        "تتوفر دقة Full HD وتحسينات بصرية مع الحفاظ على الرسومات الكلاسيكية. استبدال جميع الرسوم بموارد أوضح ما زال جزئيًا. يوجد Coliseum كتحدٍ داخل العميل؛ الحلبة التنافسية عبر الإنترنت والتصنيفات والفعاليات ما زالت قيد التطوير والتحقق."
+      ]
+    ],
+    "join": [
+      "الفصل التالي يبدأ مع المجتمع.",
+      "ادخل المركز للدردشة وجمع مجموعتك وفتح مباراة. تابع التحديثات وشارك تجارب اللعب عبر Discord."
+    ],
+    "pending": [
+      "الدعوة قيد الإعداد",
+      "الشيفرة متاحة على GitHub"
+    ],
+    "online": [
+      "اللقاء قبل المغامرة.",
+      "مركز مجتمع للحسابات وقنوات الدردشة والغرف التي تستوعب أربعة لاعبين. ابحث عن مجموعتك في الموقع أو العميل. يبقى المركز في السحابة ويستضيف اللاعبون مبارياتهم."
+    ]
+  }
+}

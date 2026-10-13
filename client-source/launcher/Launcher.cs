@@ -19,13 +19,27 @@ using System.Web.Script.Serialization;
 using System.Windows.Forms;
 using Microsoft.Win32;
 
+[assembly: AssemblyTitle("Returns from Darkness HD")]
+[assembly: AssemblyProduct("Returns from Darkness HD")]
+[assembly: AssemblyDescription("Cliente e atualizações de Returns from Darkness")]
+[assembly: AssemblyVersion("0.3.3.0")]
+[assembly: AssemblyFileVersion("0.3.3.0")]
 namespace ReturnsFromDarkness {
  static class Program {
   public static Mutex Instance;
-  public static readonly string PipeName="RfdControl-"+WindowsIdentity.GetCurrent().User.Value;
+  public static string PipeName="RfdControl-"+WindowsIdentity.GetCurrent().User.Value;
+  public static string InstanceAccount="";
+  public static string InviteAccount(string request){try{if(request==null||!request.StartsWith("rfd://play/"))return "";string text=request.Substring(11);if(text.Length>4096||!Regex.IsMatch(text,@"^[A-Za-z0-9_-]+$"))return "";text=text.Replace('-','+').Replace('_','/');text=text.PadRight((text.Length+3)/4*4,'=');var invite=Json.Deserialize<Dictionary<string,object>>(Encoding.UTF8.GetString(Convert.FromBase64String(text)));object user;if(!invite.TryGetValue("username",out user)||!(user is string))return "";string name=((string)user).ToLowerInvariant();return Regex.IsMatch(name,@"^[a-z][a-z0-9_-]{2,15}$")?name:"";}catch{return "";}}
+  public static string RequestAccount(string request){string value=InviteAccount(request);if(value!="")return value;var match=Regex.Match(request??"",@"^rfd://resume/([a-z][a-z0-9_-]{2,15})/[a-f0-9-]{36}$");return match.Success?match.Groups[1].Value:"";}
+  public static bool RouteAccount(string request){string account=RequestAccount(request);if(account==""||account==InstanceAccount||GameRunning&&(GameAccount=="offline"||GameAccount==account))return false;
+   string channel="RfdControl-"+WindowsIdentity.GetCurrent().User.Value+"-"+account;
+   try{using(var pipe=new NamedPipeClientStream(".",channel,PipeDirection.Out)){pipe.Connect(150);using(var writer=new StreamWriter(pipe,new UTF8Encoding(false))){writer.WriteLine(request);writer.Flush();}}return true;}catch(IOException){}catch(TimeoutException){}
+   if(!GameRunning)return false;Process.Start(new ProcessStartInfo(Assembly.GetExecutingAssembly().Location,"--account "+account+" \""+request+"\""){UseShellExecute=false,CreateNoWindow=true});return true;
+  }
   public static Portal Controller;
   public static Process Game,Peer;
   public static string GameRoom="",GameAccount="",ControlToken="";
+  public static string LastRoomControl="";
   [StructLayout(LayoutKind.Sequential)] public struct CopyData {public IntPtr tag;public int size;public IntPtr data;}
   [DllImport("user32.dll",SetLastError=true)] static extern IntPtr SendMessageTimeout(IntPtr window,uint msg,IntPtr source,ref CopyData data,uint flags,uint timeout,out IntPtr result);
   [DllImport("user32.dll")] static extern bool ShowWindow(IntPtr window,int command);
@@ -35,6 +49,7 @@ namespace ReturnsFromDarkness {
   public static bool GameRunning{get{return Game!=null&&!Game.HasExited;}}
   public static void FocusGame(){if(GameRunning){Game.Refresh();ShowWindow(Game.MainWindowHandle,9);SetForegroundWindow(Game.MainWindowHandle);}}
   public static bool SendRoom(string text){if(!GameRunning)return false;Game.Refresh();if(Game.MainWindowHandle==IntPtr.Zero)return false;byte[] bytes=Encoding.UTF8.GetBytes(ControlToken+"\n"+text);IntPtr memory=Marshal.AllocHGlobal(bytes.Length);try{Marshal.Copy(bytes,0,memory,bytes.Length);var data=new CopyData{tag=(IntPtr)0x52464432,size=bytes.Length,data=memory};IntPtr ack;return SendMessageTimeout(Game.MainWindowHandle,0x4a,(IntPtr)Process.GetCurrentProcess().Id,ref data,2,5000,out ack)!=IntPtr.Zero&&ack==(IntPtr)1;}finally{Marshal.FreeHGlobal(memory);}}
+  public static bool Resume(string request){var match=Regex.Match(request??"",@"^rfd://resume/([a-z][a-z0-9_-]{2,15})/([a-f0-9-]{36})$");if(!match.Success)return false;string account=match.Groups[1].Value,room=match.Groups[2].Value;if(GameRunning&&GameAccount!=account){Process.Start(new ProcessStartInfo(Assembly.GetExecutingAssembly().Location,"--account "+account+" \""+request+"\""){UseShellExecute=false,CreateNoWindow=true});return true;}if(!GameRunning||GameAccount!=account||GameRoom!=room||Peer==null||Peer.HasExited)throw new Exception("A conexão anterior foi encerrada. Atualize as salas e abra a partida novamente.");Game.Refresh();if(GetProp(Game.MainWindowHandle,"RFD_GAME_IN_ROOM")==IntPtr.Zero&&!SendRoom(LastRoomControl))throw new Exception("A partida está finalizando uma transição. Tente novamente.");FocusGame();return true;}
   public static async Task<bool> Forward(string request){for(int i=0;i<20;i++){try{using(var pipe=new NamedPipeClientStream(".",PipeName,PipeDirection.Out)){pipe.Connect(250);using(var writer=new StreamWriter(pipe,new UTF8Encoding(false))){await writer.WriteLineAsync(request??"rfd://focus");await writer.FlushAsync();}}return true;}catch(IOException){}catch(TimeoutException){}await Task.Delay(100);}return false;}
   public static async Task Listen(){var security=new PipeSecurity();security.SetAccessRuleProtection(true,false);security.AddAccessRule(new PipeAccessRule(WindowsIdentity.GetCurrent().User,PipeAccessRights.FullControl,AccessControlType.Allow));while(Controller!=null&&!Controller.IsDisposed){try{using(var pipe=new NamedPipeServerStream(PipeName,PipeDirection.In,1,PipeTransmissionMode.Byte,PipeOptions.Asynchronous,8192,8192,security)){await pipe.WaitForConnectionAsync();using(var reader=new StreamReader(pipe,Encoding.UTF8)){var line=await reader.ReadLineAsync();if(line!=null&&line.Length<=8192)Controller.BeginInvoke(new Action(()=>Controller.Accept(line)));}}}catch(ObjectDisposedException){return;}catch(IOException){}await Task.Delay(100);}}
 
@@ -45,10 +60,12 @@ namespace ReturnsFromDarkness {
   [STAThread] public static int Main(string[] args){
    ServicePointManager.SecurityProtocol=SecurityProtocolType.Tls12;
    try {
+    if(args.Length==3&&args[0]=="--account"&&Regex.IsMatch(args[1],@"^[a-z][a-z0-9_-]{2,15}$")){InstanceAccount=args[1];PipeName+="-"+InstanceAccount;args=new[]{args[2]};}
     if(args.Length==2&&args[0]=="--verify-release"){Verify(File.ReadAllText(args[1]));return 0;}
     if(args.Length==3&&args[0]=="--verify-package"){var m=Verify(File.ReadAllText(args[1]));CheckFiles(args[2],m);return 0;}
     if(args.Length==1&&args[0]=="--install-only"){WindowsFormsSynchronizationContext.AutoInstall=false;Directory.CreateDirectory(Root);InstallInitial();using(var status=new Label()){Update(status).GetAwaiter().GetResult();}Register();return 0;}
     Application.EnableVisualStyles();Application.SetCompatibleTextRenderingDefault(false);
+    if(args.Length==1&&args[0]=="--preview"){Application.Run(new Portal("--preview"));return 0;}
     Directory.CreateDirectory(Root);InstallInitial();Register();
     bool owner;Instance=new Mutex(true,"Local\\"+PipeName,out owner);
     if(!owner){if(!Forward(args.Length>0?args[0]:null).GetAwaiter().GetResult())throw new Exception("O cliente aberto ainda está preparando a conexão. Tente novamente.");Instance.Dispose();return 0;}
@@ -85,7 +102,7 @@ namespace ReturnsFromDarkness {
    string marker=Path.Combine(Root,"current.json");if(File.Exists(marker))return;
    using(var resource=Assembly.GetExecutingAssembly().GetManifestResourceStream("initial.zip")){
     if(resource==null)return;string archive=Path.Combine(Root,"initial.zip");using(var output=File.Create(archive))resource.CopyTo(output);
-    string versionDir=Path.Combine(Root,"versions","0.3.2");Extract(archive,versionDir);
+    string versionDir=Path.Combine(Root,"versions","0.3.3");Extract(archive,versionDir);
     string envelope=File.ReadAllText(Path.Combine(versionDir,"release.json"));var manifest=Verify(envelope);CheckFiles(versionDir,manifest);Activate(envelope);File.Delete(archive);
    }
   }
@@ -96,6 +113,12 @@ namespace ReturnsFromDarkness {
    using(var key=Registry.CurrentUser.CreateSubKey(@"Software\Classes\rfd")){key.SetValue("","Returns from Darkness");key.SetValue("URL Protocol","");using(var command=key.CreateSubKey(@"shell\open\command"))command.SetValue("","\""+exe+"\" \"%1\"");}
   }
   public static async Task<Dictionary<string,object>> Update(Label status){
+   Directory.CreateDirectory(Root);FileStream gate=null;DateTime until=DateTime.UtcNow.AddMinutes(3);
+   while(gate==null&&DateTime.UtcNow<until){try{gate=new FileStream(Path.Combine(Root,"update.lock"),FileMode.OpenOrCreate,FileAccess.ReadWrite,FileShare.None);}catch(IOException){}if(gate==null){status.Text="Outra conta está preparando a atualização…";await Task.Delay(100);}}
+   if(gate==null)throw new Exception("A atualização anterior ainda está em andamento. Tente novamente.");
+   using(gate)return await UpdateCore(status);
+  }
+  static async Task<Dictionary<string,object>> UpdateCore(Label status){
    string envelope;using(var web=new WebClient()){web.Encoding=Encoding.UTF8;status.Text="Verificando atualizações…";web.Headers[HttpRequestHeader.CacheControl]="no-cache";envelope=await web.DownloadStringTaskAsync(Site+"/downloads/latest.json?check="+DateTimeOffset.UtcNow.ToUnixTimeMilliseconds());}
    var manifest=Verify(envelope);string pointer=Path.Combine(Root,"current.json");if(File.Exists(pointer)){var installed=Verify(File.ReadAllText(pointer));if(new Version((string)manifest["version"])<new Version((string)installed["version"]))throw new Exception("A central apresentou uma versão anterior. Tente novamente em instantes.");}string directory=Path.Combine(Root,"versions",(string)manifest["version"]);
    if(File.Exists(Path.Combine(directory,(string)manifest["executable"]))){CheckFiles(directory,manifest);Activate(envelope);return manifest;}
@@ -114,7 +137,7 @@ namespace ReturnsFromDarkness {
   public static bool RefreshLauncher(Dictionary<string,object> manifest,string request){
    Register();if(!manifest.ContainsKey("launcher"))return false;string next=SafePath(Path.Combine(Root,"versions",(string)manifest["version"]),(string)manifest["launcher"]);
    if(Hash(next)==Hash(Assembly.GetExecutingAssembly().Location))return false;
-   if(GameRunning)return false;if(Instance!=null)Instance.ReleaseMutex();Process.Start(new ProcessStartInfo(next,request==null?"":"\""+request+"\""){UseShellExecute=false});return true;
+   if(GameRunning)return false;if(Instance!=null)Instance.ReleaseMutex();string arguments=(InstanceAccount==""?"":"--account "+InstanceAccount+" ")+(request==null?"rfd://open":"\""+request+"\"");Process.Start(new ProcessStartInfo(next,arguments){UseShellExecute=false});return true;
   }
   public static async Task Launch(Dictionary<string,object> manifest,string request,Label status){
    if(GameRunning&&(request==null||request=="rfd://focus")){FocusGame();return;}
@@ -150,36 +173,52 @@ namespace ReturnsFromDarkness {
     }catch{if(!peer.HasExited)peer.Kill();throw;}finally{if(File.Exists(ready))File.Delete(ready);}
    }
    try{
+    string roomText=invite==null?"":String.Join("\n",new[]{"room",profile,"127.0.0.1",info.EnvironmentVariables["RFD_ROOM_PORT"],info.EnvironmentVariables["RFD_ROOM_TICKET"],(string)manifest["contentHash"],((string)invite["room"]).Replace("\r","").Replace("\n"," "),info.EnvironmentVariables["RFD_ROOM_MODE"],(string)invite["roomId"]});
     if(GameRunning){
-      string roomText=String.Join("\n",new[]{"room",profile,"127.0.0.1",info.EnvironmentVariables["RFD_ROOM_PORT"],info.EnvironmentVariables["RFD_ROOM_TICKET"],(string)manifest["contentHash"],((string)invite["room"]).Replace("\r","").Replace("\n"," "),info.EnvironmentVariables["RFD_ROOM_MODE"],(string)invite["roomId"]});
       if(!SendRoom(roomText))throw new Exception("O jogo está finalizando uma transição. Tente novamente em instantes.");
     }else{
       ControlToken=RandomToken();info.EnvironmentVariables["RFD_CONTROL_TOKEN"]=ControlToken;info.EnvironmentVariables["RFD_CONTROL_PID"]=Process.GetCurrentProcess().Id.ToString();
-      Game=Process.Start(info);Game.EnableRaisingEvents=true;Game.Exited+=(s,e)=>{if(Controller!=null&&!Controller.IsDisposed)Controller.BeginInvoke(new Action(()=>{GameRoom="";GameAccount="";Controller.Show();}));};
+      Game=Process.Start(info);Game.EnableRaisingEvents=true;Game.Exited+=(s,e)=>{if(Controller!=null&&!Controller.IsDisposed)Controller.BeginInvoke(new Action(()=>{if(Peer!=null&&!Peer.HasExited)Peer.Kill();GameRoom="";GameAccount="";LastRoomControl="";Controller.Show();}));};
     }
-    Peer=peer;GameRoom=invite==null?"":(string)invite["roomId"];GameAccount=account;FocusGame();status.Text="Cliente aberto. Escolha seu personagem para entrar na partida.";
+    Peer=peer;LastRoomControl=roomText;GameRoom=invite==null?"":(string)invite["roomId"];GameAccount=account;FocusGame();status.Text="Cliente aberto. Escolha seu personagem para entrar na partida.";
    }catch{if(peer!=null&&!peer.HasExited)peer.Kill();throw;}
   }
  }
+ class RealmButton:Button {
+  public bool Secondary=false;bool hover;
+  public RealmButton(){FlatStyle=FlatStyle.Flat;FlatAppearance.BorderSize=0;Cursor=Cursors.Hand;SetStyle(ControlStyles.UserPaint|ControlStyles.AllPaintingInWmPaint|ControlStyles.OptimizedDoubleBuffer,true);}
+  protected override void OnMouseEnter(EventArgs e){hover=true;Invalidate();base.OnMouseEnter(e);}protected override void OnMouseLeave(EventArgs e){hover=false;Invalidate();base.OnMouseLeave(e);}
+  protected override void OnPaint(PaintEventArgs e){var rect=new Rectangle(0,0,Width-1,Height-1);Color top=Secondary?Color.FromArgb(37,33,29):Color.FromArgb(hover?139:112,35,25),bottom=Secondary?Color.FromArgb(15,18,21):Color.FromArgb(52,13,13);using(var b=new System.Drawing.Drawing2D.LinearGradientBrush(rect,top,bottom,90f))e.Graphics.FillRectangle(b,rect);using(var p=new Pen(Color.FromArgb(hover?225:135,163,116),1))e.Graphics.DrawRectangle(p,rect);using(var ink=new SolidBrush(Enabled?Color.FromArgb(242,218,177):Color.Gray))using(var align=new StringFormat{Alignment=StringAlignment.Center,LineAlignment=StringAlignment.Center})e.Graphics.DrawString(Text,Font,ink,rect,align);if(Focused)ControlPaint.DrawFocusRectangle(e.Graphics,Rectangle.Inflate(rect,-5,-5));}
+ }
  class Portal:Form {
-  Label status;Button play,central;string request;Dictionary<string,object> manifest;bool loaded=false;readonly Queue<string> requests=new Queue<string>();bool processing=false;NotifyIcon tray;
-  public Portal(string value){request=value;Text="Returns from Darkness HD";Width=720;Height=440;BackColor=Color.FromArgb(12,15,19);ForeColor=Color.FromArgb(230,213,180);Font=new Font("Georgia",12);StartPosition=FormStartPosition.CenterScreen;
-   Controls.Add(new Label{Text="RETURNS FROM DARKNESS",Font=new Font("Georgia",28),AutoSize=true,Location=new Point(38,55)});Controls.Add(new Label{Text="READY TO PLAY",AutoSize=true,ForeColor=Color.FromArgb(192,144,76),Location=new Point(40,112)});
-   status=new Label{Text="Preparando a sua jornada…",Width=620,Height=68,Location=new Point(40,165)};Controls.Add(status);
-   play=new Button{Text="ABRIR CLIENTE",Width=285,Height=55,Location=new Point(40,265),Enabled=false};central=new Button{Text="CENTRAL DA COMUNIDADE",Width=300,Height=55,Location=new Point(345,265)};Controls.Add(play);Controls.Add(central);
-   tray=new NotifyIcon{Icon=SystemIcons.Application,Text="Returns from Darkness HD",Visible=true};tray.DoubleClick+=(s,e)=>Accept("rfd://focus");var menu=new ContextMenuStrip();menu.Items.Add("Abrir cliente",null,(s,e)=>Accept("rfd://focus"));menu.Items.Add("Central da comunidade",null,(s,e)=>Process.Start(Program.Site+"/central/"));menu.Items.Add("Fechar central",null,(s,e)=>{if(Program.GameRunning){Hide();return;}tray.Visible=false;Close();});tray.ContextMenuStrip=menu;
-   central.Click+=(s,e)=>Process.Start(Program.Site+"/central/");play.Click+=(s,e)=>Accept(request??"rfd://open");
-   FormClosing+=(s,e)=>{if(Program.GameRunning){e.Cancel=true;Hide();}else tray.Dispose();};
-   Shown+=async(s,e)=>{if(loaded)return;loaded=true;var listener=Program.Listen();Accept(request??"rfd://open");await Task.CompletedTask;};
+  Label status,version;Button play,central;Image artwork;Stream artStream,logoStream;System.Drawing.Text.PrivateFontCollection fonts=new System.Drawing.Text.PrivateFontCollection();List<IntPtr> fontMemory=new List<IntPtr>();ProgressBar progress;string request;Dictionary<string,object> manifest;bool loaded=false;readonly Queue<string> requests=new Queue<string>();bool processing=false;NotifyIcon tray;
+  Font BrandFont(string resource,float size){using(var stream=Assembly.GetExecutingAssembly().GetManifestResourceStream(resource)){byte[] bytes=new byte[stream.Length];stream.Read(bytes,0,bytes.Length);IntPtr memory=Marshal.AllocCoTaskMem(bytes.Length);Marshal.Copy(bytes,0,memory,bytes.Length);fonts.AddMemoryFont(memory,bytes.Length);fontMemory.Add(memory);string family=resource=="title.ttf"?"Cinzel Decorative":"EB Garamond";return new Font(Array.Find(fonts.Families,f=>f.Name==family)??fonts.Families[fonts.Families.Length-1],size,FontStyle.Regular);}}
+  Label Copy(string text,int x,int y,int width,int height,Font font,Color color){var label=new Label{Text=text,Location=new Point(x,y),Size=new Size(width,height),Font=font,ForeColor=color,BackColor=Color.Transparent,UseCompatibleTextRendering=true};Controls.Add(label);return label;}
+  protected override void OnPaint(PaintEventArgs e){base.OnPaint(e);if(artwork!=null)e.Graphics.DrawImage(artwork,ClientRectangle);using(var shade=new System.Drawing.Drawing2D.LinearGradientBrush(ClientRectangle,Color.FromArgb(245,7,9,12),Color.FromArgb(35,5,8,11),0f))e.Graphics.FillRectangle(shade,ClientRectangle);using(var shade=new System.Drawing.Drawing2D.LinearGradientBrush(ClientRectangle,Color.Transparent,Color.FromArgb(255,7,9,12),90f))e.Graphics.FillRectangle(shade,ClientRectangle);using(var pen=new Pen(Color.FromArgb(100,170,127,67),1)){e.Graphics.DrawRectangle(pen,18,18,ClientSize.Width-37,ClientSize.Height-37);e.Graphics.DrawLine(pen,52,ClientSize.Height-77,ClientSize.Width-53,ClientSize.Height-77);for(int i=0;i<4;i++){int x=i%2==0?18:ClientSize.Width-19,y=i<2?18:ClientSize.Height-19,dx=i%2==0?1:-1,dy=i<2?1:-1;e.Graphics.DrawLine(pen,x,y,x+dx*36,y);e.Graphics.DrawLine(pen,x,y,x,y+dy*36);}}}
+  public Portal(string value){request=value;Text="Returns from Darkness HD";ClientSize=new Size(1100,690);FormBorderStyle=FormBorderStyle.FixedSingle;MaximizeBox=false;BackColor=Color.FromArgb(7,9,12);ForeColor=Color.FromArgb(233,222,202);Font=new Font("Segoe UI",11);StartPosition=FormStartPosition.CenterScreen;DoubleBuffered=true;AutoScaleMode=AutoScaleMode.Dpi;
+   artStream=Assembly.GetExecutingAssembly().GetManifestResourceStream("sanctuary.jpg");artwork=Image.FromStream(artStream);logoStream=Assembly.GetExecutingAssembly().GetManifestResourceStream("logo.gif");var logo=new PictureBox{Image=Image.FromStream(logoStream),SizeMode=PictureBoxSizeMode.Zoom,Location=new Point(49,40),Size=new Size(445,163),BackColor=Color.Transparent};Controls.Add(logo);
+   var display=BrandFont("title.ttf",24);var body=BrandFont("body.ttf",18);var actionFont=new Font("Segoe UI",11,FontStyle.Bold);var smallActionFont=new Font("Segoe UI",9,FontStyle.Bold);var smallBodyFont=new Font(body.FontFamily,14);Font=smallBodyFont;Color gold=Color.FromArgb(211,170,104),muted=Color.FromArgb(160,155,147);
+   Copy("READY TO PLAY",59,214,420,28,smallActionFont,gold);
+   Copy("A escuridão\nnos reúne.",54,253,555,107,display,ForeColor);
+   Copy("Retorne a Tristram. Encontre seu grupo.\nContinue a sua jornada.",58,375,540,64,body,Color.FromArgb(202,196,183));
+   play=new RealmButton{Text="ENTRAR NO JOGO  →",Location=new Point(58,469),Size=new Size(300,54),Enabled=false,Font=actionFont};central=new RealmButton{Text="CENTRAL DA COMUNIDADE  ↗",Location=new Point(376,469),Size=new Size(336,54),Font=smallActionFont,Secondary=true};Controls.Add(play);Controls.Add(central);
+   status=Copy("Preparando a sua jornada…",59,539,880,46,smallBodyFont,muted);progress=new ProgressBar{Style=ProgressBarStyle.Marquee,MarqueeAnimationSpeed=22,Location=new Point(60,590),Size=new Size(980,3)};Controls.Add(progress);
+   version=Copy("RETURNS FROM DARKNESS HD",58,630,520,28,smallActionFont,gold);Copy("COOPERATIVO  ·  ATÉ 4 JOGADORES",708,630,340,28,smallActionFont,muted);
+   tray=new NotifyIcon{Icon=SystemIcons.Application,Text="Returns from Darkness HD",Visible=true};tray.DoubleClick+=(s1,e1)=>Accept("rfd://focus");var menu=new ContextMenuStrip();menu.Items.Add("Abrir cliente",null,(s1,e1)=>Accept("rfd://focus"));menu.Items.Add("Central da comunidade",null,(s1,e1)=>Process.Start(Program.Site+"/central/"));menu.Items.Add("Verificar atualização",null,(s1,e1)=>Accept("rfd://prepare"));menu.Items.Add("Fechar central",null,(s1,e1)=>{if(Program.GameRunning){Hide();return;}tray.Visible=false;Close();});tray.ContextMenuStrip=menu;
+   central.Click+=(s1,e1)=>Process.Start(Program.Site+"/central/");play.Click+=(s1,e1)=>Accept(request??"rfd://open");
+   FormClosing+=(s1,e1)=>{if(Program.GameRunning){e1.Cancel=true;Hide();}else tray.Dispose();};
+   Shown+=async(s1,e1)=>{if(loaded)return;loaded=true;var listener=Program.Listen();if(request=="--preview"){status.Text="Seu portal para Tristram.";version.Text="PRÉVIA DO LAUNCHER · v0.3.3";progress.Visible=false;play.Enabled=true;request=null;}else Accept(request??"rfd://prepare");await Task.CompletedTask;};
   }
-  public async void Accept(string value){requests.Enqueue(value);if(processing)return;processing=true;play.Enabled=false;
+  public async void Accept(string value){requests.Enqueue(value);if(processing)return;processing=true;play.Enabled=false;progress.Visible=true;
    try{while(requests.Count>0){string next=requests.Dequeue();try{
+    if(Program.RouteAccount(next))continue;
+    if(Program.Resume(next)){Hide();continue;}
     if(next=="rfd://central"||next=="rfd://central/"){Process.Start(Program.Site+"/central/");continue;}
     if(Program.GameRunning&&(next=="rfd://focus"||next=="rfd://open")){Program.FocusGame();Hide();continue;}
     manifest=await Program.Update(status);if(Program.RefreshLauncher(manifest,next)){tray.Dispose();Close();return;}
-    if(next=="rfd://focus")next=null;
+    version.Text="RETURNS FROM DARKNESS HD · v"+manifest["version"];if(next=="rfd://prepare"){status.Text="Cliente atualizado. Sua jornada está pronta.";Show();continue;}if(next=="rfd://focus")next=null;
     await Program.Launch(manifest,next=="rfd://open"?null:next,status);request=null;Hide();
-   }catch(Exception error){status.Text=error.Message;Show();Activate();}}}finally{processing=false;play.Enabled=true;}
+   }catch(Exception error){status.Text=error.Message;Show();Activate();}}}finally{processing=false;play.Enabled=true;progress.Visible=false;}
   }
  }
 }

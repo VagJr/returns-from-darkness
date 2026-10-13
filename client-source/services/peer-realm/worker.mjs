@@ -103,7 +103,7 @@ export class Community {
       if(path==='/api/rooms/leave'){if(!current||current.id!==input.roomId)fail('Sala não encontrada.',404);await this.leave(user,current);return json({ok:true});}
       if(['/api/launch','/api/native/connect'].includes(path)) {
         if(!current||current.id!==input.roomId)fail('Entre na sala primeiro.');const member=current.members.find(m=>m.user.toLowerCase()===user.toLowerCase()),ticket=random();
-        const result=await call(roomStub(this.env,current.id),'/internal/ticket',{slot:member.slot,ticketHash:await digest(ticket),expires:now+120000});if(result.status===409)return json({launchUri:'rfd://focus',message:'Retomando a partida no cliente aberto.'});if(!result.ok)fail('Não foi possível preparar a entrada.',503);
+        const result=await call(roomStub(this.env,current.id),'/internal/ticket',{slot:member.slot,ticketHash:await digest(ticket),expires:now+120000});if(result.status===409)return json({launchUri:'rfd://resume/'+user.toLowerCase()+'/'+current.id,message:'Retomando a partida no cliente aberto.'});if(!result.ok)fail('Não foi possível preparar a entrada.',503);
         const payload={transport:'webrtc',signalUrl:'https://returns-darkness-realm.oblique-tactical.workers.dev',roomId:current.id,ticket,contentHash:this.env.CONTENT_HASH,username:user,room:current.name,expires:now+120000};
         const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(payload)))).replaceAll('+','-').replaceAll('/','_').replaceAll('=','');return json({launchUri:'rfd://play/'+encoded,message:member.slot===0?'Abra seu personagem para hospedar a partida.':'Abra seu personagem para reunir-se ao grupo.'});
       }
