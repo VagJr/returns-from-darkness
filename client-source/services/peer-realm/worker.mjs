@@ -103,7 +103,7 @@ export class Community {
       if(path==='/api/rooms/leave'){if(!current||current.id!==input.roomId)fail('Sala não encontrada.',404);await this.leave(user,current);return json({ok:true});}
       if(['/api/launch','/api/native/connect'].includes(path)) {
         if(!current||current.id!==input.roomId)fail('Entre na sala primeiro.');const member=current.members.find(m=>m.user.toLowerCase()===user.toLowerCase()),ticket=random();
-        const result=await call(roomStub(this.env,current.id),'/internal/ticket',{slot:member.slot,ticketHash:await digest(ticket),expires:now+120000});if(!result.ok)fail('Seu cliente já está conectado. Feche-o antes de entrar novamente.',409);
+        const result=await call(roomStub(this.env,current.id),'/internal/ticket',{slot:member.slot,ticketHash:await digest(ticket),expires:now+120000});if(result.status===409)return json({launchUri:'rfd://focus',message:'Retomando a partida no cliente aberto.'});if(!result.ok)fail('Não foi possível preparar a entrada.',503);
         const payload={transport:'webrtc',signalUrl:'https://returns-darkness-realm.oblique-tactical.workers.dev',roomId:current.id,ticket,contentHash:this.env.CONTENT_HASH,username:user,room:current.name,expires:now+120000};
         const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(payload)))).replaceAll('+','-').replaceAll('/','_').replaceAll('=','');return json({launchUri:'rfd://play/'+encoded,message:member.slot===0?'Abra seu personagem para hospedar a partida.':'Abra seu personagem para reunir-se ao grupo.'});
       }
@@ -156,6 +156,11 @@ export class SignalRoom {
         return;
       }
       if(!a.authenticated)fail('Credencial inválida.');
+      if(input.op==='leave'){
+        if(a.slot===0){await call(community(this.env),'/internal/close',{id:room.id});await this.close();return;}
+        room.connected=(room.connected||[]).filter(slot=>slot!==a.slot);await this.ctx.storage.put('room',room);await this.ctx.storage.delete('peer:'+a.slot);await this.notify({id:room.id,connected:room.connected});
+        for(const host of this.ctx.getWebSockets())if(host.deserializeAttachment()?.authenticated&&host.deserializeAttachment()?.slot===0)host.send(JSON.stringify({op:'peer-left',slot:a.slot}));ws.close(1000,'Saiu da partida');return;
+      }
       if(input.op==='heartbeat') {
         if(a.slot===0){room.updated=now;if(Array.isArray(input.connected)&&input.connected.length<=4&&input.connected.every(n=>Number.isInteger(n)&&room.members.some(m=>m.slot===n)))room.connected=input.connected;await this.ctx.storage.put('room',room);await this.notify({id:room.id,connected:room.connected||[]});await this.ctx.storage.setAlarm(now+TTL);}ws.send(JSON.stringify({op:'heartbeat-ok'}));return;
       }

@@ -76,7 +76,7 @@ class Bridge {
   uint64_t packetsSent=0,packetsReceived=0;
   std::array<uint64_t,4> deliverTimes{};unsigned int qaPackets=0;
   std::array<std::deque<Event>,4> deferred;size_t deferredBytes=0;
-  ~Bridge(){if(signal)signal.reset();for(auto &dc:channels)if(dc){dc->resetCallbacks();dc->close();}for(auto &pc:peers)if(pc){pc->resetCallbacks();pc->close();}if(game!=INVALID_SOCKET)closesocket(game);if(listener!=INVALID_SOCKET)closesocket(listener);CloseHandle(wake);WSACloseEvent(socketEvent);WSACleanup();}
+  ~Bridge(){if(signal){signal->send({{"op","leave"}});signal.reset();}for(auto &dc:channels)if(dc){dc->resetCallbacks();dc->close();}for(auto &pc:peers)if(pc){pc->resetCallbacks();pc->close();}if(game!=INVALID_SOCKET)closesocket(game);if(listener!=INVALID_SOCKET)closesocket(listener);CloseHandle(wake);WSACloseEvent(socketEvent);WSACleanup();}
   void enqueue(Event event){std::lock_guard<std::mutex> lock(eventsMutex);if(!event.packet.empty()&&event.slot>=0){auto delay=std::min(500,std::max(0,std::atoi(env("RFD_PEER_QA_DELAY_MS").c_str())));event.deliverAt=deliverTimes[event.slot]=std::max(deliverTimes[event.slot],now()+delay+(delay?++qaPackets%5*10:0));}eventBytes+=event.packet.size();if(events.size()>=2048||eventBytes>524288){overflow=true;SetEvent(wake);return;}events.push_back(std::move(event));SetEvent(wake);}
   void writeJson(const std::string &path,const Json &value){if(path.empty())return;std::ofstream file(std::filesystem::u8path(path),std::ios::binary|std::ios::trunc);file<<value.dump();}
   void readyStatus(int port){writeJson(readyFile,{{"state","ready"},{"port",port},{"slot",self},{"transport",relayed[0]?"cloud-relay":"webrtc"},{"mode",roomMode}});ready=true;}
@@ -136,7 +136,8 @@ class Bridge {
     if((op=="description"||op=="candidate")&&m.contains("to")){require(signal->send(m),"A sinalizacao caiu durante a conexao. Abra a sala novamente.");return;}
     if(op=="data-open"&&!hosting&&!ready&&!relayRequested){sockaddr_in address{};int size=sizeof(address);getsockname(listener,(sockaddr*)&address,&size);readyStatus(ntohs(address.sin_port));return;}
     // Loss of signaling alone does not close established gameplay connections.
-    if(op=="room-closed"&&!hosting)stopping=true;
+    if(op=="room-closed")stopping=true;
+    if(op=="peer-left"&&hosting){int slot=m.at("slot");if(slot>0&&slot<4)remove(slot);return;}
   }
   void configure(){
     signalHost=env("RFD_PEER_SIGNAL_HOST");roomId=env("RFD_PEER_ROOM_ID");ticket=env("RFD_PEER_TICKET");localTicket=env("RFD_PEER_LOCAL_TICKET");hash=env("RFD_PEER_HASH");readyFile=env("RFD_PEER_READY");statsFile=env("RFD_PEER_STATS");
