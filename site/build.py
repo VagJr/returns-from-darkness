@@ -111,4 +111,6 @@ for lang in CONFIG['languages']:
     post = f"# {t['post'][0]}\n\n{t['post'][1]}\n\n{t['summary']}\n\n**{t['now'][0]} — v{CONFIG['baseVersion']}**\n\n{t['now'][1]}\n\n**{t['next'][0]}**\n\n{t['next'][1]}\n\n{t['limits']}\n\n{t['faq'][0][1]}\n\n{t['post'][2]}\n\nDiscord: {CONFIG['discordInvite'] or t['pending'][0]}\n\nWebsite: {PUBLIC or '[URL PENDENTE / URL PENDING]'}\n\n---\nDRAFT — NOT PUBLISHED. Verify community rules and replace pending links before use.\n"
     (drafts/f'{lang}.md').write_text(post,encoding='utf-8')
 (github/'README.md').write_text(common if lang=='en' else (github/'docs/README.en.md').read_text(encoding='utf-8') + '\n\n' + ' · '.join(f'[{name}](docs/README.{code}.md)' for code,name in NAMES.items())+'\n',encoding='utf-8')
-print(f'Built {len(CONFIG["languages"])} localized pages, root page, matching post drafts and GitHub documents. Release: {CONFIG["releaseReady"]}.')
+from search_content import apply_search_content
+apply_search_content(ROOT, CONFIG, LOCALES)
+print(f'Built {len(CONFIG["languages"])} localized pages, root page, six search guides, matching post drafts and GitHub documents. Release: {CONFIG["releaseReady"]}.')
