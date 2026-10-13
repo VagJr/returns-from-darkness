@@ -1,0 +1,282 @@
+{
+  "pt-BR": {
+    "eyebrow": "CAPTURAS REAIS DO CLIENTE",
+    "title": "Dentro de Returns from Darkness.",
+    "intro": "Conheça a interface em jogo, as relíquias da Primeira Vigília e os menus que aproximam o Santuário da sua partida. Abra as imagens para ver cada detalhe.",
+    "open": "Abrir imagem completa",
+    "cards": [
+      ["Tristram e a nova interface", "A moldura de pedra e metal do projeto acompanha o mundo clássico. Vida e mana têm líquido animado e estátuas tradicionais; o cinto mantém os espaços para poções."],
+      ["Relíquias na sua mochila", "Signet of the Last Vigil, Lantern of the Return e Ashen Covenant: três itens com arte própria. Esta captura mostra a coleção no inventário durante um teste controlado."],
+      ["Play Online", "O acesso online começa no menu do jogo, com a identidade do projeto e as fontes da interface. A conta do Santuário acompanha a abertura pelo site."],
+      ["Seu Santuário dentro do jogo", "Entre na partida, atualize as opções, saia da sala ou abra a comunidade. O hub usa menus nativos do cliente e a mesma conta da central."],
+      ["A mesma sala na central", "A página Jogar mostra a sala escolhida e o grupo. Abrir jogo nesta sala leva essa escolha ao cliente, sem precisar digitar o endereço de outro jogador."]
+    ],
+    "flowTitle": "Do encontro à aventura, uma conta.",
+    "steps": [
+      ["Escolha seu grupo", "Entre no Santuário e crie ou escolha uma sala. A conta e a sala seguem com você até o cliente."],
+      ["Abra o cliente atualizado", "O launcher confere a versão antes da partida e encaminha a sala para o cliente da sua conta."],
+      ["Continue dentro do jogo", "Escolha o personagem e entre na partida. Pelo hub nativo, volte às salas ou abra a comunidade no navegador."]
+    ],
+    "note": "Capturas reais de desenvolvimento. As relíquias foram reunidas em um teste; não representam uma queda natural simultânea. A renovação da interface convive com artes clássicas e adaptações de bases comunitárias. O mundo inteiro ainda não teve suas artes substituídas."
+  },
+  "en": {
+    "eyebrow": "REAL CLIENT SCREENSHOTS",
+    "title": "Inside Returns from Darkness.",
+    "intro": "Explore the game interface, First Vigil relics and menus that bring the Sanctuary into your session. Open the images to see every detail.",
+    "open": "Open full image",
+    "cards": [
+      ["Tristram and the new interface", "The project's stone and metal frame surrounds the classic world. Life and mana feature animated liquid and traditional statues; the belt retains its potion slots."],
+      ["Relics in your inventory", "Signet of the Last Vigil, Lantern of the Return and Ashen Covenant: three items with original artwork. This capture shows the collection in inventory during a controlled test."],
+      ["Play Online", "Online access starts in the game menu, with the project's identity and interface fonts. Your Sanctuary account follows you when opening the game from the website."],
+      ["Your Sanctuary inside the game", "Enter the game, refresh the options, leave the room or open the community. The hub uses native client menus and the same account as the website."],
+      ["The same room on the website", "The Play page shows the selected room and party. Open game in this room carries that choice into the client, without typing another player's address."]
+    ],
+    "flowTitle": "From gathering to adventure, one account.",
+    "steps": [
+      ["Choose your party", "Sign in to the Sanctuary and create or choose a room. Your account and room follow you into the client."],
+      ["Open the updated client", "The launcher checks the version before play and sends the room to your account's client."],
+      ["Continue inside the game", "Choose your character and enter the game. Use the native hub to return to rooms or open the community in your browser."]
+    ],
+    "note": "Real development captures. The relics were gathered for a test; they do not represent simultaneous natural drops. The renewed interface retains classic artwork and adaptations from community bases. Artwork across the entire world has not yet been replaced."
+  },
+  "es": {
+    "eyebrow": "CAPTURAS REALES DEL CLIENTE",
+    "title": "Dentro de Returns from Darkness.",
+    "intro": "Descubre la interfaz, las reliquias de la Primera Vigilia y los menús que acercan el Santuario a tu partida. Abre las imágenes para ver cada detalle.",
+    "open": "Abrir imagen completa",
+    "cards": [
+      ["Tristram y la nueva interfaz", "El marco de piedra y metal del proyecto rodea el mundo clásico. Vida y maná tienen líquido animado y estatuas tradicionales; el cinturón conserva sus espacios para pociones."],
+      ["Reliquias en tu inventario", "Signet of the Last Vigil, Lantern of the Return y Ashen Covenant: tres objetos con arte propio. La captura muestra la colección en el inventario durante una prueba controlada."],
+      ["Play Online", "El acceso online comienza en el menú del juego, con la identidad del proyecto y sus fuentes. Tu cuenta del Santuario te acompaña al abrir el juego desde la web."],
+      ["Tu Santuario dentro del juego", "Entra en la partida, actualiza las opciones, abandona la sala o abre la comunidad. El hub usa menús nativos del cliente y la misma cuenta que la web."],
+      ["La misma sala en la web", "La página Jugar muestra la sala elegida y el grupo. Abrir juego en esta sala lleva esa elección al cliente, sin introducir la dirección de otro jugador."]
+    ],
+    "flowTitle": "Del encuentro a la aventura, una cuenta.",
+    "steps": [
+      ["Elige tu grupo", "Entra al Santuario y crea o elige una sala. Tu cuenta y sala te acompañan hasta el cliente."],
+      ["Abre el cliente actualizado", "El launcher comprueba la versión antes de jugar y envía la sala al cliente de tu cuenta."],
+      ["Continúa dentro del juego", "Elige tu personaje y entra en la partida. Desde el hub nativo, vuelve a las salas o abre la comunidad en el navegador."]
+    ],
+    "note": "Capturas reales de desarrollo. Las reliquias se reunieron para una prueba; no muestran caídas naturales simultáneas. La interfaz renovada conserva arte clásico y adaptaciones de bases comunitarias. Aún no se ha sustituido el arte de todo el mundo."
+  },
+  "fr": {
+    "eyebrow": "CAPTURES RÉELLES DU CLIENT",
+    "title": "Au cœur de Returns from Darkness.",
+    "intro": "Découvrez l'interface, les reliques de la Première Veillée et les menus qui relient le Sanctuaire à votre partie. Ouvrez les images pour en voir les détails.",
+    "open": "Ouvrir l'image complète",
+    "cards": [
+      ["Tristram et la nouvelle interface", "Le cadre de pierre et de métal du projet accompagne le monde classique. Vie et mana disposent de liquides animés et de statues traditionnelles ; la ceinture conserve ses emplacements de potions."],
+      ["Les reliques dans votre inventaire", "Signet of the Last Vigil, Lantern of the Return et Ashen Covenant : trois objets aux illustrations originales. Cette capture présente la collection dans l'inventaire lors d'un test contrôlé."],
+      ["Play Online", "L'accès en ligne commence dans le menu du jeu, avec l'identité du projet et les polices de l'interface. Votre compte du Sanctuaire vous suit lorsque vous ouvrez le jeu depuis le site."],
+      ["Votre Sanctuaire dans le jeu", "Entrez en partie, actualisez les options, quittez le salon ou ouvrez la communauté. Le hub utilise les menus natifs du client et le même compte que le site."],
+      ["Le même salon sur le site", "La page Jouer affiche le salon choisi et le groupe. Ouvrir le jeu dans ce salon transmet ce choix au client, sans saisir l'adresse d'un autre joueur."]
+    ],
+    "flowTitle": "Du rassemblement à l'aventure, un seul compte.",
+    "steps": [
+      ["Choisissez votre groupe", "Connectez-vous au Sanctuaire et créez ou choisissez un salon. Votre compte et votre salon vous suivent dans le client."],
+      ["Ouvrez le client à jour", "Le launcher vérifie la version avant la partie et transmet le salon au client de votre compte."],
+      ["Continuez dans le jeu", "Choisissez votre personnage et entrez en partie. Le hub natif permet de revenir aux salons ou d'ouvrir la communauté dans le navigateur."]
+    ],
+    "note": "Captures réelles de développement. Les reliques ont été réunies pour un test ; elles ne représentent pas des butins naturels simultanés. L'interface renouvelée conserve des illustrations classiques et des adaptations de bases communautaires. Les illustrations du monde entier n'ont pas encore été remplacées."
+  },
+  "de": {
+    "eyebrow": "ECHTE CLIENT-SCREENSHOTS",
+    "title": "Einblick in Returns from Darkness.",
+    "intro": "Entdecke die Spieloberfläche, Relikte der Ersten Wache und die Menüs, die das Sanktuario mit deiner Partie verbinden. Öffne die Bilder, um alle Details zu sehen.",
+    "open": "Vollständiges Bild öffnen",
+    "cards": [
+      ["Tristram und die neue Oberfläche", "Der Stein- und Metallrahmen des Projekts umgibt die klassische Welt. Leben und Mana haben animierte Flüssigkeit und traditionelle Statuen; der Gürtel behält seine Trankplätze."],
+      ["Relikte im Inventar", "Signet of the Last Vigil, Lantern of the Return und Ashen Covenant: drei Gegenstände mit eigenen Illustrationen. Dieses Bild zeigt die Sammlung im Inventar während eines kontrollierten Tests."],
+      ["Play Online", "Der Online-Zugang beginnt im Spielmenü mit der Identität des Projekts und den Schriftarten der Oberfläche. Dein Sanktuario-Konto wird beim Start über die Website übernommen."],
+      ["Dein Sanktuario im Spiel", "Starte die Partie, aktualisiere die Optionen, verlasse den Raum oder öffne die Community. Der Hub nutzt native Client-Menüs und dasselbe Konto wie die Website."],
+      ["Derselbe Raum auf der Website", "Die Seite Spielen zeigt den gewählten Raum und die Gruppe. Spiel in diesem Raum öffnen überträgt die Auswahl an den Client, ohne die Adresse eines anderen Spielers einzugeben."]
+    ],
+    "flowTitle": "Vom Treffen zum Abenteuer mit einem Konto.",
+    "steps": [
+      ["Wähle deine Gruppe", "Melde dich im Sanktuario an und erstelle oder wähle einen Raum. Konto und Raum werden in den Client übernommen."],
+      ["Öffne den aktuellen Client", "Der Launcher prüft vor dem Spiel die Version und übergibt den Raum an den Client deines Kontos."],
+      ["Spiele im Client weiter", "Wähle deinen Charakter und starte die Partie. Im nativen Hub kannst du zu den Räumen zurückkehren oder die Community im Browser öffnen."]
+    ],
+    "note": "Echte Entwicklungsaufnahmen. Die Relikte wurden für einen Test zusammengestellt und zeigen keine gleichzeitigen natürlichen Beutedrops. Die erneuerte Oberfläche behält klassische Grafiken und Anpassungen aus Community-Grundlagen. Die Grafiken der gesamten Welt wurden noch nicht ersetzt."
+  },
+  "it": {
+    "eyebrow": "SCHERMATE REALI DEL CLIENT",
+    "title": "Dentro Returns from Darkness.",
+    "intro": "Scopri l'interfaccia, le reliquie della Prima Veglia e i menu che collegano il Santuario alla tua partita. Apri le immagini per vedere ogni dettaglio.",
+    "open": "Apri immagine completa",
+    "cards": [
+      ["Tristram e la nuova interfaccia", "La cornice di pietra e metallo del progetto accompagna il mondo classico. Vita e mana hanno liquidi animati e statue tradizionali; la cintura conserva gli spazi per le pozioni."],
+      ["Reliquie nel tuo inventario", "Signet of the Last Vigil, Lantern of the Return e Ashen Covenant: tre oggetti con illustrazioni originali. La schermata mostra la collezione nell'inventario durante un test controllato."],
+      ["Play Online", "L'accesso online inizia dal menu di gioco, con l'identità del progetto e i caratteri dell'interfaccia. L'account del Santuario ti segue quando apri il gioco dal sito."],
+      ["Il tuo Santuario nel gioco", "Entra in partita, aggiorna le opzioni, esci dalla stanza o apri la community. L'hub usa menu nativi del client e lo stesso account del sito."],
+      ["La stessa stanza sul sito", "La pagina Gioca mostra la stanza scelta e il gruppo. Apri gioco in questa stanza invia la scelta al client, senza inserire l'indirizzo di un altro giocatore."]
+    ],
+    "flowTitle": "Dall'incontro all'avventura, un account.",
+    "steps": [
+      ["Scegli il tuo gruppo", "Accedi al Santuario e crea o scegli una stanza. Account e stanza ti seguono nel client."],
+      ["Apri il client aggiornato", "Il launcher controlla la versione prima della partita e invia la stanza al client del tuo account."],
+      ["Continua dentro il gioco", "Scegli il personaggio ed entra in partita. Dall'hub nativo, torna alle stanze o apri la community nel browser."]
+    ],
+    "note": "Schermate reali di sviluppo. Le reliquie sono state riunite per un test; non rappresentano bottini naturali simultanei. L'interfaccia rinnovata conserva arte classica e adattamenti da basi della community. Le immagini dell'intero mondo non sono ancora state sostituite."
+  },
+  "pl": {
+    "eyebrow": "PRAWDZIWE ZRZUTY EKRANU KLIENTA",
+    "title": "Wewnątrz Returns from Darkness.",
+    "intro": "Poznaj interfejs, relikwie Pierwszej Warty i menu łączące Sanktuarium z twoją rozgrywką. Otwórz obrazy, aby zobaczyć szczegóły.",
+    "open": "Otwórz pełny obraz",
+    "cards": [
+      ["Tristram i nowy interfejs", "Kamienna i metalowa rama projektu otacza klasyczny świat. Życie i mana mają animowaną ciecz i tradycyjne posągi; pas zachowuje miejsca na mikstury."],
+      ["Relikwie w ekwipunku", "Signet of the Last Vigil, Lantern of the Return i Ashen Covenant: trzy przedmioty z własnymi ilustracjami. Zrzut pokazuje kolekcję w ekwipunku podczas kontrolowanego testu."],
+      ["Play Online", "Dostęp online zaczyna się w menu gry, z identyfikacją projektu i czcionkami interfejsu. Konto Sanktuarium jest przekazywane przy otwieraniu gry ze strony."],
+      ["Twoje Sanktuarium w grze", "Wejdź do gry, odśwież opcje, opuść pokój lub otwórz społeczność. Hub używa natywnych menu klienta i tego samego konta co strona."],
+      ["Ten sam pokój na stronie", "Strona Graj pokazuje wybrany pokój i drużynę. Otwórz grę w tym pokoju przekazuje wybór do klienta bez wpisywania adresu innego gracza."]
+    ],
+    "flowTitle": "Od spotkania do przygody, jedno konto.",
+    "steps": [
+      ["Wybierz drużynę", "Zaloguj się do Sanktuarium i utwórz lub wybierz pokój. Konto i pokój zostaną przekazane do klienta."],
+      ["Otwórz aktualnego klienta", "Launcher sprawdza wersję przed grą i przekazuje pokój do klienta twojego konta."],
+      ["Kontynuuj w grze", "Wybierz postać i wejdź do gry. W natywnym hubie wrócisz do pokoi lub otworzysz społeczność w przeglądarce."]
+    ],
+    "note": "Prawdziwe zrzuty z wersji rozwojowej. Relikwie zebrano na potrzeby testu; nie pokazują jednoczesnych naturalnych łupów. Odnowiony interfejs zachowuje klasyczne grafiki i adaptacje baz społeczności. Grafiki całego świata nie zostały jeszcze zastąpione."
+  },
+  "ru": {
+    "eyebrow": "РЕАЛЬНЫЕ СКРИНШОТЫ КЛИЕНТА",
+    "title": "Внутри Returns from Darkness.",
+    "intro": "Посмотрите на интерфейс, реликвии Первого дозора и меню, связывающие Санктуарий с вашей игрой. Откройте изображения, чтобы рассмотреть детали.",
+    "open": "Открыть полное изображение",
+    "cards": [
+      ["Тристрам и новый интерфейс", "Каменная и металлическая рамка проекта окружает классический мир. Жизнь и мана отображают анимированную жидкость и традиционные статуи; пояс сохраняет ячейки для зелий."],
+      ["Реликвии в инвентаре", "Signet of the Last Vigil, Lantern of the Return и Ashen Covenant — три предмета с собственной графикой. Скриншот показывает коллекцию в инвентаре во время контролируемого теста."],
+      ["Play Online", "Вход в онлайн начинается в меню игры с оформлением проекта и шрифтами интерфейса. При запуске с сайта в клиент передаётся ваша учётная запись Санктуария."],
+      ["Ваш Санктуарий внутри игры", "Войдите в игру, обновите варианты, покиньте комнату или откройте сообщество. Хаб использует встроенные меню клиента и ту же учётную запись, что и сайт."],
+      ["Та же комната на сайте", "Страница Играть показывает выбранную комнату и группу. Открыть игру в этой комнате передаёт выбор клиенту без ввода адреса другого игрока."]
+    ],
+    "flowTitle": "От встречи к приключению с одной учётной записью.",
+    "steps": [
+      ["Выберите группу", "Войдите в Санктуарий и создайте или выберите комнату. Учётная запись и комната будут переданы в клиент."],
+      ["Откройте обновлённый клиент", "Лаунчер проверит версию перед игрой и передаст комнату клиенту вашей учётной записи."],
+      ["Продолжайте в игре", "Выберите персонажа и начните игру. Встроенный хаб позволяет вернуться к комнатам или открыть сообщество в браузере."]
+    ],
+    "note": "Реальные снимки версии в разработке. Реликвии собраны для теста и не показывают одновременное естественное выпадение. Обновлённый интерфейс сохраняет классическую графику и адаптации проектов сообщества. Графика всего мира ещё не заменена."
+  },
+  "uk": {
+    "eyebrow": "СПРАВЖНІ ЗНІМКИ КЛІЄНТА",
+    "title": "Усередині Returns from Darkness.",
+    "intro": "Перегляньте інтерфейс, реліквії Першої варти та меню, що поєднують Санктуарій із вашою грою. Відкрийте зображення, щоб роздивитися деталі.",
+    "open": "Відкрити повне зображення",
+    "cards": [
+      ["Трістрам і новий інтерфейс", "Кам'яна та металева рамка проєкту оточує класичний світ. Життя й мана мають анімовану рідину та традиційні статуї; пояс зберігає комірки для зілля."],
+      ["Реліквії в інвентарі", "Signet of the Last Vigil, Lantern of the Return і Ashen Covenant — три предмети з власною графікою. Знімок показує колекцію в інвентарі під час контрольованого тесту."],
+      ["Play Online", "Вхід онлайн починається в меню гри з оформленням проєкту та шрифтами інтерфейсу. Під час запуску із сайту до клієнта передається ваш обліковий запис Санктуарію."],
+      ["Ваш Санктуарій усередині гри", "Увійдіть у гру, оновіть варіанти, залиште кімнату або відкрийте спільноту. Хаб використовує вбудовані меню клієнта й той самий обліковий запис, що й сайт."],
+      ["Та сама кімната на сайті", "Сторінка Грати показує вибрану кімнату та групу. Відкрити гру в цій кімнаті передає вибір клієнту без введення адреси іншого гравця."]
+    ],
+    "flowTitle": "Від зустрічі до пригоди з одним обліковим записом.",
+    "steps": [
+      ["Виберіть групу", "Увійдіть у Санктуарій та створіть або виберіть кімнату. Обліковий запис і кімната перейдуть до клієнта."],
+      ["Відкрийте оновлений клієнт", "Лаунчер перевіряє версію перед грою та передає кімнату клієнту вашого облікового запису."],
+      ["Продовжуйте у грі", "Виберіть персонажа й увійдіть у гру. У вбудованому хабі можна повернутися до кімнат або відкрити спільноту в браузері."]
+    ],
+    "note": "Справжні знімки версії в розробці. Реліквії зібрано для тесту; це не одночасне природне випадіння. Оновлений інтерфейс зберігає класичну графіку й адаптації проєктів спільноти. Графіку всього світу ще не замінено."
+  },
+  "tr": {
+    "eyebrow": "GERÇEK İSTEMCİ EKRAN GÖRÜNTÜLERİ",
+    "title": "Returns from Darkness'ın içinde.",
+    "intro": "Oyun arayüzünü, İlk Nöbet yadigârlarını ve Sığınağı oyununuza bağlayan menüleri keşfedin. Ayrıntıları görmek için görüntüleri açın.",
+    "open": "Tam görüntüyü aç",
+    "cards": [
+      ["Tristram ve yeni arayüz", "Projenin taş ve metal çerçevesi klasik dünyayı çevreler. Can ve mana hareketli sıvıya ve geleneksel heykellere sahiptir; kemer iksir yuvalarını korur."],
+      ["Envanterinizdeki yadigârlar", "Signet of the Last Vigil, Lantern of the Return ve Ashen Covenant: özgün çizimlere sahip üç eşya. Bu görüntü, kontrollü bir test sırasında koleksiyonu envanterde gösterir."],
+      ["Play Online", "Çevrimiçi erişim, projenin kimliği ve arayüz yazı tipleriyle oyun menüsünden başlar. Site üzerinden oyunu açtığınızda Sığınak hesabınız istemciye aktarılır."],
+      ["Oyun içindeki Sığınağınız", "Oyuna girin, seçenekleri yenileyin, odadan ayrılın veya topluluğu açın. Merkez, istemcinin yerel menülerini ve siteyle aynı hesabı kullanır."],
+      ["Sitedeki aynı oda", "Oyna sayfası seçilen odayı ve grubu gösterir. Bu odada oyunu aç, başka bir oyuncunun adresini yazmadan seçimi istemciye aktarır."]
+    ],
+    "flowTitle": "Buluşmadan maceraya, tek hesap.",
+    "steps": [
+      ["Grubunuzu seçin", "Sığınağa giriş yapıp bir oda oluşturun veya seçin. Hesabınız ve odanız istemciye aktarılır."],
+      ["Güncel istemciyi açın", "Başlatıcı, oyun öncesinde sürümü kontrol eder ve odayı hesabınızın istemcisine gönderir."],
+      ["Oyunun içinde devam edin", "Karakterinizi seçip oyuna girin. Yerel merkezden odalara dönün veya topluluğu tarayıcıda açın."]
+    ],
+    "note": "Gerçek geliştirme görüntüleri. Yadigârlar bir test için toplandı; aynı anda doğal olarak düşen eşyaları göstermiyorlar. Yenilenen arayüz klasik çizimleri ve topluluk projelerinden uyarlamaları korur. Tüm dünyanın çizimleri henüz değiştirilmedi."
+  },
+  "ja": {
+    "eyebrow": "実際のクライアント画面",
+    "title": "Returns from Darkness の世界へ。",
+    "intro": "ゲーム画面、First Vigilの遺物、サンクチュアリとプレイをつなぐメニューをご覧ください。画像を開くと細部まで確認できます。",
+    "open": "画像を全体表示",
+    "cards": [
+      ["トリストラムと新しいインターフェース", "プロジェクト独自の石と金属のフレームがクラシックな世界を囲みます。ライフとマナには液体アニメーションと伝統的な彫像があり、ベルトにはポーション用のスロットがあります。"],
+      ["インベントリに収めた遺物", "Signet of the Last Vigil、Lantern of the Return、Ashen Covenant。独自のアートを持つ3つのアイテムです。この画像は管理されたテストでコレクションを表示したものです。"],
+      ["Play Online", "プロジェクトのデザインとゲームのフォントを使ったメニューからオンラインへ。サイトからゲームを開くと、サンクチュアリのアカウントが引き継がれます。"],
+      ["ゲーム内のサンクチュアリ", "ゲームへの参加、更新、ルームからの退出、コミュニティへの移動ができます。ハブはクライアントのネイティブメニューとサイトと同じアカウントを使います。"],
+      ["サイトにも同じルーム", "プレイページに選んだルームとパーティが表示されます。ルームからゲームを開くと選択がクライアントに渡され、他のプレイヤーのアドレス入力は不要です。"]
+    ],
+    "flowTitle": "出会いから冒険まで、ひとつのアカウント。",
+    "steps": [
+      ["パーティを選ぶ", "サンクチュアリにログインしてルームを作るか選びます。アカウントとルームがクライアントに引き継がれます。"],
+      ["最新のクライアントを開く", "ランチャーがプレイ前にバージョンを確認し、アカウントのクライアントにルームを渡します。"],
+      ["ゲーム内で続ける", "キャラクターを選んで参加します。ゲーム内ハブからルームに戻ったり、ブラウザーでコミュニティを開いたりできます。"]
+    ],
+    "note": "開発中の実画面です。遺物はテスト用に集めたもので、自然に同時ドロップした様子ではありません。新しいインターフェースにはクラシックなアートとコミュニティのベースからの改変も含まれます。世界全体のアートの置き換えはまだ完了していません。"
+  },
+  "ko": {
+    "eyebrow": "실제 클라이언트 화면",
+    "title": "Returns from Darkness의 안으로.",
+    "intro": "게임 인터페이스, 첫 번째 수호의 유물, 성역을 게임과 연결하는 메뉴를 살펴보세요. 이미지를 열면 세부 모습을 볼 수 있습니다.",
+    "open": "전체 이미지 열기",
+    "cards": [
+      ["트리스트럼과 새로운 인터페이스", "프로젝트의 돌과 금속 테두리가 고전 세계를 감쌉니다. 생명력과 마나에는 움직이는 액체와 전통 조각상이 있으며, 벨트에는 물약 슬롯이 유지됩니다."],
+      ["인벤토리 속 유물", "Signet of the Last Vigil, Lantern of the Return, Ashen Covenant: 독자적인 그림을 가진 세 아이템입니다. 이 화면은 통제된 테스트 중 인벤토리에 모은 컬렉션을 보여줍니다."],
+      ["Play Online", "프로젝트의 디자인과 인터페이스 글꼴을 사용한 게임 메뉴에서 온라인을 시작합니다. 사이트에서 게임을 열면 성역 계정이 클라이언트로 전달됩니다."],
+      ["게임 안의 성역", "게임 참여, 새로고침, 방 나가기, 커뮤니티 열기를 이용하세요. 허브는 클라이언트의 기본 메뉴와 사이트와 같은 계정을 사용합니다."],
+      ["사이트에서도 같은 방", "플레이 페이지에서 선택한 방과 파티를 확인합니다. 이 방에서 게임 열기를 누르면 다른 플레이어의 주소를 입력하지 않아도 선택이 클라이언트로 전달됩니다."]
+    ],
+    "flowTitle": "만남에서 모험까지, 하나의 계정.",
+    "steps": [
+      ["파티 선택", "성역에 로그인해 방을 만들거나 선택하세요. 계정과 방이 클라이언트로 전달됩니다."],
+      ["최신 클라이언트 열기", "런처가 플레이 전에 버전을 확인하고 계정의 클라이언트로 방을 전달합니다."],
+      ["게임 안에서 계속하기", "캐릭터를 선택해 참여하세요. 게임 내 허브에서 방으로 돌아가거나 브라우저로 커뮤니티를 열 수 있습니다."]
+    ],
+    "note": "개발 중인 실제 화면입니다. 유물은 테스트를 위해 모았으며 자연스럽게 동시에 드롭된 장면이 아닙니다. 새 인터페이스에는 고전 그림과 커뮤니티 기반의 수정 요소도 남아 있습니다. 세계 전체의 그림 교체는 아직 완료되지 않았습니다."
+  },
+  "zh-CN": {
+    "eyebrow": "真实客户端截图",
+    "title": "走进 Returns from Darkness。",
+    "intro": "查看游戏界面、初次守望的遗物，以及连接庇护之地与游戏的菜单。打开图片即可查看细节。",
+    "open": "打开完整图片",
+    "cards": [
+      ["崔斯特瑞姆与新界面", "项目的石材与金属边框环绕经典世界。生命与法力具有液体动画和传统雕像，腰带保留了药水槽位。"],
+      ["背包中的遗物", "Signet of the Last Vigil、Lantern of the Return 与 Ashen Covenant：三件拥有原创美术的物品。此截图展示了在受控测试中收集到背包内的遗物。"],
+      ["Play Online", "在线入口位于游戏菜单，使用项目形象与界面字体。从网站启动游戏时，庇护之地账号会传递给客户端。"],
+      ["游戏内的庇护之地", "进入游戏、刷新选项、离开房间或打开社区。大厅使用客户端原生菜单，并与网站使用同一账号。"],
+      ["网站中的同一房间", "游玩页面显示所选房间与队伍。在此房间打开游戏会将选择传递给客户端，无须输入其他玩家的地址。"]
+    ],
+    "flowTitle": "从相聚到冒险，一个账号。",
+    "steps": [
+      ["选择队伍", "登录庇护之地，创建或选择房间。账号与房间会传递到客户端。"],
+      ["打开最新客户端", "启动器在游玩前检查版本，并把房间发送到该账号的客户端。"],
+      ["在游戏中继续", "选择角色后进入游戏。可通过原生大厅返回房间，或在浏览器中打开社区。"]
+    ],
+    "note": "真实开发截图。遗物是为测试而集中收集的，并非自然同时掉落。更新的界面保留了经典美术和来自社区基础的改编内容。整个世界的美术替换尚未完成。"
+  },
+  "ar": {
+    "eyebrow": "لقطات حقيقية من العميل",
+    "title": "داخل Returns from Darkness.",
+    "intro": "اكتشف واجهة اللعبة وآثار الحراسة الأولى والقوائم التي تصل الملاذ بمباراتك. افتح الصور لرؤية التفاصيل.",
+    "open": "فتح الصورة الكاملة",
+    "cards": [
+      ["تريسترام والواجهة الجديدة", "يحيط إطار المشروع الحجري والمعدني بالعالم الكلاسيكي. تتميز الصحة والمانا بسائل متحرك وتماثيل تقليدية، ويحتفظ الحزام بخانات الجرعات."],
+      ["الآثار في مخزونك", "Signet of the Last Vigil وLantern of the Return وAshen Covenant: ثلاثة عناصر برسوم أصلية. تُظهر اللقطة المجموعة في المخزون أثناء اختبار مضبوط."],
+      ["Play Online", "يبدأ الدخول عبر الإنترنت من قائمة اللعبة بهوية المشروع وخطوط الواجهة. ينتقل حساب الملاذ إلى العميل عند فتح اللعبة من الموقع."],
+      ["ملاذك داخل اللعبة", "ادخل المباراة أو حدّث الخيارات أو غادر الغرفة أو افتح المجتمع. يستخدم المركز قوائم العميل الأصلية والحساب نفسه المستخدم في الموقع."],
+      ["الغرفة نفسها على الموقع", "تعرض صفحة اللعب الغرفة المختارة والفريق. ينقل زر فتح اللعبة في هذه الغرفة اختيارك إلى العميل دون كتابة عنوان لاعب آخر."]
+    ],
+    "flowTitle": "من اللقاء إلى المغامرة بحساب واحد.",
+    "steps": [
+      ["اختر فريقك", "سجّل الدخول إلى الملاذ وأنشئ غرفة أو اختر واحدة. ينتقل حسابك وغرفتك إلى العميل."],
+      ["افتح العميل المحدّث", "يتحقق المشغّل من الإصدار قبل اللعب ويرسل الغرفة إلى عميل حسابك."],
+      ["تابع داخل اللعبة", "اختر شخصيتك وادخل المباراة. يمكنك العودة إلى الغرف من المركز داخل اللعبة أو فتح المجتمع في المتصفح."]
+    ],
+    "note": "لقطات حقيقية من نسخة قيد التطوير. جُمعت الآثار للاختبار ولا تمثل سقوطاً طبيعياً متزامناً. تحتفظ الواجهة المجددة برسوم كلاسيكية وتعديلات من قواعد المجتمع. لم تُستبدل رسوم العالم بأكمله بعد."
+  }
+}

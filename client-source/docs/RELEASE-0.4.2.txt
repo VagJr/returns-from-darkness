@@ -1,0 +1,13 @@
+Returns from Darkness HD 0.4.2 — Reliquary HUD
+
+The resource vessels preserve the original Tchernobog statues, framing and animated liquid, integrated with the project's textured interface. Resource fill is separated from inherited panel sprite offsets: full health and mana reach the upper liquid area, and an empty vessel remains empty. Eight distinct belt cells retain their original controls and item positions.
+
+The adaptation preserves 48 complete health frames and 48 complete mana frames from Tchernobog 0.2.2f. Each original 256x256 RGBA canvas, including the statues and transparent margins, occupies one tile in a 2048x1536 atlas. The useful liquid diameter is approximately 110 pixels. The project shader supplies circular clipping and independent resource fill with elapsed-time animation. This inherited vessel artwork is credited to Tchernobog; it is not presented as original project artwork or 256-pixel native liquid detail.
+
+The Sanctuary website presents real client screenshots alongside clearly identified concept artwork. Gameplay, the adapted project interface and First Vigil items are shown together with the native account and room flow, explaining how the website and in-game hub share online sessions. The current client still includes inherited world, character and item artwork; this release does not replace every game texture with HD artwork.
+
+This update continues the 0.4.1 character-rule and room-difficulty organization, Play Online entry, native notices, signed updates, local save preservation and Sanctuary progression. Cooperative room difficulty belongs to the shared room; Coliseum keeps its separate arena rules. Existing global experience and ordinary drop rate tables are unchanged.
+
+Inventory equipment wells and the item grid are brighter than the decorative stone frame, with matte pewter borders and clearer grey divisions. The guardian sculptures retain their full bust and supporting base, aligned with the bottom of the HUD. The helmet slot is inset inside the inventory frame, with its hit area moved together. A new original slate-and-iron material replaces the dominant gold treatment. Menu repairs now run on initialization/activation/reset rather than fully repainting every static control ten times per second; unchanged main-menu captions are no longer rebuilt on every title-animation tick. Logo state objects are reused and released before device reset.
+
+The native menu idle pump now waits for input instead of continuously consuming a CPU core. The compatibility hook applies only to the loaded UI library in this process, is discovered by named import and preserves gameplay/network pumps.

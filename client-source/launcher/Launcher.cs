@@ -23,8 +23,8 @@ using Microsoft.Win32;
 [assembly: AssemblyTitle("Returns from Darkness HD")]
 [assembly: AssemblyProduct("Returns from Darkness HD")]
 [assembly: AssemblyDescription("Cliente e atualizações de Returns from Darkness")]
-[assembly: AssemblyVersion("0.4.1.0")]
-[assembly: AssemblyFileVersion("0.4.1.0")]
+[assembly: AssemblyVersion("0.4.2.0")]
+[assembly: AssemblyFileVersion("0.4.2.0")]
 namespace ReturnsFromDarkness {
  static class Program {
   public static Mutex Instance;
@@ -211,6 +211,7 @@ namespace ReturnsFromDarkness {
    if(GameRunning)return false;if(Instance!=null)Instance.ReleaseMutex();string arguments=(InstanceAccount==""?"":"--account "+InstanceAccount+" ")+(request==null?"rfd://open":"\""+request+"\"");Process.Start(new ProcessStartInfo(next,arguments){UseShellExecute=false});return true;
   }
   public static async Task Launch(Dictionary<string,object> manifest,string request,Label status){
+   if(GameRunning&&Path.GetFileName(Game.MainModule.FileName)!=(string)manifest["executable"])throw new Exception(Lang.S("restart"));
    if(GameRunning&&(request==null||request=="rfd://focus")){FocusGame();return;}
    string directory=Path.Combine(Root,"versions",(string)manifest["version"]);CheckFiles(directory,manifest);
    await PrepareData(directory,manifest,status);
@@ -228,7 +229,6 @@ namespace ReturnsFromDarkness {
    }
    string profile=Path.Combine(Root,"profiles",account);Directory.CreateDirectory(profile);if(!File.Exists(Path.Combine(profile,"config.ini")))File.Copy(Path.Combine(directory,"config.ini"),Path.Combine(profile,"config.ini"));info.EnvironmentVariables["RFD_PROFILE"]=profile;info.EnvironmentVariables["RFD_AUTH_PROFILE"]=profile;
    if(invite!=null&&GameRunning&&GameRoom==(string)invite["roomId"]&&GameAccount==account&&GetProp(Game.MainWindowHandle,"RFD_GAME_IN_ROOM")!=IntPtr.Zero){FocusGame();return;}
-   if(GameRunning&&Path.GetFileName(Game.MainModule.FileName)!=(string)manifest["executable"])throw new Exception(Lang.S("restart"));
    if(invite!=null){
     string localTicket;using(var rng=RandomNumberGenerator.Create()){byte[] bytes=new byte[32];rng.GetBytes(bytes);localTicket=Convert.ToBase64String(bytes).TrimEnd('=').Replace('+','-').Replace('/','_');}
     string ready=Path.Combine(profile,"peer-"+Guid.NewGuid().ToString("N")+".json");

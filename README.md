@@ -12,7 +12,7 @@ Rediscover the classic with deeper character builds, exploration and equipment. 
 
 The Sanctuary recreates the social experience of Diablo’s classic Battle.net: sign in, chat in channels, find players, and create or join multiplayer rooms. It is the Returns from Darkness community’s meeting place to gather your party and continue the adventure in the game.
 
-**Available in this build — v0.4.1**
+**Available in this build — v0.4.2**
 
 Windows client with an integrated hub, cooperative rooms for up to four players, automatic updates and separate account profiles. The item system shares room drops; automatic saving preserves inventory, gold and character development on this computer. The Sanctuary brings together public profiles, characters, portraits, titles and campaign seals. Progress through play to unlock new classes, traits, modifiers and difficulties; existing characters keep their choices. The first three campaign completions grant dots and a golden portrait. Version 0.4.1 introduces project-specific HUD and inventory framing, in-game notices and The First Vigil collection: three relics with original icons and ground sprites, rewarded by specific bosses in Normal campaign mode on Horror. The Sanctuary gains compact navigation, profile tabs and new community artwork. HUD and inventory surfaces receive an original high-definition dark-stone and aged-iron material, keeping items and controls readable.
 

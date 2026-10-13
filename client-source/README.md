@@ -1,4 +1,4 @@
-# Returns from Darkness HD 0.4.1
+# Returns from Darkness HD 0.4.2
 
 Community client adapted from The Hell 3 source 1.265/data1.267, with creator-hosted online rooms, signed updates and Sanctuary account progression. Inherited gameplay and artwork remain credited; project-specific additions include the integration, progression layer, interface framing and First Vigil relic collection. See NOTICE.md and ORIGINAL-SOURCE-README.txt.
 
@@ -13,3 +13,5 @@ Copy content/original/items to game assets/original/items, and content/original/
 Rules sanctuary-1 and all engine mode IDs are preserved (Normal0, Hardcore1, Ironman2, Nightmare3, Easy4, Survival5, Hard6, Speedrun7, Coliseum8). Progress reports are client-reported and unranked. Saves remain local; profiles do not back up complete inventories. The public setup imports compatible game data on first preparation.
 
 0.4.1 fixes D3D9 menu surface operations, repaints dialogs after activation/reset and replaces ordinary account/room/unlock notices with skinned native dialogs. The original interface framing preserves native hitboxes and item/equipment layouts. This is not a whole-world HD artwork replacement or a port of another project's complete renderer. Browser gameplay and full remaster remain in development.
+
+For 0.4.2 and later, copy health-vessel-atlas.png and mana-vessel-atlas.png from content/visual/tchernobog/orbs-runtime into game assets/remaster. CommunityOrb.hlsl is part of engine.patch and is compiled into the embedded shader header; preserve it when rebuilding. The 2048x1536 atlases contain 48 complete 256x256 RGBA frames per resource from Tchernobog 0.2.2f, preserving their statues, framing and liquid. Each original source canvas contains a useful liquid sphere about 110 pixels across; this is not 256-pixel native liquid detail. The project shader supplies circular clipping and independent resource fill. Provenance and per-frame hashes are included, while extraction previews and raw audit sources are excluded. The inherited vessel artwork is credited to Tchernobog, not claimed as original project artwork. See docs/RENDERIZACAO-HUD-0.4.2.md.

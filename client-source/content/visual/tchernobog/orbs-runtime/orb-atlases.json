@@ -1,0 +1,2859 @@
+{
+  "sourceProject": "Tchernobog 0.2.2f",
+  "archive": "references/tchernobog-0.2.2f/patch.mpq",
+  "archiveSha256": "44801bdf419f4f5e1b01b9e80631fe520ab261dd01b43580b555fc1b3761a55b",
+  "extraction": "read-only StormLib access using names from the existing HUD analysis",
+  "stormLibSha256": "93321f6f030be5d7d79eb4cbf433d6ef7e83ce20d47d8963717f207d54afbe16",
+  "pathEvidence": "Private read-only HUD format analysis; audit sources are not bundled",
+  "formatEvidence": {
+    "0x0085362c": "%04d",
+    "0x00853634": ".png",
+    "0x00853654": "%04d",
+    "0x0085365c": ".png"
+  },
+  "frameCount": 48,
+  "vesselAtlasSize": [
+    2048,
+    1536
+  ],
+  "vesselLayout": {
+    "columns": 8,
+    "rows": 6,
+    "tileSize": [
+      256,
+      256
+    ],
+    "sourceCanvasPreservedExactly": true,
+    "gutter": [
+      0,
+      0
+    ]
+  },
+  "sourceCanvasSize": [
+    256,
+    256
+  ],
+  "usefulOrbDiameterApproximately": 110,
+  "generatedArtwork": false,
+  "upscaledArtwork": false,
+  "rendererContract": [
+    "The full vessel atlases preserve the inherited statues, framing and liquid in each original 256x256 RGBA canvas.",
+    "The useful liquid diameter is approximately 110 source pixels; the 256-pixel canvas is not a 256-pixel liquid sphere.",
+    "Compose the outer vessel artwork separately from the circular glass fill, using the same elapsed-time animation frame index.",
+    "Apply the independent [0,1] resource fill mask so that zero is empty and maximum reaches the uppermost liquid row.",
+    "Raw audit sources and extraction previews are not included in the runtime source package."
+  ],
+  "orbs": {
+    "health": {
+      "vesselAtlas": "content/visual/tchernobog/orbs-runtime/health-vessel-atlas.png",
+      "vesselAtlasSha256": "a5e9f8b8d0a81d3536886900f2ccf1bbab289fa0e29f9625f1d356c337ed0c79",
+      "vesselAtlasBytes": 658370,
+      "vesselGlassCenter": [
+        94,
+        61
+      ],
+      "vesselGlassRadius": 55,
+      "uniqueFrames": 48,
+      "frames": [
+        {
+          "index": 0,
+          "resource": "ctrlpan\\health\\health_0001.png",
+          "sha256": "893fc868d88dc3b602ec4b0ca0597dfb802f4d408ac99f67fa3b1d2dadcd66e1",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "vesselUvEdges": [
+            0.0,
+            0.0,
+            0.125,
+            0.16666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.000244140625,
+            0.0003255208333333333,
+            0.124755859375,
+            0.16634114583333334
+          ]
+        },
+        {
+          "index": 1,
+          "resource": "ctrlpan\\health\\health_0002.png",
+          "sha256": "cc0aa047f7c4c6752214a83c0c2b78c095789bb2c943534916fc81658fa0bb63",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            256,
+            0,
+            512,
+            256
+          ],
+          "vesselUvEdges": [
+            0.125,
+            0.0,
+            0.25,
+            0.16666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.125244140625,
+            0.0003255208333333333,
+            0.249755859375,
+            0.16634114583333334
+          ]
+        },
+        {
+          "index": 2,
+          "resource": "ctrlpan\\health\\health_0003.png",
+          "sha256": "fa26f1adf4ece131e381e2df608764995103c734709cbdeff4b745c2e13d0443",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            512,
+            0,
+            768,
+            256
+          ],
+          "vesselUvEdges": [
+            0.25,
+            0.0,
+            0.375,
+            0.16666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.250244140625,
+            0.0003255208333333333,
+            0.374755859375,
+            0.16634114583333334
+          ]
+        },
+        {
+          "index": 3,
+          "resource": "ctrlpan\\health\\health_0004.png",
+          "sha256": "ff6a4b4d7e109becec4c2fc072de8a5e659a709cd15dcefc1ccbb42ea8d53496",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            768,
+            0,
+            1024,
+            256
+          ],
+          "vesselUvEdges": [
+            0.375,
+            0.0,
+            0.5,
+            0.16666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.375244140625,
+            0.0003255208333333333,
+            0.499755859375,
+            0.16634114583333334
+          ]
+        },
+        {
+          "index": 4,
+          "resource": "ctrlpan\\health\\health_0005.png",
+          "sha256": "936458139f425f53788e949fa6e3ab8512ae0dd1afbac1dda1389d6ad0c0a2d9",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1024,
+            0,
+            1280,
+            256
+          ],
+          "vesselUvEdges": [
+            0.5,
+            0.0,
+            0.625,
+            0.16666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.500244140625,
+            0.0003255208333333333,
+            0.624755859375,
+            0.16634114583333334
+          ]
+        },
+        {
+          "index": 5,
+          "resource": "ctrlpan\\health\\health_0006.png",
+          "sha256": "85c73a359a081f768288415fb58472ebd0a349e4a3a86336dff4ee33cdf7dfda",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1280,
+            0,
+            1536,
+            256
+          ],
+          "vesselUvEdges": [
+            0.625,
+            0.0,
+            0.75,
+            0.16666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.625244140625,
+            0.0003255208333333333,
+            0.749755859375,
+            0.16634114583333334
+          ]
+        },
+        {
+          "index": 6,
+          "resource": "ctrlpan\\health\\health_0007.png",
+          "sha256": "c813bfb15fc791baa00f6d2fccc3efb897e94833229f9413f0f36c748b8b1fd3",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1536,
+            0,
+            1792,
+            256
+          ],
+          "vesselUvEdges": [
+            0.75,
+            0.0,
+            0.875,
+            0.16666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.750244140625,
+            0.0003255208333333333,
+            0.874755859375,
+            0.16634114583333334
+          ]
+        },
+        {
+          "index": 7,
+          "resource": "ctrlpan\\health\\health_0008.png",
+          "sha256": "1f5860acd30214da1089004d537001dcac67ed0cbffedfe15455f946bc789d68",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1792,
+            0,
+            2048,
+            256
+          ],
+          "vesselUvEdges": [
+            0.875,
+            0.0,
+            1.0,
+            0.16666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.875244140625,
+            0.0003255208333333333,
+            0.999755859375,
+            0.16634114583333334
+          ]
+        },
+        {
+          "index": 8,
+          "resource": "ctrlpan\\health\\health_0009.png",
+          "sha256": "090f38ee78287ea75f6aeaaf44b7c84ef12c2991c6669fa4997879a3c61dbdd1",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            0,
+            256,
+            256,
+            512
+          ],
+          "vesselUvEdges": [
+            0.0,
+            0.16666666666666666,
+            0.125,
+            0.3333333333333333
+          ],
+          "vesselUvPixelCenters": [
+            0.000244140625,
+            0.1669921875,
+            0.124755859375,
+            0.3330078125
+          ]
+        },
+        {
+          "index": 9,
+          "resource": "ctrlpan\\health\\health_0010.png",
+          "sha256": "e62be0dc9f30eadad7a575135f6c35685d751dc9e7fd1b1411ecf5a8bfccd28b",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            256,
+            256,
+            512,
+            512
+          ],
+          "vesselUvEdges": [
+            0.125,
+            0.16666666666666666,
+            0.25,
+            0.3333333333333333
+          ],
+          "vesselUvPixelCenters": [
+            0.125244140625,
+            0.1669921875,
+            0.249755859375,
+            0.3330078125
+          ]
+        },
+        {
+          "index": 10,
+          "resource": "ctrlpan\\health\\health_0011.png",
+          "sha256": "ef43ae9f5915861f3dd010b4c8ec70b4b839aa2935a911b91e01021503e6030a",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            512,
+            256,
+            768,
+            512
+          ],
+          "vesselUvEdges": [
+            0.25,
+            0.16666666666666666,
+            0.375,
+            0.3333333333333333
+          ],
+          "vesselUvPixelCenters": [
+            0.250244140625,
+            0.1669921875,
+            0.374755859375,
+            0.3330078125
+          ]
+        },
+        {
+          "index": 11,
+          "resource": "ctrlpan\\health\\health_0012.png",
+          "sha256": "f25da25ffe772bbcd9b74cb1b55b99b6cff296430d8767e4db3c8ee957aaa166",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            768,
+            256,
+            1024,
+            512
+          ],
+          "vesselUvEdges": [
+            0.375,
+            0.16666666666666666,
+            0.5,
+            0.3333333333333333
+          ],
+          "vesselUvPixelCenters": [
+            0.375244140625,
+            0.1669921875,
+            0.499755859375,
+            0.3330078125
+          ]
+        },
+        {
+          "index": 12,
+          "resource": "ctrlpan\\health\\health_0013.png",
+          "sha256": "089d655f0ba1d7241c9e39983fd8d4abd722a7cbcae644030da5dc3751c2df71",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1024,
+            256,
+            1280,
+            512
+          ],
+          "vesselUvEdges": [
+            0.5,
+            0.16666666666666666,
+            0.625,
+            0.3333333333333333
+          ],
+          "vesselUvPixelCenters": [
+            0.500244140625,
+            0.1669921875,
+            0.624755859375,
+            0.3330078125
+          ]
+        },
+        {
+          "index": 13,
+          "resource": "ctrlpan\\health\\health_0014.png",
+          "sha256": "3827c29ae65749cb5d0ec65d2071162cf1469d0f6dab32039ea9bfc58e47d3ab",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1280,
+            256,
+            1536,
+            512
+          ],
+          "vesselUvEdges": [
+            0.625,
+            0.16666666666666666,
+            0.75,
+            0.3333333333333333
+          ],
+          "vesselUvPixelCenters": [
+            0.625244140625,
+            0.1669921875,
+            0.749755859375,
+            0.3330078125
+          ]
+        },
+        {
+          "index": 14,
+          "resource": "ctrlpan\\health\\health_0015.png",
+          "sha256": "a4b51310c7431a7e946629c9159256be56995b661bfdcfb538b5b5dd8d55367d",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1536,
+            256,
+            1792,
+            512
+          ],
+          "vesselUvEdges": [
+            0.75,
+            0.16666666666666666,
+            0.875,
+            0.3333333333333333
+          ],
+          "vesselUvPixelCenters": [
+            0.750244140625,
+            0.1669921875,
+            0.874755859375,
+            0.3330078125
+          ]
+        },
+        {
+          "index": 15,
+          "resource": "ctrlpan\\health\\health_0016.png",
+          "sha256": "5801699b00685c50d3e4764d87e842e38188924a9b5f1776c1a25ee41206098d",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1792,
+            256,
+            2048,
+            512
+          ],
+          "vesselUvEdges": [
+            0.875,
+            0.16666666666666666,
+            1.0,
+            0.3333333333333333
+          ],
+          "vesselUvPixelCenters": [
+            0.875244140625,
+            0.1669921875,
+            0.999755859375,
+            0.3330078125
+          ]
+        },
+        {
+          "index": 16,
+          "resource": "ctrlpan\\health\\health_0017.png",
+          "sha256": "6febc778fd211eafdae0b4652ecdd8c9fd493db9d83ecfc750e8f666520a7875",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            0,
+            512,
+            256,
+            768
+          ],
+          "vesselUvEdges": [
+            0.0,
+            0.3333333333333333,
+            0.125,
+            0.5
+          ],
+          "vesselUvPixelCenters": [
+            0.000244140625,
+            0.3336588541666667,
+            0.124755859375,
+            0.4996744791666667
+          ]
+        },
+        {
+          "index": 17,
+          "resource": "ctrlpan\\health\\health_0018.png",
+          "sha256": "bd33f6a1374654da3a8763049e05ce19ebd6dcf966ea438c9d3faddda0bdd256",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            256,
+            512,
+            512,
+            768
+          ],
+          "vesselUvEdges": [
+            0.125,
+            0.3333333333333333,
+            0.25,
+            0.5
+          ],
+          "vesselUvPixelCenters": [
+            0.125244140625,
+            0.3336588541666667,
+            0.249755859375,
+            0.4996744791666667
+          ]
+        },
+        {
+          "index": 18,
+          "resource": "ctrlpan\\health\\health_0019.png",
+          "sha256": "202ba8aac40672b58a0bab8ea78dd083061c153313a3542d4fd1bfcb38408ca7",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            512,
+            512,
+            768,
+            768
+          ],
+          "vesselUvEdges": [
+            0.25,
+            0.3333333333333333,
+            0.375,
+            0.5
+          ],
+          "vesselUvPixelCenters": [
+            0.250244140625,
+            0.3336588541666667,
+            0.374755859375,
+            0.4996744791666667
+          ]
+        },
+        {
+          "index": 19,
+          "resource": "ctrlpan\\health\\health_0020.png",
+          "sha256": "19362dda7b53e3356f0e675bed6bf195f85a5d3f8984cf0a0059c1d67bf45df7",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            768,
+            512,
+            1024,
+            768
+          ],
+          "vesselUvEdges": [
+            0.375,
+            0.3333333333333333,
+            0.5,
+            0.5
+          ],
+          "vesselUvPixelCenters": [
+            0.375244140625,
+            0.3336588541666667,
+            0.499755859375,
+            0.4996744791666667
+          ]
+        },
+        {
+          "index": 20,
+          "resource": "ctrlpan\\health\\health_0021.png",
+          "sha256": "65f64418aa3af17ad6185b74831076542b42b835f5991872f2665a3896b3b776",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1024,
+            512,
+            1280,
+            768
+          ],
+          "vesselUvEdges": [
+            0.5,
+            0.3333333333333333,
+            0.625,
+            0.5
+          ],
+          "vesselUvPixelCenters": [
+            0.500244140625,
+            0.3336588541666667,
+            0.624755859375,
+            0.4996744791666667
+          ]
+        },
+        {
+          "index": 21,
+          "resource": "ctrlpan\\health\\health_0022.png",
+          "sha256": "8ca8327d16464b700546d54d8bce86e4ee8445841852773e9cb829f150170aa2",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1280,
+            512,
+            1536,
+            768
+          ],
+          "vesselUvEdges": [
+            0.625,
+            0.3333333333333333,
+            0.75,
+            0.5
+          ],
+          "vesselUvPixelCenters": [
+            0.625244140625,
+            0.3336588541666667,
+            0.749755859375,
+            0.4996744791666667
+          ]
+        },
+        {
+          "index": 22,
+          "resource": "ctrlpan\\health\\health_0023.png",
+          "sha256": "3f7ebc8ec4b2ccc1e6b6f5009d042f8f3db6478b65d1b5074ef1ffaaa7097cc6",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1536,
+            512,
+            1792,
+            768
+          ],
+          "vesselUvEdges": [
+            0.75,
+            0.3333333333333333,
+            0.875,
+            0.5
+          ],
+          "vesselUvPixelCenters": [
+            0.750244140625,
+            0.3336588541666667,
+            0.874755859375,
+            0.4996744791666667
+          ]
+        },
+        {
+          "index": 23,
+          "resource": "ctrlpan\\health\\health_0024.png",
+          "sha256": "3838f465e2e6f8dedb3e357b403c36ef9b1a4aab6e553d2cb45039b19208a0b0",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1792,
+            512,
+            2048,
+            768
+          ],
+          "vesselUvEdges": [
+            0.875,
+            0.3333333333333333,
+            1.0,
+            0.5
+          ],
+          "vesselUvPixelCenters": [
+            0.875244140625,
+            0.3336588541666667,
+            0.999755859375,
+            0.4996744791666667
+          ]
+        },
+        {
+          "index": 24,
+          "resource": "ctrlpan\\health\\health_0025.png",
+          "sha256": "2332909eb67b9e5788d79aa6ea3b91479226bd4fd4623f3160185e84a685ac74",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            0,
+            768,
+            256,
+            1024
+          ],
+          "vesselUvEdges": [
+            0.0,
+            0.5,
+            0.125,
+            0.6666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.000244140625,
+            0.5003255208333334,
+            0.124755859375,
+            0.6663411458333334
+          ]
+        },
+        {
+          "index": 25,
+          "resource": "ctrlpan\\health\\health_0026.png",
+          "sha256": "13e588e25164d2cb6e700c1f26f06dfe7c01d2fb036744caccfebaa048258601",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            256,
+            768,
+            512,
+            1024
+          ],
+          "vesselUvEdges": [
+            0.125,
+            0.5,
+            0.25,
+            0.6666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.125244140625,
+            0.5003255208333334,
+            0.249755859375,
+            0.6663411458333334
+          ]
+        },
+        {
+          "index": 26,
+          "resource": "ctrlpan\\health\\health_0027.png",
+          "sha256": "485b28a9f7b56edab74f9e275d40b295c5730e680f261cb9178d1c298a657541",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            512,
+            768,
+            768,
+            1024
+          ],
+          "vesselUvEdges": [
+            0.25,
+            0.5,
+            0.375,
+            0.6666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.250244140625,
+            0.5003255208333334,
+            0.374755859375,
+            0.6663411458333334
+          ]
+        },
+        {
+          "index": 27,
+          "resource": "ctrlpan\\health\\health_0028.png",
+          "sha256": "667428cc7de505007e5405346a1269e0019ec61fe0cfc1b19eb60e1fe67b5ac6",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            768,
+            768,
+            1024,
+            1024
+          ],
+          "vesselUvEdges": [
+            0.375,
+            0.5,
+            0.5,
+            0.6666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.375244140625,
+            0.5003255208333334,
+            0.499755859375,
+            0.6663411458333334
+          ]
+        },
+        {
+          "index": 28,
+          "resource": "ctrlpan\\health\\health_0029.png",
+          "sha256": "ea60e0a6eadb4d6e88e6aa0053a8e1b506817f5cef51c2a5a0016530cca9173d",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1024,
+            768,
+            1280,
+            1024
+          ],
+          "vesselUvEdges": [
+            0.5,
+            0.5,
+            0.625,
+            0.6666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.500244140625,
+            0.5003255208333334,
+            0.624755859375,
+            0.6663411458333334
+          ]
+        },
+        {
+          "index": 29,
+          "resource": "ctrlpan\\health\\health_0030.png",
+          "sha256": "e516d69e7e79dc9396c4038645565539d9f569dc558638d25f23aacddba55001",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1280,
+            768,
+            1536,
+            1024
+          ],
+          "vesselUvEdges": [
+            0.625,
+            0.5,
+            0.75,
+            0.6666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.625244140625,
+            0.5003255208333334,
+            0.749755859375,
+            0.6663411458333334
+          ]
+        },
+        {
+          "index": 30,
+          "resource": "ctrlpan\\health\\health_0031.png",
+          "sha256": "4e164a84b7d5aed8c1bd93feeec09d7dc40897feea311f729968272a88c674a6",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1536,
+            768,
+            1792,
+            1024
+          ],
+          "vesselUvEdges": [
+            0.75,
+            0.5,
+            0.875,
+            0.6666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.750244140625,
+            0.5003255208333334,
+            0.874755859375,
+            0.6663411458333334
+          ]
+        },
+        {
+          "index": 31,
+          "resource": "ctrlpan\\health\\health_0032.png",
+          "sha256": "dd7a0a238682ecf8ba5b1271d1e59ba5b15cf3b8535f775f10a887788b22f222",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1792,
+            768,
+            2048,
+            1024
+          ],
+          "vesselUvEdges": [
+            0.875,
+            0.5,
+            1.0,
+            0.6666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.875244140625,
+            0.5003255208333334,
+            0.999755859375,
+            0.6663411458333334
+          ]
+        },
+        {
+          "index": 32,
+          "resource": "ctrlpan\\health\\health_0033.png",
+          "sha256": "6b652828b29627b87642fb53ba1c3d8a429c293224dca1fd5178dcd562e30b07",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            0,
+            1024,
+            256,
+            1280
+          ],
+          "vesselUvEdges": [
+            0.0,
+            0.6666666666666666,
+            0.125,
+            0.8333333333333334
+          ],
+          "vesselUvPixelCenters": [
+            0.000244140625,
+            0.6669921875,
+            0.124755859375,
+            0.8330078125
+          ]
+        },
+        {
+          "index": 33,
+          "resource": "ctrlpan\\health\\health_0034.png",
+          "sha256": "28529c550b08ab703f3f1bbf2f58bd6d48b4632a8071594711694de6e4f8ba9f",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            256,
+            1024,
+            512,
+            1280
+          ],
+          "vesselUvEdges": [
+            0.125,
+            0.6666666666666666,
+            0.25,
+            0.8333333333333334
+          ],
+          "vesselUvPixelCenters": [
+            0.125244140625,
+            0.6669921875,
+            0.249755859375,
+            0.8330078125
+          ]
+        },
+        {
+          "index": 34,
+          "resource": "ctrlpan\\health\\health_0035.png",
+          "sha256": "49fdb4dcf1a180ada4268729ad9130a1b86e4bf38e229d85ec01a0b2c6f8321a",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            512,
+            1024,
+            768,
+            1280
+          ],
+          "vesselUvEdges": [
+            0.25,
+            0.6666666666666666,
+            0.375,
+            0.8333333333333334
+          ],
+          "vesselUvPixelCenters": [
+            0.250244140625,
+            0.6669921875,
+            0.374755859375,
+            0.8330078125
+          ]
+        },
+        {
+          "index": 35,
+          "resource": "ctrlpan\\health\\health_0036.png",
+          "sha256": "62acede88b032d440149d698b0e6acacd913cd74d1b7557b7bdd7e9ee91da396",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            768,
+            1024,
+            1024,
+            1280
+          ],
+          "vesselUvEdges": [
+            0.375,
+            0.6666666666666666,
+            0.5,
+            0.8333333333333334
+          ],
+          "vesselUvPixelCenters": [
+            0.375244140625,
+            0.6669921875,
+            0.499755859375,
+            0.8330078125
+          ]
+        },
+        {
+          "index": 36,
+          "resource": "ctrlpan\\health\\health_0037.png",
+          "sha256": "31224287ab6c892480e1edbc7671e452419f7ec97262f65a26e70e25fb87368a",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1024,
+            1024,
+            1280,
+            1280
+          ],
+          "vesselUvEdges": [
+            0.5,
+            0.6666666666666666,
+            0.625,
+            0.8333333333333334
+          ],
+          "vesselUvPixelCenters": [
+            0.500244140625,
+            0.6669921875,
+            0.624755859375,
+            0.8330078125
+          ]
+        },
+        {
+          "index": 37,
+          "resource": "ctrlpan\\health\\health_0038.png",
+          "sha256": "8e68256aabcc00c1406b6f1c0af4045ca92924bbd26b854f35de69e4beb44e58",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1280,
+            1024,
+            1536,
+            1280
+          ],
+          "vesselUvEdges": [
+            0.625,
+            0.6666666666666666,
+            0.75,
+            0.8333333333333334
+          ],
+          "vesselUvPixelCenters": [
+            0.625244140625,
+            0.6669921875,
+            0.749755859375,
+            0.8330078125
+          ]
+        },
+        {
+          "index": 38,
+          "resource": "ctrlpan\\health\\health_0039.png",
+          "sha256": "8e84b70d51ff022df3631c63072be4465074ab46765e741c2c914ffb049d082d",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1536,
+            1024,
+            1792,
+            1280
+          ],
+          "vesselUvEdges": [
+            0.75,
+            0.6666666666666666,
+            0.875,
+            0.8333333333333334
+          ],
+          "vesselUvPixelCenters": [
+            0.750244140625,
+            0.6669921875,
+            0.874755859375,
+            0.8330078125
+          ]
+        },
+        {
+          "index": 39,
+          "resource": "ctrlpan\\health\\health_0040.png",
+          "sha256": "09261b57d1b0011b1661f796537f3f1496bf97fbf9d74bff09eb40d6aa3920ea",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1792,
+            1024,
+            2048,
+            1280
+          ],
+          "vesselUvEdges": [
+            0.875,
+            0.6666666666666666,
+            1.0,
+            0.8333333333333334
+          ],
+          "vesselUvPixelCenters": [
+            0.875244140625,
+            0.6669921875,
+            0.999755859375,
+            0.8330078125
+          ]
+        },
+        {
+          "index": 40,
+          "resource": "ctrlpan\\health\\health_0041.png",
+          "sha256": "da2aa4c8f32dd3b62d56feee929e52e1d6fc18d16e9091131fdc6e75ffe5d95d",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            0,
+            1280,
+            256,
+            1536
+          ],
+          "vesselUvEdges": [
+            0.0,
+            0.8333333333333334,
+            0.125,
+            1.0
+          ],
+          "vesselUvPixelCenters": [
+            0.000244140625,
+            0.8336588541666666,
+            0.124755859375,
+            0.9996744791666666
+          ]
+        },
+        {
+          "index": 41,
+          "resource": "ctrlpan\\health\\health_0042.png",
+          "sha256": "70058513d1399f45e4d41685ccadd1c3810398ec453f8a0115cf99e2d1f66124",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            256,
+            1280,
+            512,
+            1536
+          ],
+          "vesselUvEdges": [
+            0.125,
+            0.8333333333333334,
+            0.25,
+            1.0
+          ],
+          "vesselUvPixelCenters": [
+            0.125244140625,
+            0.8336588541666666,
+            0.249755859375,
+            0.9996744791666666
+          ]
+        },
+        {
+          "index": 42,
+          "resource": "ctrlpan\\health\\health_0043.png",
+          "sha256": "38cf282de00be9b0981cacf1cf494e4d79ab496a2dd99d6de4cd0bafc16f7be5",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            512,
+            1280,
+            768,
+            1536
+          ],
+          "vesselUvEdges": [
+            0.25,
+            0.8333333333333334,
+            0.375,
+            1.0
+          ],
+          "vesselUvPixelCenters": [
+            0.250244140625,
+            0.8336588541666666,
+            0.374755859375,
+            0.9996744791666666
+          ]
+        },
+        {
+          "index": 43,
+          "resource": "ctrlpan\\health\\health_0044.png",
+          "sha256": "3b13d6c05fe8604f2b2a22b1bc54cd93999ba8402e87aa7a0a1bff9acc286bcc",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            768,
+            1280,
+            1024,
+            1536
+          ],
+          "vesselUvEdges": [
+            0.375,
+            0.8333333333333334,
+            0.5,
+            1.0
+          ],
+          "vesselUvPixelCenters": [
+            0.375244140625,
+            0.8336588541666666,
+            0.499755859375,
+            0.9996744791666666
+          ]
+        },
+        {
+          "index": 44,
+          "resource": "ctrlpan\\health\\health_0045.png",
+          "sha256": "1bcaae407548625faf1ff9c30cee04cc2cfe1621bd0096c105283c1c814707bd",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1024,
+            1280,
+            1280,
+            1536
+          ],
+          "vesselUvEdges": [
+            0.5,
+            0.8333333333333334,
+            0.625,
+            1.0
+          ],
+          "vesselUvPixelCenters": [
+            0.500244140625,
+            0.8336588541666666,
+            0.624755859375,
+            0.9996744791666666
+          ]
+        },
+        {
+          "index": 45,
+          "resource": "ctrlpan\\health\\health_0046.png",
+          "sha256": "5006ea1abe32bf8b6d33529ebad73355fd1963a9b27ba0289b1ba653dacbbf92",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1280,
+            1280,
+            1536,
+            1536
+          ],
+          "vesselUvEdges": [
+            0.625,
+            0.8333333333333334,
+            0.75,
+            1.0
+          ],
+          "vesselUvPixelCenters": [
+            0.625244140625,
+            0.8336588541666666,
+            0.749755859375,
+            0.9996744791666666
+          ]
+        },
+        {
+          "index": 46,
+          "resource": "ctrlpan\\health\\health_0047.png",
+          "sha256": "8a0141b744b1be6c2c0921325eaf293445f23f8e8aa8f5037210d7f115bca28a",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1536,
+            1280,
+            1792,
+            1536
+          ],
+          "vesselUvEdges": [
+            0.75,
+            0.8333333333333334,
+            0.875,
+            1.0
+          ],
+          "vesselUvPixelCenters": [
+            0.750244140625,
+            0.8336588541666666,
+            0.874755859375,
+            0.9996744791666666
+          ]
+        },
+        {
+          "index": 47,
+          "resource": "ctrlpan\\health\\health_0048.png",
+          "sha256": "0245bf783339fef2bd3f7395ab5c69419ef04a684892c6d80d6e559350d68f5d",
+          "sourceAlphaBBox": [
+            16,
+            6,
+            175,
+            150
+          ],
+          "vesselAtlasBox": [
+            1792,
+            1280,
+            2048,
+            1536
+          ],
+          "vesselUvEdges": [
+            0.875,
+            0.8333333333333334,
+            1.0,
+            1.0
+          ],
+          "vesselUvPixelCenters": [
+            0.875244140625,
+            0.8336588541666666,
+            0.999755859375,
+            0.9996744791666666
+          ]
+        }
+      ]
+    },
+    "mana": {
+      "vesselAtlas": "content/visual/tchernobog/orbs-runtime/mana-vessel-atlas.png",
+      "vesselAtlasSha256": "9e57da2a4ad114b4039eaa385ac8feca6579113c54ff82b710c0e420edb708ad",
+      "vesselAtlasBytes": 808452,
+      "vesselGlassCenter": [
+        69,
+        61
+      ],
+      "vesselGlassRadius": 55,
+      "uniqueFrames": 48,
+      "frames": [
+        {
+          "index": 0,
+          "resource": "ctrlpan\\mana\\mana_0001.png",
+          "sha256": "f046c00909e0083e88bf73569383a89043c22d9da8f215778e7aec415b1fe91f",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            0,
+            0,
+            256,
+            256
+          ],
+          "vesselUvEdges": [
+            0.0,
+            0.0,
+            0.125,
+            0.16666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.000244140625,
+            0.0003255208333333333,
+            0.124755859375,
+            0.16634114583333334
+          ]
+        },
+        {
+          "index": 1,
+          "resource": "ctrlpan\\mana\\mana_0002.png",
+          "sha256": "c2ec30cb3a18d7693ebb0a86fa81854ecc5853526ddeb2e33fd71f13f79e688e",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            256,
+            0,
+            512,
+            256
+          ],
+          "vesselUvEdges": [
+            0.125,
+            0.0,
+            0.25,
+            0.16666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.125244140625,
+            0.0003255208333333333,
+            0.249755859375,
+            0.16634114583333334
+          ]
+        },
+        {
+          "index": 2,
+          "resource": "ctrlpan\\mana\\mana_0003.png",
+          "sha256": "90b3d6c389ef867e52a0762da88cf231b787ced20eda69afdec0d29deaa65cc8",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            512,
+            0,
+            768,
+            256
+          ],
+          "vesselUvEdges": [
+            0.25,
+            0.0,
+            0.375,
+            0.16666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.250244140625,
+            0.0003255208333333333,
+            0.374755859375,
+            0.16634114583333334
+          ]
+        },
+        {
+          "index": 3,
+          "resource": "ctrlpan\\mana\\mana_0004.png",
+          "sha256": "1d246ce4fd15044c5a437091860159819df63eaf39757341f96faeec8e684b6a",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            768,
+            0,
+            1024,
+            256
+          ],
+          "vesselUvEdges": [
+            0.375,
+            0.0,
+            0.5,
+            0.16666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.375244140625,
+            0.0003255208333333333,
+            0.499755859375,
+            0.16634114583333334
+          ]
+        },
+        {
+          "index": 4,
+          "resource": "ctrlpan\\mana\\mana_0005.png",
+          "sha256": "262f4681835ed61150db5eb5da818718ce8906c39503bf354e8f10c3ab8a55b9",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1024,
+            0,
+            1280,
+            256
+          ],
+          "vesselUvEdges": [
+            0.5,
+            0.0,
+            0.625,
+            0.16666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.500244140625,
+            0.0003255208333333333,
+            0.624755859375,
+            0.16634114583333334
+          ]
+        },
+        {
+          "index": 5,
+          "resource": "ctrlpan\\mana\\mana_0006.png",
+          "sha256": "bc9221e377ca2b08617dfcf43776bec8b41f611c008e2b6106d2fb965270b721",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1280,
+            0,
+            1536,
+            256
+          ],
+          "vesselUvEdges": [
+            0.625,
+            0.0,
+            0.75,
+            0.16666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.625244140625,
+            0.0003255208333333333,
+            0.749755859375,
+            0.16634114583333334
+          ]
+        },
+        {
+          "index": 6,
+          "resource": "ctrlpan\\mana\\mana_0007.png",
+          "sha256": "b16dc4289a0ac1e43ef477e9178260a38fc427d948f9bb3d36b2478d3221d29f",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1536,
+            0,
+            1792,
+            256
+          ],
+          "vesselUvEdges": [
+            0.75,
+            0.0,
+            0.875,
+            0.16666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.750244140625,
+            0.0003255208333333333,
+            0.874755859375,
+            0.16634114583333334
+          ]
+        },
+        {
+          "index": 7,
+          "resource": "ctrlpan\\mana\\mana_0008.png",
+          "sha256": "a90c5a4512f97466322a3a1e7752d36e72ba013da3f0dbec79cc926cec78577b",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1792,
+            0,
+            2048,
+            256
+          ],
+          "vesselUvEdges": [
+            0.875,
+            0.0,
+            1.0,
+            0.16666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.875244140625,
+            0.0003255208333333333,
+            0.999755859375,
+            0.16634114583333334
+          ]
+        },
+        {
+          "index": 8,
+          "resource": "ctrlpan\\mana\\mana_0009.png",
+          "sha256": "a532e87290ff0fbf2e1ef7e9469b8d60a358b96b2e76589abe2e391679416d94",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            0,
+            256,
+            256,
+            512
+          ],
+          "vesselUvEdges": [
+            0.0,
+            0.16666666666666666,
+            0.125,
+            0.3333333333333333
+          ],
+          "vesselUvPixelCenters": [
+            0.000244140625,
+            0.1669921875,
+            0.124755859375,
+            0.3330078125
+          ]
+        },
+        {
+          "index": 9,
+          "resource": "ctrlpan\\mana\\mana_0010.png",
+          "sha256": "8312126376f6494624ef24e943b9eaf42b9f5a5263fd3e0cc0c6a244c924eac1",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            256,
+            256,
+            512,
+            512
+          ],
+          "vesselUvEdges": [
+            0.125,
+            0.16666666666666666,
+            0.25,
+            0.3333333333333333
+          ],
+          "vesselUvPixelCenters": [
+            0.125244140625,
+            0.1669921875,
+            0.249755859375,
+            0.3330078125
+          ]
+        },
+        {
+          "index": 10,
+          "resource": "ctrlpan\\mana\\mana_0011.png",
+          "sha256": "d7031a309d418eb3e394dbef3fef7b6a2cbd3ed8129bd14400af090f408601cc",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            512,
+            256,
+            768,
+            512
+          ],
+          "vesselUvEdges": [
+            0.25,
+            0.16666666666666666,
+            0.375,
+            0.3333333333333333
+          ],
+          "vesselUvPixelCenters": [
+            0.250244140625,
+            0.1669921875,
+            0.374755859375,
+            0.3330078125
+          ]
+        },
+        {
+          "index": 11,
+          "resource": "ctrlpan\\mana\\mana_0012.png",
+          "sha256": "069aead7ea4284054ed933b6ba8542b9503aa081130a15da1547e54def5a006f",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            768,
+            256,
+            1024,
+            512
+          ],
+          "vesselUvEdges": [
+            0.375,
+            0.16666666666666666,
+            0.5,
+            0.3333333333333333
+          ],
+          "vesselUvPixelCenters": [
+            0.375244140625,
+            0.1669921875,
+            0.499755859375,
+            0.3330078125
+          ]
+        },
+        {
+          "index": 12,
+          "resource": "ctrlpan\\mana\\mana_0013.png",
+          "sha256": "187bb50e4b6d128e1c67f28e2eb1aa186441d4073dc945fe773b270874ee9741",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1024,
+            256,
+            1280,
+            512
+          ],
+          "vesselUvEdges": [
+            0.5,
+            0.16666666666666666,
+            0.625,
+            0.3333333333333333
+          ],
+          "vesselUvPixelCenters": [
+            0.500244140625,
+            0.1669921875,
+            0.624755859375,
+            0.3330078125
+          ]
+        },
+        {
+          "index": 13,
+          "resource": "ctrlpan\\mana\\mana_0014.png",
+          "sha256": "82f5d6b31089806baddecdd3cd5304d1ec8d14a3a9fa738a2beab74979e7362b",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1280,
+            256,
+            1536,
+            512
+          ],
+          "vesselUvEdges": [
+            0.625,
+            0.16666666666666666,
+            0.75,
+            0.3333333333333333
+          ],
+          "vesselUvPixelCenters": [
+            0.625244140625,
+            0.1669921875,
+            0.749755859375,
+            0.3330078125
+          ]
+        },
+        {
+          "index": 14,
+          "resource": "ctrlpan\\mana\\mana_0015.png",
+          "sha256": "41cdacd5f212b3f8ce92cd0e31b700d9e7e8ea16f272533bbbaead3ae883497f",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1536,
+            256,
+            1792,
+            512
+          ],
+          "vesselUvEdges": [
+            0.75,
+            0.16666666666666666,
+            0.875,
+            0.3333333333333333
+          ],
+          "vesselUvPixelCenters": [
+            0.750244140625,
+            0.1669921875,
+            0.874755859375,
+            0.3330078125
+          ]
+        },
+        {
+          "index": 15,
+          "resource": "ctrlpan\\mana\\mana_0016.png",
+          "sha256": "123f851fa0389c83e30e1eb8d24dca83cea4ea85b3673b283214904071820b6c",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1792,
+            256,
+            2048,
+            512
+          ],
+          "vesselUvEdges": [
+            0.875,
+            0.16666666666666666,
+            1.0,
+            0.3333333333333333
+          ],
+          "vesselUvPixelCenters": [
+            0.875244140625,
+            0.1669921875,
+            0.999755859375,
+            0.3330078125
+          ]
+        },
+        {
+          "index": 16,
+          "resource": "ctrlpan\\mana\\mana_0017.png",
+          "sha256": "e6d800fe4959e94befe9bf6de4ab13bcf6591ff6fda738499e6a78110dc746b1",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            0,
+            512,
+            256,
+            768
+          ],
+          "vesselUvEdges": [
+            0.0,
+            0.3333333333333333,
+            0.125,
+            0.5
+          ],
+          "vesselUvPixelCenters": [
+            0.000244140625,
+            0.3336588541666667,
+            0.124755859375,
+            0.4996744791666667
+          ]
+        },
+        {
+          "index": 17,
+          "resource": "ctrlpan\\mana\\mana_0018.png",
+          "sha256": "08540ea037fa9263eaf99fb97d8355e72963fc65f7f0f46b2886920977a7b5aa",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            256,
+            512,
+            512,
+            768
+          ],
+          "vesselUvEdges": [
+            0.125,
+            0.3333333333333333,
+            0.25,
+            0.5
+          ],
+          "vesselUvPixelCenters": [
+            0.125244140625,
+            0.3336588541666667,
+            0.249755859375,
+            0.4996744791666667
+          ]
+        },
+        {
+          "index": 18,
+          "resource": "ctrlpan\\mana\\mana_0019.png",
+          "sha256": "52468b2497db43a84976f2561f4a841e26091b411fd96d479995499e34b47158",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            512,
+            512,
+            768,
+            768
+          ],
+          "vesselUvEdges": [
+            0.25,
+            0.3333333333333333,
+            0.375,
+            0.5
+          ],
+          "vesselUvPixelCenters": [
+            0.250244140625,
+            0.3336588541666667,
+            0.374755859375,
+            0.4996744791666667
+          ]
+        },
+        {
+          "index": 19,
+          "resource": "ctrlpan\\mana\\mana_0020.png",
+          "sha256": "c5ec787782c0159548a69ccfdeb163c6231c81ed4b0d54edd564cb6de86725dd",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            768,
+            512,
+            1024,
+            768
+          ],
+          "vesselUvEdges": [
+            0.375,
+            0.3333333333333333,
+            0.5,
+            0.5
+          ],
+          "vesselUvPixelCenters": [
+            0.375244140625,
+            0.3336588541666667,
+            0.499755859375,
+            0.4996744791666667
+          ]
+        },
+        {
+          "index": 20,
+          "resource": "ctrlpan\\mana\\mana_0021.png",
+          "sha256": "eb1b65d257b38871386e2b1b571d693ced56fafa8186208e62b9b3d3efd10cdc",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1024,
+            512,
+            1280,
+            768
+          ],
+          "vesselUvEdges": [
+            0.5,
+            0.3333333333333333,
+            0.625,
+            0.5
+          ],
+          "vesselUvPixelCenters": [
+            0.500244140625,
+            0.3336588541666667,
+            0.624755859375,
+            0.4996744791666667
+          ]
+        },
+        {
+          "index": 21,
+          "resource": "ctrlpan\\mana\\mana_0022.png",
+          "sha256": "2a993c5d6b98ec3794a3338b25e5771cde8236ef5a5305cc073498c751350600",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1280,
+            512,
+            1536,
+            768
+          ],
+          "vesselUvEdges": [
+            0.625,
+            0.3333333333333333,
+            0.75,
+            0.5
+          ],
+          "vesselUvPixelCenters": [
+            0.625244140625,
+            0.3336588541666667,
+            0.749755859375,
+            0.4996744791666667
+          ]
+        },
+        {
+          "index": 22,
+          "resource": "ctrlpan\\mana\\mana_0023.png",
+          "sha256": "4336769a7aaec1b3771d8e0be58a690827cdfe56b07d0b394225ae7d0a46a14d",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1536,
+            512,
+            1792,
+            768
+          ],
+          "vesselUvEdges": [
+            0.75,
+            0.3333333333333333,
+            0.875,
+            0.5
+          ],
+          "vesselUvPixelCenters": [
+            0.750244140625,
+            0.3336588541666667,
+            0.874755859375,
+            0.4996744791666667
+          ]
+        },
+        {
+          "index": 23,
+          "resource": "ctrlpan\\mana\\mana_0024.png",
+          "sha256": "32cd6b2864c49a114f2c031764dba104bff4158f1fd5f6c3831c0bb36f8479dd",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1792,
+            512,
+            2048,
+            768
+          ],
+          "vesselUvEdges": [
+            0.875,
+            0.3333333333333333,
+            1.0,
+            0.5
+          ],
+          "vesselUvPixelCenters": [
+            0.875244140625,
+            0.3336588541666667,
+            0.999755859375,
+            0.4996744791666667
+          ]
+        },
+        {
+          "index": 24,
+          "resource": "ctrlpan\\mana\\mana_0025.png",
+          "sha256": "922947ebc60736c453f642726892396ae6930a36960f9ddc3d2ab6b3c6137233",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            0,
+            768,
+            256,
+            1024
+          ],
+          "vesselUvEdges": [
+            0.0,
+            0.5,
+            0.125,
+            0.6666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.000244140625,
+            0.5003255208333334,
+            0.124755859375,
+            0.6663411458333334
+          ]
+        },
+        {
+          "index": 25,
+          "resource": "ctrlpan\\mana\\mana_0026.png",
+          "sha256": "afa61ea0275f1c724c18857c68846850b0380a60660555fcb2103c3a337d1e2d",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            256,
+            768,
+            512,
+            1024
+          ],
+          "vesselUvEdges": [
+            0.125,
+            0.5,
+            0.25,
+            0.6666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.125244140625,
+            0.5003255208333334,
+            0.249755859375,
+            0.6663411458333334
+          ]
+        },
+        {
+          "index": 26,
+          "resource": "ctrlpan\\mana\\mana_0027.png",
+          "sha256": "ab0e9393e2bbdf57c6b3c67d22c1d89b2f5bb9a90b36629b185caaac818261a5",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            512,
+            768,
+            768,
+            1024
+          ],
+          "vesselUvEdges": [
+            0.25,
+            0.5,
+            0.375,
+            0.6666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.250244140625,
+            0.5003255208333334,
+            0.374755859375,
+            0.6663411458333334
+          ]
+        },
+        {
+          "index": 27,
+          "resource": "ctrlpan\\mana\\mana_0028.png",
+          "sha256": "4ce967d696a1f60879dc7cef48f416bf75a6121c31522ad2bdc367ad869fd6bb",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            768,
+            768,
+            1024,
+            1024
+          ],
+          "vesselUvEdges": [
+            0.375,
+            0.5,
+            0.5,
+            0.6666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.375244140625,
+            0.5003255208333334,
+            0.499755859375,
+            0.6663411458333334
+          ]
+        },
+        {
+          "index": 28,
+          "resource": "ctrlpan\\mana\\mana_0029.png",
+          "sha256": "505ecb9f2420ef975b8bc64ab57049dd091bc2407f26d648f9201d2689743fbf",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1024,
+            768,
+            1280,
+            1024
+          ],
+          "vesselUvEdges": [
+            0.5,
+            0.5,
+            0.625,
+            0.6666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.500244140625,
+            0.5003255208333334,
+            0.624755859375,
+            0.6663411458333334
+          ]
+        },
+        {
+          "index": 29,
+          "resource": "ctrlpan\\mana\\mana_0030.png",
+          "sha256": "769510323a0ac4e0d613dc7690aef6712ea179b76b1c3171f9ca60a49d1ecd98",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1280,
+            768,
+            1536,
+            1024
+          ],
+          "vesselUvEdges": [
+            0.625,
+            0.5,
+            0.75,
+            0.6666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.625244140625,
+            0.5003255208333334,
+            0.749755859375,
+            0.6663411458333334
+          ]
+        },
+        {
+          "index": 30,
+          "resource": "ctrlpan\\mana\\mana_0031.png",
+          "sha256": "79825684877d51a8f7c3b64ad53505d88cc16965b0c642818144a2ab50f6524a",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1536,
+            768,
+            1792,
+            1024
+          ],
+          "vesselUvEdges": [
+            0.75,
+            0.5,
+            0.875,
+            0.6666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.750244140625,
+            0.5003255208333334,
+            0.874755859375,
+            0.6663411458333334
+          ]
+        },
+        {
+          "index": 31,
+          "resource": "ctrlpan\\mana\\mana_0032.png",
+          "sha256": "1c01adc33c66f71d938b510817aced1762dbec273784893803020a317d1e34aa",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1792,
+            768,
+            2048,
+            1024
+          ],
+          "vesselUvEdges": [
+            0.875,
+            0.5,
+            1.0,
+            0.6666666666666666
+          ],
+          "vesselUvPixelCenters": [
+            0.875244140625,
+            0.5003255208333334,
+            0.999755859375,
+            0.6663411458333334
+          ]
+        },
+        {
+          "index": 32,
+          "resource": "ctrlpan\\mana\\mana_0033.png",
+          "sha256": "6a5fbe251072b8338ff798b5dc2498a5daa87000a509bca66d2fed4365260120",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            0,
+            1024,
+            256,
+            1280
+          ],
+          "vesselUvEdges": [
+            0.0,
+            0.6666666666666666,
+            0.125,
+            0.8333333333333334
+          ],
+          "vesselUvPixelCenters": [
+            0.000244140625,
+            0.6669921875,
+            0.124755859375,
+            0.8330078125
+          ]
+        },
+        {
+          "index": 33,
+          "resource": "ctrlpan\\mana\\mana_0034.png",
+          "sha256": "9568b3bd1bf3c331314057aed3ed406c7501ebd6e895f3c299c10c6adb61bb95",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            256,
+            1024,
+            512,
+            1280
+          ],
+          "vesselUvEdges": [
+            0.125,
+            0.6666666666666666,
+            0.25,
+            0.8333333333333334
+          ],
+          "vesselUvPixelCenters": [
+            0.125244140625,
+            0.6669921875,
+            0.249755859375,
+            0.8330078125
+          ]
+        },
+        {
+          "index": 34,
+          "resource": "ctrlpan\\mana\\mana_0035.png",
+          "sha256": "ef6d57ceb72b8839970c26981b16cdd9be9cb2c22e38a888b05832aa840c2982",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            512,
+            1024,
+            768,
+            1280
+          ],
+          "vesselUvEdges": [
+            0.25,
+            0.6666666666666666,
+            0.375,
+            0.8333333333333334
+          ],
+          "vesselUvPixelCenters": [
+            0.250244140625,
+            0.6669921875,
+            0.374755859375,
+            0.8330078125
+          ]
+        },
+        {
+          "index": 35,
+          "resource": "ctrlpan\\mana\\mana_0036.png",
+          "sha256": "c33d1ac43d442cfbdd2735fdf46a40f0abb7825ed3badecf40aa5897927dfc0b",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            768,
+            1024,
+            1024,
+            1280
+          ],
+          "vesselUvEdges": [
+            0.375,
+            0.6666666666666666,
+            0.5,
+            0.8333333333333334
+          ],
+          "vesselUvPixelCenters": [
+            0.375244140625,
+            0.6669921875,
+            0.499755859375,
+            0.8330078125
+          ]
+        },
+        {
+          "index": 36,
+          "resource": "ctrlpan\\mana\\mana_0037.png",
+          "sha256": "cdfa331cbe5d2a5cb7441accdbf7ffaee094df325bd1b60566f36fce188c6595",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1024,
+            1024,
+            1280,
+            1280
+          ],
+          "vesselUvEdges": [
+            0.5,
+            0.6666666666666666,
+            0.625,
+            0.8333333333333334
+          ],
+          "vesselUvPixelCenters": [
+            0.500244140625,
+            0.6669921875,
+            0.624755859375,
+            0.8330078125
+          ]
+        },
+        {
+          "index": 37,
+          "resource": "ctrlpan\\mana\\mana_0038.png",
+          "sha256": "098b5cff57a208b61132e524e57828c51001ec0db2af920149631d8816859564",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1280,
+            1024,
+            1536,
+            1280
+          ],
+          "vesselUvEdges": [
+            0.625,
+            0.6666666666666666,
+            0.75,
+            0.8333333333333334
+          ],
+          "vesselUvPixelCenters": [
+            0.625244140625,
+            0.6669921875,
+            0.749755859375,
+            0.8330078125
+          ]
+        },
+        {
+          "index": 38,
+          "resource": "ctrlpan\\mana\\mana_0039.png",
+          "sha256": "b5c9cdbfe4394eed786197513ef5ffdf016e67babd2f523770b71126ba79952b",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1536,
+            1024,
+            1792,
+            1280
+          ],
+          "vesselUvEdges": [
+            0.75,
+            0.6666666666666666,
+            0.875,
+            0.8333333333333334
+          ],
+          "vesselUvPixelCenters": [
+            0.750244140625,
+            0.6669921875,
+            0.874755859375,
+            0.8330078125
+          ]
+        },
+        {
+          "index": 39,
+          "resource": "ctrlpan\\mana\\mana_0040.png",
+          "sha256": "a3bb182cbb8e5a79c1b114e56ce1c5f2815b7c06829c3f326621b57889bf0174",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1792,
+            1024,
+            2048,
+            1280
+          ],
+          "vesselUvEdges": [
+            0.875,
+            0.6666666666666666,
+            1.0,
+            0.8333333333333334
+          ],
+          "vesselUvPixelCenters": [
+            0.875244140625,
+            0.6669921875,
+            0.999755859375,
+            0.8330078125
+          ]
+        },
+        {
+          "index": 40,
+          "resource": "ctrlpan\\mana\\mana_0041.png",
+          "sha256": "2b49c6cbd526acf141c20681854afaa6c89b18fd3728c37cc2d4655edad8763f",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            0,
+            1280,
+            256,
+            1536
+          ],
+          "vesselUvEdges": [
+            0.0,
+            0.8333333333333334,
+            0.125,
+            1.0
+          ],
+          "vesselUvPixelCenters": [
+            0.000244140625,
+            0.8336588541666666,
+            0.124755859375,
+            0.9996744791666666
+          ]
+        },
+        {
+          "index": 41,
+          "resource": "ctrlpan\\mana\\mana_0042.png",
+          "sha256": "2572e557c6ac53f99a9ff2a468dca96deacd5723f0b93beae55d71967f33edee",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            256,
+            1280,
+            512,
+            1536
+          ],
+          "vesselUvEdges": [
+            0.125,
+            0.8333333333333334,
+            0.25,
+            1.0
+          ],
+          "vesselUvPixelCenters": [
+            0.125244140625,
+            0.8336588541666666,
+            0.249755859375,
+            0.9996744791666666
+          ]
+        },
+        {
+          "index": 42,
+          "resource": "ctrlpan\\mana\\mana_0043.png",
+          "sha256": "fcf878adefe67245b5a0458293b524f093941f48d2a1e3dcc883ed8ee77cf0e2",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            512,
+            1280,
+            768,
+            1536
+          ],
+          "vesselUvEdges": [
+            0.25,
+            0.8333333333333334,
+            0.375,
+            1.0
+          ],
+          "vesselUvPixelCenters": [
+            0.250244140625,
+            0.8336588541666666,
+            0.374755859375,
+            0.9996744791666666
+          ]
+        },
+        {
+          "index": 43,
+          "resource": "ctrlpan\\mana\\mana_0044.png",
+          "sha256": "58fc7f60ab90d0762eb07d9262b92b8879236b86a6b34af3b15af73482e98702",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            768,
+            1280,
+            1024,
+            1536
+          ],
+          "vesselUvEdges": [
+            0.375,
+            0.8333333333333334,
+            0.5,
+            1.0
+          ],
+          "vesselUvPixelCenters": [
+            0.375244140625,
+            0.8336588541666666,
+            0.499755859375,
+            0.9996744791666666
+          ]
+        },
+        {
+          "index": 44,
+          "resource": "ctrlpan\\mana\\mana_0045.png",
+          "sha256": "e1858cc361736b5c524e10232463495056c4677b0b126c62d67719113b301dbc",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1024,
+            1280,
+            1280,
+            1536
+          ],
+          "vesselUvEdges": [
+            0.5,
+            0.8333333333333334,
+            0.625,
+            1.0
+          ],
+          "vesselUvPixelCenters": [
+            0.500244140625,
+            0.8336588541666666,
+            0.624755859375,
+            0.9996744791666666
+          ]
+        },
+        {
+          "index": 45,
+          "resource": "ctrlpan\\mana\\mana_0046.png",
+          "sha256": "689fd9e07671e6af1a3c1f0bd6fb00d66a386415243ce39ed6ebf266efc25676",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1280,
+            1280,
+            1536,
+            1536
+          ],
+          "vesselUvEdges": [
+            0.625,
+            0.8333333333333334,
+            0.75,
+            1.0
+          ],
+          "vesselUvPixelCenters": [
+            0.625244140625,
+            0.8336588541666666,
+            0.749755859375,
+            0.9996744791666666
+          ]
+        },
+        {
+          "index": 46,
+          "resource": "ctrlpan\\mana\\mana_0047.png",
+          "sha256": "65a7f9a755363e9be067a5a29f51404ebb603b29f13266ef0a217c47259eb3f5",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1536,
+            1280,
+            1792,
+            1536
+          ],
+          "vesselUvEdges": [
+            0.75,
+            0.8333333333333334,
+            0.875,
+            1.0
+          ],
+          "vesselUvPixelCenters": [
+            0.750244140625,
+            0.8336588541666666,
+            0.874755859375,
+            0.9996744791666666
+          ]
+        },
+        {
+          "index": 47,
+          "resource": "ctrlpan\\mana\\mana_0048.png",
+          "sha256": "76c0ced46df42e3f4fb04e54612baa3afe3b0e35f3fc0cdf6b2674711c3bdbf6",
+          "sourceAlphaBBox": [
+            0,
+            6,
+            141,
+            150
+          ],
+          "vesselAtlasBox": [
+            1792,
+            1280,
+            2048,
+            1536
+          ],
+          "vesselUvEdges": [
+            0.875,
+            0.8333333333333334,
+            1.0,
+            1.0
+          ],
+          "vesselUvPixelCenters": [
+            0.875244140625,
+            0.8336588541666666,
+            0.999755859375,
+            0.9996744791666666
+          ]
+        }
+      ]
+    }
+  },
+  "fullVesselRgbaPreservedExactly": true
+}

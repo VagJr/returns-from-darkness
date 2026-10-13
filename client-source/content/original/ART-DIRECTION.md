@@ -45,3 +45,13 @@ A pendant amulet named Lantern of the Return: miniature ancient iron lantern att
 Ashen Covenant:
 
 A pendant amulet named Ashen Covenant: symmetrical narrow pointed diamond of weathered black iron, two angular crossed clasps holding a fractured red garnet, delicate worn gold rim, ash etched surface, small top hanging loop, no long chain. Strong distinctive compact silhouette, three-quarter isometric view.
+
+## Revisão 0.4.2 — ardósia e ferro, sem dourado dominante
+
+A textura de runtime foi substituída por `content/original/ui/interface-stone.png`, RGB 1254×1254, SHA-256 `13876e8bec22265e76daa4bab83566e8e7a28e230f6c19a2f5d1c65efab2895b`. A saída original está preservada como `content/original/sources/interface-slate-iron.png` (origem `exec-68f137c4-bfc3-46d8-b593-95b6e189dd4b.png`). O material anterior continua em `sources/interface-stone.png` como registro da primeira coleção. O runtime usa apenas a nova revisão.
+
+Molduras, separadores e aros usam cinza/prata fosca, com recessos de carvão. O capacete tem margem dentro da moldura. As esculturas herdadas de Tchernobog são sustentáculos/bustos: sua base completa deve encostar na base do HUD, sem inventar pernas. A textura HD nova é própria do projeto; os frames dos vasos continuam identificados pela procedência extraída.
+
+Prompt exato da chamada `image_gen`:
+
+Use case: stylized-concept. Asset type: seamless raster material for a real-time gothic action RPG HUD and inventory, to be sampled by the game engine. Create one square high-resolution seamlessly tileable texture of finely carved weathered cathedral slate and forged dark iron. Diablo 1 dark medieval mood: restrained cold charcoal and gunmetal, dry porous grey stone, subtle chisel scars, soot in shallow cracks, finely pitted matte metal, occasional tiny pale mineral or bone-grey highlights, very slight cool aged pewter. Uniform close-up material sheet viewed orthographically front-on under soft neutral lighting. Readable high-frequency detail, premium crafted finish, authentic dark gothic dungeon atmosphere. Medium-dark and softly varied, not pitch black; no large gold/brass areas, no brown sandstone, no purple, no blue glossy plastic. No objects, no drawn frames, no interface mockup, no lettering, no logos, no buttons, no gems. No large diagonal bands, no spotlight, no vignette, no directional shadow or perspective. Perfectly continuous seamless edges, controlled small-scale grain suitable for use behind UI at 1920x1080. The entire canvas is one material, not a scene or grid. Opaque background.

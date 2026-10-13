@@ -1,0 +1,33 @@
+/* Real footage has its own frame; concept artwork stays in the project sections. */
+.real-gallery{position:relative;isolation:isolate;background:radial-gradient(ellipse at 50% 0,#8f692a14,transparent 58%)}
+.capture-heading{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:16px}
+.capture-heading .eyebrow{font:600 10px/1.6 system-ui,sans-serif;letter-spacing:2px;color:#b89c65;margin:0 0 12px}
+.capture-heading h2{font-family:Garamond,Georgia,serif;font-size:clamp(32px,3.5vw,52px);font-weight:400;line-height:1.12;margin:0;color:#e9d6b5;max-width:750px}
+.capture-version{flex:none;font:500 10px/1.6 system-ui,sans-serif;color:#b7a484;border:1px solid #ac8e4f42;padding:9px 13px;letter-spacing:.6px;white-space:nowrap}
+.capture-intro{font:400 14px/1.85 system-ui,sans-serif;max-width:870px;color:#b5b0a7;margin:0 0 30px}
+.capture-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:20px}
+.capture-card{grid-column:span 2;margin:0;min-width:0;overflow:hidden;background:linear-gradient(120deg,#171c23,#0a1017);border:1px solid #ad8c4d42;box-shadow:0 14px 35px #0004}
+.capture-gameplay,.capture-inventory{grid-column:span 3}
+.capture-image{position:relative;display:block;background:#030608;aspect-ratio:16/9;overflow:hidden;border-bottom:1px solid #ad8c4d35}
+.capture-image img{display:block;width:100%;height:100%;object-fit:contain;transition:filter .2s}
+.capture-play-online .capture-image img,.capture-sanctuary-hub .capture-image img{transform:scale(1.65)}
+.capture-image:hover img{filter:brightness(1.1)}
+.capture-image:focus-visible{outline:2px solid #f0cb86;outline-offset:-3px}
+.capture-expand{position:absolute;inset-inline-end:11px;bottom:11px;display:grid;place-items:center;background:#0b101de6;border:1px solid #c4a56b80;width:29px;height:29px;color:#efd5a6;font:17px system-ui,sans-serif;pointer-events:none}
+.capture-card figcaption{padding:20px 22px 22px}
+.capture-card h3{font:400 26px/1.12 Garamond,Georgia,serif;color:#dec79f;margin:0 0 11px}
+.capture-card p{font:400 12px/1.8 system-ui,sans-serif;color:#a7a395;margin:0}
+.capture-online{margin-top:31px;padding:26px 27px;border:1px solid #ad8c4d32;background:linear-gradient(110deg,#251f1770,#0b111ae6)}
+.capture-online>h3{font:400 31px/1.15 Garamond,Georgia,serif;color:#e6cba0;margin:0 0 22px}
+.capture-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:25px;list-style:none;padding:0;margin:0}
+.capture-flow li{display:flex;align-items:flex-start;gap:15px;min-width:0}
+.capture-step-number{flex:none;color:#b58a47;border:1px solid #a783463d;background:#18140e66;display:grid;place-items:center;width:33px;height:33px;font:500 11px system-ui,sans-serif;letter-spacing:1px}
+.capture-flow h4{font:600 12px/1.6 system-ui,sans-serif;color:#ddcba9;margin:0 0 8px}
+.capture-flow p{font:400 12px/1.8 system-ui,sans-serif;color:#a6a192;margin:0}
+.capture-note{font:400 11px/1.8 system-ui,sans-serif;color:#8f897c;margin:18px 0 0;max-width:930px}
+.central-gallery{padding:26px 27px 27px;margin:26px 0;border:1px solid #a3834e46;background:radial-gradient(ellipse at 50% 0,#9c6d2115,transparent 65%),linear-gradient(120deg,#15191fe8,#0b1118)}
+.central-gallery:before{content:"";position:absolute;inset:6px;border:1px solid #bca06412;pointer-events:none;z-index:-1}
+.central-gallery .capture-heading h2{font-size:36px}.central-gallery .capture-heading .eyebrow{font-size:7px;letter-spacing:1.5px}.central-gallery .capture-intro{font-size:11px;margin-bottom:22px}.central-gallery .capture-grid{gap:15px}.central-gallery .capture-card figcaption{padding:17px 18px 20px}.central-gallery .capture-card h3{font-size:26px}.central-gallery .capture-card p{font-size:10px}.central-gallery .capture-version{font-size:8px}.central-gallery .capture-online{padding:22px;margin-top:23px}.central-gallery .capture-online>h3{font-size:29px}.central-gallery .capture-flow h4,.central-gallery .capture-flow p{font-size:10px}.central-gallery .capture-note{font-size:9px}
+@media(max-width:1020px){.capture-heading{gap:18px}.capture-grid{gap:15px}.capture-card figcaption{padding:17px 18px 20px}.capture-card h3{font-size:24px}.capture-flow{gap:18px}.capture-flow li{gap:11px}.capture-online{padding:23px}.central-gallery{padding:24px}.central-gallery .capture-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.central-gallery .capture-card{grid-column:auto}.central-gallery .capture-sanctuary-room{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;align-items:center}.central-gallery .capture-sanctuary-room .capture-image{border:0;border-inline-end:1px solid #ad8c4d35}.central-gallery .capture-flow{grid-template-columns:1fr;gap:17px}.central-gallery .capture-flow li{gap:15px}}
+@media(max-width:700px){.capture-heading{display:block}.capture-heading .eyebrow{font-size:8px}.capture-heading h2{font-size:38px}.capture-version{display:inline-block;margin-top:17px;font-size:9px;padding:7px 10px}.capture-intro{font-size:12px;margin-bottom:23px}.capture-grid{grid-template-columns:1fr;gap:16px}.capture-card,.capture-gameplay,.capture-inventory{grid-column:auto}.capture-card figcaption{padding:20px}.capture-card h3{font-size:29px}.capture-card p{font-size:11px}.capture-online{padding:22px;margin-top:24px}.capture-online>h3{font-size:30px}.capture-flow{grid-template-columns:1fr;gap:22px}.capture-flow h4,.capture-flow p{font-size:11px}.capture-note{font-size:10px}.central-gallery{margin:22px 0;padding:23px 21px}.central-gallery .capture-heading h2{font-size:32px}.central-gallery .capture-heading .eyebrow{font-size:6px;letter-spacing:1px}.central-gallery .capture-intro{font-size:10px}.central-gallery .capture-grid{grid-template-columns:1fr;gap:13px}.central-gallery .capture-card{grid-column:auto}.central-gallery .capture-sanctuary-room{display:block}.central-gallery .capture-sanctuary-room .capture-image{border:0;border-bottom:1px solid #ad8c4d35}.central-gallery .capture-card h3{font-size:29px}.central-gallery .capture-online{padding:20px}.central-gallery .capture-online>h3{font-size:27px}}
+@media(prefers-reduced-motion:reduce){.capture-image img{transition:none}}
