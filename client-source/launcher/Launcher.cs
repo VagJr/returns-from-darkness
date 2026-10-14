@@ -23,8 +23,8 @@ using Microsoft.Win32;
 [assembly: AssemblyTitle("Returns from Darkness HD")]
 [assembly: AssemblyProduct("Returns from Darkness HD")]
 [assembly: AssemblyDescription("Cliente e atualizações de Returns from Darkness")]
-[assembly: AssemblyVersion("0.4.11.0")]
-[assembly: AssemblyFileVersion("0.4.11.0")]
+[assembly: AssemblyVersion("0.4.12.0")]
+[assembly: AssemblyFileVersion("0.4.12.0")]
 namespace ReturnsFromDarkness {
  static class Program {
   public static Mutex Instance;
@@ -185,13 +185,50 @@ namespace ReturnsFromDarkness {
   }
   public static void InstallInitial(){
    string installed=Path.Combine(Root,"ReturnsFromDarkness.exe");
-   if(!File.Exists(installed)){File.Copy(Assembly.GetExecutingAssembly().Location,installed,false);}
-   string marker=Path.Combine(Root,"current.json");if(File.Exists(marker))return;
    using(var resource=Assembly.GetExecutingAssembly().GetManifestResourceStream("initial.zip")){
-    if(resource==null)return;string archive=Path.Combine(Root,"initial.zip");using(var output=File.Create(archive))resource.CopyTo(output);
-    string envelope;using(var zip=ZipFile.OpenRead(archive)){var entry=zip.GetEntry("release.json");if(entry==null)throw new Exception(Lang.S("package"));using(var reader=new StreamReader(entry.Open(),Encoding.UTF8))envelope=reader.ReadToEnd();}
-    var manifest=Verify(envelope);string versionDir=Path.Combine(Root,"versions",(string)manifest["version"]);Extract(archive,versionDir);
-    CheckFiles(versionDir,manifest);Activate(envelope);File.Delete(archive);
+    if(resource==null){if(!File.Exists(installed))File.Copy(Assembly.GetExecutingAssembly().Location,installed,false);return;}
+    // Serialize setup and updates across accounts. A setup must never downgrade
+    // a newer installation, but it may restore its missing shared mod data.
+    FileStream gate=null;DateTime until=DateTime.UtcNow.AddMinutes(20);
+    while(gate==null&&DateTime.UtcNow<until){try{gate=new FileStream(Path.Combine(Root,"update.lock"),FileMode.OpenOrCreate,FileAccess.ReadWrite,FileShare.None);}catch(IOException){Thread.Sleep(100);}}
+    if(gate==null)throw new Exception(Lang.S("busy"));
+    using(gate){string archive=Path.Combine(Root,"initial-"+Guid.NewGuid().ToString("N")+".zip"),stage=Path.Combine(Root,"setup-staging-"+Guid.NewGuid().ToString("N"));
+     try{using(var output=File.Create(archive))resource.CopyTo(output);
+      string envelope;using(var zip=ZipFile.OpenRead(archive)){var entry=zip.GetEntry("release.json");if(entry==null)throw new Exception(Lang.S("package"));using(var reader=new StreamReader(entry.Open(),Encoding.UTF8))envelope=reader.ReadToEnd();}
+      var manifest=Verify(envelope);string marker=Path.Combine(Root,"current.json");bool activate=!File.Exists(marker)||new Version((string)Verify(File.ReadAllText(marker))["version"])<new Version((string)manifest["version"]);
+      Directory.CreateDirectory(stage);
+      if(activate){Extract(archive,stage);CheckFiles(stage,manifest);}
+      else using(var zip=ZipFile.OpenRead(archive)){var data=zip.GetEntry("TH3data.mor");if(data!=null)data.ExtractToFile(Path.Combine(stage,"TH3data.mor"));}
+      string bundled=Path.Combine(stage,"TH3data.mor");object descriptor;
+      if(manifest.TryGetValue("modData",out descriptor)){
+       ModData(manifest);RequireGameData(bundled,"TH3data.mor",manifest);string folder=Path.Combine(Root,"data"),target=Path.Combine(folder,"TH3data.mor");Directory.CreateDirectory(folder);
+       if(!File.Exists(target)||!(bool)InspectGameData(target,"TH3data.mor",manifest)["compatible"]){ReplaceGameData(bundled,target);Diagnostic("bundled-data","TH3data.mor verified and installed");}else File.Delete(bundled);
+      }
+      if(activate){string directory=Path.Combine(Root,"versions",(string)manifest["version"]),backup=null;Directory.CreateDirectory(Path.GetDirectoryName(directory));if(Directory.Exists(directory)){backup=directory+"-before-setup-"+Guid.NewGuid().ToString("N");Directory.Move(directory,backup);}try{Directory.Move(stage,directory);Activate(envelope);}catch{if(backup!=null&&!Directory.Exists(directory))Directory.Move(backup,directory);throw;}
+       if(!File.Exists(installed))File.Copy(SafePath(directory,(string)manifest["launcher"]),installed,false);
+      }
+     }finally{if(File.Exists(archive))File.Delete(archive);if(Directory.Exists(stage)&&Path.GetFullPath(stage).StartsWith(Path.GetFullPath(Root)+Path.DirectorySeparatorChar,StringComparison.OrdinalIgnoreCase))Directory.Delete(stage,true);}
+    }
+   }
+  }
+  public static Dictionary<string,object> ModData(Dictionary<string,object> manifest){
+   object value;if(!manifest.TryGetValue("modData",out value))return null;var data=value as Dictionary<string,object>;
+   if(data==null||(string)data["file"]!="TH3data.mor"||(string)data["sha256"]!=(string)manifest["dataSha256"]||!Regex.IsMatch((string)data["archiveSha256"],@"^[a-f0-9]{64}$")||Convert.ToInt64(data["size"])<100000000||Convert.ToInt64(data["size"])>1500000000L||Convert.ToInt64(data["archiveSize"])<1||Convert.ToInt64(data["archiveSize"])>1500000000L)throw new Exception(Lang.S("package"));
+   var uri=new Uri((string)data["archiveUrl"]);if(uri.Scheme!="https"||uri.Host!="github.com"||!uri.AbsolutePath.StartsWith("/VagJr/returns-from-darkness/releases/download/")||!String.IsNullOrEmpty(uri.UserInfo)||!String.IsNullOrEmpty(uri.Query)||!String.IsNullOrEmpty(uri.Fragment))throw new Exception(Lang.S("package"));return data;
+  }
+  public static async Task EnsureModData(Dictionary<string,object> manifest,Label status){
+   var descriptor=ModData(manifest);if(descriptor==null)return;
+   string data=Path.Combine(Root,"data"),target=Path.Combine(data,"TH3data.mor");Directory.CreateDirectory(data);
+   FileStream gate=null;DateTime until=DateTime.UtcNow.AddMinutes(30);
+   while(gate==null&&DateTime.UtcNow<until){try{gate=new FileStream(Path.Combine(data,"mod-data.lock"),FileMode.OpenOrCreate,FileAccess.ReadWrite,FileShare.None);}catch(IOException){}if(gate==null){status.Text=Lang.S("otherUpdate");await Task.Delay(200);}}
+   if(gate==null)throw new Exception(Lang.S("busy"));
+   using(gate){if(File.Exists(target)&&(bool)(await Task.Run(()=>InspectGameData(target,"TH3data.mor",manifest)))["compatible"])return;
+    if(GameRunning)throw new Exception(Lang.S("restart"));
+    string archive=Path.Combine(data,"mod-download-"+Guid.NewGuid().ToString("N")+".zip"),prepared=target+".import-"+Guid.NewGuid().ToString("N");
+    try{Stage(status,"importingData");using(var web=new TimedWebClient()){web.DownloadProgressChanged+=(s,e)=>status.Text=Lang.S("importingData")+" TH3data.mor · "+e.ProgressPercentage+"%";await Bounded(web.DownloadFileTaskAsync(new Uri((string)descriptor["archiveUrl"]),archive),web,1800000);}
+     if(new FileInfo(archive).Length!=Convert.ToInt64(descriptor["archiveSize"])||await Task.Run(()=>Hash(archive))!=(string)descriptor["archiveSha256"])throw new Exception(Lang.S("download"));
+     await Task.Run(()=>{using(var zip=ZipFile.OpenRead(archive)){if(zip.Entries.Count!=1||zip.Entries[0].FullName!="TH3data.mor"||zip.Entries[0].Length!=Convert.ToInt64(descriptor["size"]))throw new Exception(Lang.S("package"));zip.Entries[0].ExtractToFile(prepared);}RequireGameData(prepared,"TH3data.mor",manifest);ReplaceGameData(prepared,target);});Diagnostic("mod-data","verified and prepared");
+    }finally{if(File.Exists(archive))File.Delete(archive);if(File.Exists(prepared))File.Delete(prepared);}
    }
   }
   public static void Activate(string envelope){string pointer=Path.Combine(Root,"current.json"),temp=pointer+".new";File.WriteAllText(temp,envelope,Encoding.UTF8);if(File.Exists(pointer))File.Replace(temp,pointer,pointer+".previous");else File.Move(temp,pointer);}
@@ -234,6 +271,7 @@ namespace ReturnsFromDarkness {
    string data=Path.Combine(Root,"data");Directory.CreateDirectory(data);string target=Path.Combine(data,filename);
    if(File.Exists(target)&&(bool)(await Task.Run(()=>InspectGameData(target,filename,manifest)))["compatible"])return;
    if(GameRunning)throw new Exception(Lang.S("restart"));
+   if(filename=="TH3data.mor"&&ModData(manifest)!=null){await EnsureModData(manifest,status);return;}
    string[] paths={@"C:\diabloHD\runtime\thehell3\bin",@"C:\Program Files\GOG Galaxy\Games\Diablo",@"C:\GOG Games\Diablo"};
    string source=null;foreach(string folder in paths){string candidate=Path.Combine(folder,filename);if(File.Exists(candidate)&&(bool)(await Task.Run(()=>InspectGameData(candidate,filename,manifest)))["compatible"]){source=candidate;break;}}
    if(source==null){Stage(status,"selectData");if(Controller!=null){Controller.Show();Controller.Activate();}using(var dialog=new OpenFileDialog{Title=Lang.S("select")+" "+filename,Filter=filename+"|"+filename,CheckFileExists=true}){if(dialog.ShowDialog(Controller)!=DialogResult.OK)throw new Exception(Lang.S("pendingData")+" "+filename);source=dialog.FileName;}}

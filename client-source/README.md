@@ -1,4 +1,4 @@
-# Returns from Darkness HD 0.4.11
+# Returns from Darkness HD 0.4.12
 
 Community client adapted from The Hell 3 source 1.265/data1.267, with creator-hosted online rooms, signed updates and Sanctuary account progression. Inherited gameplay and artwork remain credited; project-specific additions include the integration, progression layer, interface framing and First Vigil relic collection. See NOTICE.md and ORIGINAL-SOURCE-README.txt.
 
@@ -10,7 +10,7 @@ Compile Launcher.cs + Lang.cs for .NET Framework4 WinForms with Drawing, Securit
 
 Copy content/original/items to game assets/original/items, and content/original/ui to assets/original/ui. The original basalt/iron interface material is decoded once as RGBA and composed with an A8 mask after the world pass, preserving gameplay geometry and native controls. The PNG relic icons are decoded/scaled/palettized once at load; native CEL inventory/ground frames are derived from those originals. Stable unique IDs4618..4620 and reserved private lines avoid adding them to old random unique selection. The three explicit rewards are restricted to Normal campaign/Horror: Skeleton King, Butcher and classic Diablo respectively. Existing global rate tables remain unchanged. See docs/COLECAO-PRIMEIRA-VIGILIA.md for conditions and effects.
 
-Rules sanctuary-1 and all engine mode IDs are preserved (Normal0, Hardcore1, Ironman2, Nightmare3, Easy4, Survival5, Hard6, Speedrun7, Coliseum8). Progress reports are client-reported and unranked. Saves remain local; profiles do not back up complete inventories. The public setup imports compatible game data on first preparation.
+Rules sanctuary-1 and all engine mode IDs are preserved (Normal0, Hardcore1, Ironman2, Nightmare3, Easy4, Survival5, Hard6, Speedrun7, Coliseum8). Progress reports are client-reported and unranked. Saves remain local; profiles do not back up complete inventories. The complete setup includes matching TH3 mod data; original DIABDAT.MPQ is imported from the player installation.
 
 0.4.1 fixes D3D9 menu surface operations, repaints dialogs after activation/reset and replaces ordinary account/room/unlock notices with skinned native dialogs. The original interface framing preserves native hitboxes and item/equipment layouts. This is not a whole-world HD artwork replacement or a port of another project's complete renderer. Browser gameplay and full remaster remain in development.
 
@@ -31,3 +31,5 @@ Version 0.4.9 clips bitmap glyphs to destination surfaces, bounds font-header re
 Version 0.4.10 keeps native room launch in a skinned waiting dialog until the controller delivers room control or a fixed failure code. Same-account authentication refresh preserves the current menu. Public executables opened without a controller enter through the launcher before initializing graphics. The creator reported successful external multiplayer on two PCs/two networks in 0.4.9; this is a community report, not a relabeled 0.4.10 agent certification. See docs/AUDITORIA-CONEXOES-0.4.10.md.
 
 Version 0.4.11 protects both resource-vessel inner rims from the center panel/chat overlays. CommunityHudBounds.h keeps palette and GPU clipping in original canvas coordinates. The atlas adds the original inventory seal tip from the supplied full panel, without editing any of the52sourcePNGs; 25pieces are packed. Preserve the generated atlas header and compile the HUD shader together. Hitboxes and resource logic remain unchanged. See docs/RENDERIZACAO-HUD-0.4.11.md.
+
+Version 0.4.12 embeds TH3data.mor 1.267 in the complete setup with signed SHA-256 verification. Mod data remains shared outside version folders. The small client update archive excludes it; a signed optional data archive provides automatic repair when missing. Reinstalling an older setup cannot downgrade a newer client. Source archives and Git exclude both game-data archives. See docs/AUDITORIA-INSTALACAO-0.4.12.md.

@@ -1,0 +1,9 @@
+Returns from Darkness HD 0.4.12 — Instalação simplificada
+
+O instalador Windows completo inclui TH3data.mor 1.267, validado por SHA-256 no manifesto assinado. Não é mais necessário procurar esse arquivo separadamente.
+DIABDAT.MPQ permanece por conta do jogador: a cópia compatível é importada da instalação ou selecionada no primeiro preparo.
+Dados do mod ficam compartilhados fora das versões. Atualizações normais continuam pequenas; o launcher recupera o pacote de dados automaticamente se ele estiver ausente ou incompatível.
+Reinstalação não rebaixa versões mais recentes e preserva os perfis e personagens.
+Mantém o acabamento de HUD da 0.4.11 e o ingresso em salas pelo jogo e pelo site.
+
+O cliente é uma edição de comunidade adaptada de Diablo/Hellfire e The Hell 3. Créditos e documentação originais acompanham o pacote.

@@ -131058,9 +131058,9 @@
 +#pragma once
 +
 +#define TH3_REVISION 1265
-+#define THE_HELL_VERSION_INT 0,4,11,0
-+#define THE_HELL_VERSION_STRING "v0.4.11\0"
-+#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.4.11\0"
++#define THE_HELL_VERSION_INT 0,4,12,0
++#define THE_HELL_VERSION_STRING "v0.4.12\0"
++#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.4.12\0"
 +
 +
 +
