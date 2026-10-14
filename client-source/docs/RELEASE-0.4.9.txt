@@ -1,0 +1,16 @@
+Returns from Darkness HD 0.4.9 — Desenho dos menus e dados de instalação
+
+O diagnóstico enviado pela comunidade registrou cinco encerramentos da versão 0.4.8 com violação de acesso durante o menu inicial. O transporte e os arquivos de instalação aprovados nos testes locais não encerram a investigação desse problema em outro computador. Esta atualização corrige limites no desenho de fontes e fortalece a conferência dos arquivos usados para abrir o jogo.
+
+- Os glifos são recortados aos limites da superfície de destino, inclusive em controles menores do que a altura da fonte. O fallback não altera a arte nem o estilo dos menus.
+- O carregamento de fontes verifica os limites do cabeçalho e usa os 256 índices válidos, evitando a leitura de um índice extra.
+- O launcher confere o conteúdo dos arquivos de jogo compatíveis, incluindo DIABDAT.MPQ, em vez de aceitar apenas o tamanho ou a presença de um cabeçalho. Uma importação incompatível pode ser reparada mantendo cópia de recuperação.
+- O resumo de encerramento identifica o módulo, o tipo de acesso à memória e a etapa do cliente, sem expor credenciais ou convites da sala.
+
+Mantém a entrada online, o salvamento, a atualização automática e a identidade visual existentes. Não modifica taxas globais, classes, recompensas ou artes. As correções de transporte da 0.4.8 continuam presentes; os dados TH3data.mor compatíveis continuam os mesmos.
+
+A candidata passou 46 casos de limites de fontes e a verificação/reparo dos arquivos no launcher assinado. Nos testes gráficos deste computador, perfis novos criaram personagens e carregaram o modo solo; duas contas novas entraram no mesmo mundo pelo site em conexão direta e por Play Online dentro do jogo em retransmissão. Os testes não copiaram personagens existentes nem usaram carregamento automático. São resultados locais da candidata; a publicação e a conferência do feed ainda precisam ser concluídas.
+
+Atualize pelo launcher e abra uma sala nova com todos os participantes na mesma versão. O teste gráfico em computadores distintos continua necessário para confirmar se o encerramento observado foi resolvido. Não apresentamos os testes deste computador como certificação de outras máquinas ou redes.
+
+A central mantém contas, canais e salas na nuvem. A partida roda nos clientes, com conexão direta ou retransmissão autenticada; o criador precisa permanecer conectado. A remasterização de todas as artes, migração de anfitrião e ranking PvP autoritativo continuam em desenvolvimento.

@@ -1,4 +1,4 @@
-# Returns from Darkness HD 0.4.8
+# Returns from Darkness HD 0.4.9
 
 Community client adapted from The Hell 3 source 1.265/data1.267, with creator-hosted online rooms, signed updates and Sanctuary account progression. Inherited gameplay and artwork remain credited; project-specific additions include the integration, progression layer, interface framing and First Vigil relic collection. See NOTICE.md and ORIGINAL-SOURCE-README.txt.
 
@@ -25,3 +25,5 @@ Version 0.4.6 adds the initial English/Portuguese choice, a reviewed menu transl
 Version 0.4.7 fixes guest admission before the creator opens the game, retries authenticated HTTPS relay requests, gates guest launch on host world handshake, clears departed room slots, excludes closed sockets, and recovers a local ended connection without a circular service call. Unicode account control and compatible native executable paths are repaired. Sanitized connection diagnostics are available in the launcher tray menu. No external-PC graphical certification is implied. See docs/AUDITORIA-CONEXOES-0.4.7.md.
 
 Version 0.4.8 fixes incremental TCP burst parsing and bounded consumer backpressure, clears turn outputs on failure, waits for an explicit loaded-world announcement, validates initial state fragments and decompression, and forwards in-game room launch to the existing launcher. Native exception summaries and late exit diagnostics contain no memory or credentials. The cloud boundary refreshes resident realm release configuration with an immutable per-request snapshot, preserving accounts and bindings. External graphical multiplayer certification remains pending. See docs/AUDITORIA-CONEXOES-0.4.8.md.
+
+Version 0.4.9 clips bitmap glyphs to destination surfaces, bounds font-header reads and fixes the 256-entry loop. It verifies both installation archives against the signed compatible set, repairs incompatible imports atomically with backups, and includes only whitelisted module names and access kinds in crash summaries. Controlled production launches use the validated archive directory; the development override archive is disabled in public builds. The exact old Strm2.dll + 0x1A102 write failure was reproduced with guard pages, but confirmation on the affected external PCs is still required. See docs/AUDITORIA-INSTALACAO-0.4.9.md.

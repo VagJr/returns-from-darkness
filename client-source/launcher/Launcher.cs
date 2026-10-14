@@ -23,8 +23,8 @@ using Microsoft.Win32;
 [assembly: AssemblyTitle("Returns from Darkness HD")]
 [assembly: AssemblyProduct("Returns from Darkness HD")]
 [assembly: AssemblyDescription("Cliente e atualizações de Returns from Darkness")]
-[assembly: AssemblyVersion("0.4.8.0")]
-[assembly: AssemblyFileVersion("0.4.8.0")]
+[assembly: AssemblyVersion("0.4.9.0")]
+[assembly: AssemblyFileVersion("0.4.9.0")]
 namespace ReturnsFromDarkness {
  static class Program {
   public static Mutex Instance;
@@ -127,7 +127,7 @@ namespace ReturnsFromDarkness {
   [DllImport("kernel32.dll",CharSet=CharSet.Unicode,SetLastError=true)] static extern uint GetShortPathName(string path,StringBuilder output,uint size);
   public static string NativeProfilePath(string profile){var shortRoot=new StringBuilder(4096);uint length=GetShortPathName(Path.GetFullPath(Root),shortRoot,(uint)shortRoot.Capacity);return length>0&&length<shortRoot.Capacity?Path.Combine(shortRoot.ToString(),"profiles",Path.GetFileName(profile)):profile;}
   public static string NativeDirectory(string directory){var shorter=new StringBuilder(4096);uint length=GetShortPathName(Path.GetFullPath(directory),shorter,(uint)shorter.Capacity);return length>0&&length<shorter.Capacity?shorter.ToString():directory;}
-  public static Dictionary<string,object> NativeCrashSummary(string profile){try{var source=Json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(profile,"native-crash.json")));var result=new Dictionary<string,object>();foreach(string key in new[]{"code","offset"}){object value;if(source.TryGetValue(key,out value)&&value is string&&Regex.IsMatch((string)value,@"^[A-Fa-f0-9]{1,8}$"))result[key]=value;}object module;if(source.TryGetValue("module",out module)&&module is string&&Array.IndexOf(new[]{"client","dependency","unknown"},(string)module)>=0)result["module"]=module;object stage;if(source.TryGetValue("stage",out stage)&&stage is string&&Regex.IsMatch((string)stage,@"^[a-z-]{1,32}$"))result["stage"]=stage;if(result.ContainsKey("code"))return result;}catch{}return null;}
+  public static Dictionary<string,object> NativeCrashSummary(string profile){try{var source=Json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(profile,"native-crash.json")));var result=new Dictionary<string,object>();foreach(string key in new[]{"code","offset"}){object value;if(source.TryGetValue(key,out value)&&value is string&&Regex.IsMatch((string)value,@"^[A-Fa-f0-9]{1,8}$"))result[key]=value;}object module;if(source.TryGetValue("module",out module)&&module is string&&Array.IndexOf(new[]{"client","dependency","unknown"},(string)module)>=0)result["module"]=module;object stage;if(source.TryGetValue("stage",out stage)&&stage is string&&Regex.IsMatch((string)stage,@"^[a-z-]{1,32}$"))result["stage"]=stage;object moduleName;if(source.TryGetValue("moduleName",out moduleName)&&Array.IndexOf(new[]{"strm2.dll","smackw32.dll","d3d9.dll","ddraw.dll","dsound.dll","user32.dll","gdi32.dll","gdi32full.dll","win32u.dll","kernel32.dll","kernelbase.dll","ntdll.dll","xinput1_4.dll","unknown"},moduleName as string)>=0)result["moduleName"]=moduleName;object access;if(source.TryGetValue("memoryAccess",out access)&&Array.IndexOf(new[]{"read","write","execute","unknown"},access as string)>=0)result["memoryAccess"]=access;if(result.ContainsKey("code"))return result;}catch{}return null;}
   public static void ObserveNativeExit(Process exited,string profile,DateTime started){
    if(Game==exited&&LastNativeProfile!="")profile=LastNativeProfile;int code=0;try{code=exited.ExitCode;}catch{}Diagnostic("native-exit",code.ToString("X8"));bool recent=false;try{recent=File.GetLastWriteTimeUtc(Path.Combine(profile,"native-crash.json"))>=started.AddSeconds(-1);}catch{}var crash=recent?NativeCrashSummary(profile):null;if(crash!=null)Diagnostic("native-crash",Json.Serialize(crash));
    var controller=Controller;if(controller==null||controller.IsDisposed)return;
@@ -141,6 +141,7 @@ namespace ReturnsFromDarkness {
    try{var pointer=Verify(File.ReadAllText(Path.Combine(Root,"current.json")));report["installedVersion"]=pointer["version"];report["contentHash"]=pointer["contentHash"];}catch{report["installedVersion"]="unavailable";}
    try{var source=Json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(profile,"network-status.json")));var safe=new Dictionary<string,object>();foreach(string key in new[]{"transport","phase","signalOnline","signalAuthenticated","hostWorldReady","worldHandshakeComplete","localWorldLoaded","hosting","packetsSent","packetsReceived"}){object value;if(source.TryGetValue(key,out value)&&(value is bool||value is int||value is long||value is decimal||value is string&&Regex.IsMatch((string)value,@"^[a-z-]{1,24}$")))safe[key]=value;}object raw;if(source.TryGetValue("links",out raw)){var links=new List<Dictionary<string,object>>();var list=raw as System.Collections.IEnumerable;if(list!=null)foreach(object item in list){if(links.Count>=4)break;var entry=item as Dictionary<string,object>;if(entry==null)continue;var link=new Dictionary<string,object>();foreach(string key in new[]{"slot","connected","directConnected","transport","rttMs","queuedBytes","gameJoined","worldLoaded","blocked","rejectionReason"}){object value;if(entry.TryGetValue(key,out value)&&(value is bool||value is int||value is long||value is decimal||value is string&&Regex.IsMatch((string)value,@"^[a-z-]{1,24}$")))link[key]=value;}links.Add(link);}safe["links"]=links;}report["network"]=safe;}catch{report["network"]="unavailable";}
    var tail=new List<string>();try{string[] lines=File.ReadAllLines(Path.Combine(Root,"diagnostics","launcher.log"));for(int i=Math.Max(0,lines.Length-40);i<lines.Length;i++){string line=Regex.Replace(lines[i],@"rfd://\S+","rfd://<redacted>");line=Regex.Replace(line,@"Bearer\s+\S+","Bearer <redacted>",RegexOptions.IgnoreCase);line=Regex.Replace(line,@"[A-Za-z]:[\\/][^\r\n]+","<local-path>");tail.Add(line);}}catch{}report["launcherStages"]=tail;var nativeCrash=NativeStarted!=DateTime.MinValue&&File.GetLastWriteTimeUtc(Path.Combine(profile,"native-crash.json"))>=NativeStarted.AddSeconds(-1)?NativeCrashSummary(profile):null;if(nativeCrash!=null)report["nativeCrash"]=nativeCrash;try{var phase=Json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(profile,"native-phase.json")));object stage;if(phase.TryGetValue("stage",out stage)&&stage is string&&Regex.IsMatch((string)stage,@"^[a-z-]{1,32}$"))report["nativeStage"]=stage;}catch{}
+   try{var data=Json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(Root,"diagnostics","game-data.json")));var list=new List<Dictionary<string,object>>();foreach(var item in (System.Collections.IEnumerable)data["files"]){var entry=item as Dictionary<string,object>;if(entry==null||list.Count>=2)continue;object name;if(!entry.TryGetValue("file",out name)||Array.IndexOf(new[]{"DIABDAT.MPQ","TH3data.mor"},name as string)<0)continue;var safe=new Dictionary<string,object>{{"file",name}};foreach(string key in new[]{"exists","compatible","exactHashRequired","bytes","sha256","expectedSha256"}){object value;if(entry.TryGetValue(key,out value)&&(value is bool||value is int||value is long||value is string&&Regex.IsMatch((string)value,@"^[a-f0-9]{64}$")))safe[key]=value;}list.Add(safe);}report["gameData"]=list;}catch{}
    string folder=Path.Combine(Root,"diagnostics");Directory.CreateDirectory(folder);string path=Path.Combine(folder,"connection-"+(Regex.IsMatch(account,@"^[a-z][a-z0-9_-]{2,15}$")?account:"offline")+".json");string text=Json.Serialize(report);File.WriteAllText(path,text,Encoding.UTF8);return text;
   }
   [STAThread] public static int Main(string[] args){
@@ -215,21 +216,46 @@ namespace ReturnsFromDarkness {
    if(Hash(archive)!=(string)manifest["archiveSha256"])throw new Exception(Lang.S("download"));
    string stage=directory+"-staging-"+Guid.NewGuid().ToString("N");Extract(archive,stage);CheckFiles(stage,manifest);string backup=null;if(Directory.Exists(directory)){if(GameRunning)throw new Exception(Lang.S("restart"));backup=directory+"-recovery-"+Guid.NewGuid().ToString("N");Directory.Move(directory,backup);}try{Directory.Move(stage,directory);Activate(envelope);}catch{if(backup!=null&&!Directory.Exists(directory))Directory.Move(backup,directory);throw;}File.Delete(archive);Diagnostic("update","verified and activated "+manifest["version"]);return manifest;
   }
-  public static async Task ImportData(string filename,Label status){
-   string data=Path.Combine(Root,"data");Directory.CreateDirectory(data);string target=Path.Combine(data,filename);if(File.Exists(target))return;
+  public static Dictionary<string,object> InspectGameData(string file,string name,Dictionary<string,object> manifest){
+   if(name!="DIABDAT.MPQ"&&name!="TH3data.mor")throw new Exception(Lang.S("package"));
+   object configured;string expected=manifest.TryGetValue(name=="TH3data.mor"?"dataSha256":"baseDataSha256",out configured)?configured as string:null;
+   if(expected!=null&&!Regex.IsMatch(expected,@"^[a-f0-9]{64}$"))throw new Exception(Lang.S("package"));
+   bool exists=File.Exists(file);long bytes=exists?new FileInfo(file).Length:0;string actual=exists?Hash(file):"";
+   bool compatible=exists&&bytes>=100000000&&(expected==null||actual==expected);
+   if(compatible&&name=="DIABDAT.MPQ")using(var stream=File.OpenRead(file)){bool found=false;var marker=new byte[4];for(int block=0;block<2048&&block*512L+4<=stream.Length;block++){stream.Position=block*512L;if(stream.Read(marker,0,4)==4&&marker[0]==77&&marker[1]==80&&marker[2]==81&&marker[3]==26){found=true;break;}}compatible=found;}
+   return new Dictionary<string,object>{{"file",name},{"exists",exists},{"bytes",bytes},{"sha256",actual},{"expectedSha256",expected??""},{"compatible",compatible},{"exactHashRequired",expected!=null}};
+  }
+  public static void RequireGameData(string file,string name,Dictionary<string,object> manifest){var check=InspectGameData(file,name,manifest);if(!(bool)check["compatible"])throw new Exception(Lang.S(File.Exists(file)?"invalidData":"pendingData")+" "+name);}
+  public static void ReplaceGameData(string prepared,string target){
+   if(File.Exists(target))File.Replace(prepared,target,target+".before-repair-"+DateTime.UtcNow.ToString("yyyyMMddHHmmss")+"-"+Guid.NewGuid().ToString("N"),true);
+   else File.Move(prepared,target);
+  }
+  public static async Task ImportData(string filename,Label status,Dictionary<string,object> manifest){
+   string data=Path.Combine(Root,"data");Directory.CreateDirectory(data);string target=Path.Combine(data,filename);
+   if(File.Exists(target)&&(bool)(await Task.Run(()=>InspectGameData(target,filename,manifest)))["compatible"])return;
+   if(GameRunning)throw new Exception(Lang.S("restart"));
    string[] paths={@"C:\diabloHD\runtime\thehell3\bin",@"C:\Program Files\GOG Galaxy\Games\Diablo",@"C:\GOG Games\Diablo"};
-   string source=null;foreach(string folder in paths){string candidate=Path.Combine(folder,filename);if(File.Exists(candidate)){source=candidate;break;}}
+   string source=null;foreach(string folder in paths){string candidate=Path.Combine(folder,filename);if(File.Exists(candidate)&&(bool)(await Task.Run(()=>InspectGameData(candidate,filename,manifest)))["compatible"]){source=candidate;break;}}
    if(source==null){Stage(status,"selectData");if(Controller!=null){Controller.Show();Controller.Activate();}using(var dialog=new OpenFileDialog{Title=Lang.S("select")+" "+filename,Filter=filename+"|"+filename,CheckFileExists=true}){if(dialog.ShowDialog(Controller)!=DialogResult.OK)throw new Exception(Lang.S("pendingData")+" "+filename);source=dialog.FileName;}}
-   Stage(status,"importingData");string temporary=target+".import-"+Guid.NewGuid().ToString("N");try{await Task.Run(()=>File.Copy(source,temporary));File.Move(temporary,target);Diagnostic("data-import",filename+" completed");}finally{if(File.Exists(temporary))File.Delete(temporary);}
+   await Task.Run(()=>RequireGameData(source,filename,manifest));
+   Stage(status,"importingData");string temporary=target+".import-"+Guid.NewGuid().ToString("N");try{await Task.Run(()=>{File.Copy(source,temporary);RequireGameData(temporary,filename,manifest);ReplaceGameData(temporary,target);});Diagnostic("data-import",filename+" verified and prepared");}finally{if(File.Exists(temporary))File.Delete(temporary);}
   }
   public static void ValidateData(string directory,Dictionary<string,object> manifest){
-   foreach(string name in new[]{"DIABDAT.MPQ","TH3data.mor"}){string file=Path.Combine(directory,name);if(!File.Exists(file))throw new Exception(Lang.S("pendingData")+" "+name);if(new FileInfo(file).Length<100000000)throw new Exception(Lang.S("invalidData")+" "+name);}
-   // Full editions contain an MPQ header; the shareware/spawn archive is not compatible.
-   using(var stream=File.OpenRead(Path.Combine(directory,"DIABDAT.MPQ"))){bool found=false;var bytes=new byte[4];for(int block=0;block<2048&&stream.Position+4<=stream.Length;block++){stream.Position=block*512L;if(stream.Read(bytes,0,4)==4&&bytes[0]==77&&bytes[1]==80&&bytes[2]==81&&bytes[3]==26){found=true;break;}}if(!found)throw new Exception(Lang.S("invalidData")+" DIABDAT.MPQ");}
-   if(Hash(Path.Combine(directory,"TH3data.mor"))!=(string)manifest["dataSha256"])throw new Exception(Lang.S("dataMismatch"));
+   var checks=new List<Dictionary<string,object>>();foreach(string name in new[]{"DIABDAT.MPQ","TH3data.mor"})checks.Add(InspectGameData(Path.Combine(directory,name),name,manifest));
+   Directory.CreateDirectory(Path.Combine(Root,"diagnostics"));File.WriteAllText(Path.Combine(Root,"diagnostics","game-data.json"),Json.Serialize(new Dictionary<string,object>{{"version",manifest["version"]},{"files",checks},{"containsCredentials",false}}));
+   foreach(var check in checks)if(!(bool)check["compatible"])throw new Exception(Lang.S((bool)check["exists"]?"invalidData":"pendingData")+" "+check["file"]);
   }
   public static async Task PrepareData(string directory,Dictionary<string,object> manifest,Label status){
-   Stage(status,"checkingData");foreach(string filename in new[]{"DIABDAT.MPQ","TH3data.mor"}){await ImportData(filename,status);string source=Path.Combine(Root,"data",filename),target=Path.Combine(directory,filename);if(!File.Exists(target)){Stage(status,"importingData");await Task.Run(()=>{if(!CreateHardLink(target,source,IntPtr.Zero))File.Copy(source,target);});}}
+   Stage(status,"checkingData");foreach(string filename in new[]{"DIABDAT.MPQ","TH3data.mor"}){
+    await ImportData(filename,status,manifest);string source=Path.Combine(Root,"data",filename),target=Path.Combine(directory,filename);
+    if(File.Exists(target)&&(bool)(await Task.Run(()=>InspectGameData(target,filename,manifest)))["compatible"])continue;
+    if(GameRunning)throw new Exception(Lang.S("restart"));
+    Stage(status,"importingData");
+    // Creating a missing hardlink is atomic. Do not rename a temporary hardlink:
+    // another account's open archive can deny DELETE sharing on its file identity.
+    if(!File.Exists(target)&&CreateHardLink(target,source,IntPtr.Zero)){await Task.Run(()=>RequireGameData(target,filename,manifest));continue;}
+    string temporary=target+".import-"+Guid.NewGuid().ToString("N");try{await Task.Run(()=>{File.Copy(source,temporary);RequireGameData(temporary,filename,manifest);ReplaceGameData(temporary,target);});}finally{if(File.Exists(temporary))File.Delete(temporary);}
+   }
    Stage(status,"checkingData");await Task.Run(()=>ValidateData(directory,manifest));Diagnostic("game-data","compatible");
   }
   public static bool RefreshLauncher(Dictionary<string,object> manifest,string request){
@@ -243,7 +269,7 @@ namespace ReturnsFromDarkness {
    string directory=Path.Combine(Root,"versions",(string)manifest["version"]);CheckFiles(directory,manifest);
    await PrepareData(directory,manifest,status);
    request=await RenewInvitation(request,manifest);
-   string nativeDirectory=NativeDirectory(directory);var info=new ProcessStartInfo(Path.Combine(nativeDirectory,(string)manifest["executable"])){WorkingDirectory=nativeDirectory,UseShellExecute=false};info.EnvironmentVariables["RFD_PORTAL_URL"]=Site+"/central/?lang="+Lang.Language;info.EnvironmentVariables["RFD_UI_LANGUAGE"]=Lang.Language;info.EnvironmentVariables["RFD_CONTENT_HASH"]=(string)manifest["contentHash"];info.EnvironmentVariables["RFD_CONTROL_PIPE"]=PipeName;
+   string nativeDirectory=NativeDirectory(directory);var info=new ProcessStartInfo(Path.Combine(nativeDirectory,(string)manifest["executable"])){WorkingDirectory=nativeDirectory,UseShellExecute=false};info.EnvironmentVariables["RFD_PORTAL_URL"]=Site+"/central/?lang="+Lang.Language;info.EnvironmentVariables["RFD_UI_LANGUAGE"]=Lang.Language;info.EnvironmentVariables["RFD_CONTENT_HASH"]=(string)manifest["contentHash"];info.EnvironmentVariables["RFD_CONTROL_PIPE"]=PipeName;info.EnvironmentVariables["RFD_DATA_VALIDATED"]="1";
    foreach(string key in new[]{"RFD_ROOM_HOST","RFD_ROOM_PORT","RFD_ROOM_TICKET","RFD_ROOM_NAME","RFD_ROOM_MODE","RFD_ROOM_ID","RFD_ROOM_DIFFICULTY","RFD_CONTROL_TOKEN","RFD_CONTROL_PID"})info.EnvironmentVariables.Remove(key);
    string account=PreferredAccount();Dictionary<string,object> invite=null;Process peer=null;
    if(request!=null&&request.StartsWith("rfd://play/")){
