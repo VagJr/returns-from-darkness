@@ -23,8 +23,8 @@ using Microsoft.Win32;
 [assembly: AssemblyTitle("Returns from Darkness HD")]
 [assembly: AssemblyProduct("Returns from Darkness HD")]
 [assembly: AssemblyDescription("Cliente e atualizações de Returns from Darkness")]
-[assembly: AssemblyVersion("0.4.6.0")]
-[assembly: AssemblyFileVersion("0.4.6.0")]
+[assembly: AssemblyVersion("0.4.7.0")]
+[assembly: AssemblyFileVersion("0.4.7.0")]
 namespace ReturnsFromDarkness {
  static class Program {
   public static Mutex Instance;
@@ -60,6 +60,13 @@ namespace ReturnsFromDarkness {
   public static void FocusGame(){if(GameRunning){Game.Refresh();ShowWindow(Game.MainWindowHandle,9);SetForegroundWindow(Game.MainWindowHandle);}}
   public static bool SendRoom(string text){if(!GameRunning)return false;Game.Refresh();if(Game.MainWindowHandle==IntPtr.Zero)return false;byte[] bytes=Encoding.UTF8.GetBytes(ControlToken+"\n"+text);IntPtr memory=Marshal.AllocHGlobal(bytes.Length);try{Marshal.Copy(bytes,0,memory,bytes.Length);var data=new CopyData{tag=(IntPtr)0x52464432,size=bytes.Length,data=memory};IntPtr ack;return SendMessageTimeout(Game.MainWindowHandle,0x4a,(IntPtr)Process.GetCurrentProcess().Id,ref data,2,5000,out ack)!=IntPtr.Zero&&ack==(IntPtr)1;}finally{Marshal.FreeHGlobal(memory);}}
   public static bool Resume(string request){SyncGameAccount();var match=Regex.Match(request??"",@"^rfd://resume/([a-z][a-z0-9_-]{2,15})/([a-f0-9-]{36})(?:\?auth=[A-Za-z0-9_-]{43})?$");if(!match.Success)return false;string account=match.Groups[1].Value,room=match.Groups[2].Value;if(GameRunning&&GameAccount!=account){Process.Start(new ProcessStartInfo(Assembly.GetExecutingAssembly().Location,"--account "+account+" \""+request+"\""){UseShellExecute=false,CreateNoWindow=true});return true;}if(!GameRunning||GameAccount!=account||GameRoom!=room||Peer==null||Peer.HasExited)throw new Exception(Lang.S("disconnected"));Game.Refresh();if(GetProp(Game.MainWindowHandle,"RFD_GAME_IN_ROOM")==IntPtr.Zero&&!SendRoom(LastRoomControl))throw new Exception(Lang.S("transition"));FocusGame();return true;}
+  public static async Task<string> RecoverDisconnectedResume(string request){
+   var match=Regex.Match(request??"",@"^rfd://resume/([a-z][a-z0-9_-]{2,15})/([a-f0-9-]{36})(?:\?auth=[A-Za-z0-9_-]{43})?$");
+   if(!match.Success||!GameRunning||GameAccount!=match.Groups[1].Value||(Peer!=null&&!Peer.HasExited))return request;
+   string account=match.Groups[1].Value;byte[] plain=ProtectedData.Unprotect(File.ReadAllBytes(Path.Combine(Root,"profiles",account,"native-session.bin")),null,DataProtectionScope.CurrentUser);Dictionary<string,object> session;try{session=Json.Deserialize<Dictionary<string,object>>(Encoding.UTF8.GetString(plain));}finally{Array.Clear(plain,0,plain.Length);}
+   if(!String.Equals((string)session["user"],account,StringComparison.OrdinalIgnoreCase))throw new Exception(Lang.S("account"));
+   var result=await AccountApi("launch",new Dictionary<string,object>{{"roomId",match.Groups[2].Value},{"replaceConnection",true}},(string)session["token"]);string uri=(string)result["launchUri"];if(!uri.StartsWith("rfd://play/")||RequestAccount(uri)!=account)throw new Exception(Lang.S("invite"));Diagnostic("connection-recovery","fresh invitation for ended local connection");return uri;
+  }
   public static string AuthAccount="";
   static Dictionary<string,DateTime> UsedAuthCodes=new Dictionary<string,DateTime>();
   public const string Realm="https://returns-darkness-realm.oblique-tactical.workers.dev/api/";
@@ -116,6 +123,17 @@ namespace ReturnsFromDarkness {
   static async Task<T> Bounded<T>(Task<T> task,WebClient client,int milliseconds){if(await Task.WhenAny(task,Task.Delay(milliseconds))!=task){CancelPending(task,client);throw new TimeoutException(Lang.S("connection"));}return await task;}
   static async Task Bounded(Task task,WebClient client,int milliseconds){if(await Task.WhenAny(task,Task.Delay(milliseconds))!=task){CancelPending(task,client);throw new TimeoutException(Lang.S("connection"));}await task;}
   [DllImport("kernel32.dll",CharSet=CharSet.Unicode,SetLastError=true)] static extern bool CreateHardLink(string link,string existing,IntPtr reserved);
+  [DllImport("kernel32.dll",CharSet=CharSet.Unicode,SetLastError=true)] static extern uint GetShortPathName(string path,StringBuilder output,uint size);
+  public static string NativeProfilePath(string profile){var shortRoot=new StringBuilder(4096);uint length=GetShortPathName(Path.GetFullPath(Root),shortRoot,(uint)shortRoot.Capacity);return length>0&&length<shortRoot.Capacity?Path.Combine(shortRoot.ToString(),"profiles",Path.GetFileName(profile)):profile;}
+  public static string NativeDirectory(string directory){var shorter=new StringBuilder(4096);uint length=GetShortPathName(Path.GetFullPath(directory),shorter,(uint)shorter.Capacity);return length>0&&length<shorter.Capacity?shorter.ToString():directory;}
+  public static string ExportConnectionDiagnostic(){
+   var report=new Dictionary<string,object>{{"format",1},{"version",Assembly.GetExecutingAssembly().GetName().Version.ToString(3)},{"createdUtc",DateTime.UtcNow.ToString("o")},{"gameOpen",GameRunning},{"peerOpen",Peer!=null&&!Peer.HasExited},{"containsCredentials",false}};
+   string account=PreferredAccount(),profile=Path.Combine(Root,"profiles",account);
+   try{var pointer=Verify(File.ReadAllText(Path.Combine(Root,"current.json")));report["installedVersion"]=pointer["version"];report["contentHash"]=pointer["contentHash"];}catch{report["installedVersion"]="unavailable";}
+   try{var source=Json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(profile,"network-status.json")));var safe=new Dictionary<string,object>();foreach(string key in new[]{"transport","phase","signalOnline","signalAuthenticated","hostWorldReady","worldHandshakeComplete","hosting","packetsSent","packetsReceived"}){object value;if(source.TryGetValue(key,out value)&&(value is bool||value is int||value is long||value is decimal||value is string&&Regex.IsMatch((string)value,@"^[a-z-]{1,24}$")))safe[key]=value;}object raw;if(source.TryGetValue("links",out raw)){var links=new List<Dictionary<string,object>>();var list=raw as System.Collections.IEnumerable;if(list!=null)foreach(object item in list){if(links.Count>=4)break;var entry=item as Dictionary<string,object>;if(entry==null)continue;var link=new Dictionary<string,object>();foreach(string key in new[]{"slot","connected","directConnected","transport","rttMs","queuedBytes","gameJoined","blocked"}){object value;if(entry.TryGetValue(key,out value)&&(value is bool||value is int||value is long||value is decimal||value is string&&Regex.IsMatch((string)value,@"^[a-z-]{1,24}$")))link[key]=value;}links.Add(link);}safe["links"]=links;}report["network"]=safe;}catch{report["network"]="unavailable";}
+   var tail=new List<string>();try{string[] lines=File.ReadAllLines(Path.Combine(Root,"diagnostics","launcher.log"));for(int i=Math.Max(0,lines.Length-40);i<lines.Length;i++){string line=Regex.Replace(lines[i],@"rfd://\S+","rfd://<redacted>");line=Regex.Replace(line,@"Bearer\s+\S+","Bearer <redacted>",RegexOptions.IgnoreCase);line=Regex.Replace(line,@"[A-Za-z]:[\\/][^\r\n]+","<local-path>");tail.Add(line);}}catch{}report["launcherStages"]=tail;
+   string folder=Path.Combine(Root,"diagnostics");Directory.CreateDirectory(folder);string path=Path.Combine(folder,"connection-"+(Regex.IsMatch(account,@"^[a-z][a-z0-9_-]{2,15}$")?account:"offline")+".json");string text=Json.Serialize(report);File.WriteAllText(path,text,Encoding.UTF8);return text;
+  }
   [STAThread] public static int Main(string[] args){
    ServicePointManager.SecurityProtocol=SecurityProtocolType.Tls12;
    try {
@@ -216,7 +234,7 @@ namespace ReturnsFromDarkness {
    string directory=Path.Combine(Root,"versions",(string)manifest["version"]);CheckFiles(directory,manifest);
    await PrepareData(directory,manifest,status);
    request=await RenewInvitation(request,manifest);
-   var info=new ProcessStartInfo(Path.Combine(directory,(string)manifest["executable"])){WorkingDirectory=directory,UseShellExecute=false};info.EnvironmentVariables["RFD_PORTAL_URL"]=Site+"/central/?lang="+Lang.Language;info.EnvironmentVariables["RFD_UI_LANGUAGE"]=Lang.Language;info.EnvironmentVariables["RFD_CONTENT_HASH"]=(string)manifest["contentHash"];
+   string nativeDirectory=NativeDirectory(directory);var info=new ProcessStartInfo(Path.Combine(nativeDirectory,(string)manifest["executable"])){WorkingDirectory=nativeDirectory,UseShellExecute=false};info.EnvironmentVariables["RFD_PORTAL_URL"]=Site+"/central/?lang="+Lang.Language;info.EnvironmentVariables["RFD_UI_LANGUAGE"]=Lang.Language;info.EnvironmentVariables["RFD_CONTENT_HASH"]=(string)manifest["contentHash"];
    foreach(string key in new[]{"RFD_ROOM_HOST","RFD_ROOM_PORT","RFD_ROOM_TICKET","RFD_ROOM_NAME","RFD_ROOM_MODE","RFD_ROOM_ID","RFD_ROOM_DIFFICULTY","RFD_CONTROL_TOKEN","RFD_CONTROL_PID"})info.EnvironmentVariables.Remove(key);
    string account=PreferredAccount();Dictionary<string,object> invite=null;Process peer=null;
    if(request!=null&&request.StartsWith("rfd://play/")){
@@ -227,16 +245,16 @@ namespace ReturnsFromDarkness {
     account=((string)invite["username"]).ToLowerInvariant();if(!Regex.IsMatch(account,@"^[a-z][a-z0-9_-]{2,15}$")||!Regex.IsMatch((string)invite["ticket"],@"^[A-Za-z0-9_-]{43}$"))throw new Exception(Lang.S("invite"));
     info.EnvironmentVariables["RFD_CONTENT_HASH"]=(string)invite["contentHash"];info.EnvironmentVariables["RFD_ROOM_NAME"]=(string)invite["room"];
    }
-   string profile=Path.Combine(Root,"profiles",account);Directory.CreateDirectory(profile);if(!File.Exists(Path.Combine(profile,"config.ini")))File.Copy(Path.Combine(directory,"config.ini"),Path.Combine(profile,"config.ini"));info.EnvironmentVariables["RFD_PROFILE"]=profile;info.EnvironmentVariables["RFD_AUTH_PROFILE"]=profile;
-   if(invite!=null&&GameRunning&&GameRoom==(string)invite["roomId"]&&GameAccount==account&&GetProp(Game.MainWindowHandle,"RFD_GAME_IN_ROOM")!=IntPtr.Zero){FocusGame();return;}
+   string profile=Path.Combine(Root,"profiles",account);Directory.CreateDirectory(profile);if(!File.Exists(Path.Combine(profile,"config.ini")))File.Copy(Path.Combine(directory,"config.ini"),Path.Combine(profile,"config.ini"));string nativeProfile=NativeProfilePath(profile);info.EnvironmentVariables["RFD_PROFILE"]=nativeProfile;info.EnvironmentVariables["RFD_AUTH_PROFILE"]=nativeProfile;
+   if(invite!=null&&GameRunning&&GameRoom==(string)invite["roomId"]&&GameAccount==account&&Peer!=null&&!Peer.HasExited&&GetProp(Game.MainWindowHandle,"RFD_GAME_IN_ROOM")!=IntPtr.Zero){FocusGame();return;}
    if(invite!=null){
     string localTicket;using(var rng=RandomNumberGenerator.Create()){byte[] bytes=new byte[32];rng.GetBytes(bytes);localTicket=Convert.ToBase64String(bytes).TrimEnd('=').Replace('+','-').Replace('/','_');}
     string ready=Path.Combine(profile,"peer-"+Guid.NewGuid().ToString("N")+".json");
     var companion=new ProcessStartInfo(SafePath(directory,(string)manifest["peerExecutable"])){WorkingDirectory=directory,UseShellExecute=false,CreateNoWindow=true};
     companion.EnvironmentVariables["RFD_PEER_SIGNAL_HOST"]=new Uri((string)manifest["signalUrl"]).Host;companion.EnvironmentVariables["RFD_PEER_ROOM_ID"]=(string)invite["roomId"];companion.EnvironmentVariables["RFD_PEER_TICKET"]=(string)invite["ticket"];companion.EnvironmentVariables["RFD_PEER_LOCAL_TICKET"]=localTicket;companion.EnvironmentVariables["RFD_PEER_HASH"]=(string)manifest["contentHash"];companion.EnvironmentVariables["RFD_PEER_READY"]=ready;companion.EnvironmentVariables["RFD_PEER_STATS"]=Path.Combine(profile,"network-status.json");
-    Program.Diagnostic("peer-start",(string)manifest["version"]);peer=Process.Start(companion);status.Text=Lang.S("connecting");var deadline=DateTime.UtcNow.AddSeconds(50);Dictionary<string,object> connected=null;
+    Program.Diagnostic("peer-start",(string)manifest["version"]);peer=Process.Start(companion);status.Text=Lang.S("connecting");var started=DateTime.UtcNow;var deadline=started.AddSeconds(70);Dictionary<string,object> connected=null;string lastPhase="";
     try{while(DateTime.UtcNow<deadline){
-      if(File.Exists(ready)){try{connected=Json.Deserialize<Dictionary<string,object>>(File.ReadAllText(ready));}catch(ArgumentException){}catch(IOException){}if(connected!=null){if((string)connected["state"]=="error")throw new Exception((string)connected["error"]);if((string)connected["state"]=="ready")break;}}
+      if(File.Exists(ready)){try{connected=Json.Deserialize<Dictionary<string,object>>(File.ReadAllText(ready));}catch(ArgumentException){}catch(IOException){}if(connected!=null){if((string)connected["state"]=="error")throw new Exception((string)connected["error"]);if((string)connected["state"]=="ready")break;object phaseValue;if(connected.TryGetValue("phase",out phaseValue)&&phaseValue is string){string phase=(string)phaseValue;if(phase!=lastPhase){Diagnostic("connection-phase",phase);lastPhase=phase;}if(phase=="waiting-host"){status.Text=Lang.S("waitingHost");deadline=started.AddSeconds(190);}else if(phase=="relay")status.Text=Lang.S("relayConnecting");}}}
       if(peer.HasExited){Diagnostic("peer-exit",peer.ExitCode.ToString());throw new Exception(Lang.S("connection"));}await Task.Delay(100);
      }
      if(connected==null||(string)connected["state"]!="ready")throw new Exception(Lang.S("connection"));
@@ -287,7 +305,7 @@ namespace ReturnsFromDarkness {
    status=Copy(Lang.S("preparing"),59,539,880,46,smallBodyFont,muted);progress=new ProgressBar{Style=ProgressBarStyle.Marquee,MarqueeAnimationSpeed=22,Location=new Point(60,590),Size=new Size(980,3)};Controls.Add(progress);
    version=Copy("RETURNS FROM DARKNESS HD",58,630,520,28,smallActionFont,gold);Copy(Lang.S("coop"),708,630,340,28,smallActionFont,muted);
    using(var iconStream=Assembly.GetExecutingAssembly().GetManifestResourceStream("project.ico")){if(iconStream!=null)using(var projectIcon=new Icon(iconStream))Icon=(Icon)projectIcon.Clone();}
-   tray=new NotifyIcon{Icon=Icon??SystemIcons.Application,Text="Returns from Darkness HD",Visible=true};tray.DoubleClick+=(s1,e1)=>Accept("rfd://focus");var menu=new ContextMenuStrip();menu.Items.Add(Lang.S("open"),null,(s1,e1)=>Accept("rfd://focus"));menu.Items.Add(Lang.S("community"),null,(s1,e1)=>Accept("rfd://central"));menu.Items.Add(Lang.S("check"),null,(s1,e1)=>Accept("rfd://prepare"));menu.Items.Add(Lang.S("close"),null,(s1,e1)=>{if(Program.GameRunning){Hide();return;}tray.Visible=false;Close();});tray.ContextMenuStrip=menu;
+   tray=new NotifyIcon{Icon=Icon??SystemIcons.Application,Text="Returns from Darkness HD",Visible=true};tray.DoubleClick+=(s1,e1)=>Accept("rfd://focus");var menu=new ContextMenuStrip();menu.Items.Add(Lang.S("open"),null,(s1,e1)=>Accept("rfd://focus"));menu.Items.Add(Lang.S("community"),null,(s1,e1)=>Accept("rfd://central"));menu.Items.Add(Lang.S("check"),null,(s1,e1)=>Accept("rfd://prepare"));menu.Items.Add(Lang.S("copyDiagnostic"),null,(s1,e1)=>{try{Clipboard.SetText(Program.ExportConnectionDiagnostic());using(var notice=new RealmNotice(Lang.S("diagnosticCopied")))notice.ShowDialog(this);}catch(Exception error){using(var notice=new RealmNotice(Lang.Error(error.Message)))notice.ShowDialog(this);}});menu.Items.Add(Lang.S("close"),null,(s1,e1)=>{if(Program.GameRunning){Hide();return;}tray.Visible=false;Close();});tray.ContextMenuStrip=menu;
    central.Click+=(s1,e1)=>Accept("rfd://central");play.Click+=(s1,e1)=>Accept(PlayRequest(request));
    FormClosing+=(s1,e1)=>{if(Program.GameRunning){e1.Cancel=true;Hide();}else tray.Dispose();};
    Shown+=async(s1,e1)=>{if(loaded)return;loaded=true;var listener=Program.Listen();if(request=="--preview"){status.Text=Lang.S("portal");version.Text=Lang.S("preview")+" · v"+Assembly.GetExecutingAssembly().GetName().Version.ToString(3);progress.Visible=false;play.Enabled=true;request=null;}else Accept(request??"rfd://prepare");await Task.CompletedTask;};
@@ -299,12 +317,13 @@ namespace ReturnsFromDarkness {
     if(next=="rfd://central"||next=="rfd://central/"){await Program.OpenCentral();continue;}
     manifest=await Program.Update(status);if(Program.RefreshLauncher(manifest,next)){tray.Dispose();Close();return;}
     Program.Stage(status,"signingIn");bool authenticated=await Program.ApplyNativeSession(next);
+    next=await Program.RecoverDisconnectedResume(next);
     if(Program.Resume(next)){Hide();continue;}
     if(Program.GameRunning&&(authenticated||next=="rfd://focus"||next=="rfd://open")){Program.FocusGame();Hide();continue;}
     if(authenticated)next="rfd://open";
     version.Text="RETURNS FROM DARKNESS HD · v"+manifest["version"];if(next=="rfd://prepare"){request=null;status.Text=Lang.S("ready");Show();continue;}if(next=="rfd://focus")next=null;
     await Program.Launch(manifest,next=="rfd://open"?null:next,status);request=null;Hide();
-   }catch(Exception error){Program.Diagnostic("launch-failed",error.GetType().Name+": "+error.Message);status.Text=Lang.Error(error.Message);Show();Activate();}}}finally{processing=false;play.Enabled=true;progress.Visible=false;}
+   }catch(Exception error){Program.Diagnostic("launch-failed",error.GetType().Name+": "+error.Message);try{Program.ExportConnectionDiagnostic();}catch{}status.Text=Lang.Error(error.Message);Show();Activate();}}}finally{processing=false;play.Enabled=true;progress.Visible=false;}
   }
  }
 }

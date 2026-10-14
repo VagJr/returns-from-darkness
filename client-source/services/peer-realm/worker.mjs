@@ -163,7 +163,8 @@ export class Community {
       if(path==='/api/rooms/leave'){if(!current||current.id!==input.roomId)fail('Sala não encontrada.',404);await this.leave(user,current);return json({ok:true});}
       if(['/api/launch','/api/native/connect'].includes(path)) {
         if(!current||current.id!==input.roomId)fail('Entre na sala primeiro.');const member=current.members.find(m=>m.user.toLowerCase()===user.toLowerCase()),ticket=random(),authCode=await this.handoff(s,'client');
-        const result=await call(roomStub(this.env,current.id),'/internal/ticket',{slot:member.slot,ticketHash:await digest(ticket),expires:now+120000});if(result.status===409)return json({launchUri:'rfd://resume/'+user.toLowerCase()+'/'+current.id+'?auth='+authCode,message:'Retomando a partida no cliente aberto.'});if(!result.ok)fail('Não foi possível preparar a entrada.',503);
+        const result=await call(roomStub(this.env,current.id),'/internal/ticket',{slot:member.slot,ticketHash:await digest(ticket),expires:now+120000,replace:input.replaceConnection===true});if(result.status===409)return json({launchUri:'rfd://resume/'+user.toLowerCase()+'/'+current.id+'?auth='+authCode,message:'Retomando a partida no cliente aberto.'});if(!result.ok)fail('Não foi possível preparar a entrada.',503);
+        if(input.replaceConnection===true){current.connected=(current.connected||[]).filter(slot=>slot!==member.slot);this.save(current);}
         const payload={transport:'webrtc',signalUrl:'https://returns-darkness-realm.oblique-tactical.workers.dev',roomId:current.id,ticket,contentHash:this.env.CONTENT_HASH,username:user,room:current.name,mode:current.mode,difficulty:current.difficulty,expires:now+120000,authCode};
         const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(payload)))).replaceAll('+','-').replaceAll('/','_').replaceAll('=','');return json({launchUri:'rfd://play/'+encoded,message:member.slot===0?'Abra seu personagem para hospedar a partida.':'Abra seu personagem para reunir-se ao grupo.'});
       }
@@ -175,6 +176,7 @@ export class Community {
 
 export class SignalRoom {
   constructor(ctx,env){this.ctx=ctx;this.env=env;}
+  activeSockets(){return this.ctx.getWebSockets().filter(ws=>ws.readyState===1);}
   async notify(input){return call(community(this.env),'/internal/heartbeat',input);}
   async fetch(req){
     const path=new URL(req.url).pathname;
@@ -182,8 +184,8 @@ export class SignalRoom {
       if(path==='/internal/init'){await this.ctx.storage.put('room',await body(req));await this.ctx.storage.setAlarm(Date.now()+TTL);return json({ok:true});}
       if(path==='/internal/close'){await this.close();return json({ok:true});}
       const room=await this.ctx.storage.get('room');if(!room||Date.now()-room.updated>TTL)fail('A sala foi encerrada.',410);
-      if(path==='/internal/members'){const {members}=await body(req);room.members=members;for(const ws of this.ctx.getWebSockets()){const a=ws.deserializeAttachment();if(a?.slot!==undefined&&!members.some(m=>m.slot===a.slot&&m.user===a.user))ws.close(1000,'Você saiu da sala');}await this.ctx.storage.put('room',room);return json({ok:true});}
-      if(path==='/internal/ticket') {const input=await body(req);if(this.ctx.getWebSockets().some(ws=>ws.deserializeAttachment()?.slot===input.slot&&ws.deserializeAttachment()?.authenticated))return json({error:'Cliente conectado.'},409);await this.ctx.storage.put('ticket:'+input.slot,input);return json({ok:true});}
+      if(path==='/internal/members'){const {members}=await body(req);const removed=room.members.filter(old=>!members.some(m=>m.slot===old.slot&&m.user===old.user));room.members=members;room.connected=(room.connected||[]).filter(slot=>members.some(m=>m.slot===slot)&&!removed.some(m=>m.slot===slot));for(const member of removed){await this.ctx.storage.delete('peer:'+member.slot);await this.ctx.storage.delete('ticket:'+member.slot);}for(const ws of this.activeSockets()){const a=ws.deserializeAttachment();if(a?.slot!==undefined&&!members.some(m=>m.slot===a.slot&&m.user===a.user))ws.close(1000,'Você saiu da sala');}for(const host of this.activeSockets())if(host.deserializeAttachment()?.authenticated&&host.deserializeAttachment()?.slot===0)for(const member of removed)if(member.slot!==0)host.send(JSON.stringify({op:'peer-left',slot:member.slot}));await this.ctx.storage.put('room',room);return json({ok:true});}
+      if(path==='/internal/ticket') {const input=await body(req);const sockets=this.activeSockets().filter(ws=>ws.deserializeAttachment()?.slot===input.slot&&ws.deserializeAttachment()?.authenticated&&ws.readyState===1);if(sockets.length&&!input.replace)return json({error:'Cliente conectado.'},409);if(input.replace){await this.ctx.storage.delete('peer:'+input.slot);for(const ws of sockets)ws.close(1000,'Reconectando cliente');room.connected=(room.connected||[]).filter(slot=>slot!==input.slot);await this.ctx.storage.put('room',room);if(input.slot!==0)for(const host of this.activeSockets())if(host.deserializeAttachment()?.authenticated&&host.deserializeAttachment()?.slot===0)host.send(JSON.stringify({op:'peer-left',slot:input.slot}));}await this.ctx.storage.put('ticket:'+input.slot,input);return json({ok:true});}
       if(path.endsWith('/bootstrap')) {
         const input=await body(req),hash=validToken(input.ticket)?await digest(input.ticket):'';
         return await this.ctx.blockConcurrencyWhile(async()=>{
@@ -192,16 +194,16 @@ export class SignalRoom {
           if(!found)return json({error:'Convite expirado. Abra a sala novamente.'},403);
           const member=room.members.find(m=>m.slot===found.slot);if(!member)return json({error:'Participante inválido.'},403);
           const token=random();await this.ctx.storage.put('peer:'+member.slot,{hash:await digest(token),user:member.user,expires:Date.now()+28800000});
-          return json({token,slot:member.slot,host:member.slot===0,seed:room.seed,difficulty:room.difficulty,mode:room.mode,contentHash:room.contentHash,members:room.members,iceServers:[{urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun.cloudflare.com:3478'}],turnConfigured:false});
+          return json({token,slot:member.slot,host:member.slot===0,hostReady:!!room.connected?.includes(0),seed:room.seed,difficulty:room.difficulty,mode:room.mode,contentHash:room.contentHash,members:room.members,iceServers:[{urls:'stun:stun.l.google.com:19302'},{urls:'stun:stun.cloudflare.com:3478'}],turnConfigured:false});
         });
       }
       if(req.headers.get('Upgrade')==='websocket'){
-        if(this.ctx.getWebSockets().length>=12)fail('Sala ocupada.',429);const pair=new WebSocketPair();this.ctx.acceptWebSocket(pair[1]);pair[1].serializeAttachment({authenticated:false,created:Date.now(),window:Date.now(),count:0});return new Response(null,{status:101,webSocket:pair[0]});
+        if(this.activeSockets().length>=12)fail('Sala ocupada.',429);const pair=new WebSocketPair();this.ctx.acceptWebSocket(pair[1]);pair[1].serializeAttachment({authenticated:false,created:Date.now(),window:Date.now(),count:0});return new Response(null,{status:101,webSocket:pair[0]});
       }
       fail('Rota indisponível.',404);
     }catch(error){return json({error:error.status?error.message:'Não foi possível concluir a operação.'},error.status||503);}
   }
-  async close(){for(const ws of this.ctx.getWebSockets()){try{ws.send(JSON.stringify({op:'room-closed'}));ws.close(1000,'Sala encerrada');}catch{}}await this.ctx.storage.deleteAll();}
+  async close(){for(const ws of this.activeSockets()){try{ws.send(JSON.stringify({op:'room-closed'}));ws.close(1000,'Sala encerrada');}catch{}}await this.ctx.storage.deleteAll();}
   async webSocketMessage(ws,message){
     try {
       if(typeof message!=='string'||message.length>90000)fail('Mensagem inválida.');const input=JSON.parse(message),a=ws.deserializeAttachment(),now=Date.now(),room=await this.ctx.storage.get('room');
@@ -209,35 +211,36 @@ export class SignalRoom {
       if(input.op==='auth') {
         if(!Number.isInteger(input.slot)||!validToken(input.token))fail('Credencial inválida.');const grant=await this.ctx.storage.get('peer:'+input.slot);
         if(!grant||grant.expires<now||!equal(grant.hash,await digest(input.token))||!room.members.some(m=>m.slot===input.slot&&m.user===grant.user))fail('Credencial inválida.');
-        for(const other of this.ctx.getWebSockets())if(other!==ws&&other.deserializeAttachment()?.authenticated&&other.deserializeAttachment()?.slot===input.slot)other.close(1000,'Reconectado');
-        Object.assign(a,{authenticated:true,slot:input.slot,user:grant.user});ws.serializeAttachment(a);ws.send(JSON.stringify({op:'ready',members:room.members}));
-        if(a.slot!==0){for(const host of this.ctx.getWebSockets())if(host.deserializeAttachment()?.authenticated&&host.deserializeAttachment()?.slot===0)host.send(JSON.stringify({op:'guest-ready',slot:a.slot}));}
-        else{for(const peer of this.ctx.getWebSockets())if(peer!==ws&&peer.deserializeAttachment()?.authenticated)ws.send(JSON.stringify({op:'guest-ready',slot:peer.deserializeAttachment().slot}));}
+        for(const other of this.activeSockets())if(other!==ws&&other.deserializeAttachment()?.authenticated&&other.deserializeAttachment()?.slot===input.slot)other.close(1000,'Reconectado');
+        Object.assign(a,{authenticated:true,slot:input.slot,user:grant.user,grantHash:grant.hash});ws.serializeAttachment(a);ws.send(JSON.stringify({op:'ready',members:room.members,hostReady:!!room.connected?.includes(0)}));
+        if(a.slot!==0){for(const host of this.activeSockets())if(host.deserializeAttachment()?.authenticated&&host.deserializeAttachment()?.slot===0)host.send(JSON.stringify({op:'guest-ready',slot:a.slot}));}
+        else{for(const peer of this.activeSockets())if(peer!==ws&&peer.deserializeAttachment()?.authenticated)ws.send(JSON.stringify({op:'guest-ready',slot:peer.deserializeAttachment().slot}));}
         return;
       }
       if(!a.authenticated)fail('Credencial inválida.');
+      if(a.grantHash){const grant=await this.ctx.storage.get('peer:'+a.slot);if(!grant||!equal(a.grantHash,grant.hash)){ws.close(1000,'Conexao substituida');return;}}
       if(input.op==='leave'){
         if(a.slot===0){await call(community(this.env),'/internal/close',{id:room.id});await this.close();return;}
         room.connected=(room.connected||[]).filter(slot=>slot!==a.slot);await this.ctx.storage.put('room',room);await this.ctx.storage.delete('peer:'+a.slot);await this.notify({id:room.id,connected:room.connected});
-        for(const host of this.ctx.getWebSockets())if(host.deserializeAttachment()?.authenticated&&host.deserializeAttachment()?.slot===0)host.send(JSON.stringify({op:'peer-left',slot:a.slot}));ws.close(1000,'Saiu da partida');return;
+        for(const host of this.activeSockets())if(host.deserializeAttachment()?.authenticated&&host.deserializeAttachment()?.slot===0)host.send(JSON.stringify({op:'peer-left',slot:a.slot}));ws.close(1000,'Saiu da partida');return;
       }
       if(input.op==='heartbeat') {
-        if(a.slot===0){room.updated=now;if(Array.isArray(input.connected)&&input.connected.length<=4&&input.connected.every(n=>Number.isInteger(n)&&room.members.some(m=>m.slot===n)))room.connected=input.connected;await this.ctx.storage.put('room',room);await this.notify({id:room.id,connected:room.connected||[]});await this.ctx.storage.setAlarm(now+TTL);}ws.send(JSON.stringify({op:'heartbeat-ok'}));return;
+        if(a.slot===0){const wasReady=!!room.connected?.includes(0);room.updated=now;if(Array.isArray(input.connected)&&input.connected.length<=4&&input.connected.every(n=>Number.isInteger(n)&&room.members.some(m=>m.slot===n)))room.connected=input.connected;await this.ctx.storage.put('room',room);await this.notify({id:room.id,connected:room.connected||[]});if(!wasReady&&room.connected?.includes(0))for(const peer of this.activeSockets())if(peer!==ws&&peer.deserializeAttachment()?.authenticated)peer.send(JSON.stringify({op:'host-game-ready'}));await this.ctx.storage.setAlarm(now+TTL);}ws.send(JSON.stringify({op:'heartbeat-ok'}));return;
       }
       if(['relay-request','relay-accept','relay'].includes(input.op)){
         if(!Number.isInteger(input.to)||input.to<0||input.to>3||input.to===a.slot||(a.slot!==0&&input.to!==0)||!room.members.some(m=>m.slot===input.to))fail('Destino inválido.');
         if(input.op==='relay-request'&&a.slot===0||input.op==='relay-accept'&&a.slot!==0)fail('Papel inválido.');
         if(input.op==='relay'&&(typeof input.data!=='string'||input.data.length>87380||! /^[A-Za-z0-9+/]*={0,2}$/.test(input.data)))fail('Pacote inválido.');
-        const target=this.ctx.getWebSockets().find(other=>other.deserializeAttachment()?.authenticated&&other.deserializeAttachment()?.slot===input.to);if(!target)return;
+        const target=this.activeSockets().find(other=>other.deserializeAttachment()?.authenticated&&other.deserializeAttachment()?.slot===input.to);if(!target)return;
         target.send(JSON.stringify({op:input.op,from:a.slot,...(input.op==='relay'?{data:input.data}:{})}));return;
       }
       validateSignal(input);if(input.to===a.slot||(a.slot!==0&&input.to!==0)||!room.members.some(m=>m.slot===input.to))fail('Destino inválido.');
-      const target=this.ctx.getWebSockets().find(other=>other.deserializeAttachment()?.authenticated&&other.deserializeAttachment()?.slot===input.to);
+      const target=this.activeSockets().find(other=>other.deserializeAttachment()?.authenticated&&other.deserializeAttachment()?.slot===input.to);
       if(!target){ws.send(JSON.stringify({op:'peer-unavailable',slot:input.to}));return;}
       const outgoing=input.op==='description'?{op:input.op,from:a.slot,to:input.to,type:input.type,sdp:input.sdp}:{op:input.op,from:a.slot,to:input.to,candidate:input.candidate,mid:input.mid};target.send(JSON.stringify(outgoing));
     }catch{ws.close(1008,'Sinal não autorizado');}
   }
-  async webSocketClose(ws){const a=ws.deserializeAttachment();if(!a?.authenticated||a.slot===0)return;for(const host of this.ctx.getWebSockets())if(host.deserializeAttachment()?.slot===0)try{host.send(JSON.stringify({op:'signal-disconnected',slot:a.slot}));}catch{}}
+  async webSocketClose(ws){const a=ws.deserializeAttachment();if(!a?.authenticated||a.slot===0)return;for(const host of this.activeSockets())if(host.deserializeAttachment()?.slot===0)try{host.send(JSON.stringify({op:'signal-disconnected',slot:a.slot}));}catch{}}
   async webSocketError(ws){ws.close(1011,'Sinal interrompido');}
-  async alarm(){const room=await this.ctx.storage.get('room');if(!room||Date.now()-room.updated>TTL){if(room)await call(community(this.env),'/internal/close',{id:room.id});await this.close();return;}for(const ws of this.ctx.getWebSockets()){const a=ws.deserializeAttachment();if(!a.authenticated&&Date.now()-a.created>15000)ws.close(1008,'Autenticação expirada');}await this.ctx.storage.setAlarm(room.updated+TTL);}
+  async alarm(){const room=await this.ctx.storage.get('room');if(!room||Date.now()-room.updated>TTL){if(room)await call(community(this.env),'/internal/close',{id:room.id});await this.close();return;}for(const ws of this.activeSockets()){const a=ws.deserializeAttachment();if(!a.authenticated&&Date.now()-a.created>15000)ws.close(1008,'Autenticação expirada');}await this.ctx.storage.setAlarm(room.updated+TTL);}
 }

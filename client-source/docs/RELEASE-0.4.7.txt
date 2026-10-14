@@ -1,0 +1,16 @@
+Returns from Darkness HD 0.4.7 — Conexões do Santuário
+
+Esta atualização corrige a preparação e a recuperação das partidas online.
+
+- O convidado pode abrir o cliente antes do criador: a retransmissão é solicitada novamente enquanto o anfitrião prepara a partida.
+- A entrada aguarda o jogo do criador aceitar a sessão; o launcher mostra quando está aguardando o criador ou usando a conexão de contingência.
+- Sair pelo site revoga a conexão anterior e libera corretamente o lugar para voltar à sala. Mensagens não são encaminhadas a sockets encerrados.
+- Uma conexão local encerrada recebe um convite novo, preservando a conta e a instância do jogo quando possível.
+- A transferência de conta/sala e o caminho do executável nativo foram corrigidos para perfis Windows com caracteres especiais, usando caminhos Unicode e aliases compatíveis quando disponíveis.
+- O menu do launcher na bandeja permite copiar um diagnóstico de conexão sem senhas, tokens, convites, endereços locais ou sinalização privada.
+
+Partidas de até quatro jogadores usam conexão direta WebRTC; quando ela não está disponível, utilizam retransmissão autenticada HTTPS/WebSocket. O criador mantém a partida no próprio cliente e precisa permanecer conectado. O Santuário continua usando os serviços de contas, descoberta e retransmissão na nuvem; não exige um servidor de jogo no PC do administrador. Não há migração automática de anfitrião nem ranking PvP autoritativo.
+
+Os testes desta release incluem a engine gráfica e transporte via serviço público, mas não certificam uma partida gráfica em dois PCs externos. Consulte AUDITORIA-CONEXOES-0.4.7.md para evidências e limites.
+
+Mantém o HUD Dark Gothic, menus principais EN/PT-BR e a recuperação da trilha sonora da 0.4.6. A tradução integral da campanha, a coleção de 36 itens com obtenção natural e contratos diários continuam em desenvolvimento; os contratos diários permanecem desativados publicamente. Os arquivos de dados compatíveis são preparados separadamente no primeiro acesso. Saves completos permanecem locais por conta.

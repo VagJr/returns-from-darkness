@@ -1,4 +1,4 @@
-# Returns from Darkness HD 0.4.6
+# Returns from Darkness HD 0.4.7
 
 Community client adapted from The Hell 3 source 1.265/data1.267, with creator-hosted online rooms, signed updates and Sanctuary account progression. Inherited gameplay and artwork remain credited; project-specific additions include the integration, progression layer, interface framing and First Vigil relic collection. See NOTICE.md and ORIGINAL-SOURCE-README.txt.
 
@@ -21,3 +21,5 @@ Version 0.4.3 uses the project owner's Dark Gothic HUD Kit for the complete pane
 Version 0.4.5 preserves the world underneath transparent HUD edges, composes party chat with the kit, adds restrained slot highlights and gives item descriptions an independent textured background. Native text, equipment rules and gameplay rates remain unchanged. See docs/RENDERIZACAO-HUD-0.4.5.md.
 
 Version 0.4.6 adds the initial English/Portuguese choice, a reviewed menu translation layer and original archive music fallback when optional music packs are missing. Whole-game translation and accented glyph support remain in progress. The Ashes of the Return collection includes 36 original artworks and a masked RGBA inventory atlas; balance, natural acquisition and original equipped animations remain in development. Daily contracts are disabled by default and must not be advertised as publicly available.
+
+Version 0.4.7 fixes guest admission before the creator opens the game, retries authenticated HTTPS relay requests, gates guest launch on host world handshake, clears departed room slots, excludes closed sockets, and recovers a local ended connection without a circular service call. Unicode account control and compatible native executable paths are repaired. Sanitized connection diagnostics are available in the launcher tray menu. No external-PC graphical certification is implied. See docs/AUDITORIA-CONEXOES-0.4.7.md.

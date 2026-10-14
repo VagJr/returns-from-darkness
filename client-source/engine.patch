@@ -3730,17 +3730,17 @@
 +char *formName=nullptr,*formPassword=nullptr;int formNameSize=0,formPasswordSize=0;
 +int formTexts[]={ID_CAPTION,1040,1041,0},formEdits[]={1028,1029,0},formButtons[]={ID_OK_BUTTON,ID_EXIT_CANCEL_BUTTON,0};
 +const int ids[]={ID_MAINMENU_SINGLEPLAYER,ID_MAINMENU_MULTIPLAYER,ID_MAINMENU_COLISEUM,ID_MAINMENU_REPLAY_INTRO,ID_MAINMENU_SUPPORT,ID_MAINMENU_CREDITS,ID_EXIT_CANCEL_BUTTON};
-+std::string storage(bool reading){
-+ char profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_AUTH_PROFILE",profile,sizeof(profile));
-+ if(!profile[0])GetEnvironmentVariableA("RFD_PROFILE",profile,sizeof(profile));
-+ if(!reading&&!username.empty()){char root[MAX_PATH]={};GetEnvironmentVariableA("LOCALAPPDATA",root,sizeof(root));std::string name=username;std::transform(name.begin(),name.end(),name.begin(),[](unsigned char c){return char(tolower(c));});std::string path=std::string(root)+"\\ReturnsFromDarkness\\profiles\\"+name;CreateDirectoryA(path.c_str(),nullptr);if(!token.empty()){FILE *last=fopen((std::string(root)+"\\ReturnsFromDarkness\\last-account.txt").c_str(),"w");if(last){fwrite(name.data(),1,name.size(),last);fclose(last);}}SetEnvironmentVariableA("RFD_AUTH_PROFILE",path.c_str());return path+"\\native-session.bin";}
-+ return std::string(profile)+"\\native-session.bin";
++std::wstring storage(bool reading){
++ wchar_t profile[4096]={};GetEnvironmentVariableW(L"RFD_AUTH_PROFILE",profile,4096);
++ if(!profile[0])GetEnvironmentVariableW(L"RFD_PROFILE",profile,4096);
++ if(!reading&&!username.empty()){wchar_t root[4096]={};GetEnvironmentVariableW(L"LOCALAPPDATA",root,4096);std::string name=username;std::transform(name.begin(),name.end(),name.begin(),[](unsigned char c){return char(tolower(c));});std::wstring path=std::wstring(root)+L"\\ReturnsFromDarkness\\profiles\\"+std::wstring(name.begin(),name.end());CreateDirectoryW(path.c_str(),nullptr);if(!token.empty()){FILE *last=_wfopen((std::wstring(root)+L"\\ReturnsFromDarkness\\last-account.txt").c_str(),L"w");if(last){fwrite(name.data(),1,name.size(),last);fclose(last);}}SetEnvironmentVariableW(L"RFD_AUTH_PROFILE",path.c_str());return path+L"\\native-session.bin";}
++ return std::wstring(profile)+L"\\native-session.bin";
 +}
 +void remember(bool read){
 + struct AccountIdentitySync {~AccountIdentitySync(){RfdPublishNativeAccount(token.empty()?"":username.c_str());}} identitySync;
-+ if(read){token.clear();username.clear();FILE *f=fopen(storage(true).c_str(),"rb");if(!f)return;fseek(f,0,SEEK_END);long size=ftell(f);rewind(f);if(size<1||size>8192){fclose(f);return;}std::vector<BYTE> bytes(size);if(fread(bytes.data(),1,size,f)!=size){fclose(f);return;}fclose(f);DATA_BLOB input{DWORD(size),bytes.data()},out{};
++ if(read){token.clear();username.clear();FILE *f=_wfopen(storage(true).c_str(),L"rb");if(!f)return;fseek(f,0,SEEK_END);long size=ftell(f);rewind(f);if(size<1||size>8192){fclose(f);return;}std::vector<BYTE> bytes(size);if(fread(bytes.data(),1,size,f)!=size){fclose(f);return;}fclose(f);DATA_BLOB input{DWORD(size),bytes.data()},out{};
 +  if(CryptUnprotectData(&input,nullptr,nullptr,nullptr,nullptr,CRYPTPROTECT_UI_FORBIDDEN,&out)){try{auto j=HubJson::parse(std::string((char*)out.pbData,out.cbData));token=j.at("token");username=j.at("user");if(token.size()!=43||username.size()<3||username.size()>16){token.clear();username.clear();}}catch(...){token.clear();username.clear();}SecureZeroMemory(out.pbData,out.cbData);LocalFree(out.pbData);}
-+ }else{std::string text=HubJson({{"token",token},{"user",username}}).dump();DATA_BLOB input{DWORD(text.size()),(BYTE*)text.data()},out{};if(CryptProtectData(&input,L"Returns from Darkness",nullptr,nullptr,nullptr,CRYPTPROTECT_UI_FORBIDDEN,&out)){std::string path=storage(false),temp=path+".new";FILE *f=fopen(temp.c_str(),"wb");if(f){fwrite(out.pbData,1,out.cbData,f);fclose(f);MoveFileExA(temp.c_str(),path.c_str(),MOVEFILE_REPLACE_EXISTING|MOVEFILE_WRITE_THROUGH);}LocalFree(out.pbData);}}
++ }else{std::string text=HubJson({{"token",token},{"user",username}}).dump();DATA_BLOB input{DWORD(text.size()),(BYTE*)text.data()},out{};if(CryptProtectData(&input,L"Returns from Darkness",nullptr,nullptr,nullptr,CRYPTPROTECT_UI_FORBIDDEN,&out)){std::wstring path=storage(false),temp=path+L".new";FILE *f=_wfopen(temp.c_str(),L"wb");if(f){fwrite(out.pbData,1,out.cbData,f);fclose(f);MoveFileExW(temp.c_str(),path.c_str(),MOVEFILE_REPLACE_EXISTING|MOVEFILE_WRITE_THROUGH);}LocalFree(out.pbData);}}
 +}
 +HubJson api(const std::wstring &route,const HubJson &body=nullptr){
 + HINTERNET session=WinHttpOpen(L"RFD-NativeHub/0.4.1",WINHTTP_ACCESS_TYPE_AUTOMATIC_PROXY,nullptr,nullptr,0);if(!session)throw std::runtime_error("A central nao respondeu.");
@@ -5446,7 +5446,7 @@
 +};
 --- /dev/null
 +++ b/src/CommunityOnline.cpp
-@@ -0,0 +1,108 @@
+@@ -0,0 +1,111 @@
 +#include "stdafx.h"
 +#include "CommunityDev.h"
 +#include "CommunityProgress.h"
@@ -5467,6 +5467,8 @@
 +int result(int ok){if(!ok)SetLastError(rfd_room_alive()?STORM_ERROR_NO_MESSAGES_WAITING:STORM_ERROR_GAME_TERMINATED);return ok;}
 +void events(){int player;uint reason;while(rfd_room_event(&player,&reason)){if(handlers[NE_3_PLAYER_LEAVE]){S_EVT event{NE_3_PLAYER_LEAVE,player,&reason,4};((void(__stdcall*)(S_EVT*))handlers[NE_3_PLAYER_LEAVE])(&event);}}}
 +void log(const char *message){char profile[MAX_PATH];if(!environment(profile,MAX_PATH,"RFD_PROFILE"))return;std::string file=std::string(profile)+"\\client-events.log";FILE *output=fopen(file.c_str(),"a");if(output){fprintf(output,"%lu %s\n",GetTickCount(),message);fclose(output);}}
++std::wstring wideProfile(const std::string &value){int n=MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,value.data(),int(value.size()),nullptr,0);if(!n)return L"";std::wstring w(n,L'\0');MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,value.data(),int(value.size()),&w[0],n);wchar_t full[4096]={};DWORD size=GetFullPathNameW(w.c_str(),4096,full,nullptr);return size&&size<4096?full:L"";}
++bool applyProfile(const char *key,const std::string &value){auto profile=wideProfile(value);if(profile.empty())return false;auto slash=profile.find_last_of(L"\\/");if(slash!=std::wstring::npos){auto parent=profile.substr(0,slash);wchar_t shorter[4096]={};DWORD n=GetShortPathNameW(parent.c_str(),shorter,4096);if(n&&n<4096)profile=std::wstring(shorter)+L"\\"+profile.substr(slash+1);}std::wstring name(key,key+strlen(key));return SetEnvironmentVariableW(name.c_str(),profile.c_str())!=FALSE;}
 +}
 +bool RfdOnlineRequested(){char ticket[64];return environment(ticket,sizeof(ticket),"RFD_ROOM_TICKET");}
 +bool RfdControlPending(){return authChanged||!pendingRoom.empty();}
@@ -5476,11 +5478,11 @@
 + std::string text(static_cast<const char*>(copy->lpData),copy->cbData);std::vector<std::string> fields;size_t begin=0;
 + while(true){size_t end=text.find('\n',begin);fields.push_back(text.substr(begin,end==std::string::npos?end:end-begin));if(end==std::string::npos)break;begin=end+1;}
 + if(fields.size()==3&&fields[0]==token&&fields[1]=="auth"){
-+  char root[MAX_PATH]={};GetEnvironmentVariableA("LOCALAPPDATA",root,sizeof(root));std::string prefix=std::string(root)+"\\ReturnsFromDarkness\\profiles\\";
-+  if(fields[2].rfind(prefix,0)!=0)return false;std::string account=fields[2].substr(prefix.size());if(account.size()<3||account.size()>16||account.find_first_not_of("abcdefghijklmnopqrstuvwxyz0123456789_-")!=std::string::npos)return false;
-+  SetEnvironmentVariableA("RFD_AUTH_PROFILE",fields[2].c_str());RfdPublishNativeAccount(account.c_str());if(gbRunGame!=1&&!RfdOnlineRequested())authChanged=true;return true;
++  wchar_t root[4096]={};DWORD n=GetEnvironmentVariableW(L"LOCALAPPDATA",root,4096);if(!n||n>=4096)return false;std::wstring prefix=std::wstring(root)+L"\\ReturnsFromDarkness\\profiles\\";wchar_t normalized[4096]={};if(!GetFullPathNameW(prefix.c_str(),4096,normalized,nullptr))return false;prefix=normalized;if(prefix.back()!=L'\\')prefix+=L'\\';auto profile=wideProfile(fields[2]);
++  if(profile.size()<=prefix.size()||CompareStringOrdinal(profile.c_str(),int(prefix.size()),prefix.c_str(),int(prefix.size()),TRUE)!=CSTR_EQUAL)return false;auto suffix=profile.substr(prefix.size());if(suffix.size()<3||suffix.size()>16||suffix.find_first_not_of(L"abcdefghijklmnopqrstuvwxyz0123456789_-")!=std::wstring::npos)return false;std::string account(suffix.begin(),suffix.end());
++  if(!applyProfile("RFD_AUTH_PROFILE",fields[2]))return false;RfdPublishNativeAccount(account.c_str());if(gbRunGame!=1&&!RfdOnlineRequested())authChanged=true;log("account control accepted");return true;
 + }
-+ if(fields.size()!=11||fields[0]!=token||fields[1]!="room"||fields[2].size()>=MAX_PATH||fields[3]!="127.0.0.1"||fields[5].size()!=43||fields[6].size()!=64||fields[7].size()>96||fields[9].size()!=36||fields[10].size()!=1||fields[10][0]<'0'||fields[10][0]>'8')return false;
++ if(fields.size()!=11||fields[0]!=token||fields[1]!="room"||wideProfile(fields[2]).empty()||fields[3]!="127.0.0.1"||fields[5].size()!=43||fields[6].size()!=64||fields[7].size()>96||fields[9].size()!=36||fields[10].size()!=1||fields[10][0]<'0'||fields[10][0]>'8')return false;
 + if(!pendingRoom.empty())return false;
 + pendingRoom=std::move(fields);if(gbRunGame==1){gbRunGame=0;gbRunGameResult=1;ResetMainMenu();}log("room switch queued by resident controller");return true;
 +}
@@ -5488,9 +5490,9 @@
 + if(authChanged&&gbRunGame!=1&&!RfdOnlineRequested()){char profile[MAX_PATH]={};if(environment(profile,sizeof(profile),"RFD_AUTH_PROFILE"))SetEnvironmentVariableA("RFD_PROFILE",profile);}
 + authChanged=false;if(pendingRoom.empty())return false;auto fields=std::move(pendingRoom);pendingRoom.clear();
 + const char *keys[]={"RFD_PROFILE","RFD_ROOM_HOST","RFD_ROOM_PORT","RFD_ROOM_TICKET","RFD_CONTENT_HASH","RFD_ROOM_NAME","RFD_ROOM_MODE","RFD_ROOM_ID","RFD_ROOM_DIFFICULTY"};
-+ for(int i=0;i<9;i++)SetEnvironmentVariableA(keys[i],fields[i+2].c_str());SetEnvironmentVariableA("RFD_AUTH_PROFILE",fields[2].c_str());log("room switch applied after previous game saved");return true;
++ applyProfile("RFD_PROFILE",fields[2]);for(int i=1;i<9;i++)SetEnvironmentVariableA(keys[i],fields[i+2].c_str());applyProfile("RFD_AUTH_PROFILE",fields[2]);log("room switch applied after previous game saved");return true;
 +}
-+void RfdClearRoomRequest(){SetEnvironmentVariableA("RFD_ROOM_TICKET",nullptr);SetEnvironmentVariableA("RFD_ROOM_ID",nullptr);if(ghMainWnd)RemovePropA(ghMainWnd,"RFD_GAME_IN_ROOM");}
++void RfdClearRoomRequest(){SetEnvironmentVariableA("RFD_ROOM_TICKET",nullptr);SetEnvironmentVariableA("RFD_ROOM_ID",nullptr);if(ghMainWnd){RemovePropA(ghMainWnd,"RFD_GAME_IN_ROOM");RemovePropA(ghMainWnd,"RFD_NET_PLAYER_COUNT");}}
 +void RfdLeaveToHub(){log("intentional return to community hub");wantsHub=true;gbRunGame=0;gbRunGameResult=1;ResetMainMenu();}
 +bool RfdTakeHubRequest(){bool value=wantsHub;wantsHub=false;return value;}
 +void RfdOpenProjectLobby(){if(RfdOpenAuthenticatedCommunity())return;char url[256];if(!environment(url,sizeof(url),"RFD_PORTAL_URL"))strcpy(url,"https://returns-from-darkness.vercel.app/central/");ShellExecuteA(ghMainWnd,"open",url,nullptr,nullptr,SW_SHOWNORMAL);}
@@ -5515,6 +5517,7 @@
 +void RfdGameEntered(){if(active){SetPropA(ghMainWnd,"RFD_GAME_IN_ROOM",reinterpret_cast<HANDLE>(1));log("world loaded and game loop entered; shared ground items enabled");}}
 +// Explicit developer fixture: runs only against an isolated profile supplied by the QA runner.
 +void RfdEngineQaTick(){
++ if(active&&ghMainWnd){static DWORD published=0;DWORD now=GetTickCount();if(now-published>=1000){published=now;SetPropA(ghMainWnd,"RFD_NET_PLAYER_COUNT",reinterpret_cast<HANDLE>(static_cast<uintptr_t>(NetPlayerCount)));}}
 +#if RFD_DEV_QA
 + char mode[32],profile[MAX_PATH];if(!active||!environment(mode,sizeof(mode),"RFD_ENGINE_QA")||!environment(profile,sizeof(profile),"RFD_PROFILE")||strstr(profile,"engine-qa-")==nullptr)return;
 + static DWORD begin=GetTickCount(),reported=0;static bool dropped=false,picked=false,sessionChecked=false;auto elapsed=GetTickCount()-begin;auto &player=Players[CurrentPlayerIndex];
@@ -5527,11 +5530,11 @@
 + if(elapsed-reported>=1000){reported=elapsed;int shared=0;for(int i=0;i<ItemsCount;i++){int id=ItemActive[i];if(Items[id].seed==0x12345678ll)shared+=Items[id].amount;}
 +  auto file=fopen((std::string(profile)+"\\engine-qa-state.json").c_str(),"w");if(file){fprintf(file,"{\"elapsedMs\":%lu,\"slot\":%d,\"players\":%d,\"groundGold\":%d,\"gold\":%d,\"level\":%d,\"items\":%d,\"dropped\":%s,\"picked\":%s}",elapsed,CurrentPlayerIndex,NetPlayerCount,shared,player.TotalGold,player.CharLevel,player.InvItemCount,dropped?"true":"false",picked?"true":"false");fclose(file);}
 + }
-+ if(elapsed>28000){UpdatePlayerFile();RfdLeaveToHub();}
++ if(elapsed>50000){UpdatePlayerFile();RfdLeaveToHub();}
 +#endif
 +}
-+int __stdcall RfdNetDestroy(){if(!active)return eSNetDestroy();rfd_room_close();active=false;return 1;}
-+int __stdcall RfdNetDropPlayer(int player,unsigned int reason){if(!active)return eSNetDropPlayer(player,reason);if(player!=rfd_room_slot()){SetLastError(STORM_ERROR_INVALID_PLAYER);return 0;}rfd_room_close();active=false;return 1;}
++int __stdcall RfdNetDestroy(){if(!active)return eSNetDestroy();rfd_room_close();active=false;RemovePropA(ghMainWnd,"RFD_NET_PLAYER_COUNT");return 1;}
++int __stdcall RfdNetDropPlayer(int player,unsigned int reason){if(!active)return eSNetDropPlayer(player,reason);if(player!=rfd_room_slot()){SetLastError(STORM_ERROR_INVALID_PLAYER);return 0;}rfd_room_close();active=false;RemovePropA(ghMainWnd,"RFD_NET_PLAYER_COUNT");return 1;}
 +int __stdcall RfdNetGetGameInfo(int type,void *data,unsigned int capacity,int *written){
 + if(!active)return eSNetGetGameInfo(type,data,capacity,written);char name[64];const void *source=nullptr;unsigned int size=0;
 + if(type==GI_5_GAMETEMPLATE){source=&connectedGame;size=sizeof(connectedGame);}
@@ -5543,7 +5546,7 @@
 +int __stdcall RfdNetGetOwnerTurnsWaiting(uint *turns){if(!active)return eSNetGetOwnerTurnsWaiting(turns);*turns=rfd_room_turns_waiting(1);return result(rfd_room_alive());}
 +int __stdcall RfdNetGetTurnsInTransit(uint *turns){if(!active)return eSNetGetTurnsInTransit(turns);*turns=rfd_room_turns_waiting(0);return result(rfd_room_alive());}
 +int __stdcall RfdNetGetProviderCaps(CAPS *caps){if(!active)return eSNetGetProviderCaps(caps);*caps={36,0,512,16,4,1000000,50,20,2};return 1;}
-+int __stdcall RfdNetLeaveGame(int reason){if(!active)return RfdOnlineRequested()?1:eSNetLeaveGame(reason);log("central room left normally");rfd_room_close();active=false;NetItem=false;RemovePropA(ghMainWnd,"RFD_GAME_IN_ROOM");return 1;}
++int __stdcall RfdNetLeaveGame(int reason){if(!active)return RfdOnlineRequested()?1:eSNetLeaveGame(reason);log("central room left normally");rfd_room_close();active=false;NetItem=false;RemovePropA(ghMainWnd,"RFD_GAME_IN_ROOM");RemovePropA(ghMainWnd,"RFD_NET_PLAYER_COUNT");return 1;}
 +int __stdcall RfdNetRegisterEventHandler(int event,int handler){if(event<0||event>4)return 0;handlers[event]=handler;return RfdOnlineRequested()?1:eSNetRegisterEventHandler(event,handler);}
 +int __stdcall RfdNetUnregisterEventHandler(int event,int handler){if(event<0||event>4)return 0;handlers[event]=0;return RfdOnlineRequested()?1:eSNetUnregisterEventHandler(event,handler);}
 +int __stdcall RfdNetSetBasePlayer(int player){return RfdOnlineRequested()&&MaxCountOfPlayersInGame>1?1:eSNetSetBasePlayer(player);}
@@ -143127,9 +143130,9 @@
 +#pragma once
 +
 +#define TH3_REVISION 1265
-+#define THE_HELL_VERSION_INT 0,4,6,0
-+#define THE_HELL_VERSION_STRING "v0.4.6\0"
-+#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.4.6\0"
++#define THE_HELL_VERSION_INT 0,4,7,0
++#define THE_HELL_VERSION_STRING "v0.4.7\0"
++#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.4.7\0"
 +
 +
 +
