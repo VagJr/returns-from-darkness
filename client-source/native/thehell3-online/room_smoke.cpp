@@ -6,6 +6,8 @@
 int main(int argc,char **argv){
  if(argc!=4)return 2;std::string ticket;std::getline(std::cin,ticket);
  if(!rfd_room_open(argv[1],static_cast<unsigned short>(std::atoi(argv[2])),ticket.c_str(),argv[3])){std::cerr<<rfd_room_error()<<"\n";return 1;}
+ const char *delayText=std::getenv("RFD_ROOM_QA_WORLD_READY_DELAY_MS");int delay=delayText?std::atoi(delayText):0;if(delay<0)delay=0;if(delay>60000)delay=60000;if(delay)Sleep(static_cast<DWORD>(delay));
+ if(!rfd_room_world_ready()){std::cerr<<"Loaded world announcement failed: "<<rfd_room_error()<<"\n";return 6;}
  int self=rfd_room_slot();std::cout<<"{\"connected\":true,\"slot\":"<<self<<",\"startsWorld\":"<<rfd_room_starts_world()<<",\"seed\":"<<rfd_room_seed()<<"}"<<std::endl;
  std::string command;
  while(std::getline(std::cin,command)){

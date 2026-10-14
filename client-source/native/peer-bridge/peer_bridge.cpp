@@ -28,11 +28,11 @@ static void require(bool value,const char *error){if(!value)throw std::runtime_e
 static std::wstring wide(const std::string &s){int n=MultiByteToWideChar(CP_UTF8,0,s.data(),int(s.size()),nullptr,0);std::wstring result(n,L' ');MultiByteToWideChar(CP_UTF8,0,s.data(),int(s.size()),result.data(),n);return result;}
 struct HttpHandle{HINTERNET value=nullptr;HttpHandle(HINTERNET v=nullptr):value(v){}~HttpHandle(){if(value)WinHttpCloseHandle(value);}operator HINTERNET()const{return value;}HttpHandle(const HttpHandle&)=delete;};
 struct Signal {
-  std::string host,path,token;int slot;std::atomic<bool> running{true},online{false};
+  std::string host,path,token;int slot;std::atomic<bool> running{true},online{false},authenticated{false};
   std::atomic<HINTERNET> socket{nullptr};std::thread receiver;std::mutex sending;
   std::function<void(Json)> receive;
   Signal(std::string h,std::string p,std::string t,int s):host(h),path(p),token(t),slot(s){}
-  void stop(){running=false;online=false;auto ws=socket.exchange(nullptr);if(ws)WinHttpCloseHandle(ws);if(receiver.joinable())receiver.join();}
+  void stop(){running=false;authenticated=false;online=false;auto ws=socket.exchange(nullptr);if(ws)WinHttpCloseHandle(ws);if(receiver.joinable())receiver.join();}
   ~Signal(){stop();}
   bool send(const Json &value){std::lock_guard<std::mutex> lock(sending);auto ws=socket.load();if(!online||!ws)return false;const std::string text=value.dump();return WinHttpWebSocketSend(ws,WINHTTP_WEB_SOCKET_UTF8_MESSAGE_BUFFER_TYPE,(void*)text.data(),DWORD(text.size()))==NO_ERROR;}
   void start(){receiver=std::thread([this]{int backoff=1;while(running){
@@ -42,14 +42,14 @@ struct Signal {
     HttpHandle request(connection?WinHttpOpenRequest(connection,L"GET",wide(path).c_str(),nullptr,WINHTTP_NO_REFERER,WINHTTP_DEFAULT_ACCEPT_TYPES,WINHTTP_FLAG_SECURE):nullptr);
     DWORD redirects=WINHTTP_OPTION_REDIRECT_POLICY_NEVER;if(request)WinHttpSetOption(request,WINHTTP_OPTION_REDIRECT_POLICY,&redirects,sizeof(redirects));
     if(!request||!WinHttpSetOption(request,WINHTTP_OPTION_UPGRADE_TO_WEB_SOCKET,nullptr,0)||!WinHttpSendRequest(request,WINHTTP_NO_ADDITIONAL_HEADERS,0,nullptr,0,0,0)||!WinHttpReceiveResponse(request,nullptr)){for(int i=0;i<backoff*10&&running;i++)Sleep(100);backoff=std::min(backoff*2,15);continue;}
-    HINTERNET ws=WinHttpWebSocketCompleteUpgrade(request,0);if(!ws)continue;socket=ws;online=true;backoff=1;
+    HINTERNET ws=WinHttpWebSocketCompleteUpgrade(request,0);if(!ws)continue;authenticated=false;socket=ws;online=true;backoff=1;
     send({{"op","auth"},{"slot",slot},{"token",token}});std::string incoming;unsigned char buffer[8192];
     while(running&&socket==ws){DWORD size=0;WINHTTP_WEB_SOCKET_BUFFER_TYPE type;DWORD error=WinHttpWebSocketReceive(ws,buffer,sizeof(buffer),&size,&type);if(error!=NO_ERROR||type==WINHTTP_WEB_SOCKET_CLOSE_BUFFER_TYPE)break;
       if(type!=WINHTTP_WEB_SOCKET_UTF8_FRAGMENT_BUFFER_TYPE&&type!=WINHTTP_WEB_SOCKET_UTF8_MESSAGE_BUFFER_TYPE)break;
       incoming.append((char*)buffer,size);if(incoming.size()>90000)break;
-      if(type==WINHTTP_WEB_SOCKET_UTF8_MESSAGE_BUFFER_TYPE){try{receive(Json::parse(incoming));}catch(...){}incoming.clear();}
+      if(type==WINHTTP_WEB_SOCKET_UTF8_MESSAGE_BUFFER_TYPE){try{auto message=Json::parse(incoming);if(message.value("op","")=="ready")authenticated=true;receive(std::move(message));}catch(...){}incoming.clear();}
     }
-    online=false;if(socket.exchange(nullptr)==ws)WinHttpCloseHandle(ws);for(int i=0;i<backoff*10&&running;i++)Sleep(100);backoff=std::min(backoff*2,15);
+    authenticated=false;online=false;if(socket.exchange(nullptr)==ws)WinHttpCloseHandle(ws);for(int i=0;i<backoff*10&&running;i++)Sleep(100);backoff=std::min(backoff*2,15);
   }});}
 };
 static Json post(const std::string &host,const std::string &path,const Json &input){
@@ -69,9 +69,9 @@ class Bridge {
   int self=-1;uint32_t seed=0;unsigned char difficulty=0;bool hosting=false,gameJoined=false,stopping=false;
   SOCKET listener=INVALID_SOCKET,game=INVALID_SOCKET;Bytes input,output;size_t outputOffset=0;
   std::unique_ptr<Signal> signal;std::array<std::shared_ptr<rtc::PeerConnection>,4> peers;std::array<std::shared_ptr<rtc::DataChannel>,4> channels;
-  std::array<bool,4> joined{};std::array<std::deque<Bytes>,4> early;Bytes init;
+  std::array<bool,4> joined{},worldLoaded{};std::array<std::deque<Bytes>,4> early;Bytes init;
   std::array<bool,4> relayed{};bool relayRequested=false,transportReady=false,hostWorldReady=false,signalAuthenticated=false;
-  std::array<bool,4> blocked{};
+  std::array<bool,4> blocked{};std::array<std::string,4> rejectionReason;
   std::array<uint32_t,4> peerEpoch{};
   std::mutex eventsMutex;std::deque<Event> events;size_t eventBytes=0;HANDLE wake=CreateEvent(nullptr,FALSE,FALSE,nullptr);WSAEVENT socketEvent=WSACreateEvent();
   uint64_t created=now(),lastGame=now(),lastHeartbeat=0,lastStats=0,lastRelayRequest=0;int localPort=0;std::string publishedPhase;bool preface=false,ready=false;std::atomic<bool> overflow{false};
@@ -94,7 +94,7 @@ class Bridge {
   void readyStatus(int port){writeJson(readyFile,{{"state","ready"},{"port",port},{"slot",self},{"transport",relayed[0]?"cloud-relay":"webrtc"},{"mode",roomMode},{"difficulty",int(difficulty)},{"username",username}});ready=true;}
   void admissionStatus(){
     if(ready)return;
-    if(signalAuthenticated&&(hosting||(transportReady&&hostWorldReady))){readyStatus(localPort);return;}
+    if(signal&&signal->authenticated&&signalAuthenticated&&(hosting||(transportReady&&hostWorldReady))){readyStatus(localPort);return;}
     std::string phase=transportReady&&!hostWorldReady?"waiting-host":relayRequested?"relay":"connecting";
     if(phase!=publishedPhase){writeJson(readyFile,{{"state","pending"},{"phase",phase}});publishedPhase=phase;}
   }
@@ -102,7 +102,7 @@ class Bridge {
   bool direct(int destination,const Bytes &p){if(relayed[destination]){require(signal->online,"O relay foi desconectado.");require(signal->send({{"op","relay"},{"to",destination},{"data",encode64(p)}}),"O relay foi desconectado.");packetsSent++;return true;}auto dc=channels[destination];if(!dc||!dc->isOpen())return false;require(dc->bufferedAmount()<=262144,"Conexao congestionada. A partida foi interrompida para preservar a sincronizacao.");dc->sendBuffer(p);packetsSent++;return true;}
   void to(int slot,const Bytes &p){if(slot==self)queueLocal(p);else if(hosting)direct(slot,p);else direct(0,p);}
   void broadcast(const Bytes &p,int except=-1){for(int i=0;i<4;i++)if(joined[i]&&i!=except)to(i,p);}
-  void remove(int slot){if(!joined[slot])return;joined[slot]=false;Bytes packet{0x14,254,255,static_cast<unsigned char>(slot),6,0,0,0x40};broadcast(packet,slot);}
+  void remove(int slot){worldLoaded[slot]=false;if(!joined[slot])return;joined[slot]=false;Bytes packet{0x14,254,255,static_cast<unsigned char>(slot),6,0,0,0x40};broadcast(packet,slot);lastHeartbeat=0;}
   void packet(int source,Bytes p){
     require(p.size()>=3&&p.size()<=65535,"Pacote invalido.");packetsReceived++;
     if(!hosting){require(source==0,"Origem invalida.");if(p[0]==0x12)gameJoined=true;queueLocal(p);return;}
@@ -117,6 +117,7 @@ class Bridge {
       if(source==0)for(int i=1;i<4;i++)if(!early[i].empty()){auto pending=std::move(early[i].front());early[i].clear();packet(i,std::move(pending));}
       lastHeartbeat=0;return;
     }
+    if(p[0]==0x41){require(p.size()==3&&p[1]==source&&p[2]==254,"Estado do mundo invalido.");worldLoaded[source]=true;lastHeartbeat=0;return;}
     require(p[1]==source&&(p[0]==1||p[0]==2||p[0]==0x31||p[0]==0x32||p[0]==0x14),"Identidade de pacote invalida.");
     if(p[0]==0x14){require(p.size()==8&&p[3]==source,"Saida invalida.");remove(source);return;}
     require((p[0]!=2||p.size()==8)&&((p[0]!=0x31&&p[0]!=0x32)||p.size()==7),"Tamanho de pacote invalido.");
@@ -125,7 +126,11 @@ class Bridge {
   void receivePacket(int source,Bytes p){
     if(!hosting||source==0){packet(source,std::move(p));return;}
     require(source>0&&source<4,"Origem invalida.");if(blocked[source])return;
-    try{packet(source,std::move(p));}catch(const std::exception&){blocked[source]=true;remove(source);if(channels[source]){channels[source]->resetCallbacks();channels[source]->close();}if(peers[source]){peers[source]->resetCallbacks();peers[source]->close();}}
+    try{packet(source,std::move(p));}catch(const std::exception &error){
+      // Only fixed diagnostic codes are published, never payloads or credentials.
+      const std::string reason=error.what();rejectionReason[source]=reason=="Ingresso invalido."?"invalid-join":reason=="Versao do cliente incompativel."?"content-version":reason=="Identidade de pacote invalida."?"packet-identity":reason=="Tamanho de pacote invalido."?"packet-size":reason=="Estado do mundo invalido."?"world-ready-format":reason=="Cliente local congestionado."?"local-backpressure":"protocol-or-transport";
+      blocked[source]=true;remove(source);if(channels[source]){channels[source]->resetCallbacks();channels[source]->close();}if(peers[source]){peers[source]->resetCallbacks();peers[source]->close();}
+    }
   }
   void attach(int slot,std::shared_ptr<rtc::DataChannel> dc){
     require(dc->label()=="rfd-lockstep-v1"&&!dc->reliability().unordered&&!dc->reliability().maxPacketLifeTime&&!dc->reliability().maxRetransmits,"Canal incompatível.");channels[slot]=dc;
@@ -158,7 +163,7 @@ class Bridge {
     if(op=="data-open"&&!hosting&&!ready&&!relayRequested){transportReady=true;admissionStatus();return;}
     // Loss of signaling alone does not close established gameplay connections.
     if(op=="room-closed")stopping=true;
-    if(op=="peer-left"&&hosting){int slot=m.at("slot");if(slot>0&&slot<4){remove(slot);++peerEpoch[slot];early[slot].clear();blocked[slot]=false;relayed[slot]=false;deferredBytes-=std::accumulate(deferred[slot].begin(),deferred[slot].end(),size_t(0),[](size_t n,const Event &e){return n+e.packet.size();});deferred[slot].clear();if(channels[slot]){channels[slot]->resetCallbacks();channels[slot]->close();channels[slot].reset();}if(peers[slot]){peers[slot]->resetCallbacks();peers[slot]->close();peers[slot].reset();}}return;}
+    if(op=="peer-left"&&hosting){int slot=m.at("slot");if(slot>0&&slot<4){remove(slot);++peerEpoch[slot];early[slot].clear();blocked[slot]=false;rejectionReason[slot].clear();relayed[slot]=false;deferredBytes-=std::accumulate(deferred[slot].begin(),deferred[slot].end(),size_t(0),[](size_t n,const Event &e){return n+e.packet.size();});deferred[slot].clear();if(channels[slot]){channels[slot]->resetCallbacks();channels[slot]->close();channels[slot].reset();}if(peers[slot]){peers[slot]->resetCallbacks();peers[slot]->close();peers[slot].reset();}}return;}
   }
   void configure(){
     signalHost=env("RFD_PEER_SIGNAL_HOST");roomId=env("RFD_PEER_ROOM_ID");ticket=env("RFD_PEER_TICKET");localTicket=env("RFD_PEER_LOCAL_TICKET");hash=env("RFD_PEER_HASH");readyFile=env("RFD_PEER_READY");statsFile=env("RFD_PEER_STATS");
@@ -169,22 +174,29 @@ class Bridge {
     localPort=ntohs(address.sin_port);hostWorldReady=boot.value("hostReady",false);
     signal=std::make_unique<Signal>(signalHost,"/signal/"+roomId,boot.at("token"),self);signal->receive=[this](Json m){Event e;e.signal=std::move(m);enqueue(std::move(e));};signal->start();admissionStatus();
   }
+  void consumeGameInput(){
+    if(!preface){auto end=std::find(input.begin(),input.end(),'\n');if(end==input.end()){require(input.size()<128,"Credencial local invalida.");return;}std::string line(input.begin(),end);require(line=="RFDROOM1 "+localTicket,"Credencial local invalida.");input.erase(input.begin(),end+1);preface=true;}
+    size_t used=0;while(input.size()-used>=4){uint32_t n=0;memcpy(&n,input.data()+used,4);require(n>=3&&n<=65535,"Pacote local invalido.");if(input.size()-used<n+4)break;Bytes p(input.begin()+used+4,input.begin()+used+4+n);if(hosting)packet(self,std::move(p));else{if(p[0]==0x41)require(gameJoined&&p.size()==3&&p[1]==self&&p[2]==254,"Estado do mundo invalido.");require(direct(0,p),"Anfitriao desconectado.");if(p[0]==0x41)worldLoaded[self]=true;}used+=n+4;}if(used)input.erase(input.begin(),input.begin()+used);
+  }
+  void drainDeferred(){
+    for(int slot=0;slot<4;slot++){auto &queue=deferred[slot];while(!queue.empty()&&queue.front().deliverAt<=now()){auto event=std::move(queue.front());queue.pop_front();deferredBytes-=event.packet.size();if(event.epoch!=peerEpoch[slot]||relayed[slot])continue;if(event.closed){if(hosting)remove(slot);else if(ready)stopping=true;}else receivePacket(slot,std::move(event.packet));}}
+  }
   void pollGame(){
     if(game==INVALID_SOCKET){game=accept(listener,nullptr,nullptr);if(game==INVALID_SOCKET)return;WSAEventSelect(game,socketEvent,FD_READ|FD_CLOSE|FD_WRITE);BOOL nodelay=TRUE;setsockopt(game,IPPROTO_TCP,TCP_NODELAY,(char*)&nodelay,sizeof(nodelay));closesocket(listener);listener=INVALID_SOCKET;lastGame=now();}
     WSANETWORKEVENTS network{};WSAEnumNetworkEvents(game,socketEvent,&network);
-    unsigned char chunk[16384];while(true){int n=recv(game,(char*)chunk,sizeof(chunk),0);if(n>0){input.insert(input.end(),chunk,chunk+n);lastGame=now();require(input.size()<=131074,"Entrada acima do limite.");}else if(n<0&&WSAGetLastError()==WSAEWOULDBLOCK)break;else{stopping=true;return;}}
-    if(!preface){auto end=std::find(input.begin(),input.end(),'\n');if(end==input.end()){require(input.size()<128,"Credencial local invalida.");return;}std::string line(input.begin(),end);require(line=="RFDROOM1 "+localTicket,"Credencial local invalida.");input.erase(input.begin(),end+1);preface=true;}
-    size_t used=0;while(input.size()-used>=4){uint32_t n=0;memcpy(&n,input.data()+used,4);require(n>=3&&n<=65535,"Pacote local invalido.");if(input.size()-used<n+4)break;Bytes p(input.begin()+used+4,input.begin()+used+4+n);if(hosting)packet(self,std::move(p));else{require(direct(0,p),"Anfitriao desconectado.");}used+=n+4;}if(used)input.erase(input.begin(),input.begin()+used);
+    // Bound incomplete input, rather than the aggregate size of valid queued frames.
+    // A peer can legitimately send an entire delta in one TCP burst.
+    unsigned char chunk[16384];while(true){int n=recv(game,(char*)chunk,sizeof(chunk),0);if(n>0){input.insert(input.end(),chunk,chunk+n);lastGame=now();require(input.size()<=131074,"Entrada acima do limite.");consumeGameInput();}else if(n<0&&WSAGetLastError()==WSAEWOULDBLOCK)break;else{stopping=true;return;}}
     while(outputOffset<output.size()){int n=send(game,(char*)output.data()+outputOffset,int(output.size()-outputOffset),0);if(n>0)outputOffset+=n;else if(n<0&&WSAGetLastError()==WSAEWOULDBLOCK)break;else{stopping=true;return;}}if(outputOffset==output.size()){output.clear();outputOffset=0;}
   }
   void run(){configure();while(!stopping){
     require(!overflow,"Fila de rede excedida.");std::deque<Event> pending;{std::lock_guard<std::mutex> lock(eventsMutex);pending.swap(events);eventBytes=0;}
     for(auto &e:pending){if(e.slot>=0){require(e.slot<4,"Origem invalida.");if(e.epoch!=peerEpoch[e.slot])continue;}if(e.channel){attach(e.slot,e.channel);if(e.channel->isOpen()){Event opened;opened.slot=e.slot;opened.epoch=e.epoch;opened.signal={{"op","data-open"},{"slot",e.slot}};enqueue(opened);}}else if(e.closed||!e.packet.empty()){require(e.slot>=0&&e.slot<4,"Origem invalida.");deferredBytes+=e.packet.size();require(deferredBytes<=524288&&deferred[e.slot].size()<2048,"Fila de rede excedida.");deferred[e.slot].push_back(std::move(e));}else if(!e.signal.is_null())signalEvent(e.signal);}
-    for(int slot=0;slot<4;slot++){auto &queue=deferred[slot];while(!queue.empty()&&queue.front().deliverAt<=now()){auto event=std::move(queue.front());queue.pop_front();deferredBytes-=event.packet.size();if(relayed[slot])continue;if(event.closed){if(hosting)remove(slot);else if(ready)stopping=true;}else receivePacket(slot,std::move(event.packet));}}
+    drainDeferred();
     pollGame();auto current=now();if(!ready&&current-created>(transportReady?180000:60000))throw std::runtime_error(transportReady?"O criador ainda nao entrou na partida. Tente novamente quando o grupo estiver pronto.":"Nao foi possivel conectar ao grupo pela conexao direta ou retransmissao. Verifique a conexao e tente novamente.");if(game==INVALID_SOCKET&&ready&&current-created>240000)throw std::runtime_error("Entrada no jogo expirou.");if(game!=INVALID_SOCKET&&current-lastGame>60000)throw std::runtime_error("Cliente local sem resposta.");
-    if(signal->online&&current-lastHeartbeat>=45000){Json connected=Json::array();for(int i=0;i<4;i++)if(joined[i])connected.push_back(i);signal->send({{"op","heartbeat"},{"connected",connected}});lastHeartbeat=current;}
-    if(!hosting&&!ready&&!transportReady&&signal->online&&signalAuthenticated&&current-created>8000&&current-lastRelayRequest>=2000){relayRequested=true;lastRelayRequest=current;signal->send({{"op","relay-request"},{"to",0}});admissionStatus();}
-    if(current-lastStats>=5000){const auto stopFile=env("RFD_PEER_QA_SIGNAL_STOP_FILE");if(!stopFile.empty()&&signal->running&&std::filesystem::exists(std::filesystem::u8path(stopFile)))signal->stop();Json links=Json::array();for(int i=0;i<4;i++)if(peers[i]||relayed[i]){auto rtt=peers[i]?peers[i]->rtt():rtc::optional<std::chrono::milliseconds>{};bool directConnected=peers[i]&&peers[i]->state()==rtc::PeerConnection::State::Connected;links.push_back({{"slot",i},{"connected",relayed[i]||directConnected},{"directConnected",directConnected},{"transport",relayed[i]?"cloud-relay":"webrtc"},{"rttMs",rtt?rtt->count():-1},{"queuedBytes",channels[i]?channels[i]->bufferedAmount():0},{"gameJoined",hosting?joined[i]:gameJoined},{"blocked",blocked[i]}});}bool usesRelay=std::any_of(relayed.begin(),relayed.end(),[](bool value){return value;});writeJson(statsFile,{{"transport",usesRelay?"cloud-relay":"webrtc"},{"phase",ready?"ready":publishedPhase},{"signalOnline",signal->online.load()},{"signalAuthenticated",signalAuthenticated},{"hostWorldReady",hosting?joined[0]:hostWorldReady},{"worldHandshakeComplete",hosting?joined[self]:gameJoined},{"hosting",hosting},{"packetsSent",packetsSent},{"packetsReceived",packetsReceived},{"links",links}},false);lastStats=current;}
+    if(signal->online&&signal->authenticated&&signalAuthenticated&&current-lastHeartbeat>=45000){Json connected=Json::array();for(int i=0;i<4;i++)if(worldLoaded[i])connected.push_back(i);signal->send({{"op","heartbeat"},{"connected",connected}});lastHeartbeat=current;}
+    if(!hosting&&!ready&&!transportReady&&signal->online&&signal->authenticated&&signalAuthenticated&&current-created>8000&&current-lastRelayRequest>=2000){relayRequested=true;lastRelayRequest=current;signal->send({{"op","relay-request"},{"to",0}});admissionStatus();}
+    if(current-lastStats>=5000){const auto stopFile=env("RFD_PEER_QA_SIGNAL_STOP_FILE");if(!stopFile.empty()&&signal->running&&std::filesystem::exists(std::filesystem::u8path(stopFile)))signal->stop();Json links=Json::array();for(int i=0;i<4;i++)if(peers[i]||relayed[i]){auto rtt=peers[i]?peers[i]->rtt():rtc::optional<std::chrono::milliseconds>{};bool directConnected=peers[i]&&peers[i]->state()==rtc::PeerConnection::State::Connected;links.push_back({{"slot",i},{"connected",relayed[i]||directConnected},{"directConnected",directConnected},{"transport",relayed[i]?"cloud-relay":"webrtc"},{"rttMs",rtt?rtt->count():-1},{"queuedBytes",channels[i]?channels[i]->bufferedAmount():0},{"gameJoined",hosting?joined[i]:gameJoined},{"worldLoaded",worldLoaded[i]},{"blocked",blocked[i]},{"rejectionReason",rejectionReason[i]}});}bool usesRelay=std::any_of(relayed.begin(),relayed.end(),[](bool value){return value;});writeJson(statsFile,{{"transport",usesRelay?"cloud-relay":"webrtc"},{"phase",ready?"ready":publishedPhase},{"signalOnline",signal->online.load()},{"signalAuthenticated",signalAuthenticated},{"hostWorldReady",hosting?worldLoaded[0]:hostWorldReady},{"worldHandshakeComplete",hosting?joined[self]:gameJoined},{"localWorldLoaded",worldLoaded[self]},{"hosting",hosting},{"packetsSent",packetsSent},{"packetsReceived",packetsReceived},{"links",links}},false);lastStats=current;}
     HANDLE handles[2]={wake,socketEvent};WaitForMultipleObjects(2,handles,FALSE,10);
   }}
 };

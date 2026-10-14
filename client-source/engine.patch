@@ -3812,7 +3812,7 @@
 + return SDlgDefDialogProc_(dlg,msg,w,l);
 +}
 +bool form(const char *caption,char *name,int nameSize,char *password,int passSize){title=caption;formName=name;formPassword=password;formNameSize=nameSize;formPasswordSize=passSize;LoadFonts();MainMainMenu=true;int result=SDlgDialogBoxParam(HInstance,"RFD_ONLINE_FORM",ghMainWnd,formDialog,0);MainMainMenu=false;formName=formPassword=nullptr;title="Online do projeto";return result==1;}
-+void launch(const HubJson &room){auto result=api(L"launch",{{"roomId",room.at("id")}});std::string uri=result.at("launchUri");if(uri.rfind("rfd://play/",0)!=0&&uri.rfind("rfd://resume/",0)!=0&&uri!="rfd://focus")throw std::runtime_error("Convite da sala invalido.");ShellExecuteA(ghMainWnd,"open",uri.c_str(),nullptr,nullptr,SW_SHOWNORMAL);}
++void launch(const HubJson &room){auto result=api(L"launch",{{"roomId",room.at("id")}});std::string uri=result.at("launchUri");if(uri.rfind("rfd://play/",0)!=0&&uri.rfind("rfd://resume/",0)!=0&&uri!="rfd://focus")throw std::runtime_error("Convite da sala invalido.");if(!RfdForwardRoomLaunch(uri.c_str())){char controlled[256]={};if(GetEnvironmentVariableA("RFD_CONTROL_PIPE",controlled,sizeof(controlled)))throw std::runtime_error("Nao foi possivel comunicar com o launcher aberto. Abra a sala novamente.");ShellExecuteA(ghMainWnd,"open",uri.c_str(),nullptr,nullptr,SW_SHOWNORMAL);}}
 +const char *tierNames[]={"Horror","Purgatory","Doom","Crucible","Torment","Agony","Terror","Destruction","Inferno"};
 +bool chooseJourney(const HubJson &state,std::string &mode,int &tier){
 + labels={"Campanha cooperativa","Coliseum PvP","","","","","Voltar"};int choice=menu();if(choice==7||choice<1||choice==99)return false;
@@ -5446,7 +5446,7 @@
 +};
 --- /dev/null
 +++ b/src/CommunityOnline.cpp
-@@ -0,0 +1,111 @@
+@@ -0,0 +1,117 @@
 +#include "stdafx.h"
 +#include "CommunityDev.h"
 +#include "CommunityProgress.h"
@@ -5459,12 +5459,14 @@
 +bool active=false;
 +bool wantsHub=false;
 +bool authChanged=false;
++std::string worldReadyError;
 +std::vector<std::string> pendingRoom;
 +GameTemplate connectedGame={};
 +int handlers[5]={};
 +uint turnValues[4]={};
 +bool environment(char *buffer,DWORD size,const char *name){DWORD n=GetEnvironmentVariableA(name,buffer,size);return n>0&&n<size;}
 +int result(int ok){if(!ok)SetLastError(rfd_room_alive()?STORM_ERROR_NO_MESSAGES_WAITING:STORM_ERROR_GAME_TERMINATED);return ok;}
++int unavailable(){SetLastError(STORM_ERROR_GAME_TERMINATED);return 0;}
 +void events(){int player;uint reason;while(rfd_room_event(&player,&reason)){if(handlers[NE_3_PLAYER_LEAVE]){S_EVT event{NE_3_PLAYER_LEAVE,player,&reason,4};((void(__stdcall*)(S_EVT*))handlers[NE_3_PLAYER_LEAVE])(&event);}}}
 +void log(const char *message){char profile[MAX_PATH];if(!environment(profile,MAX_PATH,"RFD_PROFILE"))return;std::string file=std::string(profile)+"\\client-events.log";FILE *output=fopen(file.c_str(),"a");if(output){fprintf(output,"%lu %s\n",GetTickCount(),message);fclose(output);}}
 +std::wstring wideProfile(const std::string &value){int n=MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,value.data(),int(value.size()),nullptr,0);if(!n)return L"";std::wstring w(n,L'\0');MultiByteToWideChar(CP_UTF8,MB_ERR_INVALID_CHARS,value.data(),int(value.size()),&w[0],n);wchar_t full[4096]={};DWORD size=GetFullPathNameW(w.c_str(),4096,full,nullptr);return size&&size<4096?full:L"";}
@@ -5494,7 +5496,7 @@
 +}
 +void RfdClearRoomRequest(){SetEnvironmentVariableA("RFD_ROOM_TICKET",nullptr);SetEnvironmentVariableA("RFD_ROOM_ID",nullptr);if(ghMainWnd){RemovePropA(ghMainWnd,"RFD_GAME_IN_ROOM");RemovePropA(ghMainWnd,"RFD_NET_PLAYER_COUNT");}}
 +void RfdLeaveToHub(){log("intentional return to community hub");wantsHub=true;gbRunGame=0;gbRunGameResult=1;ResetMainMenu();}
-+bool RfdTakeHubRequest(){bool value=wantsHub;wantsHub=false;return value;}
++bool RfdTakeHubRequest(){bool value=wantsHub;wantsHub=false;if(!worldReadyError.empty()){auto message=std::move(worldReadyError);worldReadyError.clear();RfdShowNotice("Conexao ao projeto",message.c_str());}return value;}
 +void RfdOpenProjectLobby(){if(RfdOpenAuthenticatedCommunity())return;char url[256];if(!environment(url,sizeof(url),"RFD_PORTAL_URL"))strcpy(url,"https://returns-from-darkness.vercel.app/central/");ShellExecuteA(ghMainWnd,"open",url,nullptr,nullptr,SW_SHOWNORMAL);}
 +bool RfdJoinProjectRoom(int *player,GameTemplate *game,bool *startsWorld,const CharSaveInfo &selectedHero){
 + char host[256],ticket[64],port[8],hash[65];
@@ -5503,6 +5505,7 @@
 + if(!RfdCharacterRulesMatchRoom(int(selectedHero.GameMode),true))return false;
 + char desired[8]={};if(environment(desired,sizeof(desired),"RFD_ROOM_DIFFICULTY")&&!RfdProgressHeroDifficultyAllowed(atoi(desired),int(selectedHero.Level)))return false;
 + unsigned int number=environment(port,sizeof(port),"RFD_ROOM_PORT")?static_cast<unsigned int>(strtoul(port,nullptr,10)):25565;
++ RfdNativeStage("room-handshake");
 + if(!number||number>65535||!rfd_room_open(host,static_cast<unsigned short>(number),ticket,hash)){RfdShowNotice("Conexao ao projeto",rfd_room_error());log("room connection failed");return false;}
 + const int actualDifficulty=rfd_room_difficulty();
 + if(!RfdProgressHeroDifficultyAllowed(actualDifficulty,int(selectedHero.Level),false)){
@@ -5511,10 +5514,10 @@
 +  else RfdShowNotice("Santuario - Dificuldade","A sala informou uma dificuldade invalida. Crie uma nova sala ou entre em outra partida.");
 +  return false;
 + }
-+ active=true;NetItem=true;*player=rfd_room_slot();connectedGame.seed=rfd_room_seed();connectedGame.difficulty=static_cast<uchar>(actualDifficulty);
++ RfdNativeStage("room-admitted");active=true;NetItem=true;*player=rfd_room_slot();connectedGame.seed=rfd_room_seed();connectedGame.difficulty=static_cast<uchar>(actualDifficulty);
 + *game=connectedGame;*startsWorld=rfd_room_starts_world()!=0;log("central room connected");return true;
 +}
-+void RfdGameEntered(){if(active){SetPropA(ghMainWnd,"RFD_GAME_IN_ROOM",reinterpret_cast<HANDLE>(1));log("world loaded and game loop entered; shared ground items enabled");}}
++void RfdGameEntered(){if(active){if(!rfd_room_world_ready()){worldReadyError=rfd_room_error();if(worldReadyError.empty())worldReadyError="Nao foi possivel confirmar a entrada na partida. Volte a central e tente novamente.";log("loaded world announcement failed; returning to community hub");gbGameDestroyed=1;gbRunGame=0;gbRunGameResult=1;wantsHub=true;SetLastError(STORM_ERROR_GAME_TERMINATED);return;}SetPropA(ghMainWnd,"RFD_GAME_IN_ROOM",reinterpret_cast<HANDLE>(1));log("world loaded and announced to room; shared ground items enabled");}}
 +// Explicit developer fixture: runs only against an isolated profile supplied by the QA runner.
 +void RfdEngineQaTick(){
 + if(active&&ghMainWnd){static DWORD published=0;DWORD now=GetTickCount();if(now-published>=1000){published=now;SetPropA(ghMainWnd,"RFD_NET_PLAYER_COUNT",reinterpret_cast<HANDLE>(static_cast<uintptr_t>(NetPlayerCount)));}}
@@ -5533,34 +5536,37 @@
 + if(elapsed>50000){UpdatePlayerFile();RfdLeaveToHub();}
 +#endif
 +}
-+int __stdcall RfdNetDestroy(){if(!active)return eSNetDestroy();rfd_room_close();active=false;RemovePropA(ghMainWnd,"RFD_NET_PLAYER_COUNT");return 1;}
-+int __stdcall RfdNetDropPlayer(int player,unsigned int reason){if(!active)return eSNetDropPlayer(player,reason);if(player!=rfd_room_slot()){SetLastError(STORM_ERROR_INVALID_PLAYER);return 0;}rfd_room_close();active=false;RemovePropA(ghMainWnd,"RFD_NET_PLAYER_COUNT");return 1;}
++int __stdcall RfdNetDestroy(){if(!active&&!RfdOnlineRequested())return eSNetDestroy();rfd_room_close();active=false;NetItem=false;if(ghMainWnd){RemovePropA(ghMainWnd,"RFD_GAME_IN_ROOM");RemovePropA(ghMainWnd,"RFD_NET_PLAYER_COUNT");}return 1;}
++int __stdcall RfdNetDropPlayer(int player,unsigned int reason){if(!active)return RfdOnlineRequested()?unavailable():eSNetDropPlayer(player,reason);if(player!=rfd_room_slot()){SetLastError(STORM_ERROR_INVALID_PLAYER);return 0;}rfd_room_close();active=false;NetItem=false;if(ghMainWnd){RemovePropA(ghMainWnd,"RFD_GAME_IN_ROOM");RemovePropA(ghMainWnd,"RFD_NET_PLAYER_COUNT");}return 1;}
 +int __stdcall RfdNetGetGameInfo(int type,void *data,unsigned int capacity,int *written){
-+ if(!active)return eSNetGetGameInfo(type,data,capacity,written);char name[64];const void *source=nullptr;unsigned int size=0;
++ if(!active)return RfdOnlineRequested()?unavailable():eSNetGetGameInfo(type,data,capacity,written);char name[64];const void *source=nullptr;unsigned int size=0;
 + if(type==GI_5_GAMETEMPLATE){source=&connectedGame;size=sizeof(connectedGame);}
 + else if(type==GI_1_NAME){if(!environment(name,sizeof(name),"RFD_ROOM_NAME"))strcpy(name,"Returns from Darkness");source=name;size=static_cast<unsigned int>(strlen(name))+1;}
 + else if(type==GI_2_PASSWORD||type==GI_3_STATS){name[0]=0;source=name;size=1;}
 + else {SetLastError(ERROR_INVALID_PARAMETER);return 0;}
 + if(!data||capacity<size){SetLastError(ERROR_INSUFFICIENT_BUFFER);return 0;}memcpy(data,source,size);if(written)*written=size;return 1;
 +}
-+int __stdcall RfdNetGetOwnerTurnsWaiting(uint *turns){if(!active)return eSNetGetOwnerTurnsWaiting(turns);*turns=rfd_room_turns_waiting(1);return result(rfd_room_alive());}
-+int __stdcall RfdNetGetTurnsInTransit(uint *turns){if(!active)return eSNetGetTurnsInTransit(turns);*turns=rfd_room_turns_waiting(0);return result(rfd_room_alive());}
-+int __stdcall RfdNetGetProviderCaps(CAPS *caps){if(!active)return eSNetGetProviderCaps(caps);*caps={36,0,512,16,4,1000000,50,20,2};return 1;}
-+int __stdcall RfdNetLeaveGame(int reason){if(!active)return RfdOnlineRequested()?1:eSNetLeaveGame(reason);log("central room left normally");rfd_room_close();active=false;NetItem=false;RemovePropA(ghMainWnd,"RFD_GAME_IN_ROOM");RemovePropA(ghMainWnd,"RFD_NET_PLAYER_COUNT");return 1;}
++int __stdcall RfdNetGetOwnerTurnsWaiting(uint *turns){if(!active){if(RfdOnlineRequested()){if(turns)*turns=0;return unavailable();}return eSNetGetOwnerTurnsWaiting(turns);}*turns=rfd_room_turns_waiting(1);int alive=rfd_room_alive();if(!alive)*turns=0;return result(alive);}
++int __stdcall RfdNetGetTurnsInTransit(uint *turns){if(!active){if(RfdOnlineRequested()){if(turns)*turns=0;return unavailable();}return eSNetGetTurnsInTransit(turns);}*turns=rfd_room_turns_waiting(0);int alive=rfd_room_alive();if(!alive)*turns=0;return result(alive);}
++int __stdcall RfdNetGetProviderCaps(CAPS *caps){if(!active)return RfdOnlineRequested()?unavailable():eSNetGetProviderCaps(caps);*caps={36,0,512,16,4,1000000,50,20,2};return 1;}
++int __stdcall RfdNetLeaveGame(int reason){if(!active&&!RfdOnlineRequested())return eSNetLeaveGame(reason);if(active)log("central room left normally");rfd_room_close();active=false;NetItem=false;if(ghMainWnd){RemovePropA(ghMainWnd,"RFD_GAME_IN_ROOM");RemovePropA(ghMainWnd,"RFD_NET_PLAYER_COUNT");}return 1;}
 +int __stdcall RfdNetRegisterEventHandler(int event,int handler){if(event<0||event>4)return 0;handlers[event]=handler;return RfdOnlineRequested()?1:eSNetRegisterEventHandler(event,handler);}
 +int __stdcall RfdNetUnregisterEventHandler(int event,int handler){if(event<0||event>4)return 0;handlers[event]=0;return RfdOnlineRequested()?1:eSNetUnregisterEventHandler(event,handler);}
 +int __stdcall RfdNetSetBasePlayer(int player){return RfdOnlineRequested()&&MaxCountOfPlayersInGame>1?1:eSNetSetBasePlayer(player);}
-+int __stdcall RfdNetReceiveMessage(unsigned int *sender,void **packet,unsigned int *size){if(!active)return eSNetReceiveMessage(sender,packet,size);events();return result(rfd_room_receive_message(sender,packet,size));}
++int __stdcall RfdNetReceiveMessage(unsigned int *sender,void **packet,unsigned int *size){if(!active){if(RfdOnlineRequested()){if(sender)*sender=0;if(packet)*packet=nullptr;if(size)*size=0;return unavailable();}return eSNetReceiveMessage(sender,packet,size);}events();return result(rfd_room_receive_message(sender,packet,size));}
 +int __stdcall RfdNetReceiveTurns(unsigned int first,int count,void *data,void *sizes,void *status){
-+ if(!active)return eSNetReceiveTurns(first,count,data,sizes,status);if(count!=4){SetLastError(ERROR_INVALID_PARAMETER);return 0;}
-+ uint lengths[4],states[4];int ok=rfd_room_receive_turns(turnValues,lengths,states);auto pointers=static_cast<void **>(data);
++ if(!active&&!RfdOnlineRequested())return eSNetReceiveTurns(first,count,data,sizes,status);
++ if(count!=4||!data||!sizes||!status){SetLastError(ERROR_INVALID_PARAMETER);return 0;}
++ auto pointers=static_cast<void **>(data);for(int i=0;i<4;i++){pointers[i]=nullptr;static_cast<uint *>(sizes)[i]=0;static_cast<uint *>(status)[i]=0;turnValues[i]=0;}
++ if(!active)return unavailable();
++ uint lengths[4]={},states[4]={};int ok=rfd_room_receive_turns(turnValues,lengths,states);
 + for(int i=0;i<4;i++){pointers[i]=lengths[i]?turnValues+i:nullptr;static_cast<uint *>(sizes)[i]=lengths[i];static_cast<uint *>(status)[i]=states[i];}return result(ok);
 +}
-+int __stdcall RfdNetSendMessage(int player,void *packet,size_t size){if(!active)return eSNetSendMessage(player,packet,size);return result(rfd_room_send_message(player,packet,static_cast<unsigned int>(size)));}
-+int __stdcall RfdNetSendTurn(char *data,size_t size){if(!active)return eSNetSendTurn(data,size);if(size!=4){SetLastError(ERROR_INVALID_PARAMETER);return 0;}uint value;memcpy(&value,data,4);return result(rfd_room_send_turn(value));}
++int __stdcall RfdNetSendMessage(int player,void *packet,size_t size){if(!active)return RfdOnlineRequested()?unavailable():eSNetSendMessage(player,packet,size);return result(rfd_room_send_message(player,packet,static_cast<unsigned int>(size)));}
++int __stdcall RfdNetSendTurn(char *data,size_t size){if(!active)return RfdOnlineRequested()?unavailable():eSNetSendTurn(data,size);if(size!=4){SetLastError(ERROR_INVALID_PARAMETER);return 0;}uint value;memcpy(&value,data,4);return result(rfd_room_send_turn(value));}
 --- /dev/null
 +++ b/src/CommunityOnline.h
-@@ -0,0 +1,56 @@
+@@ -0,0 +1,58 @@
 +#pragma once
 +bool RfdOnlineRequested();
 +bool RfdControlPending();
@@ -5572,6 +5578,8 @@
 +bool RfdJoinProjectRoom(int *player, GameTemplate *game, bool *startsWorld, const CharSaveInfo& selectedHero);
 +void RfdOpenProjectLobby();
 +void RfdGameEntered();
++void RfdNativeStage(const char *stage);
++bool RfdForwardRoomLaunch(const char *request);
 +void RfdEngineQaTick();
 +int __stdcall RfdNetDestroy();
 +int __stdcall RfdNetDropPlayer(int player,unsigned int reason);
@@ -7557,7 +7565,7 @@
 +void RfdOrbClearSprite(void *destination,int width,int height);
 --- /dev/null
 +++ b/src/CommunitySession.cpp
-@@ -0,0 +1,51 @@
+@@ -0,0 +1,57 @@
 +#include "stdafx.h"
 +#include "CommunitySession.h"
 +
@@ -7576,6 +7584,12 @@
 +  SetPropA(ghMainWnd,"RFD_ACCOUNT_HASH_HI",reinterpret_cast<HANDLE>(static_cast<uintptr_t>(static_cast<uint32_t>(hash>>32))));
 +  SetPropA(ghMainWnd,"RFD_ACCOUNT_STATE",reinterpret_cast<HANDLE>(1));
 + }else{RemovePropA(ghMainWnd,"RFD_ACCOUNT_HASH_LO");RemovePropA(ghMainWnd,"RFD_ACCOUNT_HASH_HI");SetPropA(ghMainWnd,"RFD_ACCOUNT_STATE",reinterpret_cast<HANDLE>(2));}
++}
++bool RfdForwardRoomLaunch(const char *request){
++ if(!request||strlen(request)>8192||strchr(request,'\n')||strchr(request,'\r')||strncmp(request,"rfd://",6))return false;
++ wchar_t channel[256]={};DWORD length=GetEnvironmentVariableW(L"RFD_CONTROL_PIPE",channel,256);if(length<11||length>=256||wcsncmp(channel,L"RfdControl-",11))return false;
++ std::wstring path=L"\\\\.\\pipe\\";path+=channel;if(!WaitNamedPipeW(path.c_str(),1500))return false;HANDLE pipe=CreateFileW(path.c_str(),GENERIC_WRITE,0,nullptr,OPEN_EXISTING,0,nullptr);if(pipe==INVALID_HANDLE_VALUE)return false;
++ std::string line=std::string(request)+"\n";DWORD written=0;bool ok=WriteFile(pipe,line.data(),static_cast<DWORD>(line.size()),&written,nullptr)&&written==line.size();CloseHandle(pipe);return ok;
 +}
 +bool RfdAcquireInstance(){
 + static HANDLE guard=nullptr;
@@ -57790,7 +57804,7 @@
 +};
 --- a/src/Main.cpp
 +++ b/src/Main.cpp
-@@ -1,5626 +1,5642 @@
+@@ -1,5626 +1,5659 @@
 -﻿#include "stdafx.h"
 -
 -bool MouseMoved = false;
@@ -65330,6 +65344,7 @@
 +
 +		// initialize network
 +		bool exitProgram = 0;
++		RfdNativeStage("network-init");
 +		if( !NetInit( singleGame, &exitProgram ) ){
 +			gbRunGameResult = !exitProgram;
 +			break;
@@ -65484,7 +65499,7 @@
 +	gbRunGameResult = 1;
 +	MainDrawFunc();
 +	PaletteFadeIn( 8 );
-+	RfdGameEntered();
++	RfdNativeStage("world-loaded");RfdGameEntered();
 +	IsWaitingNetTimeOut_MayBe = 1;
 +	ResetFrameSyncCritSection(0);
 +	int v4 = 0;
@@ -65678,6 +65693,22 @@
 +	return GetLastError() != 183; // 0x000000B7
 +}
 +
++// Keep a small, credential-free crash summary even when the launcher did not
++// observe the initial exception. No memory, paths or credentials are exported.
++void RfdNativeStage(const char *stage){
++ if(!stage||strlen(stage)>32||strspn(stage,"abcdefghijklmnopqrstuvwxyz-")!=strlen(stage))return;
++ SetEnvironmentVariableA("RFD_NATIVE_STAGE",stage);wchar_t profile[4096]={},path[4096]={};DWORD length=GetEnvironmentVariableW(L"RFD_PROFILE",profile,4096);if(!length||length>=4000)return;
++ _snwprintf_s(path,4096,_TRUNCATE,L"%s\\native-phase.json",profile);HANDLE output=CreateFileW(path,GENERIC_WRITE,FILE_SHARE_READ,nullptr,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,nullptr);if(output==INVALID_HANDLE_VALUE)return;char text[128]={};int size=_snprintf_s(text,sizeof(text),_TRUNCATE,"{\"stage\":\"%s\",\"uptimeMs\":%lu}",stage,GetTickCount());DWORD written=0;if(size>0)WriteFile(output,text,size,&written,nullptr);CloseHandle(output);
++}
++static DWORD RfdCrashExitCode=0;
++static LONG RfdRecordCrash(EXCEPTION_POINTERS* exception){
++ RfdCrashExitCode=exception&&exception->ExceptionRecord?exception->ExceptionRecord->ExceptionCode:ERROR_UNHANDLED_EXCEPTION;
++ wchar_t profile[4096]={},path[4096]={};DWORD length=GetEnvironmentVariableW(L"RFD_PROFILE",profile,4096);
++ if(length&&length<4000){_snwprintf_s(path,4096,_TRUNCATE,L"%s\\native-crash.json",profile);HANDLE output=CreateFileW(path,GENERIC_WRITE,FILE_SHARE_READ,nullptr,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL,nullptr);
++  if(output!=INVALID_HANDLE_VALUE){char text[768]={};char stage[40]={};GetEnvironmentVariableA("RFD_NATIVE_STAGE",stage,sizeof(stage));if(strspn(stage,"abcdefghijklmnopqrstuvwxyz-")!=strlen(stage))stage[0]=0;uintptr_t address=exception&&exception->ExceptionRecord?reinterpret_cast<uintptr_t>(exception->ExceptionRecord->ExceptionAddress):0;MEMORY_BASIC_INFORMATION memory={};uintptr_t offset=VirtualQuery(reinterpret_cast<void*>(address),&memory,sizeof(memory))?address-reinterpret_cast<uintptr_t>(memory.AllocationBase):0;char module[24]="unknown";if(memory.AllocationBase==GetModuleHandleW(nullptr))strcpy_s(module,"client");else if(memory.Type==MEM_IMAGE)strcpy_s(module,"dependency");int size=_snprintf_s(text,sizeof(text),_TRUNCATE,"{\"format\":1,\"code\":\"%08lX\",\"module\":\"%s\",\"offset\":\"%lX\",\"stage\":\"%s\",\"thread\":%lu,\"uptimeMs\":%lu,\"containsCredentials\":false}",RfdCrashExitCode,module,static_cast<unsigned long>(offset),stage,GetCurrentThreadId(),GetTickCount());DWORD written=0;if(size>0)WriteFile(output,text,size,&written,nullptr);CloseHandle(output);}
++ }
++ return EXCEPTION_EXECUTE_HANDLER;
++}
 +//-----  crash minidump functional ----------------------------------------
 +void CreateMiniDump( EXCEPTION_POINTERS* pep )
 +{
@@ -65766,7 +65797,7 @@
 +	}
 +	BlackPalette();
 +	InitRandomSeed64(TrueRandom64()); // TODO: add separate seed sequence (items/transmute), may be add it to save
-+	DisplayMainMenu();
++	RfdNativeStage("main-menu");DisplayMainMenu();
 +
 +	UiDestroy();
 +	SavePaletteSettings();
@@ -65780,7 +65811,7 @@
 +	// ------ Original code end here ---------------------------------------
 +
 +	ExitTH2();
-+	} __except( CreateMiniDump( GetExceptionInformation() ), EXCEPTION_EXECUTE_HANDLER ) {}
++	} __except( RfdRecordCrash( GetExceptionInformation() ) ) {return static_cast<int>(RfdCrashExitCode);}
 +	
 +	return 0;
 +}
@@ -96556,7 +96587,7 @@
 +}
 --- a/src/msg.cpp
 +++ b/src/msg.cpp
-@@ -1,3034 +1,3049 @@
+@@ -1,3034 +1,3179 @@
 -﻿#include "stdafx.h"
 -
 -i64 sgdwOwnerWait;
@@ -99594,6 +99625,9 @@
 +#include "stdafx.h"
 +#include "CommunityLoot.h"
 +
++int ParseCmdBounded( int playerIndex, const TCmd* packet, int bytes );
++static bool RfdApplyDeltaChunk( uchar cmd, int len );
++
 +i64 sgdwOwnerWait;
 +int sgdwRecvOffset;
 +int sgnCurrMegaPlayer;
@@ -99907,22 +99941,29 @@
 +	for( int playerIndex = -1; mega; mega = mega->pNext ){
 +		uchar* data = mega->data;
 +		int size = sizeof(mega->data);
-+		while( size != mega->dwSpaceLeft ){
++		if( mega->dwSpaceLeft > (uint)size ) break;
++		while( size > (int)mega->dwSpaceLeft ){
++			int available = size - mega->dwSpaceLeft;
 +			if( *data == CMD_103_FAKE_SETID ){
++				if( available < sizeof(TFakeCmdPlr) ) break;
 +				TFakeCmdPlr* setIdCmd = (TFakeCmdPlr*) data;
 +			    data += sizeof(*setIdCmd);
 +				size -= sizeof(*setIdCmd);
 +				playerIndex = setIdCmd->bPlr;
++				if( playerIndex < 0 || playerIndex >= PlayersMax_4 ) break;
 +			}
 +			else if( *data == CMD_104_FAKE_DROPID ){
++				if( available < sizeof(TFakeDropPlr) ) break;
 +				TFakeDropPlr* dropCmd = (TFakeDropPlr*) data;
++				if( dropCmd->bPlr >= PlayersMax_4 ) break;
 +				data += sizeof(*dropCmd);
 +				size -= sizeof(*dropCmd);
 +                UnbufferRemovePlayer( dropCmd->bPlr, dropCmd->dwReason );
 +			}
 +			else{
 +				TCmd* cmd = (TCmd*) data;
-+				int parsedSize = ParseCmd( playerIndex, cmd );
++				int parsedSize = ParseCmdBounded( playerIndex, cmd, available );
++				if( parsedSize <= 0 || parsedSize > available ) break;
 +				data += parsedSize;
 +				size -= parsedSize;
 +			}
@@ -100844,6 +100885,33 @@
 +}
 +
 +//----- (0044765B) --------------------------------------------------------
++int ParseCmdBounded( int playerIndex, const TCmd* packet, int bytes )
++{
++    if( !packet || bytes < sizeof(TCmd) || playerIndex < 0 || playerIndex >= PlayersMax_4 ) return 0;
++    uchar cmd = packet->bCmd;
++    bool delta = cmd == CMD_83_DLEVEL_JUNK || cmd == CMD_84_DLEVEL_END
++        || ((cmd & CMD_DLEVEL) && (cmd & ~CMD_DLEVEL) < DungeonCount);
++    if( delta || cmd == CMD_2_ACK_PLRINFO || cmd == CMD_54_SEND_PLRINFO ){
++        if( bytes < sizeof(TCmdPlrInfoHdr) ) return 0;
++        const auto* chunk = (const TCmdPlrInfoHdr*)packet;
++        size_t capacity = delta ? sizeof(sgbRecvLevel) : sizeof(LastPlayerInfo);
++        if( !chunk->wBytes || chunk->wBytes > bytes - sizeof(*chunk)
++         || chunk->wOffset > capacity || chunk->wBytes > capacity - chunk->wOffset ) return 0;
++    }else if( cmd == CMD_86_STRING ){
++        if( bytes < 2 || !memchr((const uchar*)packet + 1, 0,
++            std::min<size_t>(bytes - 1, sizeof(((TCmdString*)nullptr)->str))) ) return 0;
++    }else if( cmd == CMD_35_SYNCDATA ){
++        // The packed sync header has two item records; wLen follows the 3-byte prefix.
++        const size_t headerBytes = 14 + 2 * sizeof(LastItemInfo);
++        if( bytes < headerBytes ) return 0;
++        ushort payloadBytes;
++        memcpy(&payloadBytes, (const uchar*)packet + 3, sizeof(payloadBytes));
++        if( payloadBytes > bytes - headerBytes || payloadBytes % sizeof(TSyncMonster)
++         || ((const uchar*)packet)[1] >= DungeonCount ) return 0;
++    }
++    return ParseCmd(playerIndex, packet);
++}
++
 +int ParseCmd( int playerIndex, const TCmd* packet)
 +{
 +	sbLastCmd = packet->bCmd;
@@ -100935,7 +101003,7 @@
 +	case CMD_108_PVP					  : return On_PVP((TCmdPvP*)packet, playerIndex);
 +	case CMD_109_WallRecast				  : return On_WallRecast((TCmdWallRecast*)packet, playerIndex);
 +	default:
-+		if( packet->bCmd | CMD_DLEVEL && (packet->bCmd & ~CMD_DLEVEL) < DungeonCount ){
++		if( ((uchar)packet->bCmd & CMD_DLEVEL) && ((uchar)packet->bCmd & ~CMD_DLEVEL) < DungeonCount ){
 +			return DReceiveChunk( playerIndex, (TCmdPlrInfoHdr*)packet );
 +		}else{
 +			SNetDropPlayer(playerIndex, 0x40000006); return 0; // wrong network command
@@ -100948,6 +101016,17 @@
 +//----- (00447B88) --------------------------------------------------------
 +int DReceiveChunk( int playerIndex, const TCmdPlrInfoHdr* packet)
 +{
++    if( !packet || playerIndex < 0 || playerIndex >= PlayersMax_4 ) return 0;
++    if( !packet->wBytes || packet->wOffset > sizeof(sgbRecvLevel)
++     || packet->wBytes > sizeof(sgbRecvLevel) - packet->wOffset
++     || (packet->bCmd == CMD_84_DLEVEL_END && (packet->wOffset != 0 || packet->wBytes != 1))
++     || (packet->bCmd != CMD_83_DLEVEL_JUNK && packet->bCmd != CMD_84_DLEVEL_END
++         && (!(packet->bCmd & CMD_DLEVEL) || (packet->bCmd & ~CMD_DLEVEL) >= DungeonCount)) ){
++        sgdwRecvOffset = 0;
++        sgbRecvCmd = CMD_84_DLEVEL_END;
++        SNetDropPlayer(playerIndex, 0x40000006);
++        return 0;
++    }
 +    if( gbDeltaSender != playerIndex ){
 +		// we are unexpectedly receiving delta info from somebody
 +		// if they aren't sending us the starting information, ignore it
@@ -100987,7 +101066,12 @@
 +		// since we are receiving a new delta chunk, 
 +		// we must have finished receiving the last delta chunk.
 +		// process last chunk before handling next chunk.
-+		DParseChunk(sgbRecvCmd, sgdwRecvOffset);
++        if( packet->wOffset != 0 || !RfdApplyDeltaChunk(sgbRecvCmd, sgdwRecvOffset) ){
++            sgdwRecvOffset = 0;
++            sgbRecvCmd = CMD_84_DLEVEL_END;
++            SNetDropPlayer(playerIndex, 0x40000006);
++            return 0;
++        }
 +
 +		// what's the new command?
 +		if( packet->bCmd == CMD_84_DLEVEL_END ){
@@ -101001,6 +101085,12 @@
 +        sgbRecvCmd = packet->bCmd;
 +    }
 +    
++    if( packet->wOffset != sgdwRecvOffset ){
++        sgdwRecvOffset = 0;
++        sgbRecvCmd = CMD_84_DLEVEL_END;
++        SNetDropPlayer(playerIndex, 0x40000006);
++        return 0;
++    }
 +    memcpy( &sgbRecvLevel[packet->wOffset], &packet[1], packet->wBytes );
 +    
 +	sgdwRecvOffset += packet->wBytes;
@@ -101009,13 +101099,77 @@
 +
 +// dparse_chunk
 +//----- (00447C46) --------------------------------------------------------
-+void DParseChunk( uchar cmd, int len )
++struct RfdDeltaExpansion
 +{
-+	// first byte is a flag which indicates whether the data is compressed
-+	if( sgbRecvLevel[0] ){
-+		Expand( &sgbRecvLevel[1], len, sizeof(sgbRecvLevel) - 1);
-+	}
-+	uchar* data = &sgbRecvLevel[1];
++    const uchar* source;
++    size_t sourceBytes, sourceOffset;
++    uchar* destination;
++    size_t capacity, written;
++    bool overflow;
++};
++
++static uint RfdDeltaRead( char* buffer, uint* size, void* param )
++{
++    auto& state = *(RfdDeltaExpansion*)param;
++    size_t bytes = std::min<size_t>(*size, state.sourceBytes - state.sourceOffset);
++    memcpy(buffer, state.source + state.sourceOffset, bytes);
++    state.sourceOffset += bytes;
++    return (uint)bytes;
++}
++
++static void RfdDeltaWrite( char* buffer, uint* size, void* param )
++{
++    auto& state = *(RfdDeltaExpansion*)param;
++    if( state.overflow || *size > state.capacity - state.written ){
++        state.overflow = true;
++        return;
++    }
++    memcpy(state.destination + state.written, buffer, *size);
++    state.written += *size;
++}
++
++static bool RfdDeltaPayloadValid( uchar cmd, const uchar* data, size_t bytes )
++{
++    size_t offset = 0;
++    auto consume = [&](size_t count, size_t stride, bool sparse){
++        for( size_t i = 0; i < count; ++i ){
++            if( offset >= bytes ) return false;
++            size_t length = sparse && data[offset] == INIT_VAL ? 1 : stride;
++            if( length > bytes - offset ) return false;
++            offset += length;
++        }
++        return true;
++    };
++    if( cmd == CMD_83_DLEVEL_JUNK ){
++        if( !consume(PlayersMax_4, sizeof(DPortal), true)
++         || !consume(Quest_Count, sizeof(MultiQuests), false) ) return false;
++    }else{
++        if( NetItem && !consume(MaxItems_255, sizeof(TCmdPItem), true) ) return false;
++        if( !consume(MaxObjects_127, sizeof(DObjectStr), false)
++         || !consume(Monsters_Max_Count, sizeof(DMonsterStr), true)
++         || !consume(SummonMonsters_Count, sizeof(DSummonStr), true) ) return false;
++    }
++    return offset == bytes;
++}
++
++static bool RfdApplyDeltaChunk( uchar cmd, int len )
++{
++    if( len <= 1 || len > sizeof(sgbRecvLevel)
++     || (cmd != CMD_83_DLEVEL_JUNK && (!(cmd & CMD_DLEVEL) || (cmd & ~CMD_DLEVEL) >= DungeonCount))
++     || sgbRecvLevel[0] > 1 ) return false;
++    size_t bytes = len - 1;
++    std::vector<uchar> expanded;
++    uchar* data = &sgbRecvLevel[1];
++    if( sgbRecvLevel[0] ){
++        expanded.resize(sizeof(sgbRecvLevel) - 1);
++        RfdDeltaExpansion state{data, bytes, 0, expanded.data(), expanded.size(), 0, false};
++        TDcmpStruct work{};
++        if( explode(RfdDeltaRead, RfdDeltaWrite, &work, &state) != CMP_NO_ERROR || state.overflow ) return false;
++        data = expanded.data();
++        bytes = state.written;
++    }
++    // Validate the complete serialized shape before any world state is changed.
++    if( !RfdDeltaPayloadValid(cmd, data, bytes) ) return false;
 +
 +	if( cmd == CMD_83_DLEVEL_JUNK ){
 +        DParseJunk( data );
@@ -101027,11 +101181,18 @@
 +        data = DeltaParseMonsters( data, netLevelData.monsters );
 +        data = DeltaParseSummons( data, netLevelData.summons );
 +    }
-+    else{
-+        TerminateWithError( "msg:1" );
-+    }
 +	++sgbDeltaChunks;
 +	sgbDeltaChanged = true;
++    return true;
++}
++
++void DParseChunk( uchar cmd, int len )
++{
++    if( !RfdApplyDeltaChunk(cmd, len) ){
++        sgdwRecvOffset = 0;
++        sgbRecvCmd = CMD_84_DLEVEL_END;
++        if( gbDeltaSender < PlayersMax_4 ) SNetDropPlayer(gbDeltaSender, 0x40000006);
++    }
 +}
 +
 +//----- (00447CCE) --------------------------------------------------------
@@ -102642,14 +102803,50 @@
 +}
 --- a/src/multi.cpp
 +++ b/src/multi.cpp
-@@ -1,4 +1,6 @@
+@@ -1,4 +1,8 @@
  ﻿#include "stdafx.h"
 +
 +#include "CommunityHub.h"
++
++int ParseCmdBounded( int playerIndex, const TCmd* packet, int bytes );
  
  bool gbSomebodyWonGameKludge = false;
  TBuffer sgHiPriBuf;
-@@ -726,6 +728,23 @@
+@@ -450,12 +454,13 @@
+ //----- (0044AE35) --------------------------------------------------------
+ void ProcessMsgBody( int playerIndex, uchar* data, int size )
+ {
++    if( playerIndex < 0 || playerIndex >= PlayersMax_4 || !data ) return;
+     while( size > 0 ){
+-        int cmdLen = ParseCmd( playerIndex, (TCmd*)data );
++        int cmdLen = ParseCmdBounded( playerIndex, (TCmd*)data, size );
+ 
+         // zero is an error condition:
+         // skip the rest of the packet
+-        if( cmdLen == 0 ){
++        if( cmdLen <= 0 || cmdLen > size ){
+             break;
+         }
+ 
+@@ -581,6 +586,7 @@
+ //----- (0044B0A7) --------------------------------------------------------
+ bool NetInit( bool singleGame, bool* exitProgram )
+ {
++    RfdNativeStage("network-init");
+     while( true ){
+         *exitProgram = false;
+         char playerDescription[256];// [sp+Ch] [bp-134h]@2
+@@ -679,7 +685,9 @@
+         if( !sgbPlayerTurnBitTbl[CurrentPlayerIndex] ){
+             break;
+         }
++        RfdNativeStage("waiting-delta");
+         if( WaitDeltaInfo() )        {
++            RfdNativeStage("delta-ready");
+             break;
+         }
+         NetClose();
+@@ -726,6 +734,23 @@
  //----- (th2) -------------------------------------------------------------
  bool multi_init_multi( client_info* client_info, user_info* user_info, battle_info* ui_info, bool* pfExitProgram )
  {
@@ -102673,6 +102870,41 @@
      if( gbSelectProvider ){
          bool checkUpdate = true;
          int type;
+@@ -811,6 +836,13 @@
+ //----- (0044B6F9) --------------------------------------------------------
+ void recv_plrinfo( int playerIndex, const TCmdPlrInfoHdr* p, bool recv )
+ {
++    if( playerIndex < 0 || playerIndex >= PlayersMax_4 || !p ) return;
++    if( !p->wBytes || p->wOffset > sizeof(LastPlayerInfo)
++     || p->wBytes > sizeof(LastPlayerInfo) - p->wOffset ){
++        sgwPackPlrOffsetTbl[playerIndex] = 0;
++        SNetDropPlayer(playerIndex, 0x40000006);
++        return;
++    }
+     if( CurrentPlayerIndex == playerIndex ){
+         return;
+     }
+@@ -830,9 +862,19 @@
+         return;// Если не вся информация пришла, ждём ещё
+     }
+     sgwPackPlrOffsetTbl[playerIndex] = 0;// зачем то обнуляем значение количества загруженной информации
++    const LastPlayerInfo& info = netplr[playerIndex];
++    if( info.signature != SaveSignature || info.version != CurSaveVersion
++     || !memchr(info.CharName, 0, sizeof(info.CharName))
++     || info.ClassId >= PC_COUNT || (uint)info.subclassID >= 4
++     || (uint)info.specializationID >= 4 || (uint)info.dungeon >= DungeonCount
++     || (uint)info.Row >= FineMap_112 || (uint)info.Col >= FineMap_112
++     || info.InvItemCount > countof(info.InventorySlots) ){
++        SNetDropPlayer(playerIndex, 0x40000006);
++        return;
++    }
+     multi_player_left_msg( playerIndex, false );
+     Players[playerIndex].LoadPlayerAnimationMask = 0;
+-    LoadPlayerInfo( &netplr[playerIndex], playerIndex, true );
++    if( !LoadPlayerInfo( &netplr[playerIndex], playerIndex, true ) ) return;
+     if( !recv ){
+         // Если код команды не 2 выходим
+         return;
 --- /dev/null
 +++ b/src/PaletteShader.h
 @@ -0,0 +1,85 @@
@@ -143130,9 +143362,9 @@
 +#pragma once
 +
 +#define TH3_REVISION 1265
-+#define THE_HELL_VERSION_INT 0,4,7,0
-+#define THE_HELL_VERSION_STRING "v0.4.7\0"
-+#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.4.7\0"
++#define THE_HELL_VERSION_INT 0,4,8,0
++#define THE_HELL_VERSION_STRING "v0.4.8\0"
++#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.4.8\0"
 +
 +
 +

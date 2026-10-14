@@ -4,6 +4,9 @@
 extern "C" {
 #endif
 int rfd_room_open(const char *host, unsigned short port, const char *ticket, const char *hash);
+// Announce a loaded world separately from transport admission (protocol 0.4.8+).
+// Idempotent within the current room connection; call only after loading succeeds.
+int rfd_room_world_ready(void);
 void rfd_room_close(void);
 int rfd_room_alive(void);
 int rfd_room_slot(void);
@@ -13,6 +16,8 @@ unsigned int rfd_room_difficulty(void);
 int rfd_room_send_message(int destination, const void *data, unsigned int size);
 int rfd_room_receive_message(unsigned int *sender, void **data, unsigned int *size);
 int rfd_room_send_turn(uint32_t value);
+// Outputs are cleared before polling; disconnect/protocol failure never exposes
+// stale turn values. A live pending turn can still report connected-player status.
 int rfd_room_receive_turns(uint32_t values[4], uint32_t sizes[4], uint32_t status[4]);
 unsigned int rfd_room_turns_waiting(int owner);
 int rfd_room_event(int *player, uint32_t *reason);

@@ -23,8 +23,8 @@ using Microsoft.Win32;
 [assembly: AssemblyTitle("Returns from Darkness HD")]
 [assembly: AssemblyProduct("Returns from Darkness HD")]
 [assembly: AssemblyDescription("Cliente e atualizações de Returns from Darkness")]
-[assembly: AssemblyVersion("0.4.7.0")]
-[assembly: AssemblyFileVersion("0.4.7.0")]
+[assembly: AssemblyVersion("0.4.8.0")]
+[assembly: AssemblyFileVersion("0.4.8.0")]
 namespace ReturnsFromDarkness {
  static class Program {
   public static Mutex Instance;
@@ -40,7 +40,8 @@ namespace ReturnsFromDarkness {
   public static Portal Controller;
   public static Process Game,Peer;
   public static string GameRoom="",GameAccount="",ControlToken="";
-  public static string LastRoomControl="";
+  public static string LastRoomControl="",LastNativeProfile="";
+  public static DateTime NativeStarted=DateTime.MinValue;
   [StructLayout(LayoutKind.Sequential)] public struct CopyData {public IntPtr tag;public int size;public IntPtr data;}
   [DllImport("user32.dll",SetLastError=true)] static extern IntPtr SendMessageTimeout(IntPtr window,uint msg,IntPtr source,ref CopyData data,uint flags,uint timeout,out IntPtr result);
   [DllImport("user32.dll")] static extern bool ShowWindow(IntPtr window,int command);
@@ -126,12 +127,20 @@ namespace ReturnsFromDarkness {
   [DllImport("kernel32.dll",CharSet=CharSet.Unicode,SetLastError=true)] static extern uint GetShortPathName(string path,StringBuilder output,uint size);
   public static string NativeProfilePath(string profile){var shortRoot=new StringBuilder(4096);uint length=GetShortPathName(Path.GetFullPath(Root),shortRoot,(uint)shortRoot.Capacity);return length>0&&length<shortRoot.Capacity?Path.Combine(shortRoot.ToString(),"profiles",Path.GetFileName(profile)):profile;}
   public static string NativeDirectory(string directory){var shorter=new StringBuilder(4096);uint length=GetShortPathName(Path.GetFullPath(directory),shorter,(uint)shorter.Capacity);return length>0&&length<shorter.Capacity?shorter.ToString():directory;}
+  public static Dictionary<string,object> NativeCrashSummary(string profile){try{var source=Json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(profile,"native-crash.json")));var result=new Dictionary<string,object>();foreach(string key in new[]{"code","offset"}){object value;if(source.TryGetValue(key,out value)&&value is string&&Regex.IsMatch((string)value,@"^[A-Fa-f0-9]{1,8}$"))result[key]=value;}object module;if(source.TryGetValue("module",out module)&&module is string&&Array.IndexOf(new[]{"client","dependency","unknown"},(string)module)>=0)result["module"]=module;object stage;if(source.TryGetValue("stage",out stage)&&stage is string&&Regex.IsMatch((string)stage,@"^[a-z-]{1,32}$"))result["stage"]=stage;if(result.ContainsKey("code"))return result;}catch{}return null;}
+  public static void ObserveNativeExit(Process exited,string profile,DateTime started){
+   if(Game==exited&&LastNativeProfile!="")profile=LastNativeProfile;int code=0;try{code=exited.ExitCode;}catch{}Diagnostic("native-exit",code.ToString("X8"));bool recent=false;try{recent=File.GetLastWriteTimeUtc(Path.Combine(profile,"native-crash.json"))>=started.AddSeconds(-1);}catch{}var crash=recent?NativeCrashSummary(profile):null;if(crash!=null)Diagnostic("native-crash",Json.Serialize(crash));
+   var controller=Controller;if(controller==null||controller.IsDisposed)return;
+   try{controller.BeginInvoke(new Action(()=>{if(Game!=exited||controller.IsDisposed)return;try{if(Peer!=null&&!Peer.HasExited)Peer.Kill();}catch{}GameRoom="";GameAccount="";LastRoomControl="";controller.NativeEnded(code!=0||crash!=null);try{ExportConnectionDiagnostic();}catch{}}));}
+   catch(ObjectDisposedException){}catch(InvalidOperationException){}
+  }
+  public static void ObservePeerExit(Process exited,string ready){int code=0;try{code=exited.ExitCode;}catch{}Diagnostic("peer-exit",code.ToString());try{var report=Json.Deserialize<Dictionary<string,object>>(File.ReadAllText(ready));object value;if(report.TryGetValue("error",out value)&&value is string){string error=(string)value,reason="transport-ended";if(error.Contains("Fila de rede")||error.Contains("congestionad"))reason="network-backpressure";else if(error.Contains("Entrada acima")||error.Contains("Pacote local"))reason="local-frame-rejected";else if(error.Contains("relay")||error.Contains("retransmissao"))reason="relay-unavailable";else if(error.Contains("autoriz")||error.Contains("Credencial"))reason="authorization-ended";else if(error.Contains("criador")||error.Contains("Anfitriao"))reason="host-unavailable";Diagnostic("peer-failure",reason);}}catch{}}
   public static string ExportConnectionDiagnostic(){
    var report=new Dictionary<string,object>{{"format",1},{"version",Assembly.GetExecutingAssembly().GetName().Version.ToString(3)},{"createdUtc",DateTime.UtcNow.ToString("o")},{"gameOpen",GameRunning},{"peerOpen",Peer!=null&&!Peer.HasExited},{"containsCredentials",false}};
-   string account=PreferredAccount(),profile=Path.Combine(Root,"profiles",account);
+   string account=PreferredAccount(),profile=LastNativeProfile!=""?LastNativeProfile:Path.Combine(Root,"profiles",account);
    try{var pointer=Verify(File.ReadAllText(Path.Combine(Root,"current.json")));report["installedVersion"]=pointer["version"];report["contentHash"]=pointer["contentHash"];}catch{report["installedVersion"]="unavailable";}
-   try{var source=Json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(profile,"network-status.json")));var safe=new Dictionary<string,object>();foreach(string key in new[]{"transport","phase","signalOnline","signalAuthenticated","hostWorldReady","worldHandshakeComplete","hosting","packetsSent","packetsReceived"}){object value;if(source.TryGetValue(key,out value)&&(value is bool||value is int||value is long||value is decimal||value is string&&Regex.IsMatch((string)value,@"^[a-z-]{1,24}$")))safe[key]=value;}object raw;if(source.TryGetValue("links",out raw)){var links=new List<Dictionary<string,object>>();var list=raw as System.Collections.IEnumerable;if(list!=null)foreach(object item in list){if(links.Count>=4)break;var entry=item as Dictionary<string,object>;if(entry==null)continue;var link=new Dictionary<string,object>();foreach(string key in new[]{"slot","connected","directConnected","transport","rttMs","queuedBytes","gameJoined","blocked"}){object value;if(entry.TryGetValue(key,out value)&&(value is bool||value is int||value is long||value is decimal||value is string&&Regex.IsMatch((string)value,@"^[a-z-]{1,24}$")))link[key]=value;}links.Add(link);}safe["links"]=links;}report["network"]=safe;}catch{report["network"]="unavailable";}
-   var tail=new List<string>();try{string[] lines=File.ReadAllLines(Path.Combine(Root,"diagnostics","launcher.log"));for(int i=Math.Max(0,lines.Length-40);i<lines.Length;i++){string line=Regex.Replace(lines[i],@"rfd://\S+","rfd://<redacted>");line=Regex.Replace(line,@"Bearer\s+\S+","Bearer <redacted>",RegexOptions.IgnoreCase);line=Regex.Replace(line,@"[A-Za-z]:[\\/][^\r\n]+","<local-path>");tail.Add(line);}}catch{}report["launcherStages"]=tail;
+   try{var source=Json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(profile,"network-status.json")));var safe=new Dictionary<string,object>();foreach(string key in new[]{"transport","phase","signalOnline","signalAuthenticated","hostWorldReady","worldHandshakeComplete","localWorldLoaded","hosting","packetsSent","packetsReceived"}){object value;if(source.TryGetValue(key,out value)&&(value is bool||value is int||value is long||value is decimal||value is string&&Regex.IsMatch((string)value,@"^[a-z-]{1,24}$")))safe[key]=value;}object raw;if(source.TryGetValue("links",out raw)){var links=new List<Dictionary<string,object>>();var list=raw as System.Collections.IEnumerable;if(list!=null)foreach(object item in list){if(links.Count>=4)break;var entry=item as Dictionary<string,object>;if(entry==null)continue;var link=new Dictionary<string,object>();foreach(string key in new[]{"slot","connected","directConnected","transport","rttMs","queuedBytes","gameJoined","worldLoaded","blocked","rejectionReason"}){object value;if(entry.TryGetValue(key,out value)&&(value is bool||value is int||value is long||value is decimal||value is string&&Regex.IsMatch((string)value,@"^[a-z-]{1,24}$")))link[key]=value;}links.Add(link);}safe["links"]=links;}report["network"]=safe;}catch{report["network"]="unavailable";}
+   var tail=new List<string>();try{string[] lines=File.ReadAllLines(Path.Combine(Root,"diagnostics","launcher.log"));for(int i=Math.Max(0,lines.Length-40);i<lines.Length;i++){string line=Regex.Replace(lines[i],@"rfd://\S+","rfd://<redacted>");line=Regex.Replace(line,@"Bearer\s+\S+","Bearer <redacted>",RegexOptions.IgnoreCase);line=Regex.Replace(line,@"[A-Za-z]:[\\/][^\r\n]+","<local-path>");tail.Add(line);}}catch{}report["launcherStages"]=tail;var nativeCrash=NativeStarted!=DateTime.MinValue&&File.GetLastWriteTimeUtc(Path.Combine(profile,"native-crash.json"))>=NativeStarted.AddSeconds(-1)?NativeCrashSummary(profile):null;if(nativeCrash!=null)report["nativeCrash"]=nativeCrash;try{var phase=Json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(profile,"native-phase.json")));object stage;if(phase.TryGetValue("stage",out stage)&&stage is string&&Regex.IsMatch((string)stage,@"^[a-z-]{1,32}$"))report["nativeStage"]=stage;}catch{}
    string folder=Path.Combine(Root,"diagnostics");Directory.CreateDirectory(folder);string path=Path.Combine(folder,"connection-"+(Regex.IsMatch(account,@"^[a-z][a-z0-9_-]{2,15}$")?account:"offline")+".json");string text=Json.Serialize(report);File.WriteAllText(path,text,Encoding.UTF8);return text;
   }
   [STAThread] public static int Main(string[] args){
@@ -234,7 +243,7 @@ namespace ReturnsFromDarkness {
    string directory=Path.Combine(Root,"versions",(string)manifest["version"]);CheckFiles(directory,manifest);
    await PrepareData(directory,manifest,status);
    request=await RenewInvitation(request,manifest);
-   string nativeDirectory=NativeDirectory(directory);var info=new ProcessStartInfo(Path.Combine(nativeDirectory,(string)manifest["executable"])){WorkingDirectory=nativeDirectory,UseShellExecute=false};info.EnvironmentVariables["RFD_PORTAL_URL"]=Site+"/central/?lang="+Lang.Language;info.EnvironmentVariables["RFD_UI_LANGUAGE"]=Lang.Language;info.EnvironmentVariables["RFD_CONTENT_HASH"]=(string)manifest["contentHash"];
+   string nativeDirectory=NativeDirectory(directory);var info=new ProcessStartInfo(Path.Combine(nativeDirectory,(string)manifest["executable"])){WorkingDirectory=nativeDirectory,UseShellExecute=false};info.EnvironmentVariables["RFD_PORTAL_URL"]=Site+"/central/?lang="+Lang.Language;info.EnvironmentVariables["RFD_UI_LANGUAGE"]=Lang.Language;info.EnvironmentVariables["RFD_CONTENT_HASH"]=(string)manifest["contentHash"];info.EnvironmentVariables["RFD_CONTROL_PIPE"]=PipeName;
    foreach(string key in new[]{"RFD_ROOM_HOST","RFD_ROOM_PORT","RFD_ROOM_TICKET","RFD_ROOM_NAME","RFD_ROOM_MODE","RFD_ROOM_ID","RFD_ROOM_DIFFICULTY","RFD_CONTROL_TOKEN","RFD_CONTROL_PID"})info.EnvironmentVariables.Remove(key);
    string account=PreferredAccount();Dictionary<string,object> invite=null;Process peer=null;
    if(request!=null&&request.StartsWith("rfd://play/")){
@@ -252,7 +261,7 @@ namespace ReturnsFromDarkness {
     string ready=Path.Combine(profile,"peer-"+Guid.NewGuid().ToString("N")+".json");
     var companion=new ProcessStartInfo(SafePath(directory,(string)manifest["peerExecutable"])){WorkingDirectory=directory,UseShellExecute=false,CreateNoWindow=true};
     companion.EnvironmentVariables["RFD_PEER_SIGNAL_HOST"]=new Uri((string)manifest["signalUrl"]).Host;companion.EnvironmentVariables["RFD_PEER_ROOM_ID"]=(string)invite["roomId"];companion.EnvironmentVariables["RFD_PEER_TICKET"]=(string)invite["ticket"];companion.EnvironmentVariables["RFD_PEER_LOCAL_TICKET"]=localTicket;companion.EnvironmentVariables["RFD_PEER_HASH"]=(string)manifest["contentHash"];companion.EnvironmentVariables["RFD_PEER_READY"]=ready;companion.EnvironmentVariables["RFD_PEER_STATS"]=Path.Combine(profile,"network-status.json");
-    Program.Diagnostic("peer-start",(string)manifest["version"]);peer=Process.Start(companion);status.Text=Lang.S("connecting");var started=DateTime.UtcNow;var deadline=started.AddSeconds(70);Dictionary<string,object> connected=null;string lastPhase="";
+    Program.Diagnostic("peer-start",(string)manifest["version"]);peer=Process.Start(companion);var observedPeer=peer;peer.Exited+=(s,e)=>ObservePeerExit(observedPeer,ready);peer.EnableRaisingEvents=true;status.Text=Lang.S("connecting");var started=DateTime.UtcNow;var deadline=started.AddSeconds(70);Dictionary<string,object> connected=null;string lastPhase="";
     try{while(DateTime.UtcNow<deadline){
       if(File.Exists(ready)){try{connected=Json.Deserialize<Dictionary<string,object>>(File.ReadAllText(ready));}catch(ArgumentException){}catch(IOException){}if(connected!=null){if((string)connected["state"]=="error")throw new Exception((string)connected["error"]);if((string)connected["state"]=="ready")break;object phaseValue;if(connected.TryGetValue("phase",out phaseValue)&&phaseValue is string){string phase=(string)phaseValue;if(phase!=lastPhase){Diagnostic("connection-phase",phase);lastPhase=phase;}if(phase=="waiting-host"){status.Text=Lang.S("waitingHost");deadline=started.AddSeconds(190);}else if(phase=="relay")status.Text=Lang.S("relayConnecting");}}}
       if(peer.HasExited){Diagnostic("peer-exit",peer.ExitCode.ToString());throw new Exception(Lang.S("connection"));}await Task.Delay(100);
@@ -264,11 +273,12 @@ namespace ReturnsFromDarkness {
    }
    try{
     string roomText=invite==null?"":String.Join("\n",new[]{"room",profile,"127.0.0.1",info.EnvironmentVariables["RFD_ROOM_PORT"],info.EnvironmentVariables["RFD_ROOM_TICKET"],(string)manifest["contentHash"],((string)invite["room"]).Replace("\r","").Replace("\n"," "),info.EnvironmentVariables["RFD_ROOM_MODE"],(string)invite["roomId"],info.EnvironmentVariables["RFD_ROOM_DIFFICULTY"]});
+    LastNativeProfile=profile;
     if(GameRunning){
       if(!SendRoom(roomText))throw new Exception(Lang.S("transition"));
     }else{
       ControlToken=RandomToken();info.EnvironmentVariables["RFD_CONTROL_TOKEN"]=ControlToken;info.EnvironmentVariables["RFD_CONTROL_PID"]=Process.GetCurrentProcess().Id.ToString();
-      Stage(status,"openingGame");Game=Process.Start(info);Diagnostic("game-start",(string)manifest["version"]);Game.EnableRaisingEvents=true;Game.Exited+=(s,e)=>{if(Controller!=null&&!Controller.IsDisposed)Controller.BeginInvoke(new Action(()=>{if(Peer!=null&&!Peer.HasExited)Peer.Kill();GameRoom="";GameAccount="";LastRoomControl="";Controller.Show();}));};
+      Stage(status,"openingGame");DateTime gameStarted=DateTime.UtcNow;NativeStarted=gameStarted;info.EnvironmentVariables["RFD_CLIENT_VERSION"]=(string)manifest["version"];Game=Process.Start(info);Diagnostic("game-start",(string)manifest["version"]);var observed=Game;Game.Exited+=(s,e)=>ObserveNativeExit(observed,profile,gameStarted);Game.EnableRaisingEvents=true;
       for(int wait=0;wait<200;wait++){if(Game.HasExited){Diagnostic("native-exit",Game.ExitCode.ToString("X8"));throw new Exception(Lang.S("nativeExit"));}Game.Refresh();if(Game.MainWindowHandle!=IntPtr.Zero)break;await Task.Delay(100);}
     }
     Peer=peer;LastRoomControl=roomText;GameRoom=invite==null?"":(string)invite["roomId"];GameAccount=account;FocusGame();status.Text=Lang.S("chooseHero");
@@ -311,6 +321,7 @@ namespace ReturnsFromDarkness {
    Shown+=async(s1,e1)=>{if(loaded)return;loaded=true;var listener=Program.Listen();if(request=="--preview"){status.Text=Lang.S("portal");version.Text=Lang.S("preview")+" · v"+Assembly.GetExecutingAssembly().GetName().Version.ToString(3);progress.Visible=false;play.Enabled=true;request=null;}else Accept(request??"rfd://prepare");await Task.CompletedTask;};
   }
   public static string PlayRequest(string pending){return pending!=null&&(pending.StartsWith("rfd://play/")||pending.StartsWith("rfd://resume/")||pending.StartsWith("rfd://auth/"))?pending:"rfd://open";}
+  public void NativeEnded(bool failed){status.Text=Lang.S(failed?"nativeCrash":"ready");progress.Visible=false;play.Enabled=true;Show();if(failed)Activate();}
   public async void Accept(string value){requests.Enqueue(value);if(processing)return;processing=true;play.Enabled=false;progress.Visible=true;
    try{while(requests.Count>0){string next=requests.Dequeue();try{
     if(Program.RouteAccount(next))continue;

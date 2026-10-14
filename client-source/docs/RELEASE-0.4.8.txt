@@ -1,0 +1,18 @@
+Returns from Darkness HD 0.4.8 — Entrada e sincronização online
+
+O teste da comunidade confirmou: dois clientes no mesmo PC conectavam, mas o convidado em outro PC fechava ao entrar, inclusive na mesma rede. Esta atualização corrige defeitos reproduzidos no transporte e melhora a captura da falha nativa. O teste gráfico entre dois PCs reais continua necessário; não anunciamos essa confirmação como concluída.
+
+- A ponte processa quadros TCP incrementalmente, sem rejeitar uma rajada de mensagens válidas pelo tamanho agregado.
+- A recepção preserva mensagens e ordem quando a fila da engine fica cheia; aplica contrapressão dentro dos limites existentes.
+- Falhas de recepção não deixam status de jogadores e turnos não inicializados para o jogo.
+- O convidado aguarda o mundo do criador carregar, além da conexão e do handshake de entrada.
+- Eventos antigos de ligação são descartados; sinais de atividade dependem da autenticação atual.
+- Pacotes de personagem e estado inicial recebem validação de limites e descompressão antes de serem aplicados.
+- O menu Play Online encaminha o convite ao launcher já aberto, usando a mesma instância.
+- Um crash nativo gera código e resumo técnico sem credenciais; o launcher registra a saída mesmo depois de a janela abrir. Não é preciso procurar um dump de memória para copiar o diagnóstico.
+
+Mantém salas de até quatro jogadores, conexão direta preferencial e retransmissão autenticada HTTPS/WSS quando necessária. O criador hospeda a partida e precisa permanecer conectado. A nuvem mantém contas, descoberta e relay; a porta 25565 do modelo antigo não faz parte deste transporte.
+
+Contas e saves locais são preservados. Todos os participantes precisam atualizar para 0.4.8 e usar uma sala nova. Se o convidado ainda fechar em uma rede específica, a opção Copiar diagnóstico de conexão no ícone do launcher inclui a etapa nativa e o código da falha, sem senhas ou convites.
+
+HUD, taxas, conteúdo da campanha e o estado das funcionalidades em desenvolvimento permanecem como na versão anterior. Contratos diários continuam desativados; a coleção de 36 itens mantém sua apresentação de desenvolvimento.
