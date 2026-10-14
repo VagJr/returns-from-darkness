@@ -9,7 +9,7 @@
  function node(tag,text='',className=''){const el=document.createElement(tag);el.textContent=text;if(className)el.className=className;return el;}
  async function api(route,body,query=''){
   const token=sessionStorage.getItem('rfd-central-tab-session')||'logged-out';
-  const url=remote?'/api/realm?route='+encodeURIComponent(route)+query:'/api/'+route+(query?'?'+query.slice(1):'');
+  const url=remote?'/api/realm/?route='+encodeURIComponent(route)+query:'/api/'+route+(query?'?'+query.slice(1):'');
   const res=await fetch(url,{method:body?'POST':'GET',headers:{Authorization:'Bearer '+token,...(body?{'Content-Type':'application/json'}:{})},body:body?JSON.stringify(body):undefined});
   const data=await res.json();if(!res.ok)throw Error(data.error||T('Não foi possível concluir.'));return data;
  }
