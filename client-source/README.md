@@ -1,4 +1,4 @@
-# Returns from Darkness HD 0.4.5
+# Returns from Darkness HD 0.4.6
 
 Community client adapted from The Hell 3 source 1.265/data1.267, with creator-hosted online rooms, signed updates and Sanctuary account progression. Inherited gameplay and artwork remain credited; project-specific additions include the integration, progression layer, interface framing and First Vigil relic collection. See NOTICE.md and ORIGINAL-SOURCE-README.txt.
 
@@ -19,3 +19,5 @@ For 0.4.2 and later, copy health-vessel-atlas.png and mana-vessel-atlas.png from
 Version 0.4.3 uses the project owner's Dark Gothic HUD Kit for the complete panel frames, guardian sculptures, recesses, equipment wells and buttons. The original 52 PNGs remain byte-exact under content/original/hud-kit/source. The runtime 2048x2048 atlas packs 24 pieces with transparent gutters; integration.json records provenance and hashes. Rebuild the atlas and CommunityHudAtlas.h using prepare-gothic-hud-kit.py, then compile CommunityHudKit.hlsl. Live inventory remains 10x7 and the belt keeps eight cells. Fixed sample values, items and potion pictures are excluded from composition. Tchernobog supplies the animated liquid only when the new kit is present; its old vessel/statue rendering remains a fallback. See docs/RENDERIZACAO-HUD-0.4.3.md.
 
 Version 0.4.5 preserves the world underneath transparent HUD edges, composes party chat with the kit, adds restrained slot highlights and gives item descriptions an independent textured background. Native text, equipment rules and gameplay rates remain unchanged. See docs/RENDERIZACAO-HUD-0.4.5.md.
+
+Version 0.4.6 adds the initial English/Portuguese choice, a reviewed menu translation layer and original archive music fallback when optional music packs are missing. Whole-game translation and accented glyph support remain in progress. The Ashes of the Return collection includes 36 original artworks and a masked RGBA inventory atlas; balance, natural acquisition and original equipped animations remain in development. Daily contracts are disabled by default and must not be advertised as publicly available.

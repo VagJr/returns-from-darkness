@@ -1,0 +1,22 @@
+{
+  "upstream": "DevilutionX 1.5.5",
+  "resource": "pt_BR.gmo",
+  "resourceSha256": "9922cd8efa82955f3d0624a037fc7de113e450759876f558466a60810a1050d7",
+  "metadata": {
+    "project-id-version": "DevilutionX",
+    "po-revision-date": "2023-07-09 20:20-0700",
+    "last-translator": "Altieres Lima da Silva <altieres.lima@gmail.com>",
+    "language-team": "",
+    "language": "pt_BR",
+    "mime-version": "1.0",
+    "content-type": "text/plain; charset=UTF-8",
+    "content-transfer-encoding": "8bit",
+    "plural-forms": "nplurals=2; plural=(n > 1);",
+    "x-generator": "Poedit 3.2.2",
+    "x-poedit-sourcecharset": "UTF-8",
+    "x-poedit-keywordslist": "_;N_;P_:1c,2",
+    "x-poedit-basepath": "..",
+    "x-poedit-searchpath-0": "Source"
+  },
+  "fullGameTranslated": false
+}

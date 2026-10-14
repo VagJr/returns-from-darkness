@@ -1,0 +1,12 @@
+Returns from Darkness HD 0.4.6
+
+- Escolha inicial entre English e Português (Brasil), com alteração pelo menu de idioma.
+- Tradução dos menus principais e das telas próprias de conta e salas. A tradução integral de diálogos, descrições e conteúdo da campanha continua em desenvolvimento; alguns textos ainda usam a base em inglês, e a camada nativa ainda simplifica acentos.
+- A música volta a usar as faixas clássicas do arquivo do jogo quando um pacote opcional não está presente. A preferência de volume do jogador é preservada.
+- Exibição de ícones próprios em cor completa, com proporção e transparência preservadas no inventário, sem substituir os encaixes ou as regras de equipamento.
+- Prévia da coleção Cinzas do Retorno no site e no Santuário: 36 artes originais em seis folhas, capturas reais do inventário e etapas de desenvolvimento. A coleção ainda não está disponível como recompensa normal da campanha.
+- Mantidas as correções de transparência da HUD, chat, destaques de encaixe e descrições de itens da 0.4.5.
+
+O launcher e o instalador são publicados com manifesto assinado da mesma versão. As atualizações preservam os perfis e personagens locais. O site continua conectando a conta e a sala ao cliente.
+
+Os contratos diários permanecem desativados no serviço público. Progressão e conquistas são informadas pelo cliente e não constituem ranking autoritativo. As artes herdadas do mundo permanecem; esta versão não anuncia remasterização completa de todos os cenários ou animações equipadas novas.

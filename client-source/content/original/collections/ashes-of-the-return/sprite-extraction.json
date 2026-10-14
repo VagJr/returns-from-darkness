@@ -1,0 +1,662 @@
+{
+  "items": 36,
+  "sheets": 6,
+  "sourceArtworkRepainted": false,
+  "masterSize": [
+    1536,
+    1024
+  ],
+  "minimumUsefulLongEdge": 417,
+  "itemsPerGeneration": 6,
+  "crops": [
+    {
+      "id": 4621,
+      "key": "emberwake",
+      "sheet": "sheet-01.png",
+      "cropBox": [
+        39,
+        47,
+        481,
+        489
+      ],
+      "size": [
+        442,
+        442
+      ],
+      "alphaPixels": 36115,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "51fdb13ffd6fd6f59d30bdced0fd15031c87dc8192785d922556a19354370a0e"
+    },
+    {
+      "id": 4622,
+      "key": "oath-of-return",
+      "sheet": "sheet-01.png",
+      "cropBox": [
+        503,
+        1,
+        1070,
+        502
+      ],
+      "size": [
+        567,
+        501
+      ],
+      "alphaPixels": 48075,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "c287bf3e5302816ca8c6346fdc11d2d5924bcfb1c1a4cf69b5cde3f9220b3f44"
+    },
+    {
+      "id": 4623,
+      "key": "cinderhew",
+      "sheet": "sheet-01.png",
+      "cropBox": [
+        1048,
+        39,
+        1519,
+        505
+      ],
+      "size": [
+        471,
+        466
+      ],
+      "alphaPixels": 55210,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "f0526c6c629eadcbb3c7a29aebc4359f449ea7df0e83dde3c95f6d27375a23c4"
+    },
+    {
+      "id": 4624,
+      "key": "last-bell",
+      "sheet": "sheet-01.png",
+      "cropBox": [
+        42,
+        516,
+        481,
+        1004
+      ],
+      "size": [
+        439,
+        488
+      ],
+      "alphaPixels": 50738,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "80585b97ff85d793e1394b20d41161bff13e2f7bf1b276a2cc316cdfcdc0327e"
+    },
+    {
+      "id": 4625,
+      "key": "pilgrim-bow",
+      "sheet": "sheet-01.png",
+      "cropBox": [
+        533,
+        513,
+        1069,
+        1017
+      ],
+      "size": [
+        536,
+        504
+      ],
+      "alphaPixels": 30811,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "20b297d4f8615ac5d8d9e4ff0e072e828158296236171dd64419ba4e6b98ddb5"
+    },
+    {
+      "id": 4626,
+      "key": "ember-crook",
+      "sheet": "sheet-01.png",
+      "cropBox": [
+        1028,
+        502,
+        1518,
+        1015
+      ],
+      "size": [
+        490,
+        513
+      ],
+      "alphaPixels": 36157,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "a127e025572c88304f1b75519994f695d292806c832f922c80e16fb92d72e208"
+    },
+    {
+      "id": 4627,
+      "key": "grave-cleaver",
+      "sheet": "sheet-02.png",
+      "cropBox": [
+        34,
+        4,
+        562,
+        521
+      ],
+      "size": [
+        528,
+        517
+      ],
+      "alphaPixels": 57116,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "215bd3cc94efe2e30567ed955c0f042710ad212703450e7b07c61cf0ac3d85ad"
+    },
+    {
+      "id": 4628,
+      "key": "vesper-maul",
+      "sheet": "sheet-02.png",
+      "cropBox": [
+        565,
+        10,
+        1117,
+        514
+      ],
+      "size": [
+        552,
+        504
+      ],
+      "alphaPixels": 55938,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "b34ef4237fd3057606e271d7a35cc1b1897c7d2c0997e18a0a6a12029f88c18a"
+    },
+    {
+      "id": 4629,
+      "key": "blackthorn-longbow",
+      "sheet": "sheet-02.png",
+      "cropBox": [
+        1116,
+        4,
+        1526,
+        526
+      ],
+      "size": [
+        410,
+        522
+      ],
+      "alphaPixels": 19974,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "ad120e7ea31d5e21d6054c1fad31e33f3ab843ebd28c12bb02b48650cb1a7fda"
+    },
+    {
+      "id": 4630,
+      "key": "lantern-spire",
+      "sheet": "sheet-02.png",
+      "cropBox": [
+        25,
+        490,
+        517,
+        1007
+      ],
+      "size": [
+        492,
+        517
+      ],
+      "alphaPixels": 30977,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "847d0a4e94990c514cc39ff8b2292bb4ce298107ae845466f8f785fe9ce7c729"
+    },
+    {
+      "id": 4631,
+      "key": "vigil-buckler",
+      "sheet": "sheet-02.png",
+      "cropBox": [
+        605,
+        537,
+        994,
+        970
+      ],
+      "size": [
+        389,
+        433
+      ],
+      "alphaPixels": 122354,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "800b3bb16147661e7926bc67684e041bfb3c04e830f5f6a8c427f276c68f5b4d"
+    },
+    {
+      "id": 4632,
+      "key": "gate-of-ashes",
+      "sheet": "sheet-02.png",
+      "cropBox": [
+        1166,
+        484,
+        1462,
+        1016
+      ],
+      "size": [
+        296,
+        532
+      ],
+      "alphaPixels": 89718,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "0b631e244ad264161eaf5893dbb0b46afe04f304c4d4ca313e1bc6a2097ab5fe"
+    },
+    {
+      "id": 4633,
+      "key": "pilgrim-mantle",
+      "sheet": "sheet-03.png",
+      "cropBox": [
+        47,
+        6,
+        514,
+        507
+      ],
+      "size": [
+        467,
+        501
+      ],
+      "alphaPixels": 143039,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "10149e05a76973a8379c41a5a5da3003cd39e8a3fa1d356b8bde49cb5f88b2fe"
+    },
+    {
+      "id": 4634,
+      "key": "nightkeeper-vest",
+      "sheet": "sheet-03.png",
+      "cropBox": [
+        554,
+        2,
+        1008,
+        506
+      ],
+      "size": [
+        454,
+        504
+      ],
+      "alphaPixels": 138017,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "9f9a943ee70c83fc82aad7b941469d266760a7c76ee2392f263af3d6f8b1148f"
+    },
+    {
+      "id": 4635,
+      "key": "ashguard-mail",
+      "sheet": "sheet-03.png",
+      "cropBox": [
+        1037,
+        10,
+        1497,
+        534
+      ],
+      "size": [
+        460,
+        524
+      ],
+      "alphaPixels": 142546,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "cc5688f5085cd4238ca4a42a9fcd3312c1d2ab4ef24176a173e7d9250f1ba9e9"
+    },
+    {
+      "id": 4636,
+      "key": "returning-bastion",
+      "sheet": "sheet-03.png",
+      "cropBox": [
+        42,
+        504,
+        578,
+        1024
+      ],
+      "size": [
+        536,
+        520
+      ],
+      "alphaPixels": 179416,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "c97b177027328313a9cea235aa784045b49c16246fc650c9d87adbade8eb975f"
+    },
+    {
+      "id": 4637,
+      "key": "watcher-helm",
+      "sheet": "sheet-03.png",
+      "cropBox": [
+        665,
+        526,
+        992,
+        980
+      ],
+      "size": [
+        327,
+        454
+      ],
+      "alphaPixels": 81130,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "0e6db0d7c9c8a2f68c5d0a8a3e87369a59e6e05c5dea548a4e2696ebdc179e90"
+    },
+    {
+      "id": 4638,
+      "key": "crown-of-cinders",
+      "sheet": "sheet-03.png",
+      "cropBox": [
+        1154,
+        494,
+        1449,
+        1015
+      ],
+      "size": [
+        295,
+        521
+      ],
+      "alphaPixels": 86237,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "4fc889e005fedb9e6b497c1e152cf4531ceea6b1efbec6903be88bd18d453b4d"
+    },
+    {
+      "id": 4639,
+      "key": "ember-band",
+      "sheet": "sheet-04.png",
+      "cropBox": [
+        36,
+        37,
+        474,
+        442
+      ],
+      "size": [
+        438,
+        405
+      ],
+      "alphaPixels": 83302,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "8c5e777f880f3c156a995eb3c99b00d0d637e42ed4637c5e6139bb2017317796"
+    },
+    {
+      "id": 4640,
+      "key": "unbroken-circle",
+      "sheet": "sheet-04.png",
+      "cropBox": [
+        538,
+        30,
+        997,
+        452
+      ],
+      "size": [
+        459,
+        422
+      ],
+      "alphaPixels": 133792,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "11d7b0c2df593e48b8dc46816d2ba6f19f080809ed7eb3882e14944133b6ccbd"
+    },
+    {
+      "id": 4641,
+      "key": "nightfall-signet",
+      "sheet": "sheet-04.png",
+      "cropBox": [
+        1070,
+        26,
+        1510,
+        464
+      ],
+      "size": [
+        440,
+        438
+      ],
+      "alphaPixels": 132354,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "ef5f3f361a259cd2b3b1b5ec848cf333ba15a21e4c33d42e960fbdc0e0870ab8"
+    },
+    {
+      "id": 4642,
+      "key": "homeward-token",
+      "sheet": "sheet-04.png",
+      "cropBox": [
+        109,
+        454,
+        522,
+        1002
+      ],
+      "size": [
+        413,
+        548
+      ],
+      "alphaPixels": 96525,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "337ea763d72f0363b7df47e20b81be354ba11b02d01df7cc9eb6961b89a5140c"
+    },
+    {
+      "id": 4643,
+      "key": "reliquary-of-dawn",
+      "sheet": "sheet-04.png",
+      "cropBox": [
+        606,
+        461,
+        981,
+        1005
+      ],
+      "size": [
+        375,
+        544
+      ],
+      "alphaPixels": 95624,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "82bb4b8f3ae8dc6e2e4a5f1cdf935377aaae3da4614e7a99265b0f08ee158cd4"
+    },
+    {
+      "id": 4644,
+      "key": "wayfarer-grip",
+      "sheet": "sheet-04.png",
+      "cropBox": [
+        1019,
+        506,
+        1520,
+        973
+      ],
+      "size": [
+        501,
+        467
+      ],
+      "alphaPixels": 158417,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "b0cd8ce04d1a5e20a0fd9c6bfe17e612b03a268ae30ece2750cd23a78a6e26e8"
+    },
+    {
+      "id": 4645,
+      "key": "iron-oath-gauntlets",
+      "sheet": "sheet-05.png",
+      "cropBox": [
+        49,
+        5,
+        521,
+        536
+      ],
+      "size": [
+        472,
+        531
+      ],
+      "alphaPixels": 127886,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "1e11b57e66084aa929dade44a4ba631914cc378ed029186ebb624d585b241fa1"
+    },
+    {
+      "id": 4646,
+      "key": "ashen-path-boots",
+      "sheet": "sheet-05.png",
+      "cropBox": [
+        542,
+        13,
+        1061,
+        531
+      ],
+      "size": [
+        519,
+        518
+      ],
+      "alphaPixels": 151046,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "d0e7594a14d0bd7f43ccc60268bdba4db9c27d2f0d8478f6fb47f8d1802edf37"
+    },
+    {
+      "id": 4647,
+      "key": "gravewalker-greaves",
+      "sheet": "sheet-05.png",
+      "cropBox": [
+        1101,
+        0,
+        1520,
+        549
+      ],
+      "size": [
+        419,
+        549
+      ],
+      "alphaPixels": 135570,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "b4b491bd3f91d39a359dc404be44a2252aa688356f181049b8a82f6f8e5f3b09"
+    },
+    {
+      "id": 4648,
+      "key": "pilgrim-cord",
+      "sheet": "sheet-05.png",
+      "cropBox": [
+        18,
+        595,
+        529,
+        906
+      ],
+      "size": [
+        511,
+        311
+      ],
+      "alphaPixels": 113532,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "70a5e859d0993367f5d8d12f580030dcebd1571b2da3080e453a53f800109e22"
+    },
+    {
+      "id": 4649,
+      "key": "warden-girdle",
+      "sheet": "sheet-05.png",
+      "cropBox": [
+        555,
+        614,
+        1135,
+        921
+      ],
+      "size": [
+        580,
+        307
+      ],
+      "alphaPixels": 140776,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "dc8e0e4bde607ff51cfb974969bc57aea4a1973f784bd105ad33bb740e177a98"
+    },
+    {
+      "id": 4650,
+      "key": "cinder-flask",
+      "sheet": "sheet-05.png",
+      "cropBox": [
+        1187,
+        551,
+        1487,
+        1015
+      ],
+      "size": [
+        300,
+        464
+      ],
+      "alphaPixels": 84636,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "fe0abfdae025672edc4133925dbcb4465e2b4296faeb02320913697aea7c5a12"
+    },
+    {
+      "id": 4651,
+      "key": "vesper-snare",
+      "sheet": "sheet-06.png",
+      "cropBox": [
+        26,
+        82,
+        517,
+        442
+      ],
+      "size": [
+        491,
+        360
+      ],
+      "alphaPixels": 104197,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "1d77c9468be7bb12cec49914da2b7cbf070962978ce962c5326051f9e9c128a3"
+    },
+    {
+      "id": 4652,
+      "key": "raven-talons",
+      "sheet": "sheet-06.png",
+      "cropBox": [
+        567,
+        52,
+        1000,
+        490
+      ],
+      "size": [
+        433,
+        438
+      ],
+      "alphaPixels": 77279,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "09ba724d2bdfc7ab11aafecfb6082e46fa11da5003d8211e2aa5e5108616ce87"
+    },
+    {
+      "id": 4653,
+      "key": "returning-shard",
+      "sheet": "sheet-06.png",
+      "cropBox": [
+        1043,
+        47,
+        1517,
+        480
+      ],
+      "size": [
+        474,
+        433
+      ],
+      "alphaPixels": 46167,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "cca001e2c2630bebec091fca2a5a1fe92e35e5a67499d2c51de69c0c871d12e0"
+    },
+    {
+      "id": 4654,
+      "key": "cinder-weight",
+      "sheet": "sheet-06.png",
+      "cropBox": [
+        35,
+        521,
+        542,
+        968
+      ],
+      "size": [
+        507,
+        447
+      ],
+      "alphaPixels": 72115,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "ed802948ff0351a9062d2bcccfd328007e46b3e6d98ac1eeff39291e24f66bbe"
+    },
+    {
+      "id": 4655,
+      "key": "last-light-pistol",
+      "sheet": "sheet-06.png",
+      "cropBox": [
+        506,
+        550,
+        1041,
+        947
+      ],
+      "size": [
+        535,
+        397
+      ],
+      "alphaPixels": 84627,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "807e71a0b7f0eaa3c2122cd12375bacf7390051b948f66f560f15944ca990834"
+    },
+    {
+      "id": 4656,
+      "key": "chronicle-of-return",
+      "sheet": "sheet-06.png",
+      "cropBox": [
+        1060,
+        518,
+        1516,
+        984
+      ],
+      "size": [
+        456,
+        466
+      ],
+      "alphaPixels": 137583,
+      "rgbaSourcePixelsPreserved": true,
+      "sha256": "9296abf3e8984d648263c4d4a14a6a2e37d3310839e41e58555fa1e82c7d7029"
+    }
+  ],
+  "inGameIntegrationComplete": false
+}

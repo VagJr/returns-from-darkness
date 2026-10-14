@@ -15,8 +15,8 @@ export function unlocks(profile){
 function empty(user){return {username:user,maxLevel:1,maxArenaLevel:1,legacyDifficulty:0,cleared:[],pvpKills:0,bosses:[],avatar:0,title:'wanderer',bio:'',createdAt:Date.now(),updatedAt:Date.now()};}
 function hero(input){
  if(!input||!validId(input.id)||typeof input.name!=='string'||input.name.trim().length<1||[...input.name].length>16||/[\x00-\x1f\x7f]/.test(input.name)||
-    !integer(input.classId,0,28)||!integer(input.level,1,150)||!integer(input.mode,0,8)||!category(input.category)||(input.mode===8)!==(input.category==='coliseum')||!integer(input.allowedDifficulty??0,0,9))bad('Personagem inválido.');
- return {id:input.id,name:input.name.trim(),classId:input.classId,level:input.level,mode:input.mode,category:input.category,allowedDifficulty:input.allowedDifficulty||0};
+    !integer(input.classId,0,28)||!integer(input.level,1,150)||!integer(input.mode,0,8)||!category(input.category)||(input.mode===8)!==(input.category==='coliseum')||!integer(input.allowedDifficulty??0,0,9)||!integer(input.highestFloor??0,0,24))bad('Personagem inválido.');
+ return {id:input.id,name:input.name.trim(),classId:input.classId,level:input.level,mode:input.mode,category:input.category,allowedDifficulty:input.allowedDifficulty||0,highestFloor:input.highestFloor||0};
 }
 export class Progression {
  constructor(community){this.c=community;this.sql=community.sql;this.rows=community.rows.bind(community);
@@ -44,7 +44,8 @@ export class Progression {
  upsert(user,h,legacy=false){const p=this.get(user),key=user.toLowerCase(),existing=this.rows('SELECT record FROM characters WHERE user=? AND id=?',key,h.id)[0];
   if(!existing&&this.rows('SELECT COUNT(*) AS n FROM characters WHERE user=?',key)[0].n>=512)bad('Limite de personagens do perfil atingido.',409);
   // Stable account/hero identity is scoped to the authenticated account.
-  this.sql.exec('INSERT OR REPLACE INTO characters VALUES (?,?,?)',key,h.id,JSON.stringify({...h,archived:false,updatedAt:Date.now(),provenance:legacy?'local-save':'native-game'}));
+  const previous=existing?JSON.parse(existing.record):null;
+  this.sql.exec('INSERT OR REPLACE INTO characters VALUES (?,?,?)',key,h.id,JSON.stringify({...h,highestFloor:Math.max(previous?.highestFloor||0,h.highestFloor||0),archived:false,updatedAt:Date.now(),provenance:legacy?'local-save':'native-game'}));
   if(h.category==='coliseum')p.maxArenaLevel=Math.max(p.maxArenaLevel||1,h.level);
   else {p.maxLevel=Math.max(p.maxLevel,h.level);if(legacy)p.legacyDifficulty=Math.max(p.legacyDifficulty,h.allowedDifficulty);}
   this.save(p);return p;

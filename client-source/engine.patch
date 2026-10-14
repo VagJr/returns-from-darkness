@@ -3350,6 +3350,269 @@
 +	return data;
 +}
 --- /dev/null
++++ b/src/CommunityCollectionAssets.h
+@@ -0,0 +1,40 @@
++#pragma once
++struct RfdCollectionAsset { const wchar_t *file; int width,height,baseIndex,requiredLevel; };
++static const RfdCollectionAsset RfdCollectionAssets[] = {
++{ L"rfd-emberwake.png", 56, 84, 286, 8 },
++{ L"rfd-oath-of-return.png", 56, 84, 128, 45 },
++{ L"rfd-cinderhew.png", 56, 84, 487, 8 },
++{ L"rfd-last-bell.png", 56, 84, 932, 8 },
++{ L"rfd-pilgrim-bow.png", 56, 84, 144, 8 },
++{ L"rfd-ember-crook.png", 56, 84, 277, 8 },
++{ L"rfd-grave-cleaver.png", 56, 84, 133, 24 },
++{ L"rfd-vesper-maul.png", 56, 84, 102, 45 },
++{ L"rfd-blackthorn-longbow.png", 56, 84, 161, 45 },
++{ L"rfd-lantern-spire.png", 56, 84, 186, 45 },
++{ L"rfd-vigil-buckler.png", 56, 84, 800, 8 },
++{ L"rfd-gate-of-ashes.png", 56, 84, 512, 45 },
++{ L"rfd-pilgrim-mantle.png", 56, 84, 58, 8 },
++{ L"rfd-nightkeeper-vest.png", 56, 84, 1019, 24 },
++{ L"rfd-ashguard-mail.png", 56, 84, 107, 24 },
++{ L"rfd-returning-bastion.png", 56, 84, 1202, 45 },
++{ L"rfd-watcher-helm.png", 56, 56, 14, 8 },
++{ L"rfd-crown-of-cinders.png", 56, 56, 728, 45 },
++{ L"rfd-ember-band.png", 28, 28, 157, 8 },
++{ L"rfd-unbroken-circle.png", 28, 28, 1149, 24 },
++{ L"rfd-nightfall-signet.png", 28, 28, 197, 45 },
++{ L"rfd-homeward-token.png", 28, 28, 1189, 8 },
++{ L"rfd-reliquary-of-dawn.png", 28, 28, 305, 45 },
++{ L"rfd-wayfarer-grip.png", 56, 56, 404, 8 },
++{ L"rfd-iron-oath-gauntlets.png", 56, 56, 408, 24 },
++{ L"rfd-ashen-path-boots.png", 56, 56, 1151, 8 },
++{ L"rfd-gravewalker-greaves.png", 56, 56, 795, 24 },
++{ L"rfd-pilgrim-cord.png", 56, 28, 1178, 8 },
++{ L"rfd-warden-girdle.png", 56, 28, 441, 24 },
++{ L"rfd-cinder-flask.png", 56, 84, 755, 24 },
++{ L"rfd-vesper-snare.png", 56, 84, 1052, 24 },
++{ L"rfd-raven-talons.png", 56, 84, 1040, 24 },
++{ L"rfd-returning-shard.png", 56, 84, 1219, 24 },
++{ L"rfd-cinder-weight.png", 56, 84, 1232, 24 },
++{ L"rfd-last-light-pistol.png", 56, 84, 2433, 45 },
++{ L"rfd-chronicle-of-return.png", 56, 56, 9, 45 },
++};
+--- /dev/null
++++ b/src/CommunityCollectionDefs.h
+@@ -0,0 +1,217 @@
++// Generated explicit rewards. Private negative lines never enter seeded loot.
++{ 4621, "Emberwake", 286, -103, -1, 2, 4, 1360, -1,
++    AE_REQUIRED_CLVL, 0, 8, 8, 0, 0, 0, 0,
++    AE_PERCENT_DAMAGE, 0, 10, 10, 0, 0, 0, 0,
++    AE_STR, 0, 2, 2, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 5, 5, 0, 0, 0, 0,
++},
++{ 4622, "Oath of Return", 128, -104, -1, 15, 4, 5800, -1,
++    AE_REQUIRED_CLVL, 0, 45, 45, 0, 0, 0, 0,
++    AE_PERCENT_DAMAGE, 0, 30, 30, 0, 0, 0, 0,
++    AE_STR, 0, 6, 6, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 15, 15, 0, 0, 0, 0,
++},
++{ 4623, "Cinderhew", 487, -105, -1, 2, 4, 1360, -1,
++    AE_REQUIRED_CLVL, 0, 8, 8, 0, 0, 0, 0,
++    AE_PERCENT_DAMAGE, 0, 10, 10, 0, 0, 0, 0,
++    AE_STR, 0, 2, 2, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 5, 5, 0, 0, 0, 0,
++},
++{ 4624, "The Last Bell", 932, -106, -1, 2, 4, 1360, -1,
++    AE_REQUIRED_CLVL, 0, 8, 8, 0, 0, 0, 0,
++    AE_PERCENT_DAMAGE, 0, 10, 10, 0, 0, 0, 0,
++    AE_STR, 0, 2, 2, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 5, 5, 0, 0, 0, 0,
++},
++{ 4625, "Pilgrim's Bow", 144, -107, -1, 2, 4, 1360, -1,
++    AE_REQUIRED_CLVL, 0, 8, 8, 0, 0, 0, 0,
++    AE_PERCENT_DAMAGE, 0, 10, 10, 0, 0, 0, 0,
++    AE_DEX, 0, 2, 2, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 5, 5, 0, 0, 0, 0,
++},
++{ 4626, "Ember Crook", 277, -108, -1, 2, 4, 1360, -1,
++    AE_REQUIRED_CLVL, 0, 8, 8, 0, 0, 0, 0,
++    AE_MAG, 0, 2, 2, 0, 0, 0, 0,
++    AE_MANA, 0, 8, 8, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 5, 5, 0, 0, 0, 0,
++},
++{ 4627, "Grave Cleaver", 133, -109, -1, 8, 4, 3280, -1,
++    AE_REQUIRED_CLVL, 0, 24, 24, 0, 0, 0, 0,
++    AE_PERCENT_DAMAGE, 0, 20, 20, 0, 0, 0, 0,
++    AE_STR, 0, 4, 4, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 10, 10, 0, 0, 0, 0,
++},
++{ 4628, "Vesper Maul", 102, -110, -1, 15, 4, 5800, -1,
++    AE_REQUIRED_CLVL, 0, 45, 45, 0, 0, 0, 0,
++    AE_PERCENT_DAMAGE, 0, 30, 30, 0, 0, 0, 0,
++    AE_STR, 0, 6, 6, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 15, 15, 0, 0, 0, 0,
++},
++{ 4629, "Blackthorn Longbow", 161, -111, -1, 15, 4, 5800, -1,
++    AE_REQUIRED_CLVL, 0, 45, 45, 0, 0, 0, 0,
++    AE_PERCENT_DAMAGE, 0, 30, 30, 0, 0, 0, 0,
++    AE_DEX, 0, 6, 6, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 15, 15, 0, 0, 0, 0,
++},
++{ 4630, "Lantern Spire", 186, -112, -1, 15, 4, 5800, -1,
++    AE_REQUIRED_CLVL, 0, 45, 45, 0, 0, 0, 0,
++    AE_MAG, 0, 6, 6, 0, 0, 0, 0,
++    AE_MANA, 0, 30, 30, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 15, 15, 0, 0, 0, 0,
++},
++{ 4631, "Vigil Buckler", 800, -113, -1, 2, 4, 1360, -1,
++    AE_REQUIRED_CLVL, 0, 8, 8, 0, 0, 0, 0,
++    AE_VIT, 0, 2, 2, 0, 0, 0, 0,
++    AE_HIT_POINTS, 0, 8, 8, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 5, 5, 0, 0, 0, 0,
++},
++{ 4632, "Gate of Ashes", 512, -114, -1, 15, 4, 5800, -1,
++    AE_REQUIRED_CLVL, 0, 45, 45, 0, 0, 0, 0,
++    AE_VIT, 0, 6, 6, 0, 0, 0, 0,
++    AE_HIT_POINTS, 0, 30, 30, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 15, 15, 0, 0, 0, 0,
++},
++{ 4633, "Pilgrim's Mantle", 58, -115, -1, 2, 4, 1360, -1,
++    AE_REQUIRED_CLVL, 0, 8, 8, 0, 0, 0, 0,
++    AE_VIT, 0, 2, 2, 0, 0, 0, 0,
++    AE_HIT_POINTS, 0, 8, 8, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 5, 5, 0, 0, 0, 0,
++},
++{ 4634, "Nightkeeper's Vest", 1019, -116, -1, 8, 4, 3280, -1,
++    AE_REQUIRED_CLVL, 0, 24, 24, 0, 0, 0, 0,
++    AE_VIT, 0, 4, 4, 0, 0, 0, 0,
++    AE_HIT_POINTS, 0, 18, 18, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 10, 10, 0, 0, 0, 0,
++},
++{ 4635, "Ashguard Mail", 107, -117, -1, 8, 4, 3280, -1,
++    AE_REQUIRED_CLVL, 0, 24, 24, 0, 0, 0, 0,
++    AE_VIT, 0, 4, 4, 0, 0, 0, 0,
++    AE_HIT_POINTS, 0, 18, 18, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 10, 10, 0, 0, 0, 0,
++},
++{ 4636, "Returning Bastion", 1202, -118, -1, 15, 4, 5800, -1,
++    AE_REQUIRED_CLVL, 0, 45, 45, 0, 0, 0, 0,
++    AE_VIT, 0, 6, 6, 0, 0, 0, 0,
++    AE_HIT_POINTS, 0, 30, 30, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 15, 15, 0, 0, 0, 0,
++},
++{ 4637, "Watcher's Helm", 14, -119, -1, 2, 4, 1360, -1,
++    AE_REQUIRED_CLVL, 0, 8, 8, 0, 0, 0, 0,
++    AE_VIT, 0, 2, 2, 0, 0, 0, 0,
++    AE_HIT_POINTS, 0, 8, 8, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 5, 5, 0, 0, 0, 0,
++},
++{ 4638, "Crown of Cinders", 728, -120, -1, 15, 4, 5800, -1,
++    AE_REQUIRED_CLVL, 0, 45, 45, 0, 0, 0, 0,
++    AE_VIT, 0, 6, 6, 0, 0, 0, 0,
++    AE_HIT_POINTS, 0, 30, 30, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 15, 15, 0, 0, 0, 0,
++},
++{ 4639, "Ember Band", 157, -121, -1, 2, 4, 1360, -1,
++    AE_REQUIRED_CLVL, 0, 8, 8, 0, 0, 0, 0,
++    AE_VIT, 0, 2, 2, 0, 0, 0, 0,
++    AE_HIT_POINTS, 0, 8, 8, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 5, 5, 0, 0, 0, 0,
++},
++{ 4640, "Unbroken Circle", 1149, -122, -1, 8, 4, 3280, -1,
++    AE_REQUIRED_CLVL, 0, 24, 24, 0, 0, 0, 0,
++    AE_VIT, 0, 4, 4, 0, 0, 0, 0,
++    AE_HIT_POINTS, 0, 18, 18, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 10, 10, 0, 0, 0, 0,
++},
++{ 4641, "Nightfall Signet", 197, -123, -1, 15, 4, 5800, -1,
++    AE_REQUIRED_CLVL, 0, 45, 45, 0, 0, 0, 0,
++    AE_VIT, 0, 6, 6, 0, 0, 0, 0,
++    AE_HIT_POINTS, 0, 30, 30, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 15, 15, 0, 0, 0, 0,
++},
++{ 4642, "Homeward Token", 1189, -124, -1, 2, 4, 1360, -1,
++    AE_REQUIRED_CLVL, 0, 8, 8, 0, 0, 0, 0,
++    AE_MAG, 0, 2, 2, 0, 0, 0, 0,
++    AE_MANA, 0, 8, 8, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 5, 5, 0, 0, 0, 0,
++},
++{ 4643, "Reliquary of Dawn", 305, -125, -1, 15, 4, 5800, -1,
++    AE_REQUIRED_CLVL, 0, 45, 45, 0, 0, 0, 0,
++    AE_MAG, 0, 6, 6, 0, 0, 0, 0,
++    AE_MANA, 0, 30, 30, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 15, 15, 0, 0, 0, 0,
++},
++{ 4644, "Wayfarer's Grip", 404, -126, -1, 2, 4, 1360, -1,
++    AE_REQUIRED_CLVL, 0, 8, 8, 0, 0, 0, 0,
++    AE_VIT, 0, 2, 2, 0, 0, 0, 0,
++    AE_HIT_POINTS, 0, 8, 8, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 5, 5, 0, 0, 0, 0,
++},
++{ 4645, "Iron Oath Gauntlets", 408, -127, -1, 8, 4, 3280, -1,
++    AE_REQUIRED_CLVL, 0, 24, 24, 0, 0, 0, 0,
++    AE_VIT, 0, 4, 4, 0, 0, 0, 0,
++    AE_HIT_POINTS, 0, 18, 18, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 10, 10, 0, 0, 0, 0,
++},
++{ 4646, "Ashen Path Boots", 1151, -128, -1, 2, 4, 1360, -1,
++    AE_REQUIRED_CLVL, 0, 8, 8, 0, 0, 0, 0,
++    AE_VIT, 0, 2, 2, 0, 0, 0, 0,
++    AE_HIT_POINTS, 0, 8, 8, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 5, 5, 0, 0, 0, 0,
++},
++{ 4647, "Gravewalker Greaves", 795, -129, -1, 8, 4, 3280, -1,
++    AE_REQUIRED_CLVL, 0, 24, 24, 0, 0, 0, 0,
++    AE_VIT, 0, 4, 4, 0, 0, 0, 0,
++    AE_HIT_POINTS, 0, 18, 18, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 10, 10, 0, 0, 0, 0,
++},
++{ 4648, "Pilgrim's Cord", 1178, -130, -1, 2, 4, 1360, -1,
++    AE_REQUIRED_CLVL, 0, 8, 8, 0, 0, 0, 0,
++    AE_VIT, 0, 2, 2, 0, 0, 0, 0,
++    AE_HIT_POINTS, 0, 8, 8, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 5, 5, 0, 0, 0, 0,
++},
++{ 4649, "Warden's Girdle", 441, -131, -1, 8, 4, 3280, -1,
++    AE_REQUIRED_CLVL, 0, 24, 24, 0, 0, 0, 0,
++    AE_VIT, 0, 4, 4, 0, 0, 0, 0,
++    AE_HIT_POINTS, 0, 18, 18, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 10, 10, 0, 0, 0, 0,
++},
++{ 4650, "Cinder Flask", 755, -132, -1, 8, 4, 3280, -1,
++    AE_REQUIRED_CLVL, 0, 24, 24, 0, 0, 0, 0,
++    AE_MAG, 0, 4, 4, 0, 0, 0, 0,
++    AE_MANA, 0, 18, 18, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 10, 10, 0, 0, 0, 0,
++},
++{ 4651, "Vesper Snare", 1052, -133, -1, 8, 4, 3280, -1,
++    AE_REQUIRED_CLVL, 0, 24, 24, 0, 0, 0, 0,
++    AE_MAG, 0, 4, 4, 0, 0, 0, 0,
++    AE_MANA, 0, 18, 18, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 10, 10, 0, 0, 0, 0,
++},
++{ 4652, "Raven Talons", 1040, -134, -1, 8, 4, 3280, -1,
++    AE_REQUIRED_CLVL, 0, 24, 24, 0, 0, 0, 0,
++    AE_PERCENT_DAMAGE, 0, 20, 20, 0, 0, 0, 0,
++    AE_STR, 0, 4, 4, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 10, 10, 0, 0, 0, 0,
++},
++{ 4653, "Returning Shard", 1219, -135, -1, 8, 4, 3280, -1,
++    AE_REQUIRED_CLVL, 0, 24, 24, 0, 0, 0, 0,
++    AE_PERCENT_DAMAGE, 0, 20, 20, 0, 0, 0, 0,
++    AE_DEX, 0, 4, 4, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 10, 10, 0, 0, 0, 0,
++},
++{ 4654, "Cinder Weight", 1232, -136, -1, 8, 4, 3280, -1,
++    AE_REQUIRED_CLVL, 0, 24, 24, 0, 0, 0, 0,
++    AE_PERCENT_DAMAGE, 0, 20, 20, 0, 0, 0, 0,
++    AE_STR, 0, 4, 4, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 10, 10, 0, 0, 0, 0,
++},
++{ 4655, "Last Light", 2433, -137, -1, 15, 4, 5800, -1,
++    AE_REQUIRED_CLVL, 0, 45, 45, 0, 0, 0, 0,
++    AE_PERCENT_DAMAGE, 0, 30, 30, 0, 0, 0, 0,
++    AE_DEX, 0, 6, 6, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 15, 15, 0, 0, 0, 0,
++},
++{ 4656, "Chronicle of Return", 9, -138, -1, 15, 4, 5800, -1,
++    AE_REQUIRED_CLVL, 0, 45, 45, 0, 0, 0, 0,
++    AE_MAG, 0, 6, 6, 0, 0, 0, 0,
++    AE_MANA, 0, 30, 30, 0, 0, 0, 0,
++    AE_RESIST_FIRE, 0, 15, 15, 0, 0, 0, 0,
++},
+--- /dev/null
 +++ b/src/CommunityDev.h
 @@ -0,0 +1,15 @@
 +#pragma once
@@ -3369,12 +3632,13 @@
 +}
 --- /dev/null
 +++ b/src/CommunityHub.cpp
-@@ -0,0 +1,298 @@
+@@ -0,0 +1,343 @@
 +#include "stdafx.h"
 +#include "CommunityHub.h"
 +#include "CommunityProgress.h"
 +#include "CommunityDev.h"
 +#include "CommunitySession.h"
++#include "CommunityMenuTranslations.h"
 +#pragma pack(push,8)
 +#include <winhttp.h>
 +#include <wincrypt.h>
@@ -3413,6 +3677,19 @@
 +extern void __fastcall SetDialogBmpToElem(HWND,HWND);
 +extern PALETTEENTRY *__fastcall GetMenuPalette(int);
 +namespace {
++std::set<std::string> playerTexts;
++bool languageInitialized=false,portuguese=false;
++std::string languagePath(){
++ char folder[MAX_PATH]={},mode[40]={};GetEnvironmentVariableA("RFD_PROFILE",folder,sizeof(folder));GetEnvironmentVariableA("RFD_ENGINE_QA",mode,sizeof(mode));
++ if(mode[0]&&strstr(folder,"engine-qa-"))return std::string(folder)+"\\language.txt";
++ GetEnvironmentVariableA("LOCALAPPDATA",folder,sizeof(folder));return std::string(folder)+"\\ReturnsFromDarkness\\language.txt";
++}
++void initializeLanguage(){
++ if(languageInitialized)return;languageInitialized=true;portuguese=PRIMARYLANGID(GetUserDefaultUILanguage())==LANG_PORTUGUESE;
++ char qaMode[40]={};GetEnvironmentVariableA("RFD_ENGINE_QA",qaMode,sizeof(qaMode));if(qaMode[0])portuguese=false;
++ char value[16]={};FILE *file=fopen(languagePath().c_str(),"r");if(file){fgets(value,sizeof(value),file);fclose(file);portuguese=strncmp(value,"pt-BR",5)==0;}
++ if(GetEnvironmentVariableA("RFD_GAME_LANGUAGE",value,sizeof(value)))portuguese=strcmp(value,"pt-BR")==0;
++}
 +struct NoticeState {std::string caption,text;std::vector<std::string> lines;size_t page=0;int rows=1;};
 +int noticeTexts[]={ID_QUESTION_TEXT,ID_CAPTION,0},noticeButtons[]={ID_YES_OK_BUTTON,0};
 +std::string noticeText(const char *text){
@@ -3478,7 +3755,7 @@
 + // Keep complete captions. Only the font size changes, never their spelling.
 + for(int i=0;i<7;i++){
 +  HWND button=GetDlgItem(dlg,ids[i]);RECT rect{};GetClientRect(button,&rect);
-+  std::string label=noticeText(labels[i].c_str());int chosen=0;
++  std::string label=noticeText(RfdMenuText(labels[i].c_str()));int chosen=0;
 +  for(int font:{4,2,0}){SetCurFont(font);chosen=font;if(GetStringDrawWidth(const_cast<char*>(label.c_str()))<=rect.right-2*GetPentagramWidth()-8)break;}
 +  hubLabelsFit=hubLabelsFit&&GetStringDrawWidth(const_cast<char*>(label.c_str()))<=rect.right-2*GetPentagramWidth()-8;
 +  SetDlgItemTextA(dlg,ids[i],label.c_str());EnableWindow(button,!label.empty());int one[]={ids[i],0};InitButtonListText(dlg,one,chosen,0);
@@ -3546,10 +3823,25 @@
 +}
 +}
 +const char *RfdHubFormTitle(){return title.c_str();}
++const char *RfdGameLanguage(){initializeLanguage();return portuguese?"pt-BR":"en";}
++void RfdProtectPlayerText(const char *text){if(text&&strlen(text)<65&&playerTexts.size()<1024)playerTexts.insert(text);}
++const char *RfdMenuText(const char *text){
++ if(!text)return "";initializeLanguage();if(playerTexts.count(text))return text;
++ for(auto &entry:RfdMenuTranslations)if(!strcmp(text,entry.key))return portuguese?entry.portuguese:entry.english;
++ return text;
++}
++void RfdSelectGameLanguage(bool force){
++ initializeLanguage();char mode[40]={};GetEnvironmentVariableA("RFD_ENGINE_QA",mode,sizeof(mode));
++ if(mode[0]&&!force){SetEnvironmentVariableA("RFD_GAME_LANGUAGE",RfdGameLanguage());return;}
++ if(!force&&GetFileAttributesA(languagePath().c_str())!=INVALID_FILE_ATTRIBUTES)return;
++ char explicitLanguage[16]={};if(!force&&GetEnvironmentVariableA("RFD_GAME_LANGUAGE",explicitLanguage,sizeof(explicitLanguage))&&(!strcmp(explicitLanguage,"en")||!strcmp(explicitLanguage,"pt-BR")))return;
++ auto previous=labels;labels={"English","Portugues (Brasil)","","","","","Voltar / Back"};int choice=menu();labels=previous;
++ if(choice==1||choice==2){portuguese=choice==2;FILE *file=fopen(languagePath().c_str(),"w");if(file){fputs(RfdGameLanguage(),file);fclose(file);}SetEnvironmentVariableA("RFD_GAME_LANGUAGE",RfdGameLanguage());SetEnvironmentVariableA("RFD_UI_LANGUAGE",RfdGameLanguage());}
++}
 +void RfdShowNotice(const char *caption,const char *text){
 + // Only startup/fatal errors before graphics initialization may use a system box.
 + if(!ghMainWnd||!ScreenSurface){MessageBoxA(ghMainWnd,text?text:"",caption?caption:"Returns from Darkness",MB_OK|MB_ICONINFORMATION);return;}
-+ LoadFonts();NoticeState state{noticeText(caption),noticeText(text)};HWND parent=GetActiveWindow();if(!parent||GetWindowThreadProcessId(parent,nullptr)!=GetCurrentThreadId())parent=ghMainWnd;
++ LoadFonts();NoticeState state{noticeText(RfdMenuText(caption)),noticeText(RfdMenuText(text))};HWND parent=GetActiveWindow();if(!parent||GetWindowThreadProcessId(parent,nullptr)!=GetCurrentThreadId())parent=ghMainWnd;
 + SDlgDialogBoxParam(HInstance,"RFD_NATIVE_NOTICE",parent,noticeDialog,(LPARAM)&state);
 + extern void RfdRepaintMenus();RfdRepaintMenus();
 +}
@@ -3627,6 +3919,22 @@
 +  };
 +  Gallery::folder()=profile;SetTimer(ghMainWnd,0x524648,350,Gallery::tick);return false;
 + }
++ if(!strcmp(mode,"language")&&strstr(profile,"engine-qa-")){
++  struct LanguageFixture {
++   static int &choice(){static int value=0;return value;}
++   static std::string &folder(){static std::string value;return value;}
++   static BOOL CALLBACK find(HWND window,LPARAM data){if(window!=ghMainWnd&&IsWindowVisible(window)){*(HWND*)data=window;return FALSE;}return TRUE;}
++   static void CALLBACK timer(HWND,UINT,UINT_PTR,DWORD){HWND dialog=nullptr;EnumThreadWindows(GetCurrentThreadId(),find,(LPARAM)&dialog);if(!dialog)return;
++    std::string file=folder()+"\\language-"+std::to_string(choice())+".bmp";
++    if(GetFileAttributesA(file.c_str())==INVALID_FILE_ATTRIBUTES){extern void RfdQueueMenuCapture(const char*);RfdQueueMenuCapture(file.c_str());return;}
++    PostMessageA(dialog,WM_COMMAND,choice()?ID_MAINMENU_MULTIPLAYER:ID_MAINMENU_SINGLEPLAYER,0);
++   }
++  };
++  LanguageFixture::folder()=profile;SetTimer(ghMainWnd,0x52464c,300,LanguageFixture::timer);
++  RfdSelectGameLanguage(true);bool english=!strcmp(RfdGameLanguage(),"en")&&!strcmp(RfdMenuText("Nome"),"Name")&&!strcmp(RfdMenuText("Entrar na conta"),"Enter Account");
++  LanguageFixture::choice()=1;RfdSelectGameLanguage(true);bool pt=!strcmp(RfdGameLanguage(),"pt-BR")&&!strcmp(RfdMenuText("Single Player"),"Um jogador")&&!strcmp(RfdMenuText("Password"),"Senha");
++  KillTimer(ghMainWnd,0x52464c);FILE *file=fopen((std::string(profile)+"\\language-choice-qa.json").c_str(),"w");if(file){fprintf(file,"{\"fixtureOnly\":true,\"actualNativeChoice\":true,\"englishSelected\":%s,\"portugueseSelected\":%s,\"wholeGameTranslationComplete\":false}",english?"true":"false",pt?"true":"false");fclose(file);}return true;
++ }
 + if(strcmp(mode,"render")||strstr(profile,"engine-qa-")==nullptr)return false;
 + struct Fixture{
 +  static std::string &folder(){static std::string path;return path;}
@@ -3670,7 +3978,7 @@
 +}
 --- /dev/null
 +++ b/src/CommunityHub.h
-@@ -0,0 +1,11 @@
+@@ -0,0 +1,15 @@
 +#pragma once
 +int RfdShowRoomHub();
 +const char *RfdHubFormTitle();
@@ -3682,6 +3990,10 @@
 +// Account, room and unlock notices use the game's bitmap fonts and popup skin.
 +void RfdShowNotice(const char *caption,const char *text);
 +bool RfdMenuRenderQa();
++const char *RfdMenuText(const char *text);
++void RfdSelectGameLanguage(bool force=false);
++void RfdProtectPlayerText(const char *text);
++const char *RfdGameLanguage();
 --- /dev/null
 +++ b/src/CommunityHudAtlas.h
 @@ -0,0 +1,30 @@
@@ -3717,13 +4029,15 @@
 +};
 --- /dev/null
 +++ b/src/CommunityHudKit.cpp
-@@ -0,0 +1,381 @@
+@@ -0,0 +1,437 @@
 +#include "stdafx.h"
 +#include "CommunityHudKit.h"
 +#include "CommunityRemaster.h"
 +#include "CommunityDev.h"
++#include "CommunityHub.h"
 +#include "CommunityHudAtlas.h"
 +#include "CommunityHudKitShader.h"
++#include "CommunityItemAtlas.h"
 +#include <wincodec.h>
 +#if RFD_DEV_QA
 +extern ItemCell ItemCells[117];
@@ -3735,9 +4049,13 @@
 +constexpr int AtlasSize=2048;
 +std::vector<DWORD> sourcePixels;
 +std::vector<unsigned char> expected,visible;
++std::vector<DWORD> itemPixels;
++std::vector<unsigned char> itemExpected,itemVisible;
++bool itemAttempted=false;
 +bool attempted=false,loaded=false;
 +struct Sprite {int asset,x,y,w,h;RfdKitSource source;DWORD tint;};
 +std::vector<Sprite> sprites;
++std::vector<Sprite> itemSprites;
 +#if RFD_DEV_QA
 +struct Caption {std::string text;int x,y,width,advance;};
 +std::vector<Caption> captions;
@@ -3747,6 +4065,7 @@
 +#endif
 +IDirect3DDevice9 *owner=nullptr;
 +IDirect3DTexture9 *texture=nullptr,*mask=nullptr;
++IDirect3DTexture9 *itemTexture=nullptr,*itemMask=nullptr;
 +IDirect3DPixelShader9 *shader=nullptr;
 +int maskW=0,maskH=0;
 +bool location(void *destination,int &x,int &y){
@@ -3770,6 +4089,15 @@
 + }
 + if(convert)convert->Release();if(frame)frame->Release();if(decoder)decoder->Release();if(factory)factory->Release();if(SUCCEEDED(initialized))CoUninitialize();
 + if(!loaded)sourcePixels.clear();return loaded;
++}
++bool loadItemArt(){
++ if(itemAttempted)return !itemPixels.empty();itemAttempted=true;
++ wchar_t path[MAX_PATH]={};GetModuleFileNameW(nullptr,path,MAX_PATH);auto tail=wcsrchr(path,L'\\');if(!tail)return false;wcscpy(tail+1,L"assets\\original\\items\\collection-atlas.png");
++ HRESULT initialized=CoInitializeEx(nullptr,COINIT_MULTITHREADED);IWICImagingFactory *factory=nullptr;IWICBitmapDecoder *decoder=nullptr;IWICBitmapFrameDecode *frame=nullptr;IWICFormatConverter *convert=nullptr;UINT w=0,h=0;bool ok=false;
++ if(SUCCEEDED(CoCreateInstance(CLSID_WICImagingFactory,nullptr,CLSCTX_INPROC_SERVER,IID_PPV_ARGS(&factory)))&&SUCCEEDED(factory->CreateDecoderFromFilename(path,nullptr,GENERIC_READ,WICDecodeMetadataCacheOnLoad,&decoder))&&
++    SUCCEEDED(decoder->GetFrame(0,&frame))&&SUCCEEDED(factory->CreateFormatConverter(&convert))&&SUCCEEDED(convert->Initialize(frame,GUID_WICPixelFormat32bppBGRA,WICBitmapDitherTypeNone,nullptr,0,WICBitmapPaletteTypeCustom))&&
++    SUCCEEDED(convert->GetSize(&w,&h))&&w==AtlasSize&&h==AtlasSize){itemPixels.resize(size_t(w)*h);ok=SUCCEEDED(convert->CopyPixels(nullptr,w*4,w*h*4,(BYTE*)itemPixels.data()));}
++ if(convert)convert->Release();if(frame)frame->Release();if(decoder)decoder->Release();if(factory)factory->Release();if(SUCCEEDED(initialized))CoUninitialize();if(!ok)itemPixels.clear();return ok;
 +}
 +unsigned char paletteColor(DWORD color){
 + int r=(color>>16)&255,g=(color>>8)&255,b=color&255;
@@ -3804,7 +4132,7 @@
 +  if(!known[key]){index=paletteColor(rgb);colors[key]=index;known[key]=true;}else index=colors[key];
 +  size_t at=size_t(y+row)*ScreenWidth+x+col;
 +  auto *pixel=WorkingSurface+(y+row+Screen_TopBorder)*WorkingWidth+x+col+Screen_LeftBorder;
-+  *pixel=index;expected[at]=index;visible[at]=255;
++  *pixel=index;expected[at]=index;visible[at]=255;if(itemVisible.size()==visible.size())itemVisible[at]=0;
 + }
 +}
 +void sprite(int asset,int x,int y,int w,int h,DWORD tint=0xffffffff){spritePart(asset,x,y,w,h,RfdKitSources[asset],tint);}
@@ -3826,6 +4154,7 @@
 +}
 +void field(int x,int y,int w,int h){nine(KIT_BUTTON,x,y,w,h,7,3);}
 +void label(int x,int y,const char *text,int width=66){
++ text=RfdMenuText(text);
 + char buffer[64];strncpy_s(buffer,text,_TRUNCATE);
 + int scale=GetTextWidth(text)>width?-1:0;
 +#if RFD_DEV_QA
@@ -3846,7 +4175,7 @@
 + }else leather(p.Left-8,p.Top-6,p.Width+16,p.Heigth+16);
 + sprite(asset,x,y,w,h);
 +}
-+void release(){if(texture)texture->Release();if(mask)mask->Release();if(shader)shader->Release();texture=mask=nullptr;shader=nullptr;maskW=maskH=0;}
++void release(){if(texture)texture->Release();if(itemTexture)itemTexture->Release();if(itemMask)itemMask->Release();if(mask)mask->Release();if(shader)shader->Release();texture=mask=itemTexture=itemMask=nullptr;shader=nullptr;maskW=maskH=0;}
 +#if RFD_DEV_QA
 +void validateNativeControls(){
 + static bool done=false;if(done)return;
@@ -3922,12 +4251,26 @@
 + if(GetTickCount()-start>1200){extern void RfdQueueMenuCapture(const char*);RfdQueueMenuCapture((std::string(profile)+"\\"+names[phase]+".bmp").c_str());}
 +#endif
 +}
-+void RfdKitBegin(){sprites.clear();
++void RfdKitBegin(){sprites.clear();itemSprites.clear();
 +#if RFD_DEV_QA
 + captions.clear();tooltipRects.clear();buttonCaptionsFit=true;buttonCaptions=0;
 +#endif
-+ const size_t size=size_t(ScreenWidth)*ScreenHeight;expected.assign(size,0);visible.assign(size,0);}
-+void RfdKitClearPixel(void *destination){int x,y;if(gbRunGame==1&&location(destination,x,y)&&visible.size()==size_t(ScreenWidth)*ScreenHeight)visible[size_t(y)*ScreenWidth+x]=0;}
++ const size_t size=size_t(ScreenWidth)*ScreenHeight;expected.assign(size,0);visible.assign(size,0);
++ if(itemVisible.size()==size)std::fill(itemVisible.begin(),itemVisible.end(),0);else{itemExpected.clear();itemVisible.clear();}}
++void RfdKitClearPixel(void *destination){int x,y;if(gbRunGame==1&&location(destination,x,y)&&visible.size()==size_t(ScreenWidth)*ScreenHeight){size_t at=size_t(y)*ScreenWidth+x;visible[at]=0;if(itemVisible.size()==visible.size())itemVisible[at]=0;}}
++void RfdKitItemIcon(int index,int x,int down,int flags){
++ if(index<0||index>=countof(RfdItemArtSources)||!RfdKitReady()||!WorkingSurface||visible.size()!=size_t(ScreenWidth)*ScreenHeight||!loadItemArt())return;
++ if(itemVisible.size()!=visible.size()){itemVisible.assign(visible.size(),0);itemExpected.resize(visible.size());}
++ auto s=RfdItemArtSources[index];x-=Screen_LeftBorder;int y=down-Screen_TopBorder-s.height+1;
++ const DWORD tint=flags&1?0xffff7777:0xffffffff;RfdKitSource rect{s.x,s.y,s.w,s.h};
++ if(flags&R_MIRROR){rect.x+=rect.w;rect.w=-rect.w;}
++ itemSprites.push_back({index,x,y,s.width,s.height,rect,tint});
++ for(int row=std::max(0,-y);row<std::min(s.height,ScreenHeight-y);row++)for(int col=std::max(0,-x);col<std::min(s.width,ScreenWidth-x);col++){
++  int sx=s.x+std::min(s.w-1,(flags&R_MIRROR?s.width-1-col:col)*s.w/s.width),sy=s.y+std::min(s.h-1,row*s.h/s.height);
++  if((itemPixels[size_t(sy)*AtlasSize+sx]>>24)<48)continue;
++  size_t at=size_t(y+row)*ScreenWidth+x+col;itemVisible[at]=255;itemExpected[at]=WorkingSurface[(y+row+Screen_TopBorder)*WorkingWidth+x+col+Screen_LeftBorder];
++ }
++}
 +void RfdKitClearSprite(void *destination,int width,int height){
 + int x,y;if(gbRunGame!=1||!location(destination,x,y)||visible.size()!=size_t(ScreenWidth)*ScreenHeight)return;
 + // Only opaque native sprite spans are protected. Padding created palette
@@ -4072,7 +4415,7 @@
 +  for(int row=0;row<AtlasSize;row++)memcpy((BYTE*)lock.pBits+row*lock.Pitch,sourcePixels.data()+size_t(row)*AtlasSize,AtlasSize*4);texture->UnlockRect(0);
 + }
 + if(!shader&&FAILED(device->CreatePixelShader((DWORD*)g_ps30_main_hud_kit,&shader)))return;
-+ if(maskW!=ScreenWidth||maskH!=ScreenHeight){if(mask)mask->Release();mask=nullptr;maskW=ScreenWidth;maskH=ScreenHeight;
++ if(maskW!=ScreenWidth||maskH!=ScreenHeight){if(mask)mask->Release();if(itemMask)itemMask->Release();mask=itemMask=nullptr;maskW=ScreenWidth;maskH=ScreenHeight;
 +  if(FAILED(device->CreateTexture(maskW,maskH,1,0,D3DFMT_A8,D3DPOOL_MANAGED,&mask,nullptr)))return;}
 + D3DLOCKED_RECT lock{};if(!mask||FAILED(mask->LockRect(0,&lock,nullptr,0)))return;
 + unsigned visiblePixels=0;
@@ -4093,7 +4436,32 @@
 + auto leatherSource=RfdKitSources[KIT_FRAME_C];float leatherRect[4]={float(leatherSource.x),float(leatherSource.y),float(leatherSource.w),float(leatherSource.h)};device->SetPixelShaderConstantF(2,leatherRect,1);
 + device->SetRenderState(D3DRS_ALPHABLENDENABLE,TRUE);device->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);device->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_INVSRCALPHA);device->SetRenderState(D3DRS_ZENABLE,FALSE);device->SetRenderState(D3DRS_CULLMODE,D3DCULL_NONE);
 + for(int i=0;i<2;i++){device->SetSamplerState(i,D3DSAMP_MINFILTER,i?D3DTEXF_POINT:D3DTEXF_LINEAR);device->SetSamplerState(i,D3DSAMP_MAGFILTER,i?D3DTEXF_POINT:D3DTEXF_LINEAR);device->SetSamplerState(i,D3DSAMP_ADDRESSU,D3DTADDRESS_CLAMP);device->SetSamplerState(i,D3DSAMP_ADDRESSV,D3DTADDRESS_CLAMP);}
-+ device->DrawPrimitiveUP(D3DPT_TRIANGLELIST,UINT(batch.size()/3),batch.data(),sizeof(Vertex));state->Apply();state->Release();
++ device->DrawPrimitiveUP(D3DPT_TRIANGLELIST,UINT(batch.size()/3),batch.data(),sizeof(Vertex));
++ unsigned itemPixelCount=0;
++ if(!itemSprites.empty()&&!itemPixels.empty()){
++  if(!itemTexture&&SUCCEEDED(device->CreateTexture(AtlasSize,AtlasSize,1,0,D3DFMT_A8R8G8B8,D3DPOOL_MANAGED,&itemTexture,nullptr))){
++   D3DLOCKED_RECT art{};if(SUCCEEDED(itemTexture->LockRect(0,&art,nullptr,0))){for(int row=0;row<AtlasSize;row++)memcpy((BYTE*)art.pBits+row*art.Pitch,itemPixels.data()+size_t(row)*AtlasSize,AtlasSize*4);itemTexture->UnlockRect(0);}else{itemTexture->Release();itemTexture=nullptr;}
++  }
++  if(!itemMask)device->CreateTexture(maskW,maskH,1,0,D3DFMT_A8,D3DPOOL_MANAGED,&itemMask,nullptr);
++  RECT region{ScreenWidth,ScreenHeight,0,0};for(auto &s:itemSprites){region.left=std::min(region.left,LONG(std::max(0,s.x)));region.top=std::min(region.top,LONG(std::max(0,s.y)));region.right=std::max(region.right,LONG(std::min(ScreenWidth,s.x+s.w)));region.bottom=std::max(region.bottom,LONG(std::min(ScreenHeight,s.y+s.h)));}
++  D3DLOCKED_RECT coverage{};
++  if(itemTexture&&itemMask&&region.right>region.left&&region.bottom>region.top&&SUCCEEDED(itemMask->LockRect(0,&coverage,&region,0))){
++   for(int y=region.top;y<region.bottom;y++){auto *out=(BYTE*)coverage.pBits+(y-region.top)*coverage.Pitch;auto *row=WorkingSurface+(y+Screen_TopBorder)*WorkingWidth+Screen_LeftBorder;
++    for(int x=region.left;x<region.right;x++){size_t at=size_t(y)*ScreenWidth+x;out[x-region.left]=itemVisible[at]&&row[x]==itemExpected[at]?255:0;itemPixelCount+=out[x-region.left]!=0;}}
++   itemMask->UnlockRect(0);batch.clear();
++   for(const auto &s:itemSprites){auto r=s.source;Vertex a=vertex(s,s.x,s.y,float(r.x),float(r.y)),b=vertex(s,s.x+s.w,s.y,float(r.x+r.w),float(r.y)),c=vertex(s,s.x,s.y+s.h,float(r.x),float(r.y+r.h)),d=vertex(s,s.x+s.w,s.y+s.h,float(r.x+r.w),float(r.y+r.h));batch.insert(batch.end(),{a,b,c,c,b,d});}
++   device->SetTexture(0,itemTexture);device->SetTexture(1,itemMask);const float none[4]={-10000,-10000,0,0};device->SetPixelShaderConstantF(2,none,1);
++   device->DrawPrimitiveUP(D3DPT_TRIANGLELIST,UINT(batch.size()/3),batch.data(),sizeof(Vertex));
++  }
++ }
++ state->Apply();state->Release();
++#if RFD_DEV_QA
++ if(itemPixelCount){char mode[40]={},profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_ENGINE_QA",mode,sizeof(mode));GetEnvironmentVariableA("RFD_PROFILE",profile,sizeof(profile));
++  if(!strcmp(mode,"ashes-collection")&&strstr(profile,"engine-qa-")){
++   int firstId=4657;for(auto &s:itemSprites)firstId=std::min(firstId,s.asset+4618);
++   std::string file=std::string(profile)+"\\item-rgba-"+std::to_string(firstId)+".json";
++   if(GetFileAttributesA(file.c_str())==INVALID_FILE_ATTRIBUTES){FILE *f=fopen(file.c_str(),"w");if(f){fprintf(f,"{\"actualGpuPass\":true,\"sourceAtlas\":[2048,2048],\"preservesAspectRatio\":true,\"paletteFallback\":true,\"visiblePixels\":%u,\"drawCommands\":%u,\"sourceItems\":[",itemPixelCount,unsigned(itemSprites.size()));for(size_t i=0;i<itemSprites.size();i++)fprintf(f,"%s%d",i?",":"",itemSprites[i].asset+4618);fputs("]}",f);fclose(f);}}}}
++#endif
 +#if RFD_DEV_QA
 + static bool reported=false;if(!reported&&visiblePixels>1000){char profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_PROFILE",profile,MAX_PATH);
 +  if(strstr(profile,"engine-qa-")){FILE *f=fopen((std::string(profile)+"\\interface-material-qa.json").c_str(),"w");if(f){fprintf(f,"{\"loaded\":true,\"material\":\"assets/original/ui/gothic-kit/hud-atlas.png\",\"sourceSize\":[2048,2048],\"screenSize\":[%d,%d],\"maskedPixels\":%u,\"decodeOnce\":true,\"maskFormat\":\"A8\",\"singleSpriteBatch\":true,\"inventoryGrid\":[10,7],\"userProvidedArtwork\":true}",ScreenWidth,ScreenHeight,visiblePixels);fclose(f);reported=true;}}}
@@ -4101,7 +4469,7 @@
 +}
 --- /dev/null
 +++ b/src/CommunityHudKit.h
-@@ -0,0 +1,19 @@
+@@ -0,0 +1,20 @@
 +#pragma once
 +bool RfdKitReady();
 +void RfdKitBegin();
@@ -4121,6 +4489,7 @@
 +void RfdKitCharacter();
 +void RfdKitRender(LPDIRECT3DDEVICE9 device);
 +void RfdKitInteractionQa();
++void RfdKitItemIcon(int index,int x,int down,int flags);
 --- /dev/null
 +++ b/src/CommunityHudKit.hlsl
 @@ -0,0 +1,32 @@
@@ -4610,6 +4979,52 @@
 +      0,   0, 255, 255,   0,   0
 +};
 --- /dev/null
++++ b/src/CommunityItemAtlas.h
+@@ -0,0 +1,43 @@
++#pragma once
++struct RfdItemArtSource { int x,y,w,h,width,height; };
++static const RfdItemArtSource RfdItemArtSources[] = {
++{10,10,272,272,28,28},
++{302,10,272,272,28,28},
++{594,10,272,272,28,28},
++{886,10,181,272,56,84},
++{1178,10,181,272,56,84},
++{1470,10,181,272,56,84},
++{10,302,181,272,56,84},
++{302,302,181,272,56,84},
++{594,302,181,272,56,84},
++{886,302,181,272,56,84},
++{1178,302,181,272,56,84},
++{1470,302,181,272,56,84},
++{10,594,181,272,56,84},
++{302,594,181,272,56,84},
++{594,594,181,272,56,84},
++{886,594,181,272,56,84},
++{1178,594,181,272,56,84},
++{1470,594,181,272,56,84},
++{10,886,181,272,56,84},
++{302,886,272,272,56,56},
++{594,886,272,272,56,56},
++{886,886,272,272,28,28},
++{1178,886,272,272,28,28},
++{1470,886,272,272,28,28},
++{10,1178,272,272,28,28},
++{302,1178,272,272,28,28},
++{594,1178,272,272,56,56},
++{886,1178,272,272,56,56},
++{1178,1178,272,272,56,56},
++{1470,1178,272,272,56,56},
++{10,1470,272,136,56,28},
++{302,1470,272,136,56,28},
++{594,1470,181,272,56,84},
++{886,1470,181,272,56,84},
++{1178,1470,181,272,56,84},
++{1470,1470,181,272,56,84},
++{10,1762,181,272,56,84},
++{302,1762,181,272,56,84},
++{594,1762,272,272,56,56},
++};
+--- /dev/null
 +++ b/src/CommunityLoot.cpp
 @@ -0,0 +1,16 @@
 +#include "stdafx.h"
@@ -4643,6 +5058,392 @@
 + ~RfdMonsterLootBatch(){if(online)for(int i=0;i<ItemsCount;i++){int id=ItemActive[i];if(!existed[id]||before[id]!=Items[id].seed)NetSendCmdDItem(true,id);}}
 +};
 +int RfdPutGroundItem(int row,int col,const LastItemInfo &info);
+--- /dev/null
++++ b/src/CommunityMenuTranslations.h
+@@ -0,0 +1,383 @@
++#pragma once
++// Native bitmap-font menu bridge. Full UTF-8 spelling is kept in the catalog.
++struct RfdMenuTranslation {const char *key,*english,*portuguese;};
++static const RfdMenuTranslation RfdMenuTranslations[]={
++{"Single Player","Single Player","Um jogador"},
++{"Multi Player","Multi Player","Multijogador"},
++{"Play Online","Play Online","Jogar online"},
++{"Online do projeto","Play Online","Jogar online"},
++{"New Hero","New Hero","Novo heroi"},
++{"New Character","New Character","Novo personagem"},
++{"Create Hero","Create Hero","Criar heroi"},
++{"Delete Hero","Delete Hero","Excluir heroi"},
++{"Select Hero","Select Hero","Selecionar heroi"},
++{"Select Character","Select Character","Selecionar personagem"},
++{"Enter Name","Enter Name","Digite o nome"},
++{"Name","Name","Nome"},
++{"Password","Password","Senha"},
++{"New Game","New Game","Novo jogo"},
++{"Load Game","Load Game","Carregar jogo"},
++{"Save Game","Save Game","Salvar jogo"},
++{"Save and Exit","Save and Exit","Salvar e sair"},
++{"Exit Game","Exit Game","Sair do jogo"},
++{"Quit Game","Quit Game","Sair do jogo"},
++{"Resume Game","Resume Game","Continuar jogo"},
++{"Previous Menu","Previous Menu","Menu anterior"},
++{"Options","Options","Opcoes"},
++{"Music","Music","Musica"},
++{"Sound","Sound","Efeitos sonoros"},
++{"Brightness","Brightness","Brilho"},
++{"Gamma","Gamma","Brilho"},
++{"Cancel","Cancel","Voltar"},
++{"Back","Back","Voltar"},
++{"OK","OK","Confirmar"},
++{"Accept","Accept","Confirmar"},
++{"Yes","Yes","Sim"},
++{"No","No","Nao"},
++{"Replay Intro","Replay Intro","Rever introducao"},
++{"Credits","Credits","Creditos"},
++{"Support","Language","Idioma / Language"},
++{"Exit Diablo","Exit Diablo","Sair do jogo"},
++{"Exit","Exit","Sair"},
++{"Choose Class","Choose Class","Escolha a classe"},
++{"Select Class","Select Class","Escolha a classe"},
++{"Class","Class","Classe"},
++{"Level","Level","Nivel"},
++{"Strength","Strength","Forca"},
++{"Magic","Magic","Magia"},
++{"Dexterity","Dexterity","Destreza"},
++{"Vitality","Vitality","Vitalidade"},
++{"Warrior","Warrior","Guerreiro"},
++{"Rogue","Rogue","Ladina"},
++{"Sorcerer","Sorcerer","Feiticeiro"},
++{"Monk","Monk","Monge"},
++{"Archer","Archer","Arqueira"},
++{"Barbarian","Barbarian","Barbaro"},
++{"Mage","Mage","Mago"},
++{"Bombardier","Bombardier","Bombardeiro"},
++{"Horror","Horror","Horror"},
++{"Purgatory","Purgatory","Purgatorio"},
++{"Doom","Doom","Perdicao"},
++{"Crucible","Crucible","Crisol"},
++{"Torment","Torment","Tormento"},
++{"Agony","Agony","Agonia"},
++{"Terror","Terror","Terror"},
++{"Destruction","Destruction","Destruicao"},
++{"Inferno","Inferno","Inferno"},
++{"Normal","Normal","Normal"},
++{"Hardcore","Hardcore","Hardcore"},
++{"Ironman","Ironman","Ironman"},
++{"Nightmare","Nightmare","Pesadelo"},
++{"Easy","Easy","Facil"},
++{"Survival","Survival","Sobrevivencia"},
++{"Hard","Hard","Dificil"},
++{"Speedrun","Speedrun","Contra o tempo"},
++{"Coliseum","Coliseum","Coliseu"},
++{"Game Mode","Game Mode","Modo de jogo"},
++{"Game Modes","Game Modes","Modos de jogo"},
++{"Difficulty","Difficulty","Dificuldade"},
++{"Traits","Traits","Caracteristicas"},
++{"Game Changers","Game Changers","Modificadores"},
++{"Create Game","Create Game","Criar partida"},
++{"Join Game","Join Game","Entrar na partida"},
++{"Game Name","Game Name","Nome da partida"},
++{"Login","Login","Entrar na conta"},
++{"Create Account","Create Account","Criar conta"},
++{"Community","Community","Comunidade"},
++{"Enter Account","Enter Account","Entrar na conta"},
++{"Room Password","Room Password","Senha da sala"},
++{"Create Room","Create Room","Criar sala"},
++{"No Rooms","No Rooms","Nenhuma sala"},
++{"Enter Game","Enter Game","Entrar na partida"},
++{"Leave Room","Leave Room","Sair da sala"},
++{"Refresh","Refresh","Atualizar"},
++{"Switch Account","Switch Account","Trocar conta"},
++{"My Sanctuary","My Sanctuary","Meu Santuario"},
++{"More Rooms / Refresh","More Rooms / Refresh","Mais salas / Atualizar"},
++{"More Options","More Options","Mais opcoes"},
++{"More Characters","More Characters","Mais personagens"},
++{"Choose Title","Choose Title","Escolher titulo"},
++{"Choose Avatar","Choose Avatar","Escolher avatar"},
++{"My Characters","My Characters","Meus personagens"},
++{"Seals and Unlocks","Seals and Unlocks","Selos e desbloqueios"},
++{"Cooperative Campaign","Cooperative Campaign","Campanha cooperativa"},
++{"More Difficulties","More Difficulties","Mais dificuldades"},
++{"Entrar na conta","Enter Account","Entrar na conta"},
++{"Criar conta","Create Account","Criar conta"},
++{"Comunidade","Community","Comunidade"},
++{"Voltar","Back","Voltar"},
++{"Senha da sala","Room Password","Senha da sala"},
++{"Criar sala","Create Room","Criar sala"},
++{"Nenhuma sala","No Rooms","Nenhuma sala"},
++{"Entrar na partida","Enter Game","Entrar na partida"},
++{"Sair da sala","Leave Room","Sair da sala"},
++{"Atualizar","Refresh","Atualizar"},
++{"Trocar conta","Switch Account","Trocar conta"},
++{"Meu Santuario","My Sanctuary","Meu Santuario"},
++{"Mais salas / Atualizar","More Rooms / Refresh","Mais salas / Atualizar"},
++{"Mais opcoes","More Options","Mais opcoes"},
++{"Mais personagens","More Characters","Mais personagens"},
++{"Escolher titulo","Choose Title","Escolher titulo"},
++{"Escolher avatar","Choose Avatar","Escolher avatar"},
++{"Meus personagens","My Characters","Meus personagens"},
++{"Selos e desbloqueios","Seals and Unlocks","Selos e desbloqueios"},
++{"Campanha cooperativa","Cooperative Campaign","Campanha cooperativa"},
++{"Mais dificuldades","More Difficulties","Mais dificuldades"},
++{"CHAR","CHAR","PERS"},
++{"QUESTS","QUESTS","MISSOES"},
++{"MAP","MAP","MAPA"},
++{"MENU","MENU","MENU"},
++{"INV","INV","INV"},
++{"SPELLS","SPELLS","MAGIAS"},
++{"CHAT","CHAT","CHAT"},
++{"TIME","TIME","TEMPO"},
++{"LIFE","LIFE","VIDA"},
++{"MANA","MANA","MANA"},
++{"REGEN","REGEN","REGEN"},
++{"CRITICAL","CRITICAL","CRITICO"},
++{"GOLD FIND","GOLD FIND","OURO"},
++{"EXP GAIN","EXP GAIN","EXP"},
++{"EXPERIENCE","EXPERIENCE","EXPERIENCIA"},
++{"NEXT LEVEL","NEXT LEVEL","PROX. NIVEL"},
++{"BASE","BASE","BASE"},
++{"TOTAL","TOTAL","TOTAL"},
++{"DEF / RESIST","DEF / RESIST","DEF / RESIST"},
++{"STRENGTH","STRENGTH","FORCA"},
++{"MAGIC","MAGIC","MAGIA"},
++{"DEXTERITY","DEXTERITY","DESTREZA"},
++{"VITALITY","VITALITY","VITALIDADE"},
++{"POINTS","POINTS","PONTOS"},
++{"ARMOR","ARMOR","ARMADURA"},
++{"TO HIT","TO HIT","ACERTO"},
++{"DAMAGE","DAMAGE","DANO"},
++{"ACID RES","ACID RES","RES. ACIDO"},
++{"MAGIC RES","MAGIC RES","RES. MAGIA"},
++{"FIRE RES","FIRE RES","RES. FOGO"},
++{"COLD RES","COLD RES","RES. GELO"},
++{"LIGHTNING","LIGHTNING","RAIO"},
++{"ARROW","ARROW","FLECHA"},
++{"FIND","FIND","ACHADO"},
++{"SPELL","SPELL","MAGIA"},
++{"LEVEL","LEVEL","NIVEL"},
++{"RESIST","RESIST","RESIST"},
++{"Inventory","Inventory","Inventario"},
++{"Character","Character","Personagem"},
++{"Spellbook","Spellbook","Grimorio"},
++{"Quests","Quests","Missoes"},
++{"Automap","Automap","Mapa"},
++{"Repair","Repair","Reparar"},
++{"Recharge","Recharge","Recarregar"},
++{"Identify","Identify","Identificar"},
++{"Buy Items","Buy Items","Comprar itens"},
++{"Sell Items","Sell Items","Vender itens"},
++{"Talk","Talk","Conversar"},
++{"Leave","Leave","Sair"},
++{"Gold","Gold","Ouro"},
++{"Selected","Selected","Selecionado"},
++{"Equipped","Equipped","Equipado"},
++{"Unique Item","Unique Item","Item unico"},
++{"Rare Item","Rare Item","Item raro"},
++{"Requirements not met","Requirements not met","Requisitos nao atendidos"},
++{"Inquisitor","Inquisitor","Inquisidor"},
++{"Guardian","Guardian","Guardiao"},
++{"Templar","Templar","Templario"},
++{"Scout","Scout","Batedora"},
++{"Sharpshooter","Sharpshooter","Atiradora de elite"},
++{"Trapper","Trapper","Armadilheiro"},
++{"Elementalist","Elementalist","Elementalista"},
++{"Demonologist","Demonologist","Demonologista"},
++{"Necromancer","Necromancer","Necromante"},
++{"Beastmaster","Beastmaster","Mestre das feras"},
++{"Warlock","Warlock","Bruxo"},
++{"Kensei","Kensei","Kensei"},
++{"Shugoki","Shugoki","Shugoki"},
++{"Shinobi","Shinobi","Shinobi"},
++{"Assassin","Assassin","Assassina"},
++{"Iron maiden","Iron maiden","Donzela de ferro"},
++{"Savage","Savage","Selvagem"},
++{"Berserker","Berserker","Furioso"},
++{"Executioner","Executioner","Carrasco"},
++{"Thraex","Thraex","Tracio"},
++{"Murmillo","Murmillo","Murmilo"},
++{"Dimachaerus","Dimachaerus","Dimaquero"},
++{"Secutor","Secutor","Secutor"},
++{"Setup","Setup","Configuracoes"},
++{"Central Online","Central Online","Central online"},
++{"Restart In Town","Restart In Town","Recomecar na cidade"},
++{"Quit","Quit","Sair"},
++{"Save & Quit","Save & Quit","Salvar e sair"},
++{"Murder Hero","Murder Hero","Abandonar personagem"},
++{"Pause","Pause","Pausa"},
++{"Choose Language","Choose Language","Escolha o idioma"},
++{"Daily Contracts","Daily Contracts","Contratos diarios"},
++{"Resets at 00:00 BRT","Resets at 00:00 BRT","Renovacao as 00:00 BRT"},
++{"Defeat champions","Defeat champions","Derrote campeoes"},
++{"Reach the indicated floor","Reach the indicated floor","Alcance o andar indicado"},
++{"Defeat creatures","Defeat creatures","Derrote criaturas"},
++{"Floor","Floor","Andar"},
++{"Reward claimed","Reward claimed","Recompensa recebida"},
++{"Enter to claim reward","Enter to claim reward","Enter para receber"},
++{"In progress","In progress","Em andamento"},
++{"Back to the journey","Back to the journey","Voltar a jornada"},
++{"Patrol of the Ashes","Patrol of the Ashes","Patrulha das Cinzas"},
++{"Hold the Dark at Bay","Hold the Dark at Bay","Contenha a Escuridao"},
++{"The Long Vigil","The Long Vigil","A Longa Vigilia"},
++{"Break Their Ranks","Break Their Ranks","Rompa as Fileiras"},
++{"Silence the Champions","Silence the Champions","Silencie os Campeoes"},
++{"Ashes of Defiance","Ashes of Defiance","Cinzas da Resistencia"},
++{"A Light Below","A Light Below","Uma Luz nas Profundezas"},
++{"Footsteps into Darkness","Footsteps into Darkness","Passos na Escuridao"},
++{"Return with a Map","Return with a Map","Volte com um Mapa"},
++{"Um jogador","Single Player","Um jogador"},
++{"Multijogador","Multi Player","Multijogador"},
++{"Jogar online","Play Online","Jogar online"},
++{"Novo heroi","New Hero","Novo heroi"},
++{"Novo personagem","New Character","Novo personagem"},
++{"Criar heroi","Create Hero","Criar heroi"},
++{"Excluir heroi","Delete Hero","Excluir heroi"},
++{"Selecionar heroi","Select Hero","Selecionar heroi"},
++{"Selecionar personagem","Select Character","Selecionar personagem"},
++{"Digite o nome","Enter Name","Digite o nome"},
++{"Nome","Name","Nome"},
++{"Senha","Password","Senha"},
++{"Novo jogo","New Game","Novo jogo"},
++{"Carregar jogo","Load Game","Carregar jogo"},
++{"Salvar jogo","Save Game","Salvar jogo"},
++{"Salvar e sair","Save and Exit","Salvar e sair"},
++{"Sair do jogo","Exit Game","Sair do jogo"},
++{"Continuar jogo","Resume Game","Continuar jogo"},
++{"Menu anterior","Previous Menu","Menu anterior"},
++{"Opcoes","Options","Opcoes"},
++{"Musica","Music","Musica"},
++{"Efeitos sonoros","Sound","Efeitos sonoros"},
++{"Brilho","Brightness","Brilho"},
++{"Confirmar","OK","Confirmar"},
++{"Sim","Yes","Sim"},
++{"Nao","No","Nao"},
++{"Rever introducao","Replay Intro","Rever introducao"},
++{"Creditos","Credits","Creditos"},
++{"Idioma / Language","Language","Idioma / Language"},
++{"Sair","Exit","Sair"},
++{"Escolha a classe","Choose Class","Escolha a classe"},
++{"Classe","Class","Classe"},
++{"Nivel","Level","Nivel"},
++{"Forca","Strength","Forca"},
++{"Magia","Magic","Magia"},
++{"Destreza","Dexterity","Destreza"},
++{"Vitalidade","Vitality","Vitalidade"},
++{"Guerreiro","Warrior","Guerreiro"},
++{"Ladina","Rogue","Ladina"},
++{"Feiticeiro","Sorcerer","Feiticeiro"},
++{"Monge","Monk","Monge"},
++{"Arqueira","Archer","Arqueira"},
++{"Barbaro","Barbarian","Barbaro"},
++{"Mago","Mage","Mago"},
++{"Bombardeiro","Bombardier","Bombardeiro"},
++{"Purgatorio","Purgatory","Purgatorio"},
++{"Perdicao","Doom","Perdicao"},
++{"Crisol","Crucible","Crisol"},
++{"Tormento","Torment","Tormento"},
++{"Agonia","Agony","Agonia"},
++{"Destruicao","Destruction","Destruicao"},
++{"Pesadelo","Nightmare","Pesadelo"},
++{"Facil","Easy","Facil"},
++{"Sobrevivencia","Survival","Sobrevivencia"},
++{"Dificil","Hard","Dificil"},
++{"Contra o tempo","Speedrun","Contra o tempo"},
++{"Coliseu","Coliseum","Coliseu"},
++{"Modo de jogo","Game Mode","Modo de jogo"},
++{"Modos de jogo","Game Modes","Modos de jogo"},
++{"Dificuldade","Difficulty","Dificuldade"},
++{"Caracteristicas","Traits","Caracteristicas"},
++{"Modificadores","Game Changers","Modificadores"},
++{"Criar partida","Create Game","Criar partida"},
++{"Nome da partida","Game Name","Nome da partida"},
++{"PERS","CHAR","PERS"},
++{"MISSOES","QUESTS","MISSOES"},
++{"MAPA","MAP","MAPA"},
++{"MAGIAS","SPELLS","MAGIAS"},
++{"TEMPO","TIME","TEMPO"},
++{"VIDA","LIFE","VIDA"},
++{"CRITICO","CRITICAL","CRITICO"},
++{"OURO","GOLD FIND","OURO"},
++{"EXP","EXP GAIN","EXP"},
++{"EXPERIENCIA","EXPERIENCE","EXPERIENCIA"},
++{"PROX. NIVEL","NEXT LEVEL","PROX. NIVEL"},
++{"FORCA","STRENGTH","FORCA"},
++{"MAGIA","MAGIC","MAGIA"},
++{"DESTREZA","DEXTERITY","DESTREZA"},
++{"VITALIDADE","VITALITY","VITALIDADE"},
++{"PONTOS","POINTS","PONTOS"},
++{"ARMADURA","ARMOR","ARMADURA"},
++{"ACERTO","TO HIT","ACERTO"},
++{"DANO","DAMAGE","DANO"},
++{"RES. ACIDO","ACID RES","RES. ACIDO"},
++{"RES. MAGIA","MAGIC RES","RES. MAGIA"},
++{"RES. FOGO","FIRE RES","RES. FOGO"},
++{"RES. GELO","COLD RES","RES. GELO"},
++{"RAIO","LIGHTNING","RAIO"},
++{"FLECHA","ARROW","FLECHA"},
++{"ACHADO","FIND","ACHADO"},
++{"NIVEL","LEVEL","NIVEL"},
++{"Inventario","Inventory","Inventario"},
++{"Personagem","Character","Personagem"},
++{"Grimorio","Spellbook","Grimorio"},
++{"Missoes","Quests","Missoes"},
++{"Mapa","Automap","Mapa"},
++{"Reparar","Repair","Reparar"},
++{"Recarregar","Recharge","Recarregar"},
++{"Identificar","Identify","Identificar"},
++{"Comprar itens","Buy Items","Comprar itens"},
++{"Vender itens","Sell Items","Vender itens"},
++{"Conversar","Talk","Conversar"},
++{"Ouro","Gold","Ouro"},
++{"Selecionado","Selected","Selecionado"},
++{"Equipado","Equipped","Equipado"},
++{"Item unico","Unique Item","Item unico"},
++{"Item raro","Rare Item","Item raro"},
++{"Requisitos nao atendidos","Requirements not met","Requisitos nao atendidos"},
++{"Inquisidor","Inquisitor","Inquisidor"},
++{"Guardiao","Guardian","Guardiao"},
++{"Templario","Templar","Templario"},
++{"Batedora","Scout","Batedora"},
++{"Atiradora de elite","Sharpshooter","Atiradora de elite"},
++{"Armadilheiro","Trapper","Armadilheiro"},
++{"Elementalista","Elementalist","Elementalista"},
++{"Demonologista","Demonologist","Demonologista"},
++{"Necromante","Necromancer","Necromante"},
++{"Mestre das feras","Beastmaster","Mestre das feras"},
++{"Bruxo","Warlock","Bruxo"},
++{"Assassina","Assassin","Assassina"},
++{"Donzela de ferro","Iron maiden","Donzela de ferro"},
++{"Selvagem","Savage","Selvagem"},
++{"Furioso","Berserker","Furioso"},
++{"Carrasco","Executioner","Carrasco"},
++{"Tracio","Thraex","Tracio"},
++{"Murmilo","Murmillo","Murmilo"},
++{"Dimaquero","Dimachaerus","Dimaquero"},
++{"Configuracoes","Setup","Configuracoes"},
++{"Central online","Central Online","Central online"},
++{"Recomecar na cidade","Restart In Town","Recomecar na cidade"},
++{"Abandonar personagem","Murder Hero","Abandonar personagem"},
++{"Pausa","Pause","Pausa"},
++{"Escolha o idioma","Choose Language","Escolha o idioma"},
++{"Contratos diarios","Daily Contracts","Contratos diarios"},
++{"Renovacao as 00:00 BRT","Resets at 00:00 BRT","Renovacao as 00:00 BRT"},
++{"Derrote campeoes","Defeat champions","Derrote campeoes"},
++{"Alcance o andar indicado","Reach the indicated floor","Alcance o andar indicado"},
++{"Derrote criaturas","Defeat creatures","Derrote criaturas"},
++{"Andar","Floor","Andar"},
++{"Recompensa recebida","Reward claimed","Recompensa recebida"},
++{"Enter para receber","Enter to claim reward","Enter para receber"},
++{"Em andamento","In progress","Em andamento"},
++{"Voltar a jornada","Back to the journey","Voltar a jornada"},
++{"Patrulha das Cinzas","Patrol of the Ashes","Patrulha das Cinzas"},
++{"Contenha a Escuridao","Hold the Dark at Bay","Contenha a Escuridao"},
++{"A Longa Vigilia","The Long Vigil","A Longa Vigilia"},
++{"Rompa as Fileiras","Break Their Ranks","Rompa as Fileiras"},
++{"Silencie os Campeoes","Silence the Champions","Silencie os Campeoes"},
++{"Cinzas da Resistencia","Ashes of Defiance","Cinzas da Resistencia"},
++{"Uma Luz nas Profundezas","A Light Below","Uma Luz nas Profundezas"},
++{"Passos na Escuridao","Footsteps into Darkness","Passos na Escuridao"},
++{"Volte com um Mapa","Return with a Map","Volte com um Mapa"},
++};
 --- /dev/null
 +++ b/src/CommunityOnline.cpp
 @@ -0,0 +1,108 @@
@@ -6021,12 +6822,12 @@
 +};
 --- /dev/null
 +++ b/src/CommunityProgress.cpp
-@@ -0,0 +1,128 @@
+@@ -0,0 +1,215 @@
 +#include "stdafx.h"
 +#include "CommunityProgress.h"
 +#include "CommunityHub.h"
 +#include "CommunityProgressRules.h"
-+#include "CommunityHub.h"
++#include "CommunityHudKit.h"
 +#include "CommunityOnline.h"
 +#include "CommunityDev.h"
 +#pragma pack(push,8)
@@ -6043,12 +6844,15 @@
 +struct Job {std::string route,profile;ProgressJson data;uint64_t created=0;};
 +struct HttpError:std::runtime_error {DWORD status;HttpError(DWORD code,const std::string &message):std::runtime_error(message),status(code){}};
 +uint64_t timeMs(){FILETIME value;GetSystemTimeAsFileTime(&value);ULARGE_INTEGER ticks;ticks.LowPart=value.dwLowDateTime;ticks.HighPart=value.dwHighDateTime;return ticks.QuadPart/10000ULL;}
++uint64_t unixMs(){return timeMs()-11644473600000ULL;}
 +std::mutex cacheMutex;
 +std::string cacheKey;
 +int accountLevel=1,legacyDifficulty=0,clearMask=0;
 +ProgressJson account=ProgressJson::object(),roster=ProgressJson::array();
 +std::string runNonce,runProfile;bool runStarted=false;DWORD nextReport=0;int lastLevel=0;
 +std::set<int> reportedBosses;
++ProgressJson dailyBoard=ProgressJson::object();std::string dailyKey,dailyNonce;bool dailyEnabled=false,dailyShown=false;int dailySelection=0;
++ProgressJson dailyEvents=ProgressJson::array();std::set<int> dailyFloors;std::set<std::string> dailyMonsters;DWORD dailyNextFlush=0,dailyNextRefresh=0;
 +std::string profile(){char value[MAX_PATH]={};GetEnvironmentVariableA("RFD_PROFILE",value,sizeof(value));return value;}
 +std::string utf8(const char *text){int size=MultiByteToWideChar(CP_ACP,0,text,-1,nullptr,0);if(size<1||size>256)return "";std::wstring wide(size,L'\0');MultiByteToWideChar(CP_ACP,0,text,-1,&wide[0],size);int length=WideCharToMultiByte(CP_UTF8,0,wide.c_str(),-1,nullptr,0,nullptr,nullptr);std::string result(length,'\0');WideCharToMultiByte(CP_UTF8,0,wide.c_str(),-1,&result[0],length,nullptr,nullptr);if(!result.empty())result.pop_back();return result;}
 +std::string sha(const std::string &text){HCRYPTPROV provider=0;HCRYPTHASH hash=0;BYTE bytes[32];DWORD size=32;std::string result;
@@ -6060,7 +6864,7 @@
 +std::string category(){return GameMode==GM_COLISEUM?"coliseum":MaxCountOfPlayersInGame>1?"campaign":"solo";}
 +std::string heroId(const char *name){std::string lower=name;std::transform(lower.begin(),lower.end(),lower.begin(),[](unsigned char c){return char(tolower(c));});return sha(category()+":"+utf8(lower.c_str()));}
 +ProgressJson hero(const CharSaveInfo& info){int full=getPlayerFullClass((PLAYER_CLASS)info.Class,(PLAYER_SUBLASS)info.SubClass,(PLAYER_SPECIALIZATION)info.Specialization);return {{"id",heroId(info.Name)},{"name",utf8(info.Name)},{"classId",full},{"level",std::max(1,int(info.Level))},{"mode",int(info.GameMode)},{"category",category()},{"allowedDifficulty",int(info.allowedDifficulty)}};}
-+ProgressJson activeHero(){const auto &p=Players[CurrentPlayerIndex];return {{"id",heroId(p.playerName)},{"name",utf8(p.playerName)},{"classId",int(p.fullClassId)},{"level",int(p.CharLevel)},{"mode",int(p.gameMode)},{"category",category()},{"allowedDifficulty",int(p.allowedDifficulty)}};}
++ProgressJson activeHero(){const auto &p=Players[CurrentPlayerIndex];return {{"id",heroId(p.playerName)},{"name",utf8(p.playerName)},{"classId",int(p.fullClassId)},{"level",int(p.CharLevel)},{"mode",int(p.gameMode)},{"category",category()},{"allowedDifficulty",int(p.allowedDifficulty)},{"highestFloor",std::max(0,std::min(24,int(Dungeon->level)))}};}
 +bool decryptFile(const std::string &path,std::string &value){FILE *file=fopen(path.c_str(),"rb");if(!file)return false;fseek(file,0,SEEK_END);long size=ftell(file);rewind(file);if(size<1||size>2097152){fclose(file);return false;}std::vector<BYTE> bytes(size);bool ok=fread(bytes.data(),1,size,file)==size;fclose(file);DATA_BLOB input{DWORD(size),bytes.data()},out{};if(!ok||!CryptUnprotectData(&input,nullptr,nullptr,nullptr,nullptr,CRYPTPROTECT_UI_FORBIDDEN,&out))return false;value.assign((char*)out.pbData,out.cbData);SecureZeroMemory(out.pbData,out.cbData);LocalFree(out.pbData);return true;}
 +void encryptFile(const std::string &path,const std::string &value){DATA_BLOB input{DWORD(value.size()),(BYTE*)value.data()},out{};if(!CryptProtectData(&input,L"Returns from Darkness progression",nullptr,nullptr,nullptr,CRYPTPROTECT_UI_FORBIDDEN,&out))return;std::string temporary=path+".new-"+eventId();FILE *file=fopen(temporary.c_str(),"wb");if(file){bool ok=fwrite(out.pbData,1,out.cbData,file)==out.cbData;fclose(file);if(ok)MoveFileExA(temporary.c_str(),path.c_str(),MOVEFILE_REPLACE_EXISTING|MOVEFILE_WRITE_THROUGH);}LocalFree(out.pbData);}
 +bool session(const std::string &key,std::string &token,std::string &user){std::string value;if(!decryptFile(key+"\\native-session.bin",value)||value.size()>8192)return false;try{auto parsed=ProgressJson::parse(value);token=parsed.at("token");user=parsed.at("user");std::string basename=key.substr(key.find_last_of("\\/")+1);bool ok=token.size()==43&&user.size()>=3&&user.size()<=16&&_stricmp(basename.c_str(),user.c_str())==0;SecureZeroMemory(&value[0],value.size());return ok;}catch(...){if(!value.empty())SecureZeroMemory(&value[0],value.size());return false;}}
@@ -6074,6 +6878,13 @@
 +}
 +void applyProfile(const std::string &key,const ProgressJson &p){std::lock_guard<std::mutex> lock(cacheMutex);if(cacheKey!=key)return;account=p;accountLevel=std::max(accountLevel,p.value("maxLevel",1));legacyDifficulty=std::max(legacyDifficulty,p.value("legacyDifficulty",0));for(auto &tier:p.value("cleared",ProgressJson::array())){int i=tier;if(i>=0&&i<9)clearMask|=1<<i;}account["maxLevel"]=accountLevel;account["legacyDifficulty"]=legacyDifficulty;account["cleared"]=ProgressJson::array();for(int i=0;i<9;i++)if(clearMask&(1<<i))account["cleared"].push_back(i);encryptFile(key+"\\progress-cache.bin",account.dump());}
 +void selectKey(){const auto key=profile();std::lock_guard<std::mutex> lock(cacheMutex);if(cacheKey==key)return;cacheKey=key;accountLevel=1;legacyDifficulty=0;clearMask=0;account=ProgressJson::object();std::string saved;if(decryptFile(key+"\\progress-cache.bin",saved)){try{account=ProgressJson::parse(saved);accountLevel=std::max(1,account.value("maxLevel",1));legacyDifficulty=account.value("legacyDifficulty",0);for(auto &tier:account.value("cleared",ProgressJson::array())){int i=tier;if(i>=0&&i<9)clearMask|=1<<i;}}catch(...){account=ProgressJson::object();}}}
++void applyDaily(const Job &job,const ProgressJson &response){
++ std::lock_guard<std::mutex> lock(cacheMutex);if(job.profile!=dailyKey||job.data.value("runNonce","")!=dailyNonce)return;
++ if(job.route=="progression/run"){dailyEnabled=response.contains("daily")&&response["daily"].is_object()&&response["daily"].value("revision","")=="daily-1";dailyBoard=dailyEnabled?response["daily"]:ProgressJson::object();}
++ else if(job.route=="daily/board")dailyBoard=response;
++ else if(response.contains("board"))dailyBoard=response["board"];
++ if(dailyEnabled)encryptFile(job.profile+"\\daily-cache.bin",dailyBoard.dump());
++}
 +class Reporter {
 + std::mutex mutex;std::condition_variable condition;std::deque<Job> jobs;bool stop=false,inFlight=false;std::set<std::string> loadedKeys;std::thread worker;
 + void persist(){for(const auto &key:loadedKeys){ProgressJson out=ProgressJson::array();for(const auto &job:jobs)if(job.profile==key)out.push_back({{"route",job.route},{"data",job.data},{"created",job.created}});encryptFile(key+"\\progress-outbox.bin",out.dump());}}
@@ -6084,8 +6895,8 @@
 + void work(){std::unique_lock<std::mutex> lock(mutex);while(!stop){
 +  if(jobs.empty()){condition.wait(lock,[&]{return stop||!jobs.empty();});continue;}
 +  Job job=jobs.front();inFlight=true;lock.unlock();bool success=false,fatal=false;std::string reason;
-+  try{auto response=request(job.profile,job.route,job.data);auto p=response.contains("profile")?response.at("profile"):response;if(p.contains("maxLevel"))applyProfile(job.profile,p);success=true;}
-+  catch(const HttpError &error){reason=error.what();fatal=error.status==400||error.status==403||error.status==410||(error.status==409&&timeMs()-job.created>120000);}
++  try{auto response=request(job.profile,job.route,job.data);auto p=response.contains("profile")?response.at("profile"):response;if(p.contains("maxLevel"))applyProfile(job.profile,p);applyDaily(job,response);success=true;}
++  catch(const HttpError &error){reason=error.what();fatal=error.status==400||error.status==403||error.status==410||(job.route.rfind("daily/",0)==0&&(error.status==404||error.status==409))||(error.status==409&&timeMs()-job.created>120000);}
 +  catch(...){/* Network and authentication failures retain the encrypted outbox. */}
 +  lock.lock();inFlight=false;
 +  if(success){jobs.pop_front();persist();}
@@ -6093,7 +6904,7 @@
 +  else condition.wait_for(lock,std::chrono::seconds(8),[&]{return stop;});
 + }persist();}
 + public:Reporter():worker([this]{work();}){}~Reporter(){{std::lock_guard<std::mutex> lock(mutex);stop=true;}condition.notify_all();if(worker.joinable())worker.join();}
-+ void add(Job job){std::lock_guard<std::mutex> lock(mutex);if(loadedKeys.insert(job.profile).second){std::string saved;if(decryptFile(job.profile+"\\progress-outbox.bin",saved)){try{auto out=ProgressJson::parse(saved);if(out.is_array()&&out.size()<2048)for(auto &r:out){auto route=r.at("route").get<std::string>();if(route=="progression/run"||route=="progression/report"||route=="progression/roster"||route=="progression/remove")jobs.push_back({route,job.profile,r.at("data"),r.value("created",timeMs())});}}catch(...){}}}
++ void add(Job job){std::lock_guard<std::mutex> lock(mutex);if(loadedKeys.insert(job.profile).second){std::string saved;if(decryptFile(job.profile+"\\progress-outbox.bin",saved)){try{auto out=ProgressJson::parse(saved);if(out.is_array()&&out.size()<2048)for(auto &r:out){auto route=r.at("route").get<std::string>();if(route=="progression/run"||route=="progression/report"||route=="progression/roster"||route=="progression/remove"||route=="daily/events"||route=="daily/claim"||route=="daily/board")jobs.push_back({route,job.profile,r.at("data"),r.value("created",timeMs())});}}catch(...){}}}
 +  if(job.route=="progression/report"&&job.data.value("kind","")=="snapshot")for(size_t i=inFlight?1:0;i<jobs.size();i++){auto &old=jobs[i];if(old.profile==job.profile&&old.route==job.route&&old.data.value("kind","")=="snapshot"&&old.data.value("runNonce","")==job.data.value("runNonce","")){old.data=job.data;persist();condition.notify_one();return;}}
 +  if(jobs.size()<2048){if(!job.created)job.created=timeMs();jobs.push_back(std::move(job));persist();condition.notify_one();}
 + }
@@ -6103,6 +6914,13 @@
 +bool allowed(const RfdUnlockRule &rule){selectKey();std::lock_guard<std::mutex> lock(cacheMutex);return accountLevel>=rule.level&&(rule.clear<0||(clearMask&(1<<rule.clear))||legacyDifficulty>rule.clear);}
 +void explainRule(const RfdUnlockRule &rule){char text[200];if(rule.clear<0)sprintf(text,"Esta escolha desbloqueia quando um personagem da conta atinge o nivel %d.",rule.level);else sprintf(text,"Esta escolha requer nivel %d na conta e conclusao da dificuldade %d.",rule.level,rule.clear+1);RfdShowNotice("Santuario - Desbloqueios",text);}
 +void emit(const char *kind,int bossId=-1,int victim=-1){if(!runStarted)return;ProgressJson data={{"runNonce",runNonce},{"eventId",eventId()},{"character",activeHero()},{"kind",kind}};if(bossId>=0){data["bossId"]=bossId;data["floor"]=Dungeon->level;}if(victim>=0)data["victimSlot"]=victim;enqueue("progression/report",data);}
++void flushDaily(){
++ while(!dailyEvents.empty()){
++  ProgressJson batch=ProgressJson::array();while(batch.size()<16&&!dailyEvents.empty()){batch.push_back(dailyEvents.front());dailyEvents.erase(dailyEvents.begin());}
++  enqueue("daily/events",{{"runNonce",runNonce},{"characterId",heroId(Players[CurrentPlayerIndex].playerName)},{"events",batch}});
++ }
++ dailyNextFlush=GetTickCount()+5000;
++}
 +}
 +#pragma pack(pop)
 +void RfdProgressRefresh(){selectKey();try{const auto key=profile();auto state=request(key,"state");if(state.contains("profile"))applyProfile(key,state.at("profile"));}catch(...){}}
@@ -6113,14 +6931,84 @@
 +bool RfdProgressHeroDifficultyAllowed(int tier,int level,bool explain){if(tier<0||tier>=9)return false;if(level>=RfdDifficultyLevels[tier])return true;if(explain){char text[160];sprintf(text,"Esta sala requer um personagem de nivel %d ou superior.",RfdDifficultyLevels[tier]);RfdShowNotice("Santuario - Dificuldade",text);}return false;}
 +bool RfdProgressDifficultyAllowed(int tier,int level){if(tier<0||tier>=9||level<RfdDifficultyLevels[tier])return false;selectKey();std::lock_guard<std::mutex> lock(cacheMutex);return tier==0||(accountLevel>=RfdDifficultyLevels[tier]&&((clearMask&(1<<(tier-1)))||legacyDifficulty>=tier));}
 +void RfdProgressRosterBegin(){selectKey();roster=ProgressJson::array();}
-+void RfdProgressRosterHero(const CharSaveInfo &info){auto h=hero(info);roster.push_back(h);std::lock_guard<std::mutex> lock(cacheMutex);if(GameMode!=GM_COLISEUM){accountLevel=std::max(accountLevel,int(info.Level));legacyDifficulty=std::max(legacyDifficulty,int(info.allowedDifficulty));}}
++void RfdProgressRosterHero(const CharSaveInfo &info){RfdProtectPlayerText(info.Name);auto h=hero(info);roster.push_back(h);std::lock_guard<std::mutex> lock(cacheMutex);if(GameMode!=GM_COLISEUM){accountLevel=std::max(accountLevel,int(info.Level));legacyDifficulty=std::max(legacyDifficulty,int(info.allowedDifficulty));}}
 +void RfdProgressRosterEnd(){for(size_t start=0;start<roster.size();start+=20){ProgressJson batch=ProgressJson::array();for(size_t i=start;i<roster.size()&&i<start+20;i++)batch.push_back(roster[i]);enqueue("progression/roster",{{"characters",batch}});}}
 +void RfdProgressRemoveHero(const char *name){enqueue("progression/remove",{{"characterId",heroId(name)}});}
 +void RfdProgressTick(){if(gbRunGame!=1||CurrentPlayerIndex>=4||!Players[CurrentPlayerIndex].playerName[0])return;const auto key=profile();const DWORD now=GetTickCount();
-+ if(!runStarted||runProfile!=key){selectKey();runNonce=nonce();runProfile=key;runStarted=!runNonce.empty();char room[64]={},hash[65]={};GetEnvironmentVariableA("RFD_ROOM_ID",room,sizeof(room));GetEnvironmentVariableA("RFD_CONTENT_HASH",hash,sizeof(hash));ProgressJson input={{"runNonce",runNonce},{"character",activeHero()},{"difficulty",Difficulty},{"contentHash",hash}};if(RfdOnlineRequested()&&room[0])input["roomId"]=room;enqueue("progression/run",input);nextReport=now;lastLevel=0;}
++ if(!runStarted||runProfile!=key){selectKey();runNonce=nonce();runProfile=key;runStarted=!runNonce.empty();{std::lock_guard<std::mutex> lock(cacheMutex);dailyKey=key;dailyNonce=runNonce;dailyEnabled=false;dailyBoard=ProgressJson::object();}dailyEvents=ProgressJson::array();dailyFloors.clear();dailyMonsters.clear();dailyNextFlush=now+5000;char room[64]={},hash[65]={};GetEnvironmentVariableA("RFD_ROOM_ID",room,sizeof(room));GetEnvironmentVariableA("RFD_CONTENT_HASH",hash,sizeof(hash));ProgressJson input={{"runNonce",runNonce},{"character",activeHero()},{"difficulty",Difficulty},{"contentHash",hash}};if(RfdOnlineRequested()&&room[0])input["roomId"]=room;enqueue("progression/run",input);nextReport=now;lastLevel=0;}
++ if(RfdDailyAvailable()){
++  uint64_t expires=0;{std::lock_guard<std::mutex> lock(cacheMutex);expires=dailyBoard.value("expires",uint64_t(0));}
++  if(expires<=unixMs()&&int(now-dailyNextRefresh)>=0){dailyNextRefresh=now+60000;enqueue("daily/board",{{"runNonce",runNonce},{"characterId",heroId(Players[CurrentPlayerIndex].playerName)}});dailyFloors.clear();}
++  int floor=Dungeon->level;if(floor>=1&&floor<=24&&dailyFloors.insert(floor).second)dailyEvents.push_back({{"eventId",eventId()},{"kind","explore"},{"floor",floor},{"occurredAt",unixMs()}});
++  if(dailyEvents.size()>=16||(!dailyEvents.empty()&&int(now-dailyNextFlush)>=0))flushDaily();
++ }
 + if(now-nextReport<15000&&lastLevel==Players[CurrentPlayerIndex].CharLevel)return;nextReport=now;lastLevel=Players[CurrentPlayerIndex].CharLevel;{std::lock_guard<std::mutex> lock(cacheMutex);if(GameMode!=GM_COLISEUM)accountLevel=std::max(accountLevel,lastLevel);}emit("snapshot");
 +}
-+void RfdProgressWorldStarted(){runStarted=false;reportedBosses.clear();}
++void RfdProgressWorldStarted(){runStarted=false;reportedBosses.clear();dailyShown=false;}
++void RfdProgressFlush(){if(runStarted){flushDaily();emit("snapshot");}}
++bool RfdDailyAvailable(){std::lock_guard<std::mutex> lock(cacheMutex);return dailyEnabled;}
++void RfdDailyKill(int monsterIndex){
++ if(!runStarted||!RfdDailyAvailable()||monsterIndex<SummonMonsters_Count||monsterIndex>=Monsters_Max_Count||GameMode==GM_COLISEUM)return;
++ auto &m=Monsters[monsterIndex];if(m.IsSummonedByMonster||!(m.Attackers&(1<<CurrentPlayerIndex))||m.dungeon!=Dungeon||Dungeon->level<1||Dungeon->level>24)return;
++ std::string identity=sha(std::to_string(int((DUNGEON)Dungeon))+":"+std::to_string(monsterIndex)+":"+std::to_string(m.RandomSeedForDrop));if(!dailyMonsters.insert(identity).second)return;
++ dailyEvents.push_back({{"eventId",eventId()},{"kind","slay"},{"floor",int(Dungeon->level)},{"instanceId",identity},{"elite",m.newBossId>0},{"occurredAt",unixMs()}});
++ if(dailyEvents.size()>=16)flushDaily();
++}
++void RfdDailyOpen(){if(!RfdDailyAvailable())return;dailyShown=true;dailySelection=0;IsQUESTPanelVisible=true;}
++void RfdDailyClose(){dailyShown=false;}
++bool RfdDailyDraw(){
++ if(!dailyShown)return false;
++ ProgressJson board;{std::lock_guard<std::mutex> lock(cacheMutex);board=dailyBoard;}
++ int x=QuestPanelRect.Left+8,y=QuestPanelRect.Top+8,width=QuestPanelRect.Width-16,height=QuestPanelRect.Heigth-16;
++ RfdKitTooltip(x,y,width,height);
++ auto line=[&](int top,const std::string &raw,int color=C_0_White){const char *text=RfdMenuText(raw.c_str());char buffer[256];strncpy_s(buffer,text,_TRUNCATE);DrawTextWithScale(x+18,top,x+width-18,buffer,color,GetTextWidth(text)>width-36?-1:0);};
++ line(y+30,"Daily Contracts",C_3_Gold);line(y+50,"Resets at 00:00 BRT");
++ if(board.contains("contracts"))for(size_t i=0;i<board["contracts"].size()&&i<3;i++){
++  auto contract=board["contracts"][i];int top=y+68+int(i)*98;
++  if(dailySelection==i)RfdKitTooltip(x+8,top,width-16,91);
++  line(top+19,contract["name"]["en"].get<std::string>(),C_3_Gold);
++  auto kind=contract.value("kind","");line(top+39,kind=="elite"?"Defeat champions":kind=="explore"?"Reach the indicated floor":"Defeat creatures");
++  char progress[100];if(kind=="explore")sprintf(progress,"%s %d   %d / %d",RfdMenuText("Floor"),contract.value("floor",1),contract.value("progress",0),contract.value("count",1));
++  else sprintf(progress,"%d / %d   %s %d",contract.value("progress",0),contract.value("count",1),RfdMenuText("Difficulty"),contract.value("minimumDifficulty",0)+1);line(top+58,progress);
++  line(top+78,contract.value("claimed",false)?"Reward claimed":contract.value("complete",false)?"Enter to claim reward":"In progress",contract.value("complete",false)?C_3_Gold:C_0_White);
++ }
++ line(y+height-30,"Back to the journey",dailySelection==3?C_3_Gold:C_0_White);return true;
++}
++bool RfdDailyNavigate(int direction){if(!dailyShown)return false;dailySelection=(dailySelection+direction+4)%4;PlayGlobalSound(S_75_I_TITLEMOV);return true;}
++bool RfdDailySelect(){
++ if(!dailyShown)return false;if(dailySelection==3){dailyShown=false;IsQUESTPanelVisible=false;return true;}
++ ProgressJson board;{std::lock_guard<std::mutex> lock(cacheMutex);board=dailyBoard;}
++ if(board.contains("contracts")&&dailySelection<int(board["contracts"].size())){auto contract=board["contracts"][dailySelection];if(contract.value("complete",false)&&!contract.value("claimed",false))enqueue("daily/claim",{{"runNonce",runNonce},{"characterId",board["characterId"]},{"contractId",contract["id"]}});}
++ return true;
++}
++bool RfdDailyClick(){
++ if(!dailyShown)return false;int x=QuestPanelRect.Left+8,y=QuestPanelRect.Top+8,width=QuestPanelRect.Width-16;
++ if(CursorX<x||CursorX>=x+width)return true;
++ for(int i=0;i<3;i++)if(CursorY>=y+68+i*98&&CursorY<y+159+i*98){dailySelection=i;return RfdDailySelect();}
++ if(CursorY>=QuestPanelRect.Down-62){dailySelection=3;RfdDailySelect();}return true;
++}
++void RfdDailyQaTick(){
++#if RFD_DEV_QA
++ char mode[32]={};GetEnvironmentVariableA("RFD_ENGINE_QA",mode,sizeof(mode));if(strcmp(mode,"daily")||!RfdDevLocalRealm()||gbRunGame!=1||!RfdDailyAvailable())return;
++ static int phase=0,selected=0;static bool guards=true;ProgressJson board;{std::lock_guard<std::mutex> lock(cacheMutex);board=dailyBoard;}
++ if(phase==0){
++  // Synthetic, isolated combat fixtures exercise the real native hook and
++  // HTTP outbox. They do not certify a multiplayer campaign playthrough.
++  DUNGEON previous=(DUNGEON)Dungeon;Dungeon=DUN_1_CHURCH_1;int index=SummonMonsters_Count+50;Monster saved=Monsters[index];auto &m=Monsters[index];m.dungeon=DUN_1_CHURCH_1;m.Attackers=1<<CurrentPlayerIndex;m.IsSummonedByMonster=false;m.newBossId=0;
++  for(int i=0;i<70;i++){m.RandomSeedForDrop=10000+i;RfdDailyKill(index);RfdDailyKill(index);}
++  size_t before=dailyMonsters.size();m.RandomSeedForDrop=99999;m.IsSummonedByMonster=true;RfdDailyKill(index);m.IsSummonedByMonster=false;m.Attackers=0;RfdDailyKill(index);guards=dailyMonsters.size()==before&&before==70;
++  Monsters[index]=saved;Dungeon=previous;flushDaily();RfdDailyOpen();phase=1;return;
++ }
++ if(!board.contains("contracts"))return;bool complete=true;for(auto &contract:board["contracts"])complete=complete&&contract.value("complete",false);if(!complete)return;
++ if(phase==1){std::string file=profile()+"\\daily-complete.bmp";if(GetFileAttributesA(file.c_str())==INVALID_FILE_ATTRIBUTES){extern void RfdQueueMenuCapture(const char*);RfdQueueMenuCapture(file.c_str());return;}RfdDailySelect();phase=2;return;}
++ if(phase==2){
++  if(!board["contracts"][selected].value("claimed",false))return;
++  if(selected<2){selected++;RfdDailyNavigate(1);RfdDailySelect();return;}
++  std::string file=profile()+"\\daily-claimed.bmp";if(GetFileAttributesA(file.c_str())==INVALID_FILE_ATTRIBUTES){extern void RfdQueueMenuCapture(const char*);RfdQueueMenuCapture(file.c_str());return;}
++  FILE *f=fopen((profile()+"\\daily-native-qa.json").c_str(),"w");if(f){ProgressJson result={{"passed",guards},{"fixtureOnly",true},{"syntheticCombatFixture",true},{"actualNativeHooksAndHttp",true},{"duplicateKillsFiltered",guards},{"summonsAndUninvolvedKillsExcluded",guards},{"journalRendered",true},{"threeClaimsPersisted",true},{"inGameItemDeliveryComplete",false},{"board",board}};auto text=result.dump();fwrite(text.data(),1,text.size(),f);fclose(f);}phase=3;
++ }
++#endif
++}
 +void RfdProgressBoss(int baseId,int bossId){if(!runStarted)return;int key=baseId==137?-137:bossId;if(key==-1||!reportedBosses.insert(key).second)return;if(baseId==137)emit("campaign-clear",137);else if(bossId>=0)emit("boss",bossId);}
 +void RfdProgressPvpKill(int victimSlot){emit("pvp-kill",-1,victimSlot);}
 +// Account menus are implemented by CommunityHub.cpp with the engine's fonts.
@@ -6152,7 +7040,7 @@
 +}
 --- /dev/null
 +++ b/src/CommunityProgress.h
-@@ -0,0 +1,18 @@
+@@ -0,0 +1,28 @@
 +#pragma once
 +void RfdProgressRefresh();
 +void RfdProgressTick();
@@ -6171,6 +7059,16 @@
 +bool RfdProgressDifficultyAllowed(int difficulty,int level);
 +void RfdShowAccountHub();
 +bool RfdProgressQa();
++void RfdDailyKill(int monsterIndex);
++bool RfdDailyAvailable();
++void RfdDailyOpen();
++void RfdDailyClose();
++bool RfdDailyDraw();
++bool RfdDailyNavigate(int direction);
++bool RfdDailySelect();
++bool RfdDailyClick();
++void RfdProgressFlush();
++void RfdDailyQaTick();
 --- /dev/null
 +++ b/src/CommunityProgressRules.h
 @@ -0,0 +1,176 @@
@@ -6352,11 +7250,12 @@
 +static const int RfdDifficultyLevels[] = {1,20,35,43,51,59,67,75,83};
 --- /dev/null
 +++ b/src/CommunityRemaster.cpp
-@@ -0,0 +1,269 @@
+@@ -0,0 +1,271 @@
 +#include "stdafx.h"
 +#include "CommunityRemaster.h"
 +#include "CommunityDev.h"
 +#include "CommunityHudKit.h"
++#include "CommunityHub.h"
 +#include <wincodec.h>
 +
 +// Source material: DamnationX beta 3 assets/hd/cathedral-floor-atlas.png.
@@ -6540,6 +7439,7 @@
 +  case B_PERKS:caption="P";break;case B_GC:caption="G";break;case B_TALK:caption="CHAT";break;
 +  case B_PVP:caption=IsPlayerFriendly?"PvE":"PvP";break;
 +  case B_SYNERGY:caption="S";break;case B_TIME:caption=CurTimeSpeedIndex?">>":">";break;}
++ caption=RfdMenuText(caption);
 + const int width=GetTextWidth(caption);
 + RfdKitRecordButtonCaption(button,width);
 + DrawLevelInfoText(x+(button.width-width)/2+down,y+(button.height+10)/2+down,caption,C_0_White,true);
@@ -7915,7 +8815,7 @@
 +}
 --- a/src/dataseg.cpp
 +++ b/src/dataseg.cpp
-@@ -1,2937 +1,2937 @@
+@@ -1,2937 +1,2939 @@
 -﻿#include "stdafx.h"
 -
 -//===============================================================
@@ -13593,21 +14493,23 @@
 +
 +Item SetBufferItemForShowEffect; // 0x00A36400
 +// 004A04B8
-+Menu SPMainMenu[6] = {
++Menu SPMainMenu[7] = {
 +		{0x80000000,  "Save Game", 	SaveGameMenuHandler},// 0	// ...
 +		{0x80000000,  "Setup",  SetupMenuHandler},//	1 //
 +		{0x80000000,  "New Game",	 NewGameMenuHandler},// 2
 +		{0x80000000,  "Load Game", 	LoadGameMenuHandler},// 3
 +		{0x80000000,  "Quit", ExitGameMenuHandler},// 4
-+		{0x80000000, 0, 0}// 5
++		{0x80000000, 0, 0},// 5: optional daily journal
++		{0x80000000, 0, 0}// 6
 +};
 +// 004A0500
-+Menu MPMainMenu[5] = {
++Menu MPMainMenu[6] = {
 +		{0x80000000,  "Setup",  SetupMenuHandler},//	0 // ...
 +		{0x80000000,  "New Game",	 NewGameMenuHandler},// 1 //	"Restart In Town"
 +		{0x80000000,  "Restart In Town", RestartMenuHandler},//	2
 +		{0x80000000,  "Quit", ExitGameMenuHandler},// 3
-+		{0x80000000, 0, 0}// 4
++		{0x80000000, 0, 0},// 4: optional daily journal
++		{0x80000000, 0, 0}// 5
 +};
 +// 004A0540
 +Menu OptionsMenu[8] = {
@@ -13818,7 +14720,7 @@
  
 --- a/src/Draw.cpp
 +++ b/src/Draw.cpp
-@@ -1,2139 +1,2150 @@
+@@ -1,2139 +1,2151 @@
 -﻿#include "stdafx.h"
 -
 -int         FullMask[] = { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 };
@@ -17981,6 +18883,7 @@
 +void MainDrawFunc()
 +{
 +	RfdKitInteractionQa();
++	extern void RfdMusicQaTick();RfdMusicQaTick();
 +	AspectX = (float) WinWidth / ScreenWidth;
 +	AspectY = (float) WinHeight / ScreenHeight;
 +	if( gbRunGame ){
@@ -20505,7 +21408,7 @@
 +}
 --- a/src/Engine.cpp
 +++ b/src/Engine.cpp
-@@ -1,1400 +1,1402 @@
+@@ -1,1400 +1,1407 @@
 -﻿#include "stdafx.h"
 -
 -CRITICAL_SECTION MemoryAllocCritical;// 0057B640
@@ -21905,6 +22808,8 @@
 -uint grand()
 -{
 -	return __acrt_getptd()->rand_state;
+-}
+\ No newline at end of file
 +#include "stdafx.h"
 +#include "CommunityRemaster.h"
 +
@@ -22399,6 +23304,11 @@
 +void __fastcall CEL_Draw(int x, int y, char* celBuf, uint frameNum, int drawWidth, int offsetStart, int offsetEnd, int flag /*= R_DIRECT*/, int outlineColor /*= -1*/)
 +{
 +	CEL_DrawTo(WorkingSurface + YOffsetHashTable[y - 16 * offsetStart] + x, celBuf, frameNum, drawWidth, offsetStart, offsetEnd, flag, outlineColor);
++	if(gbRunGame==1&&offsetStart==0&&offsetEnd==8&&frameNum==1){
++		extern int RfdOriginalItemSpriteIndex(const char*);
++		extern void RfdKitItemIcon(int,int,int,int);
++		int index=RfdOriginalItemSpriteIndex(celBuf);if(index>=0)RfdKitItemIcon(index,x,y,flag);
++	}
 +}
 +
 +//----- (00418D31) -------------------------------------------------------- interface
@@ -23306,8 +24216,7 @@
 +uint grand()
 +{
 +	return __acrt_getptd()->rand_state;
- }
-\ No newline at end of file
++}
 --- a/src/engine.h
 +++ b/src/engine.h
 @@ -1,184 +1,187 @@
@@ -32573,7 +33482,31 @@
  }
  
  //----- (20004E90) --------------------------------------------------------
-@@ -4103,16 +4083,15 @@
+@@ -3769,6 +3749,7 @@
+ 	for( hdlg_1 = hdlg; result; result = *nextElem ){
+ 		buttonWin = GetDlgItem( hdlg_1, result );
+ 		if( buttonWin ){
++			GetWindowTextA(buttonWin,String,255);const char *translated=RfdMenuText(String);if(translated!=String)SetWindowTextA(buttonWin,translated);
+ 			GetClientRect( buttonWin, &Rect );
+ 			buttonNewData = AllocTextWin();
+ 			buttonNewData->size.cx = Rect.right;
+@@ -3788,6 +3769,7 @@
+ 				-1 );
+ 			SetDialogBmpToElem( hdlg_1, buttonWin );
+ 			SetCurFont( fontIndex );
++			if(limitWidth){char translatedLabel[256]={};GetWindowTextA(buttonWin,translatedLabel,255);for(int fitted:{fontIndex,2,0}){SetCurFont(fitted);if(GetStringDrawWidth(translatedLabel)<=Rect.right-2*GetPentagramWidth())break;}}
+ 			DrawTextToButtonPic( buttonWin, limitWidth );
+ 			GetWindowTextA( buttonWin, String, 255 );
+ 			if( strlen( String ) != 0 ){
+@@ -3942,6 +3924,7 @@
+ 		elemWin = GetDlgItem( i, elem_1 );
+ 		if( elemWin ){
+ 			GetClientRect( elemWin, &Rect );
++			GetWindowTextA(elemWin,winText,255);const char *translated=RfdMenuText(winText);if(translated!=winText)SetWindowTextA(elemWin,translated);
+ 			textElemData = AllocTextWin();
+ 			textElemData->size.cx = Rect.right;
+ 			textElemData->size.cy = Rect.bottom;
+@@ -4103,16 +4086,15 @@
  	if( dlgData ){
  		if( dlgData->surface ){
  			GetWindowTextA( hdlg_1, winText, 255 );
@@ -32593,7 +33526,7 @@
  			str = winText;
  			if( winText[ 0 ] ){
  				do{
-@@ -4122,9 +4101,7 @@
+@@ -4122,9 +4104,7 @@
  					v9 = (str++)[ 1 ];
  				} while( v9 );
  			}
@@ -32604,7 +33537,7 @@
  			curFontWidth = GetCurFontWidth();
  			DrawFontString( (unsigned __int8 *) str, elemData, spaceWidth, (elemData->size.cy - curFontWidth) / 2 );
  		}
-@@ -4673,6 +4650,12 @@
+@@ -4673,6 +4653,12 @@
  //----- (200072E0) --------------------------------------------------------
  int __fastcall AnimateSelectionPentagram( HWND hdlg, HWND curButton )
  {
@@ -32617,7 +33550,7 @@
  	HWND curButton_1; // edi@1
  	HWND dlg; // ebx@1
  	int result; // eax@2
-@@ -5526,7 +5509,9 @@
+@@ -5526,7 +5512,9 @@
  	SendMessageA( editName, EM_LIMITTEXT, LoginMaxLen, 0 );
  	SetFocus( editName );
  	editPassword = GetDlgItem( hdlg, 1029 );
@@ -32628,7 +33561,7 @@
  	return 1;
  }
  
-@@ -5557,6 +5542,7 @@
+@@ -5557,6 +5545,7 @@
  //----- (200085E0) --------------------------------------------------------
  int __stdcall DialogMainMenu( HWND hdlg, unsigned int Msg, WPARAM wParam, LPARAM lParam )
  {
@@ -32636,7 +33569,7 @@
  	TextWin *dlgData; // eax@4
  	int result; // eax@4
  	HWND globalHwnd; // eax@5
-@@ -5622,7 +5608,7 @@
+@@ -5622,7 +5611,7 @@
  		InitSelectionAndLoadPentagram( "ui_art\\focus42.pcx" );
  		SDlgSetTimer( hdlg, 1, 55, 0 );
  		InitDialogSurface( hdlg );
@@ -32645,7 +33578,7 @@
  		AnimateDialogTitle( hdlg );
  		SDlgSetTimer( hdlg, 2, 55, 0 );
  		SetYesNoButtonListProc( hdlg, MainMenuButtonList );
-@@ -5637,6 +5623,8 @@
+@@ -5637,6 +5626,8 @@
  					return 0;
  				}
  				if( wParam == 2 ){
@@ -32654,7 +33587,7 @@
  					AnimateDialogTitle( hdlg );
  					return 0;
  				}
-@@ -5988,7 +5976,7 @@
+@@ -5988,7 +5979,7 @@
  		return SDlgDefDialogProc_( hdlg, Msg, wParam, lParam );
  	}
  	InitDialogSurface( hdlg );
@@ -32663,7 +33596,7 @@
  	AnimateDialogTitle( hdlg );
  	SDlgSetTimer( hdlg, 2, 55, 0 );
  	dialupWinText = AllocTextWin();
-@@ -6549,10 +6537,11 @@
+@@ -6549,10 +6540,11 @@
  		if( result != 0xFF000000 ){
  			break;
  		}
@@ -32679,7 +33612,7 @@
  	}
  	return result;
  }
-@@ -7056,6 +7045,7 @@
+@@ -7056,6 +7048,7 @@
  	switch( Msg ){
  		case WM_INITDIALOG:
  		{
@@ -32687,7 +33620,7 @@
  			char tempBuf[32];
  			if( GameMode == GM_COLISEUM ){
  				LoadStringA( HInstance, STR_80_New_hero_coliseum, tempBuf, 31 );
-@@ -7124,6 +7114,7 @@
+@@ -7124,6 +7117,7 @@
  				SetHeroInfoText( GetParent( hDlg ), &NewSaveInfo, ClassSelectionMode );
  				
  			}else if( HIWORD_IDA(wParam) == BN_DOUBLECLICKED || (ushort)wParam == 1 ){
@@ -32695,7 +33628,7 @@
  				PlaySoundTitleSelect();
  				SDlgKillTimer( hDlg, 1 );
  				SDlgEndDialog( hDlg, GetWindowLongA( GetFocus(), GWL_ID ) );
-@@ -7136,6 +7127,7 @@
+@@ -7136,6 +7130,7 @@
  			break;
  		case WM_LBUTTONDOWN:
  			if( CheckCursorOnButton( hDlg, GetDlgItem( hDlg, ID_OK_BUTTON ), (unsigned __int16) lParam, (unsigned int) lParam >> 16u ) ){
@@ -32703,7 +33636,7 @@
  				PlaySoundTitleSelect();
  				SDlgKillTimer( hDlg, 1 );
  				SDlgEndDialog( hDlg,  GetWindowLongA( GetFocus(), GWL_ID ) );
-@@ -8060,7 +8052,7 @@
+@@ -8060,7 +8055,7 @@
  	InitSelectionAndLoadPentagram( "ui_art\\focus16.pcx" );
  	SDlgSetTimer( hdlg, 1, 55, 0 );
  	InitDialogSurface( hdlg );
@@ -32712,7 +33645,7 @@
  	AnimateDialogTitle( hdlg );
  	SDlgSetTimer( hdlg, 2, 55, 0 );
  	textWin = AllocTextWin();
-@@ -9267,6 +9259,7 @@
+@@ -9267,6 +9262,7 @@
  //----- (2000D6D0) --------------------------------------------------------
  int __stdcall DialogSelectHero( HWND hdlg, unsigned int Msg, WPARAM wParam, LPARAM lParam )
  {
@@ -32720,7 +33653,7 @@
  	XinputVirtualKeyboard();
  
      if( Msg >= 3000 ){
-@@ -9280,7 +9273,7 @@
+@@ -9280,7 +9276,7 @@
  		{
  			MenuLoadCharSlots( hdlg );
  			InitDialogSurface( hdlg );
@@ -32729,7 +33662,7 @@
  			AnimateDialogTitle( hdlg );
  			SDlgSetTimer( hdlg, 2, 55, 0 );
  			TextWin* heroDialogWin = AllocTextWin();
-@@ -9513,6 +9506,13 @@
+@@ -9513,6 +9509,13 @@
          case MSG_SELECT_GAME_MODE:
          {
  			NewSaveInfo.GameChanger = GC_0_CONTINUE;
@@ -32743,7 +33676,7 @@
              int selGameModeResult = SDlgDialogBoxParam( HInstance, "SELGAMEMODE_LIST_DIALOG", hdlg, DialogSelectGameMode, lParam );
              if( selGameModeResult == -1 || selGameModeResult == ID_EXIT_CANCEL_BUTTON ){
                  PostMessageA( hdlg, MSG_SELECT_TRAITS, 0, 1 );
-@@ -9527,7 +9527,7 @@
+@@ -9527,7 +9530,7 @@
  		{
  			int selGameChangerResult = SDlgDialogBoxParam(HInstance, "SELGAMECHANGER_LIST_DIALOG", hdlg, DialogSelectGameChangers, lParam);
  			if (selGameChangerResult == -1 || selGameChangerResult == ID_EXIT_CANCEL_BUTTON) {
@@ -32752,7 +33685,7 @@
  			}
  			else if (!SelectedGameChanger) {
  				PostMessageA(hdlg, MSG_ENTER_NAME, 0, 0);
-@@ -9574,6 +9574,14 @@
+@@ -9574,6 +9577,14 @@
  			return 0;
  
  		case MSG_LOAD_GAME:
@@ -32767,7 +33700,7 @@
  			EndDialogSelectHero( hdlg, IsMultiGame == 1 ? 3 : 2 );
  			return 0;
  		
-@@ -13902,4 +13910,4 @@
+@@ -13902,4 +13913,4 @@
  		SMemFree( data, __FILE__, __LINE__, 0 );
  		data = nullptr;
  	}
@@ -32846,7 +33779,7 @@
  // This might be the function handling splitting gold piles. (drawing the window)
 --- a/src/Item.cpp
 +++ b/src/Item.cpp
-@@ -1,3500 +1,3674 @@
+@@ -1,3500 +1,3724 @@
 -﻿#include "stdafx.h"
 -
 -volatile int forceCallforSync;
@@ -36259,11 +37192,14 @@
 +#include "stdafx.h"
 +#include "CommunityLoot.h"
 +#include "CommunityHudKit.h"
++#include "CommunityCollectionAssets.h"
 +#include <wincodec.h>
 +
 +namespace {
-+constexpr int RfdRelicFirstId=4618,RfdRelicFirstGraphic=8880,RfdRelicCount=3;
++constexpr int RfdRelicFirstId=4618,RfdRelicFirstGraphic=8880,RfdRelicCount=39;
 +const wchar_t *RfdRelicFiles[]={L"last-vigil.png",L"return-lantern.png",L"ashen-covenant.png"};
++int rfdIconWidth(int index){return index<3?28:RfdCollectionAssets[index-3].width;}
++int rfdIconHeight(int index){return index<3?28:RfdCollectionAssets[index-3].height;}
 +std::vector<unsigned char> RfdRelicIcons[RfdRelicCount],RfdRelicGround[RfdRelicCount];
 +bool RfdRelicAttempted[RfdRelicCount]={};
 +int rfdRelicIndex(const Item &item){return item.UniqueItemIndex>=RfdRelicFirstId&&item.UniqueItemIndex<RfdRelicFirstId+RfdRelicCount?item.UniqueItemIndex-RfdRelicFirstId:-1;}
@@ -36288,24 +37224,32 @@
 + if(index<0||index>=RfdRelicCount)return false;
 + if(RfdRelicAttempted[index])return !RfdRelicIcons[index].empty();RfdRelicAttempted[index]=true;
 + wchar_t path[MAX_PATH];GetModuleFileNameW(nullptr,path,MAX_PATH);wchar_t *tail=wcsrchr(path,L'\\');if(!tail)return false;
-+ wcscpy(tail+1,L"assets\\original\\items\\");wcscat(path,RfdRelicFiles[index]);
++ wcscpy(tail+1,L"assets\\original\\items\\");wcscat(path,index<3?RfdRelicFiles[index]:RfdCollectionAssets[index-3].file);
 + HRESULT initialized=CoInitializeEx(nullptr,COINIT_MULTITHREADED);IWICImagingFactory *factory=nullptr;
 + IWICBitmapDecoder *decoder=nullptr;IWICBitmapFrameDecode *frame=nullptr;IWICBitmapScaler *scaler=nullptr;IWICFormatConverter *converter=nullptr;
-+ std::vector<unsigned char> rgba(28*28*4);bool ok=false;
++ const int width=rfdIconWidth(index),height=rfdIconHeight(index);
++ std::vector<unsigned char> rgba(width*height*4);bool ok=false;
 + if(SUCCEEDED(CoCreateInstance(CLSID_WICImagingFactory,nullptr,CLSCTX_INPROC_SERVER,IID_PPV_ARGS(&factory)))&&
 +    SUCCEEDED(factory->CreateDecoderFromFilename(path,nullptr,GENERIC_READ,WICDecodeMetadataCacheOnLoad,&decoder))&&
-+    SUCCEEDED(decoder->GetFrame(0,&frame))&&SUCCEEDED(factory->CreateBitmapScaler(&scaler))&&
-+    SUCCEEDED(scaler->Initialize(frame,28,28,WICBitmapInterpolationModeFant))&&SUCCEEDED(factory->CreateFormatConverter(&converter))&&
-+    SUCCEEDED(converter->Initialize(scaler,GUID_WICPixelFormat32bppBGRA,WICBitmapDitherTypeNone,nullptr,0,WICBitmapPaletteTypeCustom))&&
-+    SUCCEEDED(converter->CopyPixels(nullptr,28*4,unsigned(rgba.size()),rgba.data())))ok=true;
++    SUCCEEDED(decoder->GetFrame(0,&frame))){
++  UINT originalWidth=0,originalHeight=0;frame->GetSize(&originalWidth,&originalHeight);
++  const float fit=originalWidth&&originalHeight?std::min(float(width)/originalWidth,float(height)/originalHeight):0;
++  int sw=index<3?width:std::max(1,int(originalWidth*fit)),sh=index<3?height:std::max(1,int(originalHeight*fit));
++  std::vector<unsigned char> scaled(sw*sh*4);
++  if(fit>0&&SUCCEEDED(factory->CreateBitmapScaler(&scaler))&&SUCCEEDED(scaler->Initialize(frame,sw,sh,WICBitmapInterpolationModeFant))&&
++     SUCCEEDED(factory->CreateFormatConverter(&converter))&&SUCCEEDED(converter->Initialize(scaler,GUID_WICPixelFormat32bppBGRA,WICBitmapDitherTypeNone,nullptr,0,WICBitmapPaletteTypeCustom))&&
++     SUCCEEDED(converter->CopyPixels(nullptr,sw*4,unsigned(scaled.size()),scaled.data()))){
++   for(int y=0;y<sh;y++)memcpy(rgba.data()+((y+(height-sh)/2)*width+(width-sw)/2)*4,scaled.data()+y*sw*4,sw*4);ok=true;
++  }
++ }
 + if(converter)converter->Release();if(scaler)scaler->Release();if(frame)frame->Release();if(decoder)decoder->Release();if(factory)factory->Release();if(SUCCEEDED(initialized))CoUninitialize();
 + if(!ok)return false;
 + // Read a fixed game palette rather than a fading menu/current dungeon palette.
 + // Shared UI ramps (32..255) remain stable between the supported dungeon sets.
 + int paletteBytes=0;auto *palette=static_cast<unsigned char*>(LoadFile("Levels\\orig_pals\\town.pal",&paletteBytes));
 + if(!palette||paletteBytes<768){if(palette)FreeMem(palette);return false;}
-+ std::vector<unsigned char> icon(28*28,0);
-+ for(int p=0;p<28*28;p++)if(rgba[p*4+3]>=64){
++ std::vector<unsigned char> icon(width*height,0);
++ for(int p=0;p<width*height;p++)if(rgba[p*4+3]>=64){
 +  int best=0x7fffffff;unsigned char color=32;
 +  for(int i=32;i<256;i++){
 +   int r=int(rgba[p*4+2])-palette[i*3],g=int(rgba[p*4+1])-palette[i*3+1],b=int(rgba[p*4])-palette[i*3+2];
@@ -36313,25 +37257,33 @@
 +  }
 +  icon[p]=color;
 + }
-+ FreeMem(palette);RfdRelicIcons[index]=rfdRelicCel({icon},28,28);
++ FreeMem(palette);RfdRelicIcons[index]=rfdRelicCel({icon},width,height);
 + std::vector<std::vector<unsigned char>> ground;
 + for(int f=0;f<12;f++){
 +  std::vector<unsigned char> pixels(96*32,0);const int lift=(11-f)/2;
-+  for(int y=0;y<18;y++)for(int x=0;x<18;x++)pixels[(13-lift+y)*96+39+x]=icon[(y*28/18)*28+x*28/18];
++  if(index<3){for(int y=0;y<18;y++)for(int x=0;x<18;x++)pixels[(13-lift+y)*96+39+x]=icon[(y*28/18)*28+x*28/18];}
++  else{const float scale=std::min(28.f/width,22.f/height);const int gw=std::max(1,int(width*scale)),gh=std::max(1,int(height*scale));
++   for(int y=0;y<gh;y++)for(int x=0;x<gw;x++)pixels[(31-gh-lift+y)*96+(96-gw)/2+x]=icon[(y*height/gh)*width+x*width/gw];}
 +  ground.push_back(std::move(pixels));
 + }
 + RfdRelicGround[index]=rfdRelicCel(ground,96,32);return true;
 +}
 +void rfdRelicDimensions(int index){
 + const int graphic=RfdRelicFirstGraphic+index;
-+ ItemWidthTable[graphic+CM_12_ITEMS_PICS_START]=28;ItemHeightTable[graphic+CM_12_ITEMS_PICS_START]=28;
-+ ItemFlipTable[graphic]=FL_12_RING;
++ ItemWidthTable[graphic+CM_12_ITEMS_PICS_START]=rfdIconWidth(index);ItemHeightTable[graphic+CM_12_ITEMS_PICS_START]=rfdIconHeight(index);
++ ItemFlipTable[graphic]=index<3?FL_12_RING:ItemFlipTable[BaseItems[RfdCollectionAssets[index-3].baseIndex].GraphicValue];
 +}
 +void rfdRelicGround(Item &item,bool all){
 + const int index=rfdRelicIndex(item);if(index<0||!rfdRelicLoad(index))return;
 + item.ItemCELFilePtr=reinterpret_cast<char*>(RfdRelicGround[index].data());item.FramesCount=12;
 + if(all){item.AnimWidth=96;item.subOffsetX=16;}
 +}
++}
++
++int RfdOriginalItemSpriteIndex(const char *cel){
++ if(!cel)return -1;
++ for(int i=0;i<RfdRelicCount;i++)if(!RfdRelicIcons[i].empty()&&cel==reinterpret_cast<const char*>(RfdRelicIcons[i].data()))return i;
++ return -1;
 +}
 +
 +const char *RfdOriginalRelicLore(const Item &item){
@@ -36421,6 +37373,37 @@
 + return true;
 +#else
 + return false;
++#endif
++}
++
++void RfdCollectionQa(){
++#if RFD_DEV_QA
++ char mode[40]={},profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_ENGINE_QA",mode,sizeof(mode));GetEnvironmentVariableA("RFD_PROFILE",profile,sizeof(profile));
++ if(strcmp(mode,"ashes-collection")||!strstr(profile,"engine-qa-")||gbRunGame!=1)return;
++ static DWORD begin=GetTickCount();static int page=0,phase=0,checked=0;static bool roundtrip=true,icons=true,requirements=true;
++ auto &player=Players[CurrentPlayerIndex];DWORD elapsed=GetTickCount()-begin;
++ if(phase==0&&elapsed>1500){
++  extern bool InventoryTurnOffRedColorItems;InventoryTurnOffRedColorItems=true;
++  IsINVPanelVisible=true;IsCHARPanelVisible=false;player.InvItemCount=0;memset(player.InvUsedAlt,0,sizeof(player.InvUsedAlt));
++  for(auto &item:player.InventorySlots)item.ItemCode=IC_M1_NONE;
++  for(int n=0;n<6;n++){
++   int id=4621+page*6+n;SpawnUnique(id,player.Row+1+n%3,player.Col+1+n/3,false);
++   for(int k=0;k<ItemsCount;k++){int slot=ItemActive[k];auto &item=Items[slot];if(item.UniqueItemIndex!=id)continue;
++    LastItemInfo saved={};SaveItem(&saved,&item);Item restored={};LoadItem(&saved,&restored);
++    roundtrip=roundtrip&&restored.UniqueItemIndex==id&&restored.GraphicValue==item.GraphicValue&&restored.RequiredLevel==item.RequiredLevel&&restored.MinDamage==item.MinDamage&&restored.AddsVitality==item.AddsVitality;
++    int index=id-RfdRelicFirstId,graphic=item.GraphicValue+CM_12_ITEMS_PICS_START;auto *cel=GetItemSprites(graphic);
++    icons=icons&&graphic==1&&cel==reinterpret_cast<char*>(RfdRelicIcons[index].data())&&item.FramesCount==12;
++    requirements=requirements&&item.RequiredLevel==RfdCollectionAssets[id-4621].requiredLevel;checked++;
++    InvGetItem(CurrentPlayerIndex,slot);AutoPutCursorToInventoryOrDrop();SetCursorGraphics(CM_1_NORMAL_HAND);break;
++   }
++  }
++  phase=1;begin=GetTickCount();
++ }
++ if(phase==1&&elapsed>1500){extern void RfdQueueMenuCapture(const char*);std::string file=std::string(profile)+"\\collection-"+std::to_string(page)+".bmp";
++  if(GetFileAttributesA(file.c_str())==INVALID_FILE_ATTRIBUTES)RfdQueueMenuCapture(file.c_str());
++  else if(page<5){page++;phase=0;begin=GetTickCount();}
++  else{FILE *f=fopen((std::string(profile)+"\\collection-qa.json").c_str(),"w");if(f){fprintf(f,"{\"fixtureOnly\":true,\"itemsChecked\":%d,\"saveItemRoundtrip\":%s,\"customIconsAndGroundFrames\":%s,\"tierRequirements\":%s,\"equippedArtOriginal\":false,\"balancePlaytestComplete\":false}",checked,roundtrip?"true":"false",icons?"true":"false",requirements?"true":"false");fclose(f);}phase=2;}
++ }
 +#endif
 +}
 +
@@ -40014,7 +40997,7 @@
  					case AE_CLVL_HIT                  : accuracy           += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_DAMAGE               : addsDamage         += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_DAMAGE_PERCENT       : damagePercent      += e.minVal + player.CharLevel * e.maxVal / 100; break;
-@@ -3508,13 +3682,13 @@
+@@ -3508,13 +3732,13 @@
  					case AE_CLVL_STUN_RES             : player.stunThreshold[CT_0_STUN] += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_GOLD                 : goldFind           += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_XP                   : xpGainPercent      += e.minVal + player.CharLevel * e.maxVal / 100; break;
@@ -40031,7 +41014,7 @@
  					case AE_CLVL_CRIT_DAMAGE_PERCENT: critPercent  += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_SUMMON_DAMAGE        : { int d = e.minVal + player.CharLevel * e.maxVal / 100; summonDamageMin += d; summonDamageMax += d; } break;
  					case AE_CLVL_SUMMON_DAMAGE_PERCENT: summonDamagePercent += e.minVal + player.CharLevel * e.maxVal / 100; break;
-@@ -3522,4545 +3696,4545 @@
+@@ -3522,4545 +3746,4545 @@
  					case AE_CLVL_SUMMON_AC            : summonAc            += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_SUMMON_HP            : summonHp            += e.minVal + player.CharLevel * e.maxVal / 100; break;
  					case AE_CLVL_SUMMON_HP_PERCENT    : summonHpPercent     += e.minVal + player.CharLevel * e.maxVal / 100; break;
@@ -49108,7 +50091,7 @@
  	case AE_CLVL_HIT                  : minRnd(); maxRnd(); break;
  	case AE_CLVL_DAMAGE               : minRnd(); maxRnd(); break;
  	case AE_CLVL_DAMAGE_PERCENT       : minRnd(); maxRnd(); break;
-@@ -8074,3829 +8248,3840 @@
+@@ -8074,3829 +8298,3840 @@
  	case AE_CLVL_STUN_RES             : minRnd(); maxRnd(); break;
  	case AE_CLVL_GOLD                 : minRnd(); maxRnd(); break;
  	case AE_CLVL_XP                   : minRnd(); maxRnd(); break;
@@ -56804,7 +57787,7 @@
 +};
 --- a/src/Main.cpp
 +++ b/src/Main.cpp
-@@ -1,5626 +1,5639 @@
+@@ -1,5626 +1,5642 @@
 -﻿#include "stdafx.h"
 -
 -bool MouseMoved = false;
@@ -64513,6 +65496,8 @@
 +		RfdEngineQaTick();
 +		#if RFD_DEV_QA
 +		RfdOriginalRelicQa();
++		extern void RfdCollectionQa();RfdCollectionQa();
++		RfdDailyQaTick();
 +		#endif
 +		if(RfdOnlineRequested()&&GetTickCount()-projectLastSave>=10000&&CurrentSaveArchiveHandle==INVALID_HANDLE_VALUE){UpdatePlayerFile();projectLastSave=GetTickCount();}
 +		XinputMain();
@@ -64614,6 +65599,7 @@
 +		}
 +	}
 +
++	RfdProgressFlush();
 +	// save character in multiplayer mode
 +	if( MaxCountOfPlayersInGame > 1 
 +		|| (Players[CurrentPlayerIndex].gameChanger & BIT(GC_1_AUTO_SAVE)) 
@@ -68073,7 +69059,7 @@
 +}
 --- a/src/MainMenu.cpp
 +++ b/src/MainMenu.cpp
-@@ -1,219 +1,250 @@
+@@ -1,219 +1,251 @@
 -﻿#include "stdafx.h"
 -
 -int MenuMusicIndex = 0;
@@ -68348,6 +69334,7 @@
 +    if(RfdMenuRenderQa())return;
 +    if(RfdProgressQa())return;
 +    if(RfdHubInputQa())return;
++    RfdSelectGameLanguage();
 +    v0 = 0;
 +    do{
 +        RfdApplyRoomRequest();
@@ -68400,7 +69387,7 @@
 +        }
 +        if( dialogResult != MM_3_PLAY_INTRO ){
 +            if( dialogResult == MM_4_SUPPORT ){
-+                UiSupportDialog(16);
++                RfdSelectGameLanguage(true);
 +                continue;
 +            }
 +            if( dialogResult == MM_5_CREDITS ){
@@ -68545,7 +69532,7 @@
 +}
 --- a/src/menu.cpp
 +++ b/src/menu.cpp
-@@ -1,1329 +1,1331 @@
+@@ -1,1329 +1,1339 @@
 -﻿#include "stdafx.h"
 -
 -Menu* CurrentMenuItem;
@@ -69877,6 +70864,10 @@
 -}
 +#include "stdafx.h"
 +
++#include "CommunityProgress.h"
++
++void __fastcall RfdDailyMenuHandler(int,int){ResetMainMenu();RfdDailyOpen();}
++
 +Menu* CurrentMenuItem;
 +Menu* CurrentMenuWindowPtr;
 +void(__cdecl * MainMenuHandlerPtr)();
@@ -69919,6 +70910,8 @@
 +//----- (0041B2A2) -------------------------------------------------------- menu
 +void SPMainMenuHandler()
 +{
++	SPMainMenu[5].NamePtr=RfdDailyAvailable()?"Daily Contracts":nullptr;
++	SPMainMenu[5].FuncPtr=RfdDailyMenuHandler;
 +	Menu_SetItemAvailability(&SPMainMenu[3], gbValidSaveFile);
 +	bool isSaveGameEnabled = 0;
 +		
@@ -70026,6 +71019,8 @@
 +//----- (0041B2E0) -------------------------------------------------------- menu
 +void MPMainMenuHandler()
 +{
++	MPMainMenu[4].NamePtr=RfdDailyAvailable()?"Daily Contracts":nullptr;
++	MPMainMenu[4].FuncPtr=RfdDailyMenuHandler;
 +	MpRestartAvailability(&MPMainMenu[1], IsPlayerDead);
 +	Menu_SetItemAvailability(&MPMainMenu[2], IsPlayerDead);
 +	MpRestartAvailability(&MPMainMenu[3], IsPlayerDead);
@@ -71206,9 +72201,44 @@
 +	SetContrastByPos(pos);
 +	SetContrastMenu();
 +}
+--- a/src/MenuEngine.cpp
++++ b/src/MenuEngine.cpp
+@@ -1,4 +1,6 @@
+ ﻿#include "stdafx.h"
++
++#include "CommunityHub.h"
+ 
+ //----- (0041C99A) --------------------------------------------------------
+ void Menu_ShowPause()
+@@ -173,6 +175,7 @@
+ //----- (0041CC93) --------------------------------------------------------
+ void __fastcall Menu_DrawItem(Menu* itemPtr, int itemYPos)
+ {
++	Menu localized=*itemPtr;localized.NamePtr=const_cast<char*>(RfdMenuText(itemPtr->NamePtr));
+ 	uint itemTextWidth = Menu_GetItemTextWidth((struct Menu*)itemPtr);
+ 	if( itemPtr->Flags & MENU_SLIDER ){ 
+ 		uint HalfAnd80 = itemTextWidth / 2 + Screen_LeftBorder + 16; // itemTextWidth = 490 тут GUI_Width - 490 = 150 если 150/2 = 75 отступ с каждой стороны
+@@ -197,7 +200,7 @@
+ 		negFlaf = 0;
+ 	}
+ 	DarkLevel = negFlaf + 0xF;
+-	Font_DrawText(textStartPos, itemYPos, itemPtr->NamePtr);
++	Font_DrawText(textStartPos, itemYPos, localized.NamePtr);
+ 	if( itemPtr == CurrentMenuItem ){
+ 		int pentagramYPos = itemYPos + 1;
+ 		Surface_DrawCEL(textStartPos - 54, pentagramYPos, (int*)PentSpinCELPtr, (unsigned __int8)PentagramFrameCount, 48);
+@@ -234,7 +237,7 @@
+ 	if( aMenu->Flags & MENU_SLIDER ){
+ 		result = 490;
+ 	}else{
+-		v2 = aMenu->NamePtr;
++		v2 = const_cast<char*>(RfdMenuText(aMenu->NamePtr));
+ 		v3 = 0;
+ 		while( 1 ){
+ 			v4 = *(uchar*)v2;
 --- a/src/Monster.cpp
 +++ b/src/Monster.cpp
-@@ -1,10162 +1,10168 @@
+@@ -1,10162 +1,10169 @@
 -﻿#include "stdafx.h"
 -
 -bool AuraSoundStates[];
@@ -79304,6 +80334,7 @@
 +	if( playerIndex >= 0 ){
 +		monster.Attackers |= 1 << playerIndex;
 +	}
++	RfdDailyKill(monsterIndex);
 +	if( playerIndex >= 0 && playerIndex < 4 && monsterIndex >= SummonMonsters_Count && !monster.IsSummonedByMonster){
 +		AddXpForMonsterKill(monster.MonsterLevel, monster.Xp, monster.Attackers, monsterIndex );
 +	}
@@ -91496,7 +92527,7 @@
  
  	switch (auraIndex)
  	{
-@@ -10455,132 +10461,132 @@
+@@ -10455,132 +10462,132 @@
  	//case AUI_14_:
  	//	break;
  	//
@@ -91750,7 +92781,7 @@
  		for (ushort au = AUI_1_; au < AUI_COUNT; au++)
  		{
  			for (int auraBaseMonsterIndex : Auras[au].baseMonsterIndex)
-@@ -10630,8 +10636,8 @@
+@@ -10630,8 +10637,8 @@
  					}
  				}
  			}
@@ -91761,7 +92792,7 @@
  	for (int i = 0; i < countof(Player::AuraIndex); i++)
  	{
  		if (auraTargetPlayer.AuraIndex[i] == AUI_0_NONE) {
-@@ -10641,1829 +10647,1829 @@
+@@ -10641,1829 +10648,1829 @@
  		AuraCooldown[i]--;
  		LimitToMin(AuraCooldown[i], 0);
  
@@ -95414,7 +96445,7 @@
  			POINT p = { 0, 0 };
  			ClientToScreen(ghMainWnd, &p);
  			RECT windowRect;
-@@ -12474,54 +12480,54 @@
+@@ -12474,54 +12481,54 @@
  			ddbltfx.dwSize = sizeof(ddbltfx);
  			ddbltfx.dwFillColor = 0;
  			ScreenSurface32->Blt(&windowRect, 0, 0, DDBLT_COLORFILL | DDBLT_WAIT, &ddbltfx);
@@ -122549,6 +123580,130 @@
 +		}while( v14 != 3 && *(uchar*)v5 );
 +	}
 +}
+--- a/src/Quests.cpp
++++ b/src/Quests.cpp
+@@ -1,4 +1,6 @@
+ ﻿#include "stdafx.h"
++
++#include "CommunityProgress.h"
+ 
+ int QuestPanel_StartRowIndex;// 006EB348
+ bool IsQUESTPanelVisible;// 006EB34C
+@@ -2139,6 +2141,7 @@
+ //----- (004609FF) --------------------------------------------------------
+ void QuestPanel_Draw()
+ {
++	if(RfdDailyDraw())return;
+ 	Surface_DrawCEL(Screen_LeftBorder + QuestPanelRect.Left, Screen_TopBorder + QuestPanelRect.Down, (int*)Data_QuestCEL, 1, QuestPanelRect.Width);
+ 	
+ 	DrawQuestText(0, 2, true, "Quest Log", C_3_Gold);
+@@ -2155,6 +2158,7 @@
+ //----- (00460A90) --------------------------------------------------------
+ void QuestPanel_Open()
+ {
++	RfdDailyClose();
+ 	QuestPanel_ActiveQuestCounts = 0;
+ 	int questPanel_ActiveQuestCounts = 0;
+ 	for( int questIndex = 0; questIndex < Quest_Count; ++questIndex ){
+@@ -2183,6 +2187,7 @@
+ //----- (00460B01) --------------------------------------------------------
+ void QuestPanel_ShiftUp()
+ {
++	if(RfdDailyNavigate(-1))return;
+ 	if( QuestPanel_ActiveQuestCounts ){
+ 		if( QuestPanel_SelectedRow == QuestPanel_StartRowIndex ){
+ 			QuestPanel_SelectedRow = QUEST_PANEL_CLOSE_ROW_INDEX;
+@@ -2198,6 +2203,7 @@
+ //----- (00460B48) --------------------------------------------------------
+ void QuestPanel_ShiftDown()
+ {
++	if(RfdDailyNavigate(1))return;
+ 	if( QuestPanel_ActiveQuestCounts ){
+ 		if( QuestPanel_SelectedRow == QUEST_PANEL_CLOSE_ROW_INDEX ){
+ 			QuestPanel_SelectedRow = QuestPanel_StartRowIndex;
+@@ -2213,6 +2219,7 @@
+ //----- (00460B92) --------------------------------------------------------
+ void QuestPanel_StartSpeech()
+ {
++	if(RfdDailySelect())return;
+ 	PlayGlobalSound(S_76_I_TITLSLCT);
+ 	if( QuestPanel_ActiveQuestCounts && QuestPanel_SelectedRow != QUEST_PANEL_CLOSE_ROW_INDEX ){
+ 		int questIndex = QuestPanel_ActiveQuestsList[(QuestPanel_SelectedRow - QuestPanel_StartRowIndex) / 2];
+@@ -2224,6 +2231,7 @@
+ //----- (00460BD2) --------------------------------------------------------
+ void QuestPanel_CheckLButtonClick()
+ {
++	if(RfdDailyClick())return;
+ 	int row = (CursorY - QuestPanelTextAreaRect.Top) / 12;
+ 	for( int activeQuestIndex = 0; activeQuestIndex < QuestPanel_ActiveQuestCounts; ++activeQuestIndex ){
+ 		if( row == QuestPanel_StartRowIndex + 2 * activeQuestIndex ){
+--- a/src/SoundBuffer.cpp
++++ b/src/SoundBuffer.cpp
+@@ -212,6 +212,10 @@
+     LimitToRange(data, VOL_MIN, 0);
+     *value = data;
+     *value -= *value % VOL_STEP;
++#if RFD_DEV_QA
++    char mode[40]={},profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_ENGINE_QA",mode,sizeof(mode));GetEnvironmentVariableA("RFD_PROFILE",profile,sizeof(profile));
++    if(!strcmp(mode,"music")&&strstr(profile,"engine-qa-")&&!strcmp(key,"Music Volume"))*value=0;
++#endif
+ }
+ 
+ //----- (0046BC23) --------------------------------------------------------
+@@ -382,6 +386,7 @@
+ void __fastcall PlayMusic(char* musicName /* = 0 */ )
+ {
+     if( ! DirectSoundPtr || ! IsMusicEnabled ) return;
++	const bool worldTrack=musicName==nullptr;
+ 	bool iceage = Players[CurrentPlayerIndex].gameChanger & BIT(GC_15_ICE_AGE);
+ 	if( ! musicName ){
+ 		NonGameplaySeed = grand();
+@@ -516,15 +521,40 @@
+ 		StopMusic();
+ 		if( musicName ){
+ 			int opened = SFileOpenFile( musicName, &MusicFile );
+-			SetDirectSoundBufferFormat( MusicFile );
++			// Extended music packs are optional. Classic tracks are already in
++			// the imported game archive, under paths without the mod's "or" prefix.
++			if(!opened){
++			 static char *classic[]={"Music\\DTowne.wav","Music\\DLvlA.wav","Music\\DLvlB.wav","Music\\DLvlC.wav","Music\\DLvlD.wav","Music\\DLvlB.wav","Music\\DLvlD.wav"};
++			 static char intro[]="Music\\DIntro.wav";
++			 int type=worldTrack?int(Dungeon->graphType):0;
++			 musicName=worldTrack?classic[std::max(0,std::min(6,type))]:intro;
++			 opened=SFileOpenFile(musicName,&MusicFile);
++			}
+ 			if( opened ){
+-				SFileDdaBeginEx( MusicFile, DDA_BUF_SIZE, SFILE_DDA_LOOP, 0, MusicVolume, 0, 0 );
+-				MusicName = musicName;
++				SetDirectSoundBufferFormat(MusicFile);
++				if(SFileDdaBeginEx(MusicFile,DDA_BUF_SIZE,SFILE_DDA_LOOP,0,MusicVolume,0,0))MusicName=musicName;
++				else{SFileCloseFile(MusicFile);MusicFile=0;}
+ 			}else{
+ 				MusicFile = 0;
+ 			}
+-		}
+-	}
++#if RFD_DEV_QA
++			char mode[40]={},profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_ENGINE_QA",mode,sizeof(mode));GetEnvironmentVariableA("RFD_PROFILE",profile,sizeof(profile));
++			if(!strcmp(mode,"music")&&strstr(profile,"engine-qa-")){
++			 FILE *f=fopen((std::string(profile)+"\\music-open.log").c_str(),"a");if(f){fprintf(f,"%s|%d|%d|%d\n",musicName,opened,MusicFile!=0,worldTrack);fclose(f);}
++			}
++#endif
++		}
++	}
++}
++
++void RfdMusicQaTick(){
++#if RFD_DEV_QA
++ char mode[40]={},profile[MAX_PATH]={};GetEnvironmentVariableA("RFD_ENGINE_QA",mode,sizeof(mode));GetEnvironmentVariableA("RFD_PROFILE",profile,sizeof(profile));
++ if(strcmp(mode,"music")||!strstr(profile,"engine-qa-")||gbRunGame!=1)return;
++ static DWORD begin=GetTickCount();static uint previous=0;static bool advanced=false;uint position=0,total=0;
++ bool playing=MusicFile&&SFileDdaGetPos(MusicFile,&position,&total);advanced=advanced||(playing&&position>previous);previous=position;
++ if(GetTickCount()-begin>2500){FILE *f=fopen((std::string(profile)+"\\music-qa.json").c_str(),"w");if(f){fprintf(f,"{\"fixtureOnly\":true,\"directSoundAllocated\":%s,\"musicEnabled\":%s,\"streamActive\":%s,\"positionAdvanced\":%s,\"position\":%u,\"total\":%u,\"volume\":%d}",DirectSoundPtr?"true":"false",IsMusicEnabled?"true":"false",playing?"true":"false",advanced?"true":"false",position,total,MusicVolume);fclose(f);}}
++#endif
+ }
+ 
+ //----- (0046BE3A) --------------------------------------------------------
 --- a/src/stdafx.h
 +++ b/src/stdafx.h
 @@ -144,6 +144,7 @@
@@ -140132,7 +141287,7 @@
 +}
 --- a/src/UniqueItems.cpp
 +++ b/src/UniqueItems.cpp
-@@ -30126,7 +30126,25 @@
+@@ -30126,7 +30126,26 @@
  			AE_AC,	0,	10,	12,	0,	0,	0,	0,
  			AE_MANA_PERCENT,	0,	9,	10,	0,	0,	0,	0,
  		},
@@ -140154,11 +141309,25 @@
 +            AE_HIT_POINTS, 0, 15, 15, 0, 0, 0, 0,
 +            AE_MANA, 0, 15, 15, 0, 0, 0, 0,
 +        },
++#include "CommunityCollectionDefs.h"
  };
 -const int NextNewUniqId = 4618;
-+const int NextNewUniqId = 4621;
++const int NextNewUniqId = 4657;
  size_t count_UniqueItems = countof(UniqueItemsData);
  UniqueItem* UniqueItems = UniqueItemsData;
+--- a/src/vars.h
++++ b/src/vars.h
+@@ -383,8 +383,8 @@
+ extern int SomeCataPatternMaps10x100[715];//	
+ extern HANDLE DeltaThreadHandle;//	
+ extern int IsFastWalkEnabled;//	
+-extern Menu SPMainMenu[6];//
+-extern Menu MPMainMenu[5];//
++extern Menu SPMainMenu[7];//
++extern Menu MPMainMenu[6];//
+ extern Menu OptionsMenu[8];//
+ extern Menu MurderConfirmationMenu[5];
+ extern Menu ConfigPage1[6];
 --- /dev/null
 +++ b/src/VignettingShader.h
 @@ -0,0 +1,140 @@
@@ -140990,7 +142159,7 @@
 + GetEnvironmentVariableA("RFD_PROFILE",profile,sizeof(profile));
 + GetEnvironmentVariableA("RFD_ENGINE_QA",mode,sizeof(mode));
 + GetEnvironmentVariableA("RFD_MENU_PERF_QA",performance,sizeof(performance));
-+ bool allowedMode=strcmp(mode,"render")==0||strcmp(mode,"gallery")==0||strcmp(performance,"legacy")==0||strcmp(performance,"optimized")==0;
++ bool allowedMode=strcmp(mode,"render")==0||strcmp(mode,"language")==0||strcmp(mode,"daily")==0||strcmp(mode,"gallery")==0||strcmp(performance,"legacy")==0||strcmp(performance,"optimized")==0;
 + if(!window||strstr(profile,"engine-qa-")==nullptr||!allowedMode)return;
 + // A shell-spawned private fixture may not inherit foreground permission.
 + // Activate only its freshly created game window, before any menu opens.
@@ -141958,9 +143127,9 @@
 +#pragma once
 +
 +#define TH3_REVISION 1265
-+#define THE_HELL_VERSION_INT 0,4,5,0
-+#define THE_HELL_VERSION_STRING "v0.4.5\0"
-+#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.4.5\0"
++#define THE_HELL_VERSION_INT 0,4,6,0
++#define THE_HELL_VERSION_STRING "v0.4.6\0"
++#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.4.6\0"
 +
 +
 +

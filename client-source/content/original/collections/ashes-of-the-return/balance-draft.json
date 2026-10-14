@@ -1,0 +1,1160 @@
+{
+  "status": "candidate-not-released",
+  "items": [
+    {
+      "id": 4621,
+      "baseId": 286,
+      "baseIndex": 286,
+      "baseName": "Stiletto",
+      "itemCode": "IC_1_SWORD",
+      "requiredLevel": 8,
+      "privateLine": -103,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          8
+        ],
+        [
+          "AE_PERCENT_DAMAGE",
+          10
+        ],
+        [
+          "AE_STR",
+          2
+        ],
+        [
+          "AE_RESIST_FIRE",
+          5
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4622,
+      "baseId": 128,
+      "baseIndex": 128,
+      "baseName": "Barbaric Sword",
+      "itemCode": "IC_1_SWORD",
+      "requiredLevel": 45,
+      "privateLine": -104,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          45
+        ],
+        [
+          "AE_PERCENT_DAMAGE",
+          30
+        ],
+        [
+          "AE_STR",
+          6
+        ],
+        [
+          "AE_RESIST_FIRE",
+          15
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4623,
+      "baseId": 487,
+      "baseIndex": 487,
+      "baseName": "Voulge",
+      "itemCode": "IC_2_AXE",
+      "requiredLevel": 8,
+      "privateLine": -105,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          8
+        ],
+        [
+          "AE_PERCENT_DAMAGE",
+          10
+        ],
+        [
+          "AE_STR",
+          2
+        ],
+        [
+          "AE_RESIST_FIRE",
+          5
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4624,
+      "baseId": 932,
+      "baseIndex": 932,
+      "baseName": "Kanabo II",
+      "itemCode": "IC_4_MACE",
+      "requiredLevel": 8,
+      "privateLine": -106,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          8
+        ],
+        [
+          "AE_PERCENT_DAMAGE",
+          10
+        ],
+        [
+          "AE_STR",
+          2
+        ],
+        [
+          "AE_RESIST_FIRE",
+          5
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4625,
+      "baseId": 144,
+      "baseIndex": 144,
+      "baseName": "Hunting Bow",
+      "itemCode": "IC_3_BOW",
+      "requiredLevel": 8,
+      "privateLine": -107,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          8
+        ],
+        [
+          "AE_PERCENT_DAMAGE",
+          10
+        ],
+        [
+          "AE_DEX",
+          2
+        ],
+        [
+          "AE_RESIST_FIRE",
+          5
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4626,
+      "baseId": 277,
+      "baseIndex": 277,
+      "baseName": "Quarterstaff",
+      "itemCode": "IC_10_STAFF",
+      "requiredLevel": 8,
+      "privateLine": -108,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          8
+        ],
+        [
+          "AE_MAG",
+          2
+        ],
+        [
+          "AE_MANA",
+          8
+        ],
+        [
+          "AE_RESIST_FIRE",
+          5
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4627,
+      "baseId": 133,
+      "baseIndex": 133,
+      "baseName": "Military Axe",
+      "itemCode": "IC_2_AXE",
+      "requiredLevel": 24,
+      "privateLine": -109,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          24
+        ],
+        [
+          "AE_PERCENT_DAMAGE",
+          20
+        ],
+        [
+          "AE_STR",
+          4
+        ],
+        [
+          "AE_RESIST_FIRE",
+          10
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4628,
+      "baseId": 102,
+      "baseIndex": 102,
+      "baseName": "Heavy Mace",
+      "itemCode": "IC_4_MACE",
+      "requiredLevel": 45,
+      "privateLine": -110,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          45
+        ],
+        [
+          "AE_PERCENT_DAMAGE",
+          30
+        ],
+        [
+          "AE_STR",
+          6
+        ],
+        [
+          "AE_RESIST_FIRE",
+          15
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4629,
+      "baseId": 161,
+      "baseIndex": 161,
+      "baseName": "Crossbow",
+      "itemCode": "IC_3_BOW",
+      "requiredLevel": 45,
+      "privateLine": -111,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          45
+        ],
+        [
+          "AE_PERCENT_DAMAGE",
+          30
+        ],
+        [
+          "AE_DEX",
+          6
+        ],
+        [
+          "AE_RESIST_FIRE",
+          15
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4630,
+      "baseId": 186,
+      "baseIndex": 186,
+      "baseName": "Gothic Staff",
+      "itemCode": "IC_10_STAFF",
+      "requiredLevel": 45,
+      "privateLine": -112,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          45
+        ],
+        [
+          "AE_MAG",
+          6
+        ],
+        [
+          "AE_MANA",
+          30
+        ],
+        [
+          "AE_RESIST_FIRE",
+          15
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4631,
+      "baseId": 800,
+      "baseIndex": 800,
+      "baseName": "Braced Wood Shield",
+      "itemCode": "IC_5_SHIELD",
+      "requiredLevel": 8,
+      "privateLine": -113,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          8
+        ],
+        [
+          "AE_VIT",
+          2
+        ],
+        [
+          "AE_HIT_POINTS",
+          8
+        ],
+        [
+          "AE_RESIST_FIRE",
+          5
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4632,
+      "baseId": 512,
+      "baseIndex": 512,
+      "baseName": "Alloyed Buckler",
+      "itemCode": "IC_5_SHIELD",
+      "requiredLevel": 45,
+      "privateLine": -114,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          45
+        ],
+        [
+          "AE_VIT",
+          6
+        ],
+        [
+          "AE_HIT_POINTS",
+          30
+        ],
+        [
+          "AE_RESIST_FIRE",
+          15
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4633,
+      "baseId": 58,
+      "baseIndex": 58,
+      "baseName": "Padded Surcoat",
+      "itemCode": "IC_6_LIGHT_ARMOR",
+      "requiredLevel": 8,
+      "privateLine": -115,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          8
+        ],
+        [
+          "AE_VIT",
+          2
+        ],
+        [
+          "AE_HIT_POINTS",
+          8
+        ],
+        [
+          "AE_RESIST_FIRE",
+          5
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4634,
+      "baseId": 1019,
+      "baseIndex": 1019,
+      "baseName": "Ceremonial Leather Jacket",
+      "itemCode": "IC_6_LIGHT_ARMOR",
+      "requiredLevel": 24,
+      "privateLine": -116,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          24
+        ],
+        [
+          "AE_VIT",
+          4
+        ],
+        [
+          "AE_HIT_POINTS",
+          18
+        ],
+        [
+          "AE_RESIST_FIRE",
+          10
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4635,
+      "baseId": 107,
+      "baseIndex": 107,
+      "baseName": "Thick Mail",
+      "itemCode": "IC_8_MID_ARMOR",
+      "requiredLevel": 24,
+      "privateLine": -117,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          24
+        ],
+        [
+          "AE_VIT",
+          4
+        ],
+        [
+          "AE_HIT_POINTS",
+          18
+        ],
+        [
+          "AE_RESIST_FIRE",
+          10
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4636,
+      "baseId": 1202,
+      "baseIndex": 1202,
+      "baseName": "Plate Vest",
+      "itemCode": "IC_9_HEAVY_ARMOR",
+      "requiredLevel": 45,
+      "privateLine": -118,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          45
+        ],
+        [
+          "AE_VIT",
+          6
+        ],
+        [
+          "AE_HIT_POINTS",
+          30
+        ],
+        [
+          "AE_RESIST_FIRE",
+          15
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4637,
+      "baseId": 14,
+      "baseIndex": 14,
+      "baseName": "Skull Cap",
+      "itemCode": "IC_7_HELM",
+      "requiredLevel": 8,
+      "privateLine": -119,
+      "inventorySize": [
+        56,
+        56
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          8
+        ],
+        [
+          "AE_VIT",
+          2
+        ],
+        [
+          "AE_HIT_POINTS",
+          8
+        ],
+        [
+          "AE_RESIST_FIRE",
+          5
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4638,
+      "baseId": 728,
+      "baseIndex": 728,
+      "baseName": "Steel Facemask",
+      "itemCode": "IC_7_HELM",
+      "requiredLevel": 45,
+      "privateLine": -120,
+      "inventorySize": [
+        56,
+        56
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          45
+        ],
+        [
+          "AE_VIT",
+          6
+        ],
+        [
+          "AE_HIT_POINTS",
+          30
+        ],
+        [
+          "AE_RESIST_FIRE",
+          15
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4639,
+      "baseId": 157,
+      "baseIndex": 157,
+      "baseName": "Ring",
+      "itemCode": "IC_12_RING",
+      "requiredLevel": 8,
+      "privateLine": -121,
+      "inventorySize": [
+        28,
+        28
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          8
+        ],
+        [
+          "AE_VIT",
+          2
+        ],
+        [
+          "AE_HIT_POINTS",
+          8
+        ],
+        [
+          "AE_RESIST_FIRE",
+          5
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4640,
+      "baseId": 1149,
+      "baseIndex": 1149,
+      "baseName": "Ring",
+      "itemCode": "IC_12_RING",
+      "requiredLevel": 24,
+      "privateLine": -122,
+      "inventorySize": [
+        28,
+        28
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          24
+        ],
+        [
+          "AE_VIT",
+          4
+        ],
+        [
+          "AE_HIT_POINTS",
+          18
+        ],
+        [
+          "AE_RESIST_FIRE",
+          10
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4641,
+      "baseId": 197,
+      "baseIndex": 197,
+      "baseName": "Ring",
+      "itemCode": "IC_12_RING",
+      "requiredLevel": 45,
+      "privateLine": -123,
+      "inventorySize": [
+        28,
+        28
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          45
+        ],
+        [
+          "AE_VIT",
+          6
+        ],
+        [
+          "AE_HIT_POINTS",
+          30
+        ],
+        [
+          "AE_RESIST_FIRE",
+          15
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4642,
+      "baseId": 1189,
+      "baseIndex": 1189,
+      "baseName": "Amulet",
+      "itemCode": "IC_13_AMULET",
+      "requiredLevel": 8,
+      "privateLine": -124,
+      "inventorySize": [
+        28,
+        28
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          8
+        ],
+        [
+          "AE_MAG",
+          2
+        ],
+        [
+          "AE_MANA",
+          8
+        ],
+        [
+          "AE_RESIST_FIRE",
+          5
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4643,
+      "baseId": 305,
+      "baseIndex": 305,
+      "baseName": "Amulet",
+      "itemCode": "IC_13_AMULET",
+      "requiredLevel": 45,
+      "privateLine": -125,
+      "inventorySize": [
+        28,
+        28
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          45
+        ],
+        [
+          "AE_MAG",
+          6
+        ],
+        [
+          "AE_MANA",
+          30
+        ],
+        [
+          "AE_RESIST_FIRE",
+          15
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4644,
+      "baseId": 404,
+      "baseIndex": 404,
+      "baseName": "Leather Demi Gauntlets",
+      "itemCode": "IC_15_GLOVE",
+      "requiredLevel": 8,
+      "privateLine": -126,
+      "inventorySize": [
+        56,
+        56
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          8
+        ],
+        [
+          "AE_VIT",
+          2
+        ],
+        [
+          "AE_HIT_POINTS",
+          8
+        ],
+        [
+          "AE_RESIST_FIRE",
+          5
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4645,
+      "baseId": 408,
+      "baseIndex": 408,
+      "baseName": "Chainmail Gloves",
+      "itemCode": "IC_15_GLOVE",
+      "requiredLevel": 24,
+      "privateLine": -127,
+      "inventorySize": [
+        56,
+        56
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          24
+        ],
+        [
+          "AE_VIT",
+          4
+        ],
+        [
+          "AE_HIT_POINTS",
+          18
+        ],
+        [
+          "AE_RESIST_FIRE",
+          10
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4646,
+      "baseId": 1151,
+      "baseIndex": 1151,
+      "baseName": "Acolyte Boots",
+      "itemCode": "IC_16_BOOTS",
+      "requiredLevel": 8,
+      "privateLine": -128,
+      "inventorySize": [
+        56,
+        56
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          8
+        ],
+        [
+          "AE_VIT",
+          2
+        ],
+        [
+          "AE_HIT_POINTS",
+          8
+        ],
+        [
+          "AE_RESIST_FIRE",
+          5
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4647,
+      "baseId": 795,
+      "baseIndex": 795,
+      "baseName": "Lightscale Boots",
+      "itemCode": "IC_16_BOOTS",
+      "requiredLevel": 24,
+      "privateLine": -129,
+      "inventorySize": [
+        56,
+        56
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          24
+        ],
+        [
+          "AE_VIT",
+          4
+        ],
+        [
+          "AE_HIT_POINTS",
+          18
+        ],
+        [
+          "AE_RESIST_FIRE",
+          10
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4648,
+      "baseId": 1178,
+      "baseIndex": 1178,
+      "baseName": "Demonic Belt",
+      "itemCode": "IC_17_BELT",
+      "requiredLevel": 8,
+      "privateLine": -130,
+      "inventorySize": [
+        56,
+        28
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          8
+        ],
+        [
+          "AE_VIT",
+          2
+        ],
+        [
+          "AE_HIT_POINTS",
+          8
+        ],
+        [
+          "AE_RESIST_FIRE",
+          5
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4649,
+      "baseId": 441,
+      "baseIndex": 441,
+      "baseName": "Scaled Leather Belt",
+      "itemCode": "IC_17_BELT",
+      "requiredLevel": 24,
+      "privateLine": -131,
+      "inventorySize": [
+        56,
+        28
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          24
+        ],
+        [
+          "AE_VIT",
+          4
+        ],
+        [
+          "AE_HIT_POINTS",
+          18
+        ],
+        [
+          "AE_RESIST_FIRE",
+          10
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4650,
+      "baseId": 755,
+      "baseIndex": 755,
+      "baseName": "Burning Flasks V",
+      "itemCode": "IC_18_FLASK",
+      "requiredLevel": 24,
+      "privateLine": -132,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          24
+        ],
+        [
+          "AE_MAG",
+          4
+        ],
+        [
+          "AE_MANA",
+          18
+        ],
+        [
+          "AE_RESIST_FIRE",
+          10
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4651,
+      "baseId": 1052,
+      "baseIndex": 1052,
+      "baseName": "Arrow Trap VI",
+      "itemCode": "IC_19_TRAP",
+      "requiredLevel": 24,
+      "privateLine": -133,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          24
+        ],
+        [
+          "AE_MAG",
+          4
+        ],
+        [
+          "AE_MANA",
+          18
+        ],
+        [
+          "AE_RESIST_FIRE",
+          10
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4652,
+      "baseId": 1040,
+      "baseIndex": 1040,
+      "baseName": "Wrist Claws",
+      "itemCode": "IC_20_CLAW",
+      "requiredLevel": 24,
+      "privateLine": -134,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          24
+        ],
+        [
+          "AE_PERCENT_DAMAGE",
+          20
+        ],
+        [
+          "AE_STR",
+          4
+        ],
+        [
+          "AE_RESIST_FIRE",
+          10
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4653,
+      "baseId": 1219,
+      "baseIndex": 1219,
+      "baseName": "Throwing Knives VIII",
+      "itemCode": "IC_21_KNIFE",
+      "requiredLevel": 24,
+      "privateLine": -135,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          24
+        ],
+        [
+          "AE_PERCENT_DAMAGE",
+          20
+        ],
+        [
+          "AE_DEX",
+          4
+        ],
+        [
+          "AE_RESIST_FIRE",
+          10
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4654,
+      "baseId": 1232,
+      "baseIndex": 1232,
+      "baseName": "Throwing Mallet VIII",
+      "itemCode": "IC_22_MALLET",
+      "requiredLevel": 24,
+      "privateLine": -136,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          24
+        ],
+        [
+          "AE_PERCENT_DAMAGE",
+          20
+        ],
+        [
+          "AE_STR",
+          4
+        ],
+        [
+          "AE_RESIST_FIRE",
+          10
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4655,
+      "baseId": 2433,
+      "baseIndex": 2433,
+      "baseName": "War Pistol",
+      "itemCode": "IC_23_PISTOL",
+      "requiredLevel": 45,
+      "privateLine": -137,
+      "inventorySize": [
+        56,
+        84
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          45
+        ],
+        [
+          "AE_PERCENT_DAMAGE",
+          30
+        ],
+        [
+          "AE_DEX",
+          6
+        ],
+        [
+          "AE_RESIST_FIRE",
+          15
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    },
+    {
+      "id": 4656,
+      "baseId": 9,
+      "baseIndex": 9,
+      "baseName": "Magic Rock",
+      "itemCode": "IC_0_OTHER",
+      "requiredLevel": 45,
+      "privateLine": -138,
+      "inventorySize": [
+        56,
+        56
+      ],
+      "effects": [
+        [
+          "AE_REQUIRED_CLVL",
+          45
+        ],
+        [
+          "AE_MAG",
+          6
+        ],
+        [
+          "AE_MANA",
+          30
+        ],
+        [
+          "AE_RESIST_FIRE",
+          15
+        ]
+      ],
+      "equippedAppearance": "inherited-type-animation-not-yet-original"
+    }
+  ],
+  "globalRatesChanged": false,
+  "legacyRandomPoolChanged": false,
+  "equippedSpritesComplete": false
+}

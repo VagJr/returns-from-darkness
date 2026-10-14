@@ -12,13 +12,13 @@ Rediscover the classic with deeper character builds, exploration and equipment. 
 
 The Sanctuary recreates the social experience of Diablo’s classic Battle.net: sign in, chat in channels, find players, and create or join multiplayer rooms. It is the Returns from Darkness community’s meeting place to gather your party and continue the adventure in the game.
 
-**Available in this build — v0.4.5**
+**Available in this build — v0.4.6**
 
-Windows client with an integrated hub, cooperative rooms for up to four players, automatic updates and separate account profiles. The item system shares room drops; automatic saving preserves inventory, gold and character development on this computer. The Sanctuary brings together public profiles, characters, portraits, titles and campaign seals. Progress through play to unlock new classes, traits, modifiers and difficulties; existing characters keep their choices. The first three campaign completions grant dots and a golden portrait. Version 0.4.1 introduces project-specific HUD and inventory framing, in-game notices and The First Vigil collection: three relics with original icons and ground sprites, rewarded by specific bosses in Normal campaign mode on Horror. The Sanctuary gains compact navigation, profile tabs and new community artwork. HUD and inventory surfaces receive an original high-definition dark-stone and aged-iron material, keeping items and controls readable.
+Windows client with an integrated hub, cooperative rooms for up to four players, automatic updates and separate account profiles. The item system shares room drops; automatic saving preserves inventory, gold and character development on this computer. The Sanctuary brings together public profiles, characters, portraits, titles and campaign seals. Progress through play to unlock new classes, traits, modifiers and difficulties; existing characters keep their choices. The first three campaign completions grant dots and a golden portrait. The interface includes project-specific HUD and inventory framing, in-game notices and The First Vigil collection: three relics with original icons and ground sprites, rewarded by specific bosses in Normal campaign mode on Horror. The Sanctuary gains compact navigation, profile tabs and new community artwork. Complete Gothic frames, guardian sculptures and textured surfaces form the new project interface. Health and mana use animated liquid; eight potion slots sit alongside the experience bar. Version 0.4.6 adds an initial language choice, main menus in English and Brazilian Portuguese, and classic soundtrack fallback when the optional music pack is missing. Full campaign translation remains in development.
 
-**The next chapter**
+**In development**
 
-We continue expanding original artwork and interfaces. A whole-world remaster, new events, host migration and competitive rankings remain in development.
+36 new original artworks. From drawing to inventory, a collection takes shape inside Returns from Darkness. Development preview: these 36 items are not yet obtainable in the public version. Original equipped artwork and balance remain in production.
 
 The hub uses cloud services; gameplay runs in the clients and requires the room creator to stay connected. Characters save on this computer automatically, with recovery copies. A new room creates a new world. Full HD artwork, host migration and ranked PvP are not yet complete.
 

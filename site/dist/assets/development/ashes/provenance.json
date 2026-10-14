@@ -1,0 +1,262 @@
+{
+  "collection": "ashes-of-the-return",
+  "date": "2026-10-13",
+  "items": 36,
+  "sheets": 6,
+  "itemsPerGeneration": 6,
+  "publishedClientAtPreparation": "0.4.5",
+  "candidateBuild": "0.4.6",
+  "newItemsPubliclyAvailable": false,
+  "originalGenerationTool": "built-in image_gen",
+  "captureItemsStagedForTest": true,
+  "equippedAppearanceOriginal": false,
+  "balancePlaytestComplete": false,
+  "media": [
+    {
+      "file": "website/sheet-01.webp",
+      "kind": "original-art-sheet-web",
+      "sourceSha256": "c4d6382e9de8f44a7a689af397a48688653bb90e42c8d4da614537a3540f0b20",
+      "sha256": "ff8971a90af63546ed1e99109ace193b9771b63ddb1130c64f7e772fb13e2046",
+      "size": [
+        1536,
+        1024
+      ],
+      "cropBox": null,
+      "build": null
+    },
+    {
+      "file": "website/inventory-01.webp",
+      "kind": "real-native-capture-web",
+      "sourceSha256": "cde5db6fd0a9eb1c17d4248050651566a3058f844f038e79ce400c003ed2b17a",
+      "sha256": "25ad6243722bc47e739cef507781f156dceb926728e2404e2b958498f8a7cfe8",
+      "size": [
+        1920,
+        1080
+      ],
+      "cropBox": null,
+      "build": "0.4.6"
+    },
+    {
+      "file": "website/inventory-detail-01.webp",
+      "kind": "real-native-capture-crop-web",
+      "sourceSha256": "cde5db6fd0a9eb1c17d4248050651566a3058f844f038e79ce400c003ed2b17a",
+      "sha256": "c4ebf0108b1a4bdfbea02c53d895c9b5c5d059508b497aadd271306c515f99e0",
+      "size": [
+        480,
+        612
+      ],
+      "cropBox": [
+        1200,
+        144,
+        1680,
+        756
+      ],
+      "build": "0.4.6"
+    },
+    {
+      "file": "website/sheet-02.webp",
+      "kind": "original-art-sheet-web",
+      "sourceSha256": "b2b8126fe3d3473e7b558b82de9c523f447cc2616d7bb6d3390cc870bbd5a837",
+      "sha256": "03a0cb5edd356a17293a16d498aee9c513b82efc2ed89023d910f00593f0d70e",
+      "size": [
+        1536,
+        1024
+      ],
+      "cropBox": null,
+      "build": null
+    },
+    {
+      "file": "website/inventory-02.webp",
+      "kind": "real-native-capture-web",
+      "sourceSha256": "7672ce7624d2eeccb3832fccba42323e630e99b2fee4a47693483375848b4459",
+      "sha256": "e8202818cd0fa3ef267973efef6e19e68f62f60d72fc6f90c54fa3c70f5cdd79",
+      "size": [
+        1920,
+        1080
+      ],
+      "cropBox": null,
+      "build": "0.4.6"
+    },
+    {
+      "file": "website/inventory-detail-02.webp",
+      "kind": "real-native-capture-crop-web",
+      "sourceSha256": "7672ce7624d2eeccb3832fccba42323e630e99b2fee4a47693483375848b4459",
+      "sha256": "27be1b04f89b74b878eecf54c31202e60cf50975d38f85efc3837136ae519428",
+      "size": [
+        480,
+        612
+      ],
+      "cropBox": [
+        1200,
+        144,
+        1680,
+        756
+      ],
+      "build": "0.4.6"
+    },
+    {
+      "file": "website/sheet-03.webp",
+      "kind": "original-art-sheet-web",
+      "sourceSha256": "51ee6673a1581a3bc128479d0a15aa2b4c7fbd1f24c69c6a302670b6befd79c8",
+      "sha256": "4d1cce03d690f6da9d1d9dc17aa8f1ecd3fe245d5378be4e98ad7bdcb40a9406",
+      "size": [
+        1536,
+        1024
+      ],
+      "cropBox": null,
+      "build": null
+    },
+    {
+      "file": "website/inventory-03.webp",
+      "kind": "real-native-capture-web",
+      "sourceSha256": "7a8820c695d35ed629a6ee8d4e1e11607ff09783abfe430590ac8c3ed9d22cad",
+      "sha256": "8bc257a9009a714f09378d49641784a174d76509400c1e33e792035fe6d6a2ed",
+      "size": [
+        1920,
+        1080
+      ],
+      "cropBox": null,
+      "build": "0.4.6"
+    },
+    {
+      "file": "website/inventory-detail-03.webp",
+      "kind": "real-native-capture-crop-web",
+      "sourceSha256": "7a8820c695d35ed629a6ee8d4e1e11607ff09783abfe430590ac8c3ed9d22cad",
+      "sha256": "1d87f641d7f85e1304024c0c4aabf7a07dfc93e1653e862fcb0430b937becece",
+      "size": [
+        480,
+        612
+      ],
+      "cropBox": [
+        1200,
+        144,
+        1680,
+        756
+      ],
+      "build": "0.4.6"
+    },
+    {
+      "file": "website/sheet-04.webp",
+      "kind": "original-art-sheet-web",
+      "sourceSha256": "8a1a6a9aa1aebd1965beece60842aa326fd06d935182d3a239916fad72f48f3e",
+      "sha256": "aeda6cefc79594ad900ca221fb33eba5a9db966276107cbfdce170972b93687b",
+      "size": [
+        1536,
+        1024
+      ],
+      "cropBox": null,
+      "build": null
+    },
+    {
+      "file": "website/inventory-04.webp",
+      "kind": "real-native-capture-web",
+      "sourceSha256": "12300ae73ac0640a7448630cdb885728a12061b3a15d2fe439588d2dc5bd8407",
+      "sha256": "b5808f0cca59b72eaeef7ee5dbb59506ade2cdbbda89eb6a283c199a7c8f5547",
+      "size": [
+        1920,
+        1080
+      ],
+      "cropBox": null,
+      "build": "0.4.6"
+    },
+    {
+      "file": "website/inventory-detail-04.webp",
+      "kind": "real-native-capture-crop-web",
+      "sourceSha256": "12300ae73ac0640a7448630cdb885728a12061b3a15d2fe439588d2dc5bd8407",
+      "sha256": "54b2210bb2e739606e6ae668fdf9818620e473fb03195c54cd36bf94c96d4f2d",
+      "size": [
+        480,
+        612
+      ],
+      "cropBox": [
+        1200,
+        144,
+        1680,
+        756
+      ],
+      "build": "0.4.6"
+    },
+    {
+      "file": "website/sheet-05.webp",
+      "kind": "original-art-sheet-web",
+      "sourceSha256": "c7e96cd2426aa93f75e0f8f2c0921660090cc1e59a2c1a33a344349d874976eb",
+      "sha256": "94d55c1656bc874a76c6f96c8df76550fb86e102ee4638cf5573b645e9a521b6",
+      "size": [
+        1536,
+        1024
+      ],
+      "cropBox": null,
+      "build": null
+    },
+    {
+      "file": "website/inventory-05.webp",
+      "kind": "real-native-capture-web",
+      "sourceSha256": "19da877e50c250a34cd2bbe0912a3d6e011c979c79486486734548e42de523bc",
+      "sha256": "2a369cf29ddf8bccfa661a5d2222a536f5be2f25a990cf7338657fadf4551941",
+      "size": [
+        1920,
+        1080
+      ],
+      "cropBox": null,
+      "build": "0.4.6"
+    },
+    {
+      "file": "website/inventory-detail-05.webp",
+      "kind": "real-native-capture-crop-web",
+      "sourceSha256": "19da877e50c250a34cd2bbe0912a3d6e011c979c79486486734548e42de523bc",
+      "sha256": "1356a8e5fe6077ed351e4eb1fa72babea5dcac8b5ba168967bcae508b7c7bb22",
+      "size": [
+        480,
+        612
+      ],
+      "cropBox": [
+        1200,
+        144,
+        1680,
+        756
+      ],
+      "build": "0.4.6"
+    },
+    {
+      "file": "website/sheet-06.webp",
+      "kind": "original-art-sheet-web",
+      "sourceSha256": "9cd35612aa75300474ae7a385f05f355a0972bd0e9c752f3e7d7f471b0aa08d9",
+      "sha256": "3ac1d92a0dbf5f69f21cd7d244bedc32f7a3d410933949ed8500a10152bbf71f",
+      "size": [
+        1536,
+        1024
+      ],
+      "cropBox": null,
+      "build": null
+    },
+    {
+      "file": "website/inventory-06.webp",
+      "kind": "real-native-capture-web",
+      "sourceSha256": "cfae70634fb098f77fc55f83200493bc0dcb6c0ceacbfa921de0142a4de1a09a",
+      "sha256": "597729c0b11f159d9c3a8feff631c3ffaa64223d43ecc2701661afd5e1d731a3",
+      "size": [
+        1920,
+        1080
+      ],
+      "cropBox": null,
+      "build": "0.4.6"
+    },
+    {
+      "file": "website/inventory-detail-06.webp",
+      "kind": "real-native-capture-crop-web",
+      "sourceSha256": "cfae70634fb098f77fc55f83200493bc0dcb6c0ceacbfa921de0142a4de1a09a",
+      "sha256": "ef1a5ef45409b7d90b238646e7087344063971a26944f70b5758d0b6e509bc30",
+      "size": [
+        480,
+        612
+      ],
+      "cropBox": [
+        1200,
+        144,
+        1680,
+        756
+      ],
+      "build": "0.4.6"
+    }
+  ]
+}

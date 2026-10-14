@@ -1,0 +1,714 @@
+{
+  "atlasSize": [
+    2048,
+    2048
+  ],
+  "sha256": "be17737ca6f8ff81184126c429ff9a13c9808e6e8182bbd71214592080c21e15",
+  "items": [
+    {
+      "uniqueId": 4618,
+      "file": "last-vigil.png",
+      "source": [
+        10,
+        10,
+        272,
+        272
+      ],
+      "logicalSize": [
+        28,
+        28
+      ],
+      "drawingSize": [
+        272,
+        272
+      ]
+    },
+    {
+      "uniqueId": 4619,
+      "file": "return-lantern.png",
+      "source": [
+        302,
+        10,
+        272,
+        272
+      ],
+      "logicalSize": [
+        28,
+        28
+      ],
+      "drawingSize": [
+        272,
+        272
+      ]
+    },
+    {
+      "uniqueId": 4620,
+      "file": "ashen-covenant.png",
+      "source": [
+        594,
+        10,
+        272,
+        272
+      ],
+      "logicalSize": [
+        28,
+        28
+      ],
+      "drawingSize": [
+        272,
+        272
+      ]
+    },
+    {
+      "uniqueId": 4621,
+      "file": "rfd-emberwake.png",
+      "source": [
+        886,
+        10,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        181
+      ]
+    },
+    {
+      "uniqueId": 4622,
+      "file": "rfd-oath-of-return.png",
+      "source": [
+        1178,
+        10,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        160
+      ]
+    },
+    {
+      "uniqueId": 4623,
+      "file": "rfd-cinderhew.png",
+      "source": [
+        1470,
+        10,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        179
+      ]
+    },
+    {
+      "uniqueId": 4624,
+      "file": "rfd-last-bell.png",
+      "source": [
+        10,
+        302,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        201
+      ]
+    },
+    {
+      "uniqueId": 4625,
+      "file": "rfd-pilgrim-bow.png",
+      "source": [
+        302,
+        302,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        170
+      ]
+    },
+    {
+      "uniqueId": 4626,
+      "file": "rfd-ember-crook.png",
+      "source": [
+        594,
+        302,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        189
+      ]
+    },
+    {
+      "uniqueId": 4627,
+      "file": "rfd-grave-cleaver.png",
+      "source": [
+        886,
+        302,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        177
+      ]
+    },
+    {
+      "uniqueId": 4628,
+      "file": "rfd-vesper-maul.png",
+      "source": [
+        1178,
+        302,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        165
+      ]
+    },
+    {
+      "uniqueId": 4629,
+      "file": "rfd-blackthorn-longbow.png",
+      "source": [
+        1470,
+        302,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        230
+      ]
+    },
+    {
+      "uniqueId": 4630,
+      "file": "rfd-lantern-spire.png",
+      "source": [
+        10,
+        594,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        190
+      ]
+    },
+    {
+      "uniqueId": 4631,
+      "file": "rfd-vigil-buckler.png",
+      "source": [
+        302,
+        594,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        201
+      ]
+    },
+    {
+      "uniqueId": 4632,
+      "file": "rfd-gate-of-ashes.png",
+      "source": [
+        594,
+        594,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        151,
+        272
+      ]
+    },
+    {
+      "uniqueId": 4633,
+      "file": "rfd-pilgrim-mantle.png",
+      "source": [
+        886,
+        594,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        194
+      ]
+    },
+    {
+      "uniqueId": 4634,
+      "file": "rfd-nightkeeper-vest.png",
+      "source": [
+        1178,
+        594,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        201
+      ]
+    },
+    {
+      "uniqueId": 4635,
+      "file": "rfd-ashguard-mail.png",
+      "source": [
+        1470,
+        594,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        206
+      ]
+    },
+    {
+      "uniqueId": 4636,
+      "file": "rfd-returning-bastion.png",
+      "source": [
+        10,
+        886,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        176
+      ]
+    },
+    {
+      "uniqueId": 4637,
+      "file": "rfd-watcher-helm.png",
+      "source": [
+        302,
+        886,
+        272,
+        272
+      ],
+      "logicalSize": [
+        56,
+        56
+      ],
+      "drawingSize": [
+        196,
+        272
+      ]
+    },
+    {
+      "uniqueId": 4638,
+      "file": "rfd-crown-of-cinders.png",
+      "source": [
+        594,
+        886,
+        272,
+        272
+      ],
+      "logicalSize": [
+        56,
+        56
+      ],
+      "drawingSize": [
+        154,
+        272
+      ]
+    },
+    {
+      "uniqueId": 4639,
+      "file": "rfd-ember-band.png",
+      "source": [
+        886,
+        886,
+        272,
+        272
+      ],
+      "logicalSize": [
+        28,
+        28
+      ],
+      "drawingSize": [
+        272,
+        252
+      ]
+    },
+    {
+      "uniqueId": 4640,
+      "file": "rfd-unbroken-circle.png",
+      "source": [
+        1178,
+        886,
+        272,
+        272
+      ],
+      "logicalSize": [
+        28,
+        28
+      ],
+      "drawingSize": [
+        272,
+        250
+      ]
+    },
+    {
+      "uniqueId": 4641,
+      "file": "rfd-nightfall-signet.png",
+      "source": [
+        1470,
+        886,
+        272,
+        272
+      ],
+      "logicalSize": [
+        28,
+        28
+      ],
+      "drawingSize": [
+        272,
+        271
+      ]
+    },
+    {
+      "uniqueId": 4642,
+      "file": "rfd-homeward-token.png",
+      "source": [
+        10,
+        1178,
+        272,
+        272
+      ],
+      "logicalSize": [
+        28,
+        28
+      ],
+      "drawingSize": [
+        205,
+        272
+      ]
+    },
+    {
+      "uniqueId": 4643,
+      "file": "rfd-reliquary-of-dawn.png",
+      "source": [
+        302,
+        1178,
+        272,
+        272
+      ],
+      "logicalSize": [
+        28,
+        28
+      ],
+      "drawingSize": [
+        188,
+        272
+      ]
+    },
+    {
+      "uniqueId": 4644,
+      "file": "rfd-wayfarer-grip.png",
+      "source": [
+        594,
+        1178,
+        272,
+        272
+      ],
+      "logicalSize": [
+        56,
+        56
+      ],
+      "drawingSize": [
+        272,
+        254
+      ]
+    },
+    {
+      "uniqueId": 4645,
+      "file": "rfd-iron-oath-gauntlets.png",
+      "source": [
+        886,
+        1178,
+        272,
+        272
+      ],
+      "logicalSize": [
+        56,
+        56
+      ],
+      "drawingSize": [
+        242,
+        272
+      ]
+    },
+    {
+      "uniqueId": 4646,
+      "file": "rfd-ashen-path-boots.png",
+      "source": [
+        1178,
+        1178,
+        272,
+        272
+      ],
+      "logicalSize": [
+        56,
+        56
+      ],
+      "drawingSize": [
+        272,
+        271
+      ]
+    },
+    {
+      "uniqueId": 4647,
+      "file": "rfd-gravewalker-greaves.png",
+      "source": [
+        1470,
+        1178,
+        272,
+        272
+      ],
+      "logicalSize": [
+        56,
+        56
+      ],
+      "drawingSize": [
+        208,
+        272
+      ]
+    },
+    {
+      "uniqueId": 4648,
+      "file": "rfd-pilgrim-cord.png",
+      "source": [
+        10,
+        1470,
+        272,
+        136
+      ],
+      "logicalSize": [
+        56,
+        28
+      ],
+      "drawingSize": [
+        223,
+        136
+      ]
+    },
+    {
+      "uniqueId": 4649,
+      "file": "rfd-warden-girdle.png",
+      "source": [
+        302,
+        1470,
+        272,
+        136
+      ],
+      "logicalSize": [
+        56,
+        28
+      ],
+      "drawingSize": [
+        257,
+        136
+      ]
+    },
+    {
+      "uniqueId": 4650,
+      "file": "rfd-cinder-flask.png",
+      "source": [
+        594,
+        1470,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        176,
+        272
+      ]
+    },
+    {
+      "uniqueId": 4651,
+      "file": "rfd-vesper-snare.png",
+      "source": [
+        886,
+        1470,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        133
+      ]
+    },
+    {
+      "uniqueId": 4652,
+      "file": "rfd-raven-talons.png",
+      "source": [
+        1178,
+        1470,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        183
+      ]
+    },
+    {
+      "uniqueId": 4653,
+      "file": "rfd-returning-shard.png",
+      "source": [
+        1470,
+        1470,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        165
+      ]
+    },
+    {
+      "uniqueId": 4654,
+      "file": "rfd-cinder-weight.png",
+      "source": [
+        10,
+        1762,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        160
+      ]
+    },
+    {
+      "uniqueId": 4655,
+      "file": "rfd-last-light-pistol.png",
+      "source": [
+        302,
+        1762,
+        181,
+        272
+      ],
+      "logicalSize": [
+        56,
+        84
+      ],
+      "drawingSize": [
+        181,
+        134
+      ]
+    },
+    {
+      "uniqueId": 4656,
+      "file": "rfd-chronicle-of-return.png",
+      "source": [
+        594,
+        1762,
+        272,
+        272
+      ],
+      "logicalSize": [
+        56,
+        56
+      ],
+      "drawingSize": [
+        266,
+        272
+      ]
+    }
+  ],
+  "preservesAspectRatio": true,
+  "mastersUnchanged": true,
+  "nativePaletteFallbackRetained": true
+}

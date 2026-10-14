@@ -1,5 +1,6 @@
 import {digest,equal,random,passwordKey,validUser,validToken,validRoom,validateSignal} from './security.mjs';
 import {Progression,RULES,permitsDifficulty,unlocks} from './progression.mjs';
+import {DailyService} from './daily-service.mjs';
 const TTL=180000,SESSION=5400000,CHANNELS=['Tristram','Procurando Grupo','Comercio','Arena'];
 const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'}});
 const fail=(message,status=400)=>{throw Object.assign(Error(message),{status});};
@@ -25,7 +26,7 @@ export default {
     try {
       const signal=/^\/signal\/([a-f0-9-]{36})(\/bootstrap)?$/.exec(url.pathname);
       if(signal){if((signal[2]&&req.method!=='POST')||(!signal[2]&&req.headers.get('Upgrade')!=='websocket'))return json({error:'Rota indisponível.'},404);result=await roomStub(env,signal[1]).fetch(req);}
-      else if(url.pathname==='/health'||/^\/api\/(login|register|state|channel|chat|rooms\/(create|join|leave)|logout|launch|auth\/(handoff|redeem)|native\/connect|profiles\/(public|update)|progression\/(rules|roster|run|report|remove))$/.test(url.pathname))result=await community(env).fetch(req);
+      else if(url.pathname==='/health'||/^\/api\/(login|register|state|channel|chat|rooms\/(create|join|leave)|logout|launch|auth\/(handoff|redeem)|native\/connect|profiles\/(public|update)|progression\/(rules|roster|run|report|remove)|daily\/(board|events?|claim|wallet))$/.test(url.pathname))result=await community(env).fetch(req);
       else if(url.pathname==='/migration'&&env.MIGRATION_ENABLED==='true'&&env.MIGRATION_TOKEN&&equal(req.headers.get('Authorization'), 'Bearer '+env.MIGRATION_TOKEN))result=await community(env).fetch(req);
       else return json({error:'Rota indisponível.'},404);
     }catch(error){result=json({error:error.status?error.message:'Não foi possível concluir a operação.'},error.status||503);}
@@ -44,6 +45,7 @@ export class Community {
       CREATE TABLE IF NOT EXISTS limits (key TEXT PRIMARY KEY, count INTEGER NOT NULL, until INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS handoffs (hash TEXT PRIMARY KEY, source TEXT NOT NULL, target TEXT NOT NULL, expires INTEGER NOT NULL);`);
     this.progression=new Progression(this);
+    this.daily=env.DAILY_ENABLED==='true'?new DailyService(this):null;
   }
   rows(query,...args){return this.sql.exec(query,...args).toArray();}
   async limit(key,max,window=60000){const now=Date.now(),r=this.rows('SELECT count,until FROM limits WHERE key=?',key)[0];if(r&&r.until>now&&r.count>=max)fail('Aguarde um instante.',429);this.sql.exec('INSERT OR REPLACE INTO limits VALUES (?,?,?)',key,r&&r.until>now?r.count+1:1,r&&r.until>now?r.until:now+window);}
@@ -55,7 +57,7 @@ export class Community {
     else{room.members=room.members.filter(m=>m.user.toLowerCase()!==user.toLowerCase());await call(roomStub(this.env,room.id),'/internal/members',{members:room.members});room.connected=(room.connected||[]).filter(slot=>room.members.some(m=>m.slot===slot));this.save(room);}
   }
   async fetch(req){
-    if(req.method==='POST'&&(/^\/api\/(rooms\/|auth\/|profiles\/|progression\/|launch$|native\/connect$)/.test(new URL(req.url).pathname)))return this.ctx.blockConcurrencyWhile(()=>this.handle(req));
+    if(req.method==='POST'&&(/^\/api\/(rooms\/|auth\/|profiles\/|progression\/|daily\/|launch$|native\/connect$)/.test(new URL(req.url).pathname)))return this.ctx.blockConcurrencyWhile(()=>this.handle(req));
     return this.handle(req);
   }
   async handoff(s,target){
@@ -101,6 +103,19 @@ export class Community {
         const token=random();this.sql.exec('INSERT INTO sessions VALUES (?,?,?,?)',await digest(token),source.user,source.channel,now+SESSION);return json({username:source.user,sessionToken:token});
       }
       const s=await this.session(req),user=s.user;
+      if(path.startsWith('/api/daily/')){
+        if(!this.daily)fail('Contratos diários ainda não disponíveis.',404);
+        this.progression.native(req);
+        if(path==='/api/daily/wallet'&&req.method==='GET')return json(this.daily.wallet(user));
+        if(req.method!=='POST')fail('Método inválido.',405);
+        await this.limit('daily:'+user.toLowerCase(),120);
+        const input=await body(req);
+        if(path==='/api/daily/board')return json(await this.daily.board(user,input.characterId));
+        if(path==='/api/daily/event')return json(await this.daily.event(req,user,input));
+        if(path==='/api/daily/events')return json(await this.daily.events(req,user,input));
+        if(path==='/api/daily/claim')return json(await this.daily.claim(req,user,input));
+        fail('Rota indisponível.',404);
+      }
       if(path==='/api/state'&&req.method==='GET'){
         const events=this.rows('SELECT user,text,at FROM messages WHERE channel=? ORDER BY id DESC LIMIT 100',s.channel).reverse().map(e=>({...e,type:5}));
         const users=this.rows('SELECT user FROM sessions WHERE channel=? AND expires>? GROUP BY user ORDER BY MAX(expires) DESC LIMIT 256',s.channel,now).map(r=>r.user);
@@ -113,7 +128,13 @@ export class Community {
       if(path.startsWith('/api/progression/')){
         await this.limit('progress:'+user.toLowerCase(),60);
         const method={'/api/progression/roster':'roster','/api/progression/run':'begin','/api/progression/report':'report','/api/progression/remove':'remove'}[path];
-        if(!method)fail('Rota indisponível.',404);return json(await this.progression[method](req,user,input));
+        if(!method)fail('Rota indisponível.',404);
+        const result=await this.progression[method](req,user,input);
+        if(method==='begin'){
+          result.daily=null;
+          if(this.daily&&input.character.mode!==8){try{result.daily=await this.daily.board(user,input.character.id);}catch(error){if(error.status!==409)throw error;result.daily={unavailable:'character-locked'};}}
+        }
+        return json(result);
       }
       if(path==='/api/channel'){if(!CHANNELS.includes(input.channel))fail('Canal inválido.');this.sql.exec('UPDATE sessions SET channel=? WHERE hash=?',input.channel,s.hash);return json({ok:true});}
       if(path==='/api/chat') {await this.limit('chat:'+user.toLowerCase(),5,10000);if(typeof input.text!=='string'||input.text.trim().length<1||input.text.length>240||/[\x00-\x1f]/.test(input.text))fail('Mensagem inválida.');this.sql.exec('INSERT INTO messages(channel,user,text,at) VALUES (?,?,?,?)',s.channel,user,input.text.trim(),now);this.sql.exec('DELETE FROM messages WHERE channel=? AND id NOT IN (SELECT id FROM messages WHERE channel=? ORDER BY id DESC LIMIT 100)',s.channel,s.channel);return json({ok:true});}

@@ -6,6 +6,7 @@ from pathlib import Path
 from urllib.parse import urlsplit
 from xml.sax.saxutils import escape as xml_escape
 from real_gallery import render_gallery, prepare_sanctuary
+from development import render_development,render_teaser,prepare_development
 
 ROOT = Path(__file__).resolve().parent
 DIST = ROOT / 'dist'
@@ -47,7 +48,7 @@ def page(lang, root=False):
     if set(t) != KEYS:
         raise ValueError(f'{lang}: missing or unexpected keys: {set(t) ^ KEYS}')
     url = '/' if root else f'/{lang}/'
-    nav = ''.join(f'<a href="#{anchor}">{e(label)}</a>' for anchor,label in zip(['project','online','journal','faq'],t['nav']))
+    nav = ''.join(f'<a href="#{anchor}">{e(label)}</a>' for anchor,label in zip(['project','online','development','faq'],t['nav']))
     nav += f'<a href="/central/?lang={lang}" class="central-link">{e(CENTRAL_LABELS[lang])}</a>'
     options = ''.join(f'<option value="/{code}/" {"selected" if code==lang else ""}>{e(name)}</option>' for code,name in NAMES.items())
     alternatives = ''.join(f'<a href="/{code}/" hreflang="{code}" lang="{code}">{e(name)}</a>' for code,name in NAMES.items())
@@ -74,14 +75,16 @@ def page(lang, root=False):
 <title>Diablo 1 HD — Returns from Darkness | {e(t['sections'][0])}</title>
 <meta name="description" content="{e(t['summary'])}"><meta name="robots" content="{'index,follow' if CONFIG['releaseReady'] else 'noindex,nofollow'}">
 <meta name="theme-color" content="#0c0e10"><meta property="og:type" content="website"><meta property="og:site_name" content="Returns from Darkness"><meta property="og:title" content="{e(CONFIG['name'])}"><meta property="og:description" content="{e(t['summary'])}"><meta property="og:locale" content="{lang.replace('-', '_')}"><meta name="twitter:card" content="summary_large_image">{seo}
-<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/real-gallery.css"><link rel="preload" as="image" href="/assets/cathedral.webp"><link rel="preload" as="font" href="/assets/fonts/CinzelDecorative-Regular.ttf" type="font/ttf" crossorigin>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/real-gallery.css"><link rel="stylesheet" href="/development.css?v=ashes-1"><script src="/development.js?v=ashes-1" defer></script><link rel="preload" as="image" href="/assets/cathedral.webp"><link rel="preload" as="font" href="/assets/fonts/CinzelDecorative-Regular.ttf" type="font/ttf" crossorigin>
 <script type="application/ld+json">{json.dumps(schema,ensure_ascii=False).replace('<','\\u003c')}</script>
 </head><body><a class="skip" href="#main">{e(t['skip'])}</a>
 <header class="header"><a class="wordmark" href="#home" aria-label="Returns from Darkness"><span class="sigil" aria-hidden="true">Ⅰ</span><span>RETURNS FROM DARKNESS<small>DIABLO 1 HD</small></span></a><a class="header-discord discord-button" href="{e(CONFIG['discordInvite'])}" target="_blank" rel="noopener noreferrer">Discord ↗</a><button class="menu-toggle" aria-label="{e(t['menu'])}" aria-expanded="false" aria-controls="navigation">☰</button><nav id="navigation">{nav}</nav><label class="language"><span aria-hidden="true">◎</span><span class="sr-only">{e(t['language'])}</span><select id="language">{options}</select></label></header>
 <main id="main"><section id="home" class="hero"><div class="hero-art" role="img" aria-label="{e(t['alt'])}"></div><div class="hero-content"><p class="eyebrow"><span></span>READY TO PLAY</p><p class="eyebrow">{e(t['eyebrow'])}</p><img class="classic-logo" data-classic-logo src="/assets/returns-from-darkness-classic-animated.webp" alt="Diablo 1 HD — Returns from Darkness" width="768" height="280"><h1>{e(t['headline'][0])}<br><em>{e(t['headline'][1])}</em></h1><p class="hero-description">{e(t['summary'])}</p><div class="actions"><a class="button primary" href="/central/?lang={lang}">{e(CENTRAL_LABELS[lang])}<span aria-hidden="true">↗</span></a><a class="button" href="/central/?lang={lang}#client">↓ Windows · v{CONFIG['baseVersion']}</a><a class="button discord-button" href="{e(CONFIG['discordInvite'])}" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true"><path d="M5 5h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-7l-5 3v-3H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="1.4"/><path d="M8 9v5m-2-2.5h4" stroke="currentColor" stroke-width="1.4"/><circle cx="16" cy="10" r="1" fill="currentColor"/><circle cx="18" cy="13" r="1" fill="currentColor"/></svg>{e(DISCORD_LABELS[lang])}<span aria-hidden="true">↗</span></a><a class="discover" href="#project">{e(t['actions'][1])}<span aria-hidden="true">↓</span></a></div><div class="hero-state"><i aria-hidden="true"></i>{e(t['facts'][0])}<span>v{e(CONFIG['baseVersion'])}</span></div></div><div class="art-caption">{e(t['art'])}</div><div class="vertical-mark" aria-hidden="true">TRISTRAM · EST. 1996</div></section>
 <div class="facts"><div><span>Ⅳ</span>{e(t['facts'][1])}</div><div><span>∞</span>{e(t['facts'][2])}</div><div class="version"><span>{CONFIG['baseVersion']}</span>{e(t['facts'][0])}</div></div>
+<div class="dev-front-teaser">{render_teaser(lang)}</div>
 <section class="section project" id="project"><div class="section-kicker">01 / {e(t['sections'][0])}</div><div class="intro-grid"><h2>{e(t['vision'][0])}</h2><div><p class="lead">{e(t['vision'][1])}</p><p>{e(t['vision'][2])}</p></div></div><div class="pillars">{pillars}</div><div class="concept-gallery"><figure><img src="/assets/first-light.webp" width="1536" height="1024" loading="lazy" alt="{e(t['pillars'][2][0])}"><figcaption><span>{e(ART_TITLES[lang][0])}</span><small>{e(t['art'])}</small></figcaption></figure><figure><img src="/assets/ashen-arena.webp" width="1536" height="1024" loading="lazy" alt="{e(t['milestones'][2][0])}"><figcaption><span>{e(ART_TITLES[lang][1])} · 1v1 / 2v2</span><small>{e(t['art'])}</small></figcaption></figure></div></section>
 {render_gallery(lang, CONFIG['baseVersion'])}
+{render_development(lang)}
 <section class="section online" id="online"><div class="section-kicker">02 / {e(t['sections'][1])}</div><div class="online-heading illustrated"><div><img class="gothic-icon" src="/assets/icon-gate.svg" width="80" height="80" alt="" loading="lazy"><h2>{e(t['online'][0])}</h2><p>{e(t['online'][1])}</p></div><figure class="party-art"><img src="/assets/cooperative.webp" width="1536" height="1024" loading="lazy" alt="{e(t['flow'][1])}"><figcaption>{e(t['art'])}</figcaption></figure></div><ol class="flow">{flow}</ol><div class="online-evidence"><article><span class="status-tag">v{CONFIG['baseVersion']}</span><h3>{e(t['now'][0])}</h3><p>{e(t['now'][1])}</p></article><article><span class="status-tag muted">→</span><h3>{e(t['next'][0])}</h3><p>{e(t['next'][1])}</p></article></div><p class="fineprint">{e(t['limits'])}</p></section>
 <section class="section journal" id="journal"><div class="section-kicker">03 / {e(t['sections'][2])}</div><div class="journal-heading"><h2>{e(t['journal'][0])}</h2><p>{e(t['journal'][1])}</p></div><div class="journal-list">{milestones}</div><div class="journal-date"><time datetime="{CONFIG['updated']}">{CONFIG['updated']}</time><span>Returns from Darkness HD · v{CONFIG['baseVersion']}</span></div></section>
 <section class="section faq" id="faq"><div><div class="section-kicker">04 / {e(t['sections'][3])}</div><h2>{e(t['sections'][3])}</h2><div class="faq-decoration" aria-hidden="true">Ⅰ</div></div><div class="questions">{questions}</div></section>
@@ -90,6 +93,7 @@ def page(lang, root=False):
 
 DIST.mkdir(exist_ok=True)
 prepare_sanctuary(CONFIG['baseVersion'])
+prepare_development()
 shutil.copy2(ROOT/'real-gallery.css',DIST/'real-gallery.css')
 shutil.copytree(ROOT/'central',DIST/'central',dirs_exist_ok=True)
 for lang in CONFIG['languages']:
