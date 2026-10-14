@@ -946,7 +946,7 @@
     2048,
     2048
   ],
-  "atlasSha256": "becbfee17e6fcdb5be1da24666e2acd9938439e48f67e08959ddce0ecd3489fe",
+  "atlasSha256": "05a5998fc34c93994c33fd945754f230bbc179f0f5531209d346de1c7f6517de",
   "sprites": [
     {
       "id": "CHAR_FRAME",
@@ -1179,10 +1179,20 @@
       ]
     },
     {
+      "id": "INV_SEAL_TIP",
+      "file": "01_PAINEIS/painel_inventario_completo.png",
+      "xywh": [
+        204,
+        1079,
+        93,
+        30
+      ]
+    },
+    {
       "id": "GOLD_WELL",
       "file": "02_MOLDURAS/moldura_inventario_sobreposta.png",
       "xywh": [
-        204,
+        301,
         1079,
         36,
         17

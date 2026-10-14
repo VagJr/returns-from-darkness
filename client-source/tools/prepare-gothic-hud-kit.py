@@ -45,6 +45,7 @@ for key,name in [('TL','superior_esquerdo'),('TC','superior_centro'),('TR','supe
                  ('ML','meio_esquerdo'),('C','centro'),('MR','meio_direito'),
                  ('BL','inferior_esquerdo'),('BC','inferior_centro'),('BR','inferior_direito')]:
     selected.append(('FRAME_'+key,'06_NINE_SLICE/frame9_'+name+'.png'))
+selected.append(('INV_SEAL_TIP','01_PAINEIS/painel_inventario_completo.png'))
 atlas=Image.new('RGBA',(2048,2048)); x=y=2; shelf=0; rects=[]
 # Large rectangles first; stable shelf packing with transparent gutters.
 images=[]
@@ -52,6 +53,7 @@ for key,name in selected:
     im=Image.open(SOURCE/name).convert('RGBA')
     if key=='GRID_CELL': im=im.crop((62,355,102,400))
     if key=='GOLD_WELL': im=im.crop((142,622,178,639))
+    if key=='INV_SEAL_TIP': im=im.crop((217,574,310,604))
     images.append((key,name,im))
 images.sort(key=lambda v:(-v[2].height,-v[2].width))
 for key,name,im in images:

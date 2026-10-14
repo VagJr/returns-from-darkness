@@ -1,4 +1,4 @@
-# Returns from Darkness HD 0.4.10
+# Returns from Darkness HD 0.4.11
 
 Community client adapted from The Hell 3 source 1.265/data1.267, with creator-hosted online rooms, signed updates and Sanctuary account progression. Inherited gameplay and artwork remain credited; project-specific additions include the integration, progression layer, interface framing and First Vigil relic collection. See NOTICE.md and ORIGINAL-SOURCE-README.txt.
 
@@ -29,3 +29,5 @@ Version 0.4.8 fixes incremental TCP burst parsing and bounded consumer backpress
 Version 0.4.9 clips bitmap glyphs to destination surfaces, bounds font-header reads and fixes the 256-entry loop. It verifies both installation archives against the signed compatible set, repairs incompatible imports atomically with backups, and includes only whitelisted module names and access kinds in crash summaries. Controlled production launches use the validated archive directory; the development override archive is disabled in public builds. The exact old Strm2.dll + 0x1A102 write failure was reproduced with guard pages, but confirmation on the affected external PCs is still required. See docs/AUDITORIA-INSTALACAO-0.4.9.md.
 
 Version 0.4.10 keeps native room launch in a skinned waiting dialog until the controller delivers room control or a fixed failure code. Same-account authentication refresh preserves the current menu. Public executables opened without a controller enter through the launcher before initializing graphics. The creator reported successful external multiplayer on two PCs/two networks in 0.4.9; this is a community report, not a relabeled 0.4.10 agent certification. See docs/AUDITORIA-CONEXOES-0.4.10.md.
+
+Version 0.4.11 protects both resource-vessel inner rims from the center panel/chat overlays. CommunityHudBounds.h keeps palette and GPU clipping in original canvas coordinates. The atlas adds the original inventory seal tip from the supplied full panel, without editing any of the52sourcePNGs; 25pieces are packed. Preserve the generated atlas header and compile the HUD shader together. Hitboxes and resource logic remain unchanged. See docs/RENDERIZACAO-HUD-0.4.11.md.

@@ -348,7 +348,8 @@
     "Jornada e provisões — Abrir imagem completa": "Jornada e provisões — Abrir imagem completa",
     "Instrumentos do retorno — Abrir imagem completa": "Instrumentos do retorno — Abrir imagem completa",
     "A versão 0.4.9 corrige os limites do desenho de textos nos menus e reforça a verificação dos arquivos de instalação. O teste gráfico em outros computadores continua pendente.": "A versão 0.4.9 corrige os limites do desenho de textos nos menus e reforça a verificação dos arquivos de instalação. O teste gráfico em outros computadores continua pendente.",
-    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9."
+    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.",
+    "A 0.4.11 refina a HUD: ponta do selo do inventário e bordas das orbs completas, preservando a arte, a animação e os controles. Mantém a entrada pelo jogo e pelo site da 0.4.10.": "A 0.4.11 refina a HUD: ponta do selo do inventário e bordas das orbs completas, preservando a arte, a animação e os controles. Mantém a entrada pelo jogo e pelo site da 0.4.10."
   },
   "en": {
     "Santuário · Returns from Darkness": "Sanctuary · Returns from Darkness",
@@ -700,7 +701,8 @@
     "Jornada e provisões — Abrir imagem completa": "Journey and supplies — Open full image",
     "Instrumentos do retorno — Abrir imagem completa": "Instruments of return — Open full image",
     "A versão 0.4.9 corrige os limites do desenho de textos nos menus e reforça a verificação dos arquivos de instalação. O teste gráfico em outros computadores continua pendente.": "Version 0.4.9 corrects text drawing bounds in menus and strengthens installation data checks. Graphical testing on other computers is still pending.",
-    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10 connects in-game room entry to the same launcher, with visible progress while connecting. The community confirmed multiplayer on two PCs and different networks in 0.4.9."
+    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10 connects in-game room entry to the same launcher, with visible progress while connecting. The community confirmed multiplayer on two PCs and different networks in 0.4.9.",
+    "A 0.4.11 refina a HUD: ponta do selo do inventário e bordas das orbs completas, preservando a arte, a animação e os controles. Mantém a entrada pelo jogo e pelo site da 0.4.10.": "0.4.11 refines the HUD: a complete inventory seal tip and orb rims, preserving the artwork, animation and controls. It keeps the in-game and website entry introduced in 0.4.10."
   },
   "es": {
     "Santuário · Returns from Darkness": "Santuario · Regresa de la Oscuridad",
@@ -1051,7 +1053,8 @@
     "Jornada e provisões — Abrir imagem completa": "Viaje y provisiones — Abrir imagen completa",
     "Instrumentos do retorno — Abrir imagem completa": "Instrumentos del retorno — Abrir imagen completa",
     "A versão 0.4.9 corrige os limites do desenho de textos nos menus e reforça a verificação dos arquivos de instalação. O teste gráfico em outros computadores continua pendente.": "La versión 0.4.9 corrige los límites del dibujo de textos en los menús y refuerza la verificación de los archivos de instalación. Las pruebas gráficas en otros equipos siguen pendientes.",
-    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "La 0.4.10 integra la entrada a salas desde el juego con el mismo launcher y muestra la conexión en curso. La comunidad confirmó multijugador en dos PC y redes distintas en la 0.4.9."
+    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "La 0.4.10 integra la entrada a salas desde el juego con el mismo launcher y muestra la conexión en curso. La comunidad confirmó multijugador en dos PC y redes distintas en la 0.4.9.",
+    "A 0.4.11 refina a HUD: ponta do selo do inventário e bordas das orbs completas, preservando a arte, a animação e os controles. Mantém a entrada pelo jogo e pelo site da 0.4.10.": "La 0.4.11 refina el HUD: punta del sello del inventario y bordes de los orbes completos, conservando arte, animación y controles. Mantiene la entrada desde el juego y el sitio de la 0.4.10."
   },
   "fr": {
     "Santuário · Returns from Darkness": "Sanctuaire · Retours des ténèbres",
@@ -1402,7 +1405,8 @@
     "Jornada e provisões — Abrir imagem completa": "Voyage et provisions — Ouvrir l'image complète",
     "Instrumentos do retorno — Abrir imagem completa": "Instruments du retour — Ouvrir l'image complète",
     "A versão 0.4.9 corrige os limites do desenho de textos nos menus e reforça a verificação dos arquivos de instalação. O teste gráfico em outros computadores continua pendente.": "La version 0.4.9 corrige les limites de dessin des textes dans les menus et renforce la vérification des fichiers d’installation. Les tests graphiques sur d’autres ordinateurs restent à effectuer.",
-    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "La 0.4.10 relie les salons du jeu au même lanceur et affiche la connexion en cours. La communauté a confirmé le multijoueur sur deux PC et réseaux différents en 0.4.9."
+    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "La 0.4.10 relie les salons du jeu au même lanceur et affiche la connexion en cours. La communauté a confirmé le multijoueur sur deux PC et réseaux différents en 0.4.9.",
+    "A 0.4.11 refina a HUD: ponta do selo do inventário e bordas das orbs completas, preservando a arte, a animação e os controles. Mantém a entrada pelo jogo e pelo site da 0.4.10.": "La 0.4.11 affine le HUD : pointe du sceau de l’inventaire et contours des orbes complets, avec les mêmes illustrations, animations et commandes. Elle conserve les accès du jeu et du site de la 0.4.10."
   },
   "de": {
     "Santuário · Returns from Darkness": "Sanctuary · Rückkehr aus der Dunkelheit",
@@ -1753,7 +1757,8 @@
     "Jornada e provisões — Abrir imagem completa": "Reise und Vorräte — Vollständiges Bild öffnen",
     "Instrumentos do retorno — Abrir imagem completa": "Instrumente der Rückkehr — Vollständiges Bild öffnen",
     "A versão 0.4.9 corrige os limites do desenho de textos nos menus e reforça a verificação dos arquivos de instalação. O teste gráfico em outros computadores continua pendente.": "Version 0.4.9 korrigiert die Grenzen der Textdarstellung in Menüs und verbessert die Prüfung der Installationsdateien. Grafische Tests auf anderen Computern stehen noch aus.",
-    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10 verbindet den Raumbeitritt im Spiel mit demselben Launcher und zeigt den Verbindungsaufbau an. Die Community bestätigte Multiplayer auf zwei PCs in verschiedenen Netzwerken mit 0.4.9."
+    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10 verbindet den Raumbeitritt im Spiel mit demselben Launcher und zeigt den Verbindungsaufbau an. Die Community bestätigte Multiplayer auf zwei PCs in verschiedenen Netzwerken mit 0.4.9.",
+    "A 0.4.11 refina a HUD: ponta do selo do inventário e bordas das orbs completas, preservando a arte, a animação e os controles. Mantém a entrada pelo jogo e pelo site da 0.4.10.": "0.4.11 verfeinert das HUD: vollständige Spitze des Inventarsiegels und vollständige Kugelränder bei gleicher Grafik, Animation und Bedienung. Der Spiel- und Website-Einstieg aus 0.4.10 bleibt erhalten."
   },
   "it": {
     "Santuário · Returns from Darkness": "Santuario · Ritorno dall'oscurità",
@@ -2104,7 +2109,8 @@
     "Jornada e provisões — Abrir imagem completa": "Viaggio e provviste — Apri l'immagine completa",
     "Instrumentos do retorno — Abrir imagem completa": "Strumenti del ritorno — Apri l'immagine completa",
     "A versão 0.4.9 corrige os limites do desenho de textos nos menus e reforça a verificação dos arquivos de instalação. O teste gráfico em outros computadores continua pendente.": "La versione 0.4.9 corregge i limiti di disegno del testo nei menu e rafforza la verifica dei file di installazione. I test grafici su altri computer restano da completare.",
-    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "La 0.4.10 collega le stanze nel gioco allo stesso launcher e mostra la connessione in corso. La comunità ha confermato il multiplayer su due PC e reti diverse nella 0.4.9."
+    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "La 0.4.10 collega le stanze nel gioco allo stesso launcher e mostra la connessione in corso. La comunità ha confermato il multiplayer su due PC e reti diverse nella 0.4.9.",
+    "A 0.4.11 refina a HUD: ponta do selo do inventário e bordas das orbs completas, preservando a arte, a animação e os controles. Mantém a entrada pelo jogo e pelo site da 0.4.10.": "La 0.4.11 rifinisce l’HUD: punta del sigillo dell’inventario e bordi delle sfere completi, mantenendo grafica, animazione e comandi. Conserva l’accesso dal gioco e dal sito della 0.4.10."
   },
   "pl": {
     "Santuário · Returns from Darkness": "Sanktuarium · Powrót z ciemności",
@@ -2455,7 +2461,8 @@
     "Jornada e provisões — Abrir imagem completa": "Podróż i zapasy — Otwórz cały obraz",
     "Instrumentos do retorno — Abrir imagem completa": "Narzędzia powrotu — Otwórz cały obraz",
     "A versão 0.4.9 corrige os limites do desenho de textos nos menus e reforça a verificação dos arquivos de instalação. O teste gráfico em outros computadores continua pendente.": "Wersja 0.4.9 poprawia granice rysowania tekstu w menu i wzmacnia sprawdzanie plików instalacyjnych. Testy graficzne na innych komputerach są nadal do wykonania.",
-    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10 łączy wejście do pokoju w grze z tym samym launcherem i pokazuje nawiązywanie połączenia. Społeczność potwierdziła multiplayer na dwóch PC w różnych sieciach w 0.4.9."
+    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10 łączy wejście do pokoju w grze z tym samym launcherem i pokazuje nawiązywanie połączenia. Społeczność potwierdziła multiplayer na dwóch PC w różnych sieciach w 0.4.9.",
+    "A 0.4.11 refina a HUD: ponta do selo do inventário e bordas das orbs completas, preservando a arte, a animação e os controles. Mantém a entrada pelo jogo e pelo site da 0.4.10.": "0.4.11 dopracowuje HUD: pełny czubek pieczęci ekwipunku i krawędzie kul, zachowując grafikę, animacje i sterowanie. Wejście z gry i strony z 0.4.10 pozostaje dostępne."
   },
   "ru": {
     "Santuário · Returns from Darkness": "Святилище · Возвращение из тьмы",
@@ -2806,7 +2813,8 @@
     "Jornada e provisões — Abrir imagem completa": "Путь и припасы — Открыть полное изображение",
     "Instrumentos do retorno — Abrir imagem completa": "Инструменты возвращения — Открыть полное изображение",
     "A versão 0.4.9 corrige os limites do desenho de textos nos menus e reforça a verificação dos arquivos de instalação. O teste gráfico em outros computadores continua pendente.": "Версия 0.4.9 исправляет границы отрисовки текста в меню и усиливает проверку установочных файлов. Графические тесты на других компьютерах ещё не завершены.",
-    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10 связывает вход в комнаты из игры с тем же лаунчером и показывает процесс подключения. Сообщество подтвердило мультиплеер на двух ПК в разных сетях в 0.4.9."
+    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10 связывает вход в комнаты из игры с тем же лаунчером и показывает процесс подключения. Сообщество подтвердило мультиплеер на двух ПК в разных сетях в 0.4.9.",
+    "A 0.4.11 refina a HUD: ponta do selo do inventário e bordas das orbs completas, preservando a arte, a animação e os controles. Mantém a entrada pelo jogo e pelo site da 0.4.10.": "0.4.11 дорабатывает HUD: восстановлены верхушка печати инвентаря и края сфер с сохранением графики, анимации и управления. Вход из игры и с сайта версии 0.4.10 сохранён."
   },
   "uk": {
     "Santuário · Returns from Darkness": "Sanctuary · Returns from Darkness",
@@ -3157,7 +3165,8 @@
     "Jornada e provisões — Abrir imagem completa": "Шлях і припаси — Відкрити повне зображення",
     "Instrumentos do retorno — Abrir imagem completa": "Інструменти повернення — Відкрити повне зображення",
     "A versão 0.4.9 corrige os limites do desenho de textos nos menus e reforça a verificação dos arquivos de instalação. O teste gráfico em outros computadores continua pendente.": "Версія 0.4.9 виправляє межі відображення тексту в меню та посилює перевірку файлів інсталяції. Графічні тести на інших комп’ютерах ще не завершені.",
-    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10 поєднує вхід у кімнати з гри з тим самим лаунчером і показує процес підключення. Спільнота підтвердила мультиплеєр на двох ПК у різних мережах у 0.4.9."
+    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10 поєднує вхід у кімнати з гри з тим самим лаунчером і показує процес підключення. Спільнота підтвердила мультиплеєр на двох ПК у різних мережах у 0.4.9.",
+    "A 0.4.11 refina a HUD: ponta do selo do inventário e bordas das orbs completas, preservando a arte, a animação e os controles. Mantém a entrada pelo jogo e pelo site da 0.4.10.": "0.4.11 удосконалює HUD: відновлено верхівку печатки інвентарю та краї сфер зі збереженням графіки, анімації й керування. Вхід із гри та сайту версії 0.4.10 збережено."
   },
   "tr": {
     "Santuário · Returns from Darkness": "Sığınak · Karanlıktan Dönüş",
@@ -3508,7 +3517,8 @@
     "Jornada e provisões — Abrir imagem completa": "Yolculuk ve erzak — Tam görüntüyü aç",
     "Instrumentos do retorno — Abrir imagem completa": "Dönüş araçları — Tam görüntüyü aç",
     "A versão 0.4.9 corrige os limites do desenho de textos nos menus e reforça a verificação dos arquivos de instalação. O teste gráfico em outros computadores continua pendente.": "0.4.9 sürümü menülerdeki metin çizim sınırlarını düzeltir ve kurulum dosyalarının doğrulamasını güçlendirir. Diğer bilgisayarlardaki grafik testler henüz tamamlanmamıştır.",
-    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10 oyun içindeki oda girişini aynı başlatıcıya bağlar ve bağlantı ilerlemesini gösterir. Topluluk 0.4.9 ile farklı ağlardaki iki bilgisayarda çok oyunculu oyunu doğruladı."
+    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10 oyun içindeki oda girişini aynı başlatıcıya bağlar ve bağlantı ilerlemesini gösterir. Topluluk 0.4.9 ile farklı ağlardaki iki bilgisayarda çok oyunculu oyunu doğruladı.",
+    "A 0.4.11 refina a HUD: ponta do selo do inventário e bordas das orbs completas, preservando a arte, a animação e os controles. Mantém a entrada pelo jogo e pelo site da 0.4.10.": "0.4.11 HUD ayrıntılarını düzeltir: envanter mührünün ucu ve küre çerçeveleri tamamlandı; görseller, animasyonlar ve kontroller korundu. 0.4.10 oyun ve site girişleri korunur."
   },
   "ja": {
     "Santuário · Returns from Darkness": "サンクチュアリ・闇からの帰還",
@@ -3859,7 +3869,8 @@
     "Jornada e provisões — Abrir imagem completa": "旅と物資 — 画像全体を開く",
     "Instrumentos do retorno — Abrir imagem completa": "帰還の道具 — 画像全体を開く",
     "A versão 0.4.9 corrige os limites do desenho de textos nos menus e reforça a verificação dos arquivos de instalação. O teste gráfico em outros computadores continua pendente.": "0.4.9ではメニューの文字描画範囲を修正し、インストールデータの検証を強化しました。ほかのPCでの実ゲーム画面のテストは未完了です。",
-    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10ではゲーム内のルーム参加を同じランチャーに統合し、接続中の進行状況を表示します。コミュニティは0.4.9で異なるネットワークの2台のPCによるマルチプレイを確認しました。"
+    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10ではゲーム内のルーム参加を同じランチャーに統合し、接続中の進行状況を表示します。コミュニティは0.4.9で異なるネットワークの2台のPCによるマルチプレイを確認しました。",
+    "A 0.4.11 refina a HUD: ponta do selo do inventário e bordas das orbs completas, preservando a arte, a animação e os controles. Mantém a entrada pelo jogo e pelo site da 0.4.10.": "0.4.11ではHUDを調整し、インベントリの印章の先端とオーブの枠を復元しました。アート、アニメーション、操作を保ち、0.4.10のゲーム内・サイトからの参加方法を維持しています。"
   },
   "ko": {
     "Santuário · Returns from Darkness": "성역 · 어둠으로부터의 귀환",
@@ -4210,7 +4221,8 @@
     "Jornada e provisões — Abrir imagem completa": "여정과 보급품 — 전체 이미지 열기",
     "Instrumentos do retorno — Abrir imagem completa": "귀환의 도구 — 전체 이미지 열기",
     "A versão 0.4.9 corrige os limites do desenho de textos nos menus e reforça a verificação dos arquivos de instalação. O teste gráfico em outros computadores continua pendente.": "0.4.9는 메뉴의 텍스트 그리기 범위를 수정하고 설치 데이터 검증을 강화합니다. 다른 PC에서의 실제 게임 화면 테스트는 아직 완료되지 않았습니다.",
-    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10은 게임 내 방 입장을 같은 런처와 통합하고 연결 진행을 표시합니다. 커뮤니티는 0.4.9에서 서로 다른 네트워크의 PC 두 대로 멀티플레이를 확인했습니다."
+    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10은 게임 내 방 입장을 같은 런처와 통합하고 연결 진행을 표시합니다. 커뮤니티는 0.4.9에서 서로 다른 네트워크의 PC 두 대로 멀티플레이를 확인했습니다.",
+    "A 0.4.11 refina a HUD: ponta do selo do inventário e bordas das orbs completas, preservando a arte, a animação e os controles. Mantém a entrada pelo jogo e pelo site da 0.4.10.": "0.4.11은 인벤토리 인장 끝과 오브 테두리를 복원해 HUD를 다듬었습니다. 아트, 애니메이션, 조작과 0.4.10의 게임 내·사이트 입장 기능을 유지합니다."
   },
   "zh-CN": {
     "Santuário · Returns from Darkness": "庇护所·从黑暗中归来",
@@ -4561,7 +4573,8 @@
     "Jornada e provisões — Abrir imagem completa": "旅程与补给 — 打开完整图片",
     "Instrumentos do retorno — Abrir imagem completa": "归来之器 — 打开完整图片",
     "A versão 0.4.9 corrige os limites do desenho de textos nos menus e reforça a verificação dos arquivos de instalação. O teste gráfico em outros computadores continua pendente.": "0.4.9版本修正菜单文字的绘制边界，并加强安装文件验证。其他电脑上的实际游戏画面测试仍未完成。",
-    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10将游戏内房间加入统一到同一启动器，并显示连接进度。社区已在0.4.9中确认两台电脑在不同网络下可进行多人游戏。"
+    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "0.4.10将游戏内房间加入统一到同一启动器，并显示连接进度。社区已在0.4.9中确认两台电脑在不同网络下可进行多人游戏。",
+    "A 0.4.11 refina a HUD: ponta do selo do inventário e bordas das orbs completas, preservando a arte, a animação e os controles. Mantém a entrada pelo jogo e pelo site da 0.4.10.": "0.4.11细化HUD：恢复背包徽记顶部与球体边框，保留原画、动画和操作。继续保留0.4.10的游戏内及网站加入功能。"
   },
   "ar": {
     "Santuário · Returns from Darkness": "الحرم · العودة من الظلام",
@@ -4912,6 +4925,7 @@
     "Jornada e provisões — Abrir imagem completa": "رحلة ومؤن — فتح الصورة كاملة",
     "Instrumentos do retorno — Abrir imagem completa": "أدوات العودة — فتح الصورة كاملة",
     "A versão 0.4.9 corrige os limites do desenho de textos nos menus e reforça a verificação dos arquivos de instalação. O teste gráfico em outros computadores continua pendente.": "يصحح الإصدار 0.4.9 حدود رسم النص في القوائم ويعزز التحقق من ملفات التثبيت. اختبارات اللعب الرسومي على أجهزة أخرى لم تكتمل بعد.",
-    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "يربط الإصدار 0.4.10 دخول الغرف من اللعبة بالمشغّل نفسه مع إظهار تقدم الاتصال. أكد المجتمع اللعب الجماعي على حاسوبين بشبكتين مختلفتين في 0.4.9."
+    "A 0.4.10 integra a entrada nas salas pelo jogo ao mesmo launcher, com espera visível durante a conexão. A comunidade confirmou o multiplayer em dois PCs e redes diferentes na 0.4.9.": "يربط الإصدار 0.4.10 دخول الغرف من اللعبة بالمشغّل نفسه مع إظهار تقدم الاتصال. أكد المجتمع اللعب الجماعي على حاسوبين بشبكتين مختلفتين في 0.4.9.",
+    "A 0.4.11 refina a HUD: ponta do selo do inventário e bordas das orbs completas, preservando a arte, a animação e os controles. Mantém a entrada pelo jogo e pelo site da 0.4.10.": "يحسن الإصدار 0.4.11 تفاصيل الواجهة: اكتملت قمة ختم المخزون وحواف الكرات مع الحفاظ على الرسوم والحركة والتحكم. ويحتفظ بالدخول من اللعبة والموقع في 0.4.10."
   }
 }

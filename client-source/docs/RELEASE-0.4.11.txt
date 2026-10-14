@@ -1,0 +1,7 @@
+Returns from Darkness HD 0.4.11 — acabamento da HUD
+
+Corrige três recortes visuais: a ponta superior do pentagrama do inventário, a borda direita da orb de HP e a borda esquerda da orb de mana. O painel central agora respeita os contornos das molduras das orbs, incluindo o estado de chat. A ponta do selo é recuperada da arte original completa do kit, sem desenhar outra versão do ornamento.
+
+Os 52 PNGs originais permanecem intactos. O atlas de execução acrescenta somente um recorte de 93×30 pixels da ponta original. Fonte, ícones, animação e preenchimento dos recursos, 70 slots de inventário, oito slots do cinturão e suas áreas de clique são preservados.
+
+A conferência usa capturas reais do renderizador em 1920×1080, comparação com os pixels do kit e verificações de chat, descrições e posicionamento de itens. Não altera taxas, saves, protocolo de rede ou progressão. O modo online mantém as correções da 0.4.10.
