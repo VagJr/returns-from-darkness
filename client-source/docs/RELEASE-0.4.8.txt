@@ -2,6 +2,7 @@ Returns from Darkness HD 0.4.8 — Entrada e sincronização online
 
 O teste da comunidade confirmou: dois clientes no mesmo PC conectavam, mas o convidado em outro PC fechava ao entrar, inclusive na mesma rede. Esta atualização corrige defeitos reproduzidos no transporte e melhora a captura da falha nativa. O teste gráfico entre dois PCs reais continua necessário; não anunciamos essa confirmação como concluída.
 
+- A central atualiza sua versão/hash mesmo quando objetos da nuvem permanecem residentes; cada operação usa a mesma configuração, mantendo contas e progresso.
 - A ponte processa quadros TCP incrementalmente, sem rejeitar uma rajada de mensagens válidas pelo tamanho agregado.
 - A recepção preserva mensagens e ordem quando a fila da engine fica cheia; aplica contrapressão dentro dos limites existentes.
 - Falhas de recepção não deixam status de jogadores e turnos não inicializados para o jogo.

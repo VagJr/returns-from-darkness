@@ -17,12 +17,12 @@ export class DailyService {
   const hero=this.c.progression.characters(key).find(h=>h.id===characterId&&!h.archived);if(!hero)fail('Sincronize este personagem no cliente.',404);
   const board=await generateDailyContracts(user,hero,this.c.progression.get(user),now);this.save(user,board);return board;
  }
- async run(req,user,input,now){this.c.progression.native(req);if(!validToken(input.runNonce))fail('Partida inválida.');
+ async run(req,user,input,now,release=this.c.release){this.c.progression.native(req);if(!validToken(input.runNonce))fail('Partida inválida.');
   const row=this.rows('SELECT record FROM progression_runs WHERE id=? AND user=? AND expires>?',await digest(input.runNonce),user.toLowerCase(),now)[0];if(!row)fail('Partida ausente ou expirada.',410);
-  const run=JSON.parse(row.record);if(run.contentHash!==this.c.env.CONTENT_HASH||run.character.id!==input.characterId||run.character.mode===8)fail('Partida incompatível.',403);return run;
+  const run=JSON.parse(row.record);if(run.contentHash!==release.contentHash||run.character.id!==input.characterId||run.character.mode===8)fail('Partida incompatível.',403);return run;
  }
- async event(req,user,input,now=Date.now()){
-  const run=await this.run(req,user,input,now),period=dailyPeriod(now);
+ async event(req,user,input,now=Date.now(),release=this.c.release){
+  const run=await this.run(req,user,input,now,release),period=dailyPeriod(now);
   if(!Number.isSafeInteger(input.occurredAt)||input.occurredAt<period.start||input.occurredAt>now+30000)throw Object.assign(Error('Evento de outro período diário.'),{status:410,expiredDailyEvent:true});
   const board=await this.board(user,input.characterId,now);
   if(typeof input.eventId!=='string'||!/^[a-f0-9-]{36}$/.test(input.eventId))fail('Evento inválido.');
@@ -35,14 +35,14 @@ export class DailyService {
   applyDailyEvent(board,{...input,difficulty:run.difficulty,mode:run.character.mode,category:run.character.category},now);
   this.c.ctx.storage.transactionSync(()=>{this.sql.exec('INSERT INTO daily_events VALUES(?,?,?)',key,board.period,id);this.save(user,board);});return {board,duplicate:false};
  }
- async events(req,user,input,now=Date.now()){
+ async events(req,user,input,now=Date.now(),release=this.c.release){
   if(!Array.isArray(input.events)||input.events.length<1||input.events.length>16)fail('Lote de contratos inválido.');
   let result,expiredEvents=0;
-  for(const event of input.events){try{result=await this.event(req,user,{...event,runNonce:input.runNonce,characterId:input.characterId},now);}catch(error){if(!error.expiredDailyEvent)throw error;expiredEvents++;}}
+  for(const event of input.events){try{result=await this.event(req,user,{...event,runNonce:input.runNonce,characterId:input.characterId},now,release);}catch(error){if(!error.expiredDailyEvent)throw error;expiredEvents++;}}
   return {...(result||{ignored:true}),expiredEvents};
  }
- async claim(req,user,input,now=Date.now()){
-  const run=await this.run(req,user,input,now),board=await this.board(user,input.characterId,now),key=user.toLowerCase();
+ async claim(req,user,input,now=Date.now(),release=this.c.release){
+  const run=await this.run(req,user,input,now,release),board=await this.board(user,input.characterId,now),key=user.toLowerCase();
   if(typeof input.contractId!=='string')fail('Contrato inválido.');
   const previous=this.rows('SELECT record FROM daily_claims WHERE user=? AND period=? AND id=?',key,board.period,input.contractId)[0];if(previous)return {...JSON.parse(previous.record),board,duplicate:true};
   const contract=board.contracts.find(c=>c.id===input.contractId);if(!contract||!contract.complete)fail('Complete o contrato antes de receber a recompensa.',409);

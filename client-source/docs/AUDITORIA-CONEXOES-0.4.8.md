@@ -26,6 +26,10 @@ A diferença útil é a disciplina de admissão: o Hexmag só abre uma sessão c
 
 As correções dos bursts comprovam falhas de transporte. Elas **não comprovam sozinhas** a causa do crash que ocorreu no segundo PC.
 
+## Versão da central e objetos residentes
+
+Na validação pública, o feed do site já entregava 0.4.8, mas a central ainda retornava versão e hash 0.4.7 após um deploy apenas de variáveis. O objeto residente havia guardado a configuração anterior no construtor. A fronteira do Worker agora encaminha os dois valores da configuração atual, sobrescrevendo qualquer header externo com esse nome. Cada operação captura um snapshot imutável de versão/hash, inclusive na progressão; chamadas internas sem configuração preservam o estado atualizado. Bindings, namespace, contas e banco não são recriados. A implantação e o fluxo público são conferidos depois desse ajuste.
+
 ## Estado inicial e limites de pacotes
 
 Os dados de personagem e delta são remontados antes de o convidado começar a jogar. Foram acrescentadas verificações de tamanho disponível, offset, ordem, assinatura/versão de personagem, resultado de carregamento e limites de descompressão. A seleção de comandos de nível usa a flag correta e conversão explícita para byte sem sinal.

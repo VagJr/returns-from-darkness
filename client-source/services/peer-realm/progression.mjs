@@ -59,12 +59,12 @@ export class Progression {
   const row=this.rows('SELECT record FROM characters WHERE user=? AND id=?',user.toLowerCase(),input.characterId)[0];
   if(row){const h=JSON.parse(row.record);h.archived=true;h.updatedAt=Date.now();this.sql.exec('UPDATE characters SET record=? WHERE user=? AND id=?',JSON.stringify(h),user.toLowerCase(),input.characterId);}return this.view(user);
  }
- async begin(req,user,input){this.native(req);const h=hero(input.character);if(!validToken(input.runNonce)||!integer(input.difficulty,0,8)||input.contentHash!==this.c.env.CONTENT_HASH)bad('Partida de progressão inválida.');
+ async begin(req,user,input,release=this.c.release){this.native(req);const h=hero(input.character);if(!validToken(input.runNonce)||!integer(input.difficulty,0,8)||input.contentHash!==release.contentHash)bad('Partida de progressão inválida.');
   const id=await digest(input.runNonce),old=this.rows('SELECT user,record,expires FROM progression_runs WHERE id=?',id)[0];
   if(old){if(old.user!==user.toLowerCase())bad('Partida inválida.',403);if(old.expires<Date.now())bad('Partida de progresso ausente ou expirada.',410);const r=JSON.parse(old.record);if(r.character.id!==h.id||r.difficulty!==input.difficulty||r.roomId!==(input.roomId||''))bad('Contexto da partida mudou.',409);return {ok:true,profile:this.view(user,24)};}
   let slot=-1;
   if(h.level<RULES.difficulties[input.difficulty].level)bad('Este personagem ainda não tem nível para esta dificuldade.',403);
-  if(input.roomId){const room=this.c.rooms().find(r=>r.id===input.roomId),member=room?.members.find(m=>m.user.toLowerCase()===user.toLowerCase());
+  if(input.roomId){const room=this.c.rooms(release).find(r=>r.id===input.roomId),member=room?.members.find(m=>m.user.toLowerCase()===user.toLowerCase());
    if(!member||!(room.connected||[]).includes(member.slot))bad('Conecte o cliente à sua sala antes de registrar progresso.',409);
    if(room.difficulty!==input.difficulty||h.mode!==(room.mode==='coliseum-pvp'?8:0))bad('Modo ou dificuldade não corresponde à sala.');slot=member.slot;
   }
@@ -78,19 +78,19 @@ export class Progression {
   if(h.mode!==8&&!permits(candidate,RULES.modes[h.mode].unlock)&&!preserved)bad('Desbloqueie este modo antes de iniciar uma nova jornada.',403);
   if(!permitsDifficulty(candidate,input.difficulty))bad('Desbloqueie esta dificuldade antes de iniciar a jornada.',403);
   this.upsert(user,h,true);
-  const room=input.roomId?this.c.rooms().find(r=>r.id===input.roomId):null;
+  const room=input.roomId?this.c.rooms(release).find(r=>r.id===input.roomId):null;
   const record={character:h,difficulty:input.difficulty,roomId:input.roomId||'',slot,participants:room?.members.filter(m=>(room.connected||[]).includes(m.slot)).map(m=>m.slot)||[],contentHash:input.contentHash,pvpKills:0};
   this.sql.exec('INSERT INTO progression_runs VALUES (?,?,?,?)',id,user.toLowerCase(),JSON.stringify(record),Date.now()+604800000);
   await this.c.ctx.storage.setAlarm(Date.now()+180000);return {ok:true,profile:this.view(user,24)};
  }
- async report(req,user,input){this.native(req);if(!validToken(input.runNonce)||typeof input.eventId!=='string'||!/^[a-f0-9-]{36}$/.test(input.eventId))bad('Evento inválido.');
+ async report(req,user,input,release=this.c.release){this.native(req);if(!validToken(input.runNonce)||typeof input.eventId!=='string'||!/^[a-f0-9-]{36}$/.test(input.eventId))bad('Evento inválido.');
   const id=await digest(input.runNonce),row=this.rows('SELECT record FROM progression_runs WHERE id=? AND user=? AND expires>?',id,user.toLowerCase(),Date.now())[0];if(!row)bad('Partida de progresso ausente ou expirada.',410);
   if(this.rows('SELECT id FROM progression_events WHERE run=? AND id=?',id,input.eventId).length)return {ok:true,duplicate:true,profile:this.view(user,24)};
   const run=JSON.parse(row.record),h=hero(input.character);
-  if(h.id!==run.character.id||h.classId!==run.character.classId||h.name!==run.character.name||h.category!==run.character.category||h.mode!==run.character.mode||run.contentHash!==this.c.env.CONTENT_HASH)bad('Personagem ou build incompatível.');
+  if(h.id!==run.character.id||h.classId!==run.character.classId||h.name!==run.character.name||h.category!==run.character.category||h.mode!==run.character.mode||run.contentHash!==release.contentHash)bad('Personagem ou build incompatível.');
   if(!['snapshot','campaign-clear','pvp-kill','boss'].includes(input.kind))bad('Tipo de conquista inválido.');
   if(input.kind==='campaign-clear'&&(h.mode===8||input.floor!==24||input.bossId!==137))bad('Conclusão de campanha inválida.');
-  const liveRoom=run.roomId?this.c.rooms().find(r=>r.id===run.roomId):null;
+  const liveRoom=run.roomId?this.c.rooms(release).find(r=>r.id===run.roomId):null;
   const participants=new Set([...(run.participants||[]),...(liveRoom?.members.filter(m=>(liveRoom.connected||[]).includes(m.slot)).map(m=>m.slot)||[])]);
   if(input.kind==='pvp-kill'&&(h.mode!==8||run.slot<0||!integer(input.victimSlot,0,3)||input.victimSlot===run.slot||!participants.has(input.victimSlot)))bad('Abate de arena inválido.');
   run.participants=[...participants];

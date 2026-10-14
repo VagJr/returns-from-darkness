@@ -16,6 +16,14 @@ const roomStub=(env,id)=>env.SIGNALS.get(env.SIGNALS.idFromName(id));
 const community=env=>env.COMMUNITY.get(env.COMMUNITY.idFromName('realm-v1'));
 const call=(stub,path,input)=>stub.fetch(new Request('https://internal'+path,{method:'POST',body:JSON.stringify(input)}));
 const publicRoom=r=>({id:r.id,name:r.name,creator:r.creator,mode:r.mode,difficulty:r.difficulty,capacity:4,locked:!!r.passwordHash,contentHash:r.contentHash,players:r.members.map(m=>({user:m.user,slot:m.slot,connected:(r.connected||[]).includes(m.slot)})),createdAt:r.createdAt,hostReady:(r.connected||[]).includes(0)});
+const validRelease=(version,hash)=>typeof version==='string'&&/^\d+\.\d+\.\d+$/.test(version)&&typeof hash==='string'&&/^[a-f0-9]{64}$/.test(hash);
+function currentReleaseRequest(req,env){
+ if(!validRelease(env.CLIENT_VERSION,env.CONTENT_HASH))fail('Configuração de versão indisponível.',503);
+ const headers=new Headers(req.headers);
+ // These headers are server configuration, never input supplied by a player.
+ headers.set('X-Rfd-Realm-Version',env.CLIENT_VERSION);headers.set('X-Rfd-Realm-Hash',env.CONTENT_HASH);
+ return new Request(req,{headers});
+}
 
 export default {
   async fetch(req,env) {
@@ -26,8 +34,8 @@ export default {
     try {
       const signal=/^\/signal\/([a-f0-9-]{36})(\/bootstrap)?$/.exec(url.pathname);
       if(signal){if((signal[2]&&req.method!=='POST')||(!signal[2]&&req.headers.get('Upgrade')!=='websocket'))return json({error:'Rota indisponível.'},404);result=await roomStub(env,signal[1]).fetch(req);}
-      else if(url.pathname==='/health'||/^\/api\/(login|register|state|channel|chat|rooms\/(create|join|leave)|logout|launch|auth\/(handoff|redeem)|native\/connect|profiles\/(public|update)|progression\/(rules|roster|run|report|remove)|daily\/(board|events?|claim|wallet))$/.test(url.pathname))result=await community(env).fetch(req);
-      else if(url.pathname==='/migration'&&env.MIGRATION_ENABLED==='true'&&env.MIGRATION_TOKEN&&equal(req.headers.get('Authorization'), 'Bearer '+env.MIGRATION_TOKEN))result=await community(env).fetch(req);
+      else if(url.pathname==='/health'||/^\/api\/(login|register|state|channel|chat|rooms\/(create|join|leave)|logout|launch|auth\/(handoff|redeem)|native\/connect|profiles\/(public|update)|progression\/(rules|roster|run|report|remove)|daily\/(board|events?|claim|wallet))$/.test(url.pathname))result=await community(env).fetch(currentReleaseRequest(req,env));
+      else if(url.pathname==='/migration'&&env.MIGRATION_ENABLED==='true'&&env.MIGRATION_TOKEN&&equal(req.headers.get('Authorization'), 'Bearer '+env.MIGRATION_TOKEN))result=await community(env).fetch(currentReleaseRequest(req,env));
       else return json({error:'Rota indisponível.'},404);
     }catch(error){result=json({error:error.status?error.message:'Não foi possível concluir a operação.'},error.status||503);}
     if(result.status===101)return result;
@@ -37,7 +45,7 @@ export default {
 
 export class Community {
   constructor(ctx,env) {
-    this.ctx=ctx;this.env=env;this.sql=ctx.storage.sql;
+    this.ctx=ctx;this.env=env;this.release=Object.freeze({version:env.CLIENT_VERSION,contentHash:env.CONTENT_HASH});this.sql=ctx.storage.sql;
     this.sql.exec(`CREATE TABLE IF NOT EXISTS accounts (name TEXT PRIMARY KEY, display TEXT NOT NULL, salt TEXT NOT NULL, verifier TEXT NOT NULL, scheme TEXT NOT NULL);
       CREATE TABLE IF NOT EXISTS sessions (hash TEXT PRIMARY KEY, user TEXT NOT NULL, channel TEXT NOT NULL, expires INTEGER NOT NULL);
       CREATE TABLE IF NOT EXISTS rooms (id TEXT PRIMARY KEY, record TEXT NOT NULL, updated INTEGER NOT NULL);
@@ -49,7 +57,7 @@ export class Community {
   }
   rows(query,...args){return this.sql.exec(query,...args).toArray();}
   async limit(key,max,window=60000){const now=Date.now(),r=this.rows('SELECT count,until FROM limits WHERE key=?',key)[0];if(r&&r.until>now&&r.count>=max)fail('Aguarde um instante.',429);this.sql.exec('INSERT OR REPLACE INTO limits VALUES (?,?,?)',key,r&&r.until>now?r.count+1:1,r&&r.until>now?r.until:now+window);}
-  rooms(){return this.rows('SELECT record FROM rooms WHERE updated>?',Date.now()-TTL).map(r=>JSON.parse(r.record)).filter(r=>r.contentHash===this.env.CONTENT_HASH);}
+  rooms(release=this.release){return this.rows('SELECT record FROM rooms WHERE updated>?',Date.now()-TTL).map(r=>JSON.parse(r.record)).filter(r=>r.contentHash===release.contentHash);}
   save(room){this.sql.exec('INSERT OR REPLACE INTO rooms VALUES (?,?,?)',room.id,JSON.stringify(room),room.updated);}
   async session(req){const token=bearer(req);if(!token)fail('Entre em sua conta.',401);const hash=await digest(token),s=this.rows('SELECT * FROM sessions WHERE hash=? AND expires>?',hash,Date.now())[0];if(!s)fail('Entre em sua conta.',401);if(s.expires<Date.now()+SESSION-900000)this.sql.exec('UPDATE sessions SET expires=? WHERE hash=?',Date.now()+SESSION,hash);return s;}
   async leave(user,room){
@@ -57,19 +65,27 @@ export class Community {
     else{room.members=room.members.filter(m=>m.user.toLowerCase()!==user.toLowerCase());await call(roomStub(this.env,room.id),'/internal/members',{members:room.members});room.connected=(room.connected||[]).filter(slot=>room.members.some(m=>m.slot===slot));this.save(room);}
   }
   async fetch(req){
-    if(req.method==='POST'&&(/^\/api\/(rooms\/|auth\/|profiles\/|progression\/|daily\/|launch$|native\/connect$)/.test(new URL(req.url).pathname)))return this.ctx.blockConcurrencyWhile(()=>this.handle(req));
-    return this.handle(req);
+    const version=req.headers.get('X-Rfd-Realm-Version'),contentHash=req.headers.get('X-Rfd-Realm-Hash');
+    if(version!==null||contentHash!==null){
+      if(!validRelease(version,contentHash))return json({error:'Configuração de versão indisponível.'},503);
+      this.release=Object.freeze({version,contentHash});
+    }
+    // A resident object may outlive a vars-only deployment. Keep bindings and
+    // secrets intact, and preserve this immutable snapshot across await/queuing.
+    const release=this.release;
+    if(req.method==='POST'&&(/^\/api\/(rooms\/|auth\/|profiles\/|progression\/|daily\/|launch$|native\/connect$)/.test(new URL(req.url).pathname)))return this.ctx.blockConcurrencyWhile(()=>this.handle(req,release));
+    return this.handle(req,release);
   }
   async handoff(s,target){
     if(!['client','web'].includes(target))fail('Destino inválido.');await this.limit('handoff:'+s.user.toLowerCase(),20);
     const code=random();this.sql.exec('INSERT INTO handoffs VALUES (?,?,?,?)',await digest(code),s.hash,target,Date.now()+120000);await this.ctx.storage.setAlarm(Date.now()+TTL);return code;
   }
-  async handle(req) {
+  async handle(req,release=this.release) {
     const path=new URL(req.url).pathname,now=Date.now();
     try {
       if(path==='/internal/heartbeat'){const input=await body(req);const row=this.rows('SELECT record FROM rooms WHERE id=?',input.id)[0];if(row){const room=JSON.parse(row.record);room.updated=now;room.connected=input.connected;this.save(room);}return json({ok:true});}
       if(path==='/internal/close'){const input=await body(req);this.sql.exec('DELETE FROM rooms WHERE id=?',input.id);return json({ok:true});}
-      if(path==='/health'){const rooms=this.rooms();return json({service:'Returns from Darkness community',gatewayListening:true,lobbySessions:this.rows('SELECT COUNT(DISTINCT user) AS n FROM sessions WHERE expires>?',now)[0].n,rooms:rooms.length,connectedGamePlayers:rooms.reduce((n,r)=>n+(r.connected?.length||0),0),transport:'native-webrtc-host',playersPerRoom:4,contentHash:this.env.CONTENT_HASH,dependsOnLocalPc:false,turnRelayConfigured:false,cloudRelayFallback:true});}
+      if(path==='/health'){const rooms=this.rooms(release);return json({service:'Returns from Darkness community',gatewayListening:true,lobbySessions:this.rows('SELECT COUNT(DISTINCT user) AS n FROM sessions WHERE expires>?',now)[0].n,rooms:rooms.length,connectedGamePlayers:rooms.reduce((n,r)=>n+(r.connected?.length||0),0),transport:'native-webrtc-host',playersPerRoom:4,contentHash:release.contentHash,clientVersion:release.version,dependsOnLocalPc:false,turnRelayConfigured:false,cloudRelayFallback:true});}
       if(path==='/api/progression/rules'&&req.method==='GET')return json(RULES);
       if(path==='/api/profiles/public'&&req.method==='GET')return json(this.progression.public(new URL(req.url).searchParams.get('username')));
       if(path==='/migration'){
@@ -111,16 +127,16 @@ export class Community {
         await this.limit('daily:'+user.toLowerCase(),120);
         const input=await body(req);
         if(path==='/api/daily/board')return json(await this.daily.board(user,input.characterId));
-        if(path==='/api/daily/event')return json(await this.daily.event(req,user,input));
-        if(path==='/api/daily/events')return json(await this.daily.events(req,user,input));
-        if(path==='/api/daily/claim')return json(await this.daily.claim(req,user,input));
+        if(path==='/api/daily/event')return json(await this.daily.event(req,user,input,undefined,release));
+        if(path==='/api/daily/events')return json(await this.daily.events(req,user,input,undefined,release));
+        if(path==='/api/daily/claim')return json(await this.daily.claim(req,user,input,undefined,release));
         fail('Rota indisponível.',404);
       }
       if(path==='/api/state'&&req.method==='GET'){
         const events=this.rows('SELECT user,text,at FROM messages WHERE channel=? ORDER BY id DESC LIMIT 100',s.channel).reverse().map(e=>({...e,type:5}));
         const users=this.rows('SELECT user FROM sessions WHERE channel=? AND expires>? GROUP BY user ORDER BY MAX(expires) DESC LIMIT 256',s.channel,now).map(r=>r.user);
         const summaries=Object.fromEntries([...new Set([...users,...events.map(e=>e.user)])].slice(0,256).map(name=>[name.toLowerCase(),this.progression.summary(name)]));
-        return json({username:user,channel:s.channel,channels:CHANNELS,users,events,rooms:this.rooms().map(publicRoom),profile:this.progression.view(user,24),profiles:summaries,contentHash:this.env.CONTENT_HASH,transport:'native-webrtc-host',clientVersion:this.env.CLIENT_VERSION,clientOpen:false});
+        return json({username:user,channel:s.channel,channels:CHANNELS,users,events,rooms:this.rooms(release).map(publicRoom),profile:this.progression.view(user,24),profiles:summaries,contentHash:release.contentHash,transport:'native-webrtc-host',clientVersion:release.version,clientOpen:false});
       }
       if(req.method!=='POST')fail('Método inválido.',405);const input=await body(req);await this.limit('action:'+s.hash,40,10000);
       if(path==='/api/auth/handoff')return json({code:await this.handoff(s,input.target),username:user,expires:now+120000});
@@ -129,7 +145,7 @@ export class Community {
         await this.limit('progress:'+user.toLowerCase(),60);
         const method={'/api/progression/roster':'roster','/api/progression/run':'begin','/api/progression/report':'report','/api/progression/remove':'remove'}[path];
         if(!method)fail('Rota indisponível.',404);
-        const result=await this.progression[method](req,user,input);
+        const result=await this.progression[method](req,user,input,release);
         if(method==='begin'){
           result.daily=null;
           if(this.daily&&input.character.mode!==8){try{result.daily=await this.daily.board(user,input.character.id);}catch(error){if(error.status!==409)throw error;result.daily={unavailable:'character-locked'};}}
@@ -138,23 +154,23 @@ export class Community {
       }
       if(path==='/api/channel'){if(!CHANNELS.includes(input.channel))fail('Canal inválido.');this.sql.exec('UPDATE sessions SET channel=? WHERE hash=?',input.channel,s.hash);return json({ok:true});}
       if(path==='/api/chat') {await this.limit('chat:'+user.toLowerCase(),5,10000);if(typeof input.text!=='string'||input.text.trim().length<1||input.text.length>240||/[\x00-\x1f]/.test(input.text))fail('Mensagem inválida.');this.sql.exec('INSERT INTO messages(channel,user,text,at) VALUES (?,?,?,?)',s.channel,user,input.text.trim(),now);this.sql.exec('DELETE FROM messages WHERE channel=? AND id NOT IN (SELECT id FROM messages WHERE channel=? ORDER BY id DESC LIMIT 100)',s.channel,s.channel);return json({ok:true});}
-      const current=this.rooms().find(r=>r.members.some(m=>m.user.toLowerCase()===user.toLowerCase()));
+      const current=this.rooms(release).find(r=>r.members.some(m=>m.user.toLowerCase()===user.toLowerCase()));
       if(path==='/api/logout'){this.sql.exec('DELETE FROM sessions WHERE hash=?',s.hash);if(!this.rows('SELECT hash FROM sessions WHERE user=? AND expires>?',user,now).length&&current&&!current.connected?.length)await this.leave(user,current);return json({ok:true});}
       if(path==='/api/rooms/create'){
-        if(current)fail('Saia da sala atual antes de criar outra.');if(input.contentHash!==this.env.CONTENT_HASH)fail('Pacote de conteúdo incompatível.');
+        if(current)fail('Saia da sala atual antes de criar outra.');if(input.contentHash!==release.contentHash)fail('Pacote de conteúdo incompatível.');
         if(typeof input.name!=='string'||input.name.trim().length<2||input.name.length>40||/[\x00-\x1f]/.test(input.name))fail('Nome de sala inválido.');
-        if(this.rooms().length>=64)fail('Limite de salas atingido.',429);const mode=input.mode||'campaign-coop';if(!['campaign-coop','coliseum-pvp'].includes(mode))fail('Modo inválido.');
+        if(this.rooms(release).length>=64)fail('Limite de salas atingido.',429);const mode=input.mode||'campaign-coop';if(!['campaign-coop','coliseum-pvp'].includes(mode))fail('Modo inválido.');
         // Coliseum has fixed arena rules. Ignore a stale campaign selection from older clients.
         const difficulty=mode==='coliseum-pvp'?0:(input.difficulty??0);if(!Number.isInteger(difficulty)||difficulty<0||difficulty>8)fail('Dificuldade inválida.');
         const profile=this.progression.get(user);if(!permitsDifficulty(profile,difficulty))fail('Desbloqueie esta dificuldade antes de criar a sala.',403);
         if(mode==='coliseum-pvp'&&!unlocks(profile).modes.includes(8))fail('Alcance o nível 10 para desbloquear o Coliseum.',403);
         const password=input.password||'';if(typeof password!=='string'||password.length>64)fail('Senha de sala inválida.');
-        const room={id:crypto.randomUUID(),name:input.name.trim(),creator:user,mode,difficulty,seed:crypto.getRandomValues(new Uint32Array(1))[0],contentHash:this.env.CONTENT_HASH,members:[{user,slot:0}],connected:[],passwordSalt:random(16),passwordHash:null,createdAt:now,updated:now};
+        const room={id:crypto.randomUUID(),name:input.name.trim(),creator:user,mode,difficulty,seed:crypto.getRandomValues(new Uint32Array(1))[0],contentHash:release.contentHash,members:[{user,slot:0}],connected:[],passwordSalt:random(16),passwordHash:null,createdAt:now,updated:now};
         if(password)room.passwordHash=await passwordKey(password,room.passwordSalt);
         const response=await call(roomStub(this.env,room.id),'/internal/init',room);if(!response.ok)fail('Não foi possível abrir a sala.',503);this.save(room);return json({room:publicRoom(room)});
       }
       if(path==='/api/rooms/join'){
-        const room=this.rooms().find(r=>r.id===input.roomId);if(!room)fail('Sala não encontrada.',404);if(current&&current.id!==room.id)fail('Saia da sala atual antes de entrar em outra.');if(room.contentHash!==input.contentHash)fail('Pacote de conteúdo incompatível.');
+        const room=this.rooms(release).find(r=>r.id===input.roomId);if(!room)fail('Sala não encontrada.',404);if(current&&current.id!==room.id)fail('Saia da sala atual antes de entrar em outra.');if(room.contentHash!==input.contentHash)fail('Pacote de conteúdo incompatível.');
         if(room.passwordHash&&!equal(room.passwordHash,await passwordKey(input.password||'',room.passwordSalt)))fail('Senha da sala incorreta.',403);
         const profile=this.progression.get(user);if(!permitsDifficulty(profile,room.difficulty))fail('Desbloqueie esta dificuldade antes de entrar na sala.',403);
         if(room.mode==='coliseum-pvp'&&!unlocks(profile).modes.includes(8))fail('Alcance o nível 10 para desbloquear o Coliseum.',403);
@@ -165,7 +181,7 @@ export class Community {
         if(!current||current.id!==input.roomId)fail('Entre na sala primeiro.');const member=current.members.find(m=>m.user.toLowerCase()===user.toLowerCase()),ticket=random(),authCode=await this.handoff(s,'client');
         const result=await call(roomStub(this.env,current.id),'/internal/ticket',{slot:member.slot,ticketHash:await digest(ticket),expires:now+120000,replace:input.replaceConnection===true});if(result.status===409)return json({launchUri:'rfd://resume/'+user.toLowerCase()+'/'+current.id+'?auth='+authCode,message:'Retomando a partida no cliente aberto.'});if(!result.ok)fail('Não foi possível preparar a entrada.',503);
         if(input.replaceConnection===true){current.connected=(current.connected||[]).filter(slot=>slot!==member.slot);this.save(current);}
-        const payload={transport:'webrtc',signalUrl:'https://returns-darkness-realm.oblique-tactical.workers.dev',roomId:current.id,ticket,contentHash:this.env.CONTENT_HASH,username:user,room:current.name,mode:current.mode,difficulty:current.difficulty,expires:now+120000,authCode};
+        const payload={transport:'webrtc',signalUrl:'https://returns-darkness-realm.oblique-tactical.workers.dev',roomId:current.id,ticket,contentHash:release.contentHash,username:user,room:current.name,mode:current.mode,difficulty:current.difficulty,expires:now+120000,authCode};
         const encoded=btoa(unescape(encodeURIComponent(JSON.stringify(payload)))).replaceAll('+','-').replaceAll('/','_').replaceAll('=','');return json({launchUri:'rfd://play/'+encoded,message:member.slot===0?'Abra seu personagem para hospedar a partida.':'Abra seu personagem para reunir-se ao grupo.'});
       }
       fail('Rota indisponível.',404);
