@@ -1,97 +1,97 @@
 {
   "pt-BR": {
-    "summary": "Retorne a Tristram em uma aventura ampliada: 29 caminhos de personagem, milhares de equipamentos, magias, talentos e desafios. ReÃºna atÃ© quatro jogadores na central online e continue a jornada no cliente Windows de Returns from Darkness HD.",
+    "summary": "Retorne a Tristram em uma aventura ampliada: 29 caminhos de personagem, milhares de equipamentos, magias, talentos e desafios. Reúna até quatro jogadores na central online e continue a jornada no cliente Windows de Returns from Darkness HD.",
     "facts": [
-      "Cliente disponÃ­vel Â· Em evoluÃ§Ã£o",
-      "AtÃ© 4 jogadores por partida",
-      "Gratuito Â· NÃ£o comercial"
+      "Cliente disponível · Em evolução",
+      "Até 4 jogadores por partida",
+      "Gratuito · Não comercial"
     ],
     "vision": [
       "Alguns lugares nunca deixam de chamar.",
-      "O silÃªncio de Tristram. A porta da catedral. A sensaÃ§Ã£o de descer mais um andar com amigos.",
-      "Uma comunidade para reencontrar o clÃ¡ssico com mais possibilidades de construÃ§Ã£o de personagem, exploraÃ§Ã£o e equipamentos. A central reÃºne contas, chat e salas; cada grupo vive sua prÃ³pria aventura, com a identidade de Returns from Darkness."
+      "O silêncio de Tristram. A porta da catedral. A sensação de descer mais um andar com amigos.",
+      "Uma comunidade para reencontrar o clássico com mais possibilidades de construção de personagem, exploração e equipamentos. A central reúne contas, chat e salas; cada grupo vive sua própria aventura, com a identidade de Returns from Darkness."
     ],
     "pillars": [
       [
         "29 caminhos",
-        "Seis arquÃ©tipos e 29 classes e especializaÃ§Ãµes. Combine atributos, talentos e caracterÃ­sticas para desenvolver seu estilo de combate."
+        "Seis arquétipos e 29 classes e especializações. Combine atributos, talentos e características para desenvolver seu estilo de combate."
       ],
       [
         "Um arsenal profundo",
-        "Mais de 2.500 bases de equipamentos, afixos, raridades, gemas e melhorias. Organize seu acervo no baÃº ampliado e experimente novas combinaÃ§Ãµes."
+        "Mais de 2.500 bases de equipamentos, afixos, raridades, gemas e melhorias. Organize seu acervo no baú ampliado e experimente novas combinações."
       ],
       [
         "Mais desafios",
-        "Magias, chefes, criaturas, missÃµes e Ã¡reas ampliam a jornada. Regras como Hardcore, Ironman e Survival, alÃ©m do Coliseum, oferecem outros desafios no cliente."
+        "Magias, chefes, criaturas, missões e áreas ampliam a jornada. Regras como Hardcore, Ironman e Survival, além do Coliseum, oferecem outros desafios no cliente."
       ]
     ],
     "now": [
-      "DisponÃ­vel nesta build",
-      "Cliente Windows com central integrada, salas cooperativas para atÃ© quatro pessoas, launcher com atualizaÃ§Ã£o automÃ¡tica e personagens separados por conta. O sistema de itens compartilha os drops da sala; o salvamento automÃ¡tico preserva inventÃ¡rio, ouro e evoluÃ§Ã£o neste computador. O SantuÃ¡rio reÃºne perfis pÃºblicos, personagens, retratos, tÃ­tulos e selos de campanha. Evolua jogando para liberar novas classes, caracterÃ­sticas, modificadores e dificuldades; personagens existentes mantÃªm suas escolhas. As trÃªs primeiras conclusÃµes concedem os dots e o retrato dourado. A interface reÃºne molduras prÃ³prias do HUD e inventÃ¡rio, avisos integrados ao jogo e a coleÃ§Ã£o A Primeira VigÃ­lia: trÃªs relÃ­quias com Ã­cones e sprites prÃ³prios, obtidas de chefes especÃ­ficos na campanha Normal em Horror. O SantuÃ¡rio ganhou navegaÃ§Ã£o compacta, abas de perfil e uma nova ilustraÃ§Ã£o da comunidade. Molduras gÃ³ticas completas, esculturas guardianas e superfÃ­cies texturizadas compÃµem a nova interface do projeto. Vida e mana tÃªm lÃ­quido animado; oito espaÃ§os de poÃ§Ãµes acompanham a barra de experiÃªncia. A versÃ£o 0.4.6 acrescenta escolha inicial de idioma, menus principais em inglÃªs e portuguÃªs do Brasil e recuperaÃ§Ã£o da trilha sonora clÃ¡ssica quando o pacote opcional estÃ¡ ausente. A traduÃ§Ã£o da campanha completa continua em desenvolvimento. A 0.4.12 inclui TH3data.mor no instalador completo. O launcher prepara os dados do mod automaticamente e mantém as atualizações pequenas. DIABDAT.MPQ é importado da instalação do jogador ou selecionado no primeiro preparo."
+      "Disponível nesta build",
+      "Cliente Windows com central integrada, salas cooperativas para até quatro pessoas, launcher com atualização automática e personagens separados por conta. O sistema de itens compartilha os drops da sala; o salvamento automático preserva inventário, ouro e evolução neste computador. O Santuário reúne perfis públicos, personagens, retratos, títulos e selos de campanha. Evolua jogando para liberar novas classes, características, modificadores e dificuldades; personagens existentes mantêm suas escolhas. As três primeiras conclusões concedem os dots e o retrato dourado. A interface reúne molduras próprias do HUD e inventário, avisos integrados ao jogo e a coleção A Primeira Vigília: três relíquias com ícones e sprites próprios, obtidas de chefes específicos na campanha Normal em Horror. O Santuário ganhou navegação compacta, abas de perfil e uma nova ilustração da comunidade. Molduras góticas completas, esculturas guardianas e superfícies texturizadas compõem a nova interface do projeto. Vida e mana têm líquido animado; oito espaços de poções acompanham a barra de experiência. A versão 0.4.6 acrescenta escolha inicial de idioma, menus principais em inglês e português do Brasil e recuperação da trilha sonora clássica quando o pacote opcional está ausente. A tradução da campanha completa continua em desenvolvimento. A 0.4.12 inclui TH3data.mor no instalador completo. O launcher prepara os dados do mod automaticamente e mantém as atualizações pequenas. DIABDAT.MPQ é importado da instalação do jogador ou selecionado no primeiro preparo."
     ],
     "next": [
       "Em desenvolvimento",
-      "36 novas artes originais. Do desenho ao inventÃ¡rio, uma coleÃ§Ã£o toma forma dentro de Returns from Darkness. PrÃ©via de desenvolvimento: estes 36 itens ainda nÃ£o estÃ£o disponÃ­veis para obter na versÃ£o pÃºblica. A aparÃªncia equipada prÃ³pria e o balanceamento continuam em produÃ§Ã£o."
+      "36 novas artes originais. Do desenho ao inventário, uma coleção toma forma dentro de Returns from Darkness. Prévia de desenvolvimento: estes 36 itens ainda não estão disponíveis para obter na versão pública. A aparência equipada própria e o balanceamento continuam em produção."
     ],
-    "limits": "A central usa serviÃ§os na nuvem; a partida roda nos clientes e exige que o criador permaneÃ§a conectado. Personagens sÃ£o salvos neste computador, com gravaÃ§Ã£o automÃ¡tica e cÃ³pia de recuperaÃ§Ã£o. Uma nova sala cria um novo mundo. Artes HD completas, migraÃ§Ã£o de anfitriÃ£o e ranking PvP ainda nÃ£o estÃ£o concluÃ­dos.",
+    "limits": "A central usa serviços na nuvem; a partida roda nos clientes e exige que o criador permaneça conectado. Personagens são salvos neste computador, com gravação automática e cópia de recuperação. Uma nova sala cria um novo mundo. Artes HD completas, migração de anfitrião e ranking PvP ainda não estão concluídos.",
     "milestones": [
       [
-        "A comunidade estÃ¡ online",
-        "Conta, canais, chat e salas estÃ£o no site. O projeto nÃ£o depende do computador do administrador ligado para manter a central acessÃ­vel.",
-        "DisponÃ­vel"
+        "A comunidade está online",
+        "Conta, canais, chat e salas estão no site. O projeto não depende do computador do administrador ligado para manter a central acessível.",
+        "Disponível"
       ],
       [
         "Uma jornada mais ampla",
-        "29 caminhos de personagem, equipamentos, talentos, magias e desafios compÃµem o cliente atual. O menu de salas e a identidade visual seguem integrados Ã  experiÃªncia.",
+        "29 caminhos de personagem, equipamentos, talentos, magias e desafios compõem o cliente atual. O menu de salas e a identidade visual seguem integrados à experiência.",
         "No cliente"
       ],
       [
         "O retorno continua",
-        "Full HD, melhorias de materiais e logo animada jÃ¡ fazem parte da direÃ§Ã£o visual. A remasterizaÃ§Ã£o de todas as artes e a Arena das Cinzas continuam em produÃ§Ã£o.",
+        "Full HD, melhorias de materiais e logo animada já fazem parte da direção visual. A remasterização de todas as artes e a Arena das Cinzas continuam em produção.",
         "Em desenvolvimento"
       ]
     ],
     "faq": [
       [
-        "Como comeÃ§ar a jogar?",
-        "Baixe o cliente Windows na central, entre na conta e crie ou escolha uma sala. O botÃ£o da sala abre o jogo; o hub interno tambÃ©m dÃ¡ acesso Ã  comunidade. O launcher verifica a versÃ£o mais recente antes de iniciar uma nova partida e importa os arquivos de jogo compatÃ­veis da sua instalaÃ§Ã£o. Ao abrir o jogo pelo site, sua conta tambÃ©m entra no hub interno. Ao abrir a central pelo jogo ou launcher conectado, a conta acompanha vocÃª no navegador. A 0.4.12 inclui TH3data.mor no instalador completo. O launcher prepara os dados do mod automaticamente e mantém as atualizações pequenas. DIABDAT.MPQ é importado da instalação do jogador ou selecionado no primeiro preparo."
+        "Como começar a jogar?",
+        "Baixe o cliente Windows na central, entre na conta e crie ou escolha uma sala. O botão da sala abre o jogo; o hub interno também dá acesso à comunidade. O launcher verifica a versão mais recente antes de iniciar uma nova partida e importa os arquivos de jogo compatíveis da sua instalação. Ao abrir o jogo pelo site, sua conta também entra no hub interno. Ao abrir a central pelo jogo ou launcher conectado, a conta acompanha você no navegador. A 0.4.12 inclui TH3data.mor no instalador completo. O launcher prepara os dados do mod automaticamente e mantém as atualizações pequenas. DIABDAT.MPQ é importado da instalação do jogador ou selecionado no primeiro preparo."
       ],
       [
-        "Ã‰ preciso manter um servidor no meu PC?",
-        "A central de contas, chat e salas permanece na nuvem. A partida Ã© hospedada pelo cliente do criador da sala, com conexÃ£o direta quando possÃ­vel e retransmissÃ£o em redes restritivas. O criador precisa permanecer no jogo; sair encerra a partida do grupo."
+        "É preciso manter um servidor no meu PC?",
+        "A central de contas, chat e salas permanece na nuvem. A partida é hospedada pelo cliente do criador da sala, com conexão direta quando possível e retransmissão em redes restritivas. O criador precisa permanecer no jogo; sair encerra a partida do grupo."
       ],
       [
         "Meu personagem fica salvo?",
-        "Sim. O cliente salva automaticamente durante a jornada e ao sair normalmente, mantendo inventÃ¡rio, ouro e evoluÃ§Ã£o em um perfil por conta neste computador. Os saves ficam separados das atualizaÃ§Ãµes. NÃ£o hÃ¡ sincronizaÃ§Ã£o de personagens entre computadores; o mundo de uma sala nÃ£o Ã© persistente."
+        "Sim. O cliente salva automaticamente durante a jornada e ao sair normalmente, mantendo inventário, ouro e evolução em um perfil por conta neste computador. Os saves ficam separados das atualizações. Não há sincronização de personagens entre computadores; o mundo de uma sala não é persistente."
       ],
       [
-        "O jogo inteiro jÃ¡ estÃ¡ remasterizado e a Arena pronta?",
-        "O cliente suporta resoluÃ§Ã£o Full HD. A versÃ£o 0.4.1 acrescenta molduras prÃ³prias e material de pedra e metal em alta definiÃ§Ã£o ao HUD e inventÃ¡rio, alÃ©m dos Ã­cones e sprites das trÃªs relÃ­quias A Primeira VigÃ­lia. Os cenÃ¡rios, personagens e monstros ainda preservam grande parte das artes clÃ¡ssicas: a remasterizaÃ§Ã£o do mundo inteiro nÃ£o estÃ¡ pronta. O Coliseum estÃ¡ disponÃ­vel como desafio do cliente; a Arena PvP competitiva, ranking e eventos prÃ³prios continuam em desenvolvimento."
+        "O jogo inteiro já está remasterizado e a Arena pronta?",
+        "O cliente suporta resolução Full HD. A versão 0.4.1 acrescenta molduras próprias e material de pedra e metal em alta definição ao HUD e inventário, além dos ícones e sprites das três relíquias A Primeira Vigília. Os cenários, personagens e monstros ainda preservam grande parte das artes clássicas: a remasterização do mundo inteiro não está pronta. O Coliseum está disponível como desafio do cliente; a Arena PvP competitiva, ranking e eventos próprios continuam em desenvolvimento."
       ],
       [
-        "Todo o conteÃºdo foi criado pelo Returns from Darkness?",
-        "Somos uma ediÃ§Ã£o de comunidade adaptada de Diablo/Hellfire e The Hell 3, com os crÃ©ditos das bases preservados. Grande parte das classes, Ã¡reas, equipamentos e artes vem dessas bases. Returns from Darkness cria o SantuÃ¡rio, a integraÃ§Ã£o online, a atualizaÃ§Ã£o e a progressÃ£o de conta, alÃ©m de ilustraÃ§Ãµes, emblema, molduras texturizadas do HUD e inventÃ¡rio e as trÃªs relÃ­quias A Primeira VigÃ­lia. Estes elementos prÃ³prios sÃ£o apresentados como adiÃ§Ãµes ao conteÃºdo herdado, sem atribuir ao projeto a criaÃ§Ã£o de todo o jogo."
+        "Todo o conteúdo foi criado pelo Returns from Darkness?",
+        "Somos uma edição de comunidade adaptada de Diablo/Hellfire e The Hell 3, com os créditos das bases preservados. Grande parte das classes, áreas, equipamentos e artes vem dessas bases. Returns from Darkness cria o Santuário, a integração online, a atualização e a progressão de conta, além de ilustrações, emblema, molduras texturizadas do HUD e inventário e as três relíquias A Primeira Vigília. Estes elementos próprios são apresentados como adições ao conteúdo herdado, sem atribuir ao projeto a criação de todo o jogo."
       ]
     ],
     "join": [
-      "O prÃ³ximo capÃ­tulo comeÃ§a com a comunidade.",
-      "Entre na central para conversar, reunir seu grupo e abrir uma partida. No Discord, acompanhe as atualizaÃ§Ãµes e compartilhe suas experiÃªncias de jogo."
+      "O próximo capítulo começa com a comunidade.",
+      "Entre na central para conversar, reunir seu grupo e abrir uma partida. No Discord, acompanhe as atualizações e compartilhe suas experiências de jogo."
     ],
     "pending": [
-      "Convite em preparaÃ§Ã£o",
-      "CÃ³digo disponÃ­vel no GitHub"
+      "Convite em preparação",
+      "Código disponível no GitHub"
     ],
     "online": [
-      "SantuÃ¡rio",
-      "O SantuÃ¡rio recria a experiÃªncia social da Battle.net clÃ¡ssica de Diablo: entre com sua conta, converse em canais, encontre jogadores e crie ou participe de salas multiplayer. Ã‰ o ponto de encontro da comunidade Returns from Darkness para reunir o grupo e continuar a jornada no jogo."
+      "Santuário",
+      "O Santuário recria a experiência social da Battle.net clássica de Diablo: entre com sua conta, converse em canais, encontre jogadores e crie ou participe de salas multiplayer. É o ponto de encontro da comunidade Returns from Darkness para reunir o grupo e continuar a jornada no jogo."
     ]
   },
   "en": {
     "summary": "Return to Tristram for an expanded adventure: 29 character paths, thousands of equipment bases, spells, talents and challenges. Gather up to four players in the online community hub and continue your journey in the Returns from Darkness HD Windows client.",
     "facts": [
-      "Client available Â· In development",
+      "Client available · In development",
       "Up to 4 players per game",
-      "Free Â· Non-commercial"
+      "Free · Non-commercial"
     ],
     "vision": [
       "Some places never stop calling.",
@@ -170,20 +170,20 @@
     ],
     "online": [
       "Sanctuary",
-      "The Sanctuary recreates the social experience of Diabloâ€™s classic Battle.net: sign in, chat in channels, find players, and create or join multiplayer rooms. It is the Returns from Darkness communityâ€™s meeting place to gather your party and continue the adventure in the game."
+      "The Sanctuary recreates the social experience of Diablo’s classic Battle.net: sign in, chat in channels, find players, and create or join multiplayer rooms. It is the Returns from Darkness community’s meeting place to gather your party and continue the adventure in the game."
     ]
   },
   "es": {
-    "summary": "Regresa a Tristram en una aventura ampliada: 29 caminos de personaje, miles de equipos, hechizos, talentos y desafÃ­os. ReÃºne hasta cuatro jugadores en la central online y continÃºa en el cliente Windows de Returns from Darkness HD.",
+    "summary": "Regresa a Tristram en una aventura ampliada: 29 caminos de personaje, miles de equipos, hechizos, talentos y desafíos. Reúne hasta cuatro jugadores en la central online y continúa en el cliente Windows de Returns from Darkness HD.",
     "facts": [
-      "Cliente disponible Â· En evoluciÃ³n",
+      "Cliente disponible · En evolución",
       "Hasta 4 jugadores por partida",
-      "Gratis Â· No comercial"
+      "Gratis · No comercial"
     ],
     "vision": [
       "Algunos lugares nunca dejan de llamar.",
-      "El silencio de Tristram. La puerta de la catedral. Descender un piso mÃ¡s con amigos.",
-      "Redescubre el clÃ¡sico con mÃ¡s opciones de personaje, exploraciÃ³n y equipo. Cuentas, chat y salas se reÃºnen en la central; cada grupo vive su propia aventura con la identidad de Returns from Darkness."
+      "El silencio de Tristram. La puerta de la catedral. Descender un piso más con amigos.",
+      "Redescubre el clásico con más opciones de personaje, exploración y equipo. Cuentas, chat y salas se reúnen en la central; cada grupo vive su propia aventura con la identidad de Returns from Darkness."
     ],
     "pillars": [
       [
@@ -192,181 +192,181 @@
       ],
       [
         "Un arsenal profundo",
-        "MÃ¡s de 2.500 bases de equipo, afijos, rarezas, gemas y mejoras. Organiza tu colecciÃ³n en el alijo ampliado."
+        "Más de 2.500 bases de equipo, afijos, rarezas, gemas y mejoras. Organiza tu colección en el alijo ampliado."
       ],
       [
-        "MÃ¡s desafÃ­os",
-        "Hechizos, jefes, criaturas, misiones y zonas amplÃ­an el viaje. Hardcore, Ironman, Survival y Coliseum ofrecen desafÃ­os adicionales en el cliente."
+        "Más desafíos",
+        "Hechizos, jefes, criaturas, misiones y zonas amplían el viaje. Hardcore, Ironman, Survival y Coliseum ofrecen desafíos adicionales en el cliente."
       ]
     ],
     "now": [
-      "Disponible en esta versiÃ³n",
-      "Cliente Windows con central integrada, salas cooperativas de hasta cuatro jugadores, actualizaciones automÃ¡ticas y perfiles separados. El sistema de objetos comparte los drops de la sala; el guardado automÃ¡tico conserva inventario, oro y evoluciÃ³n en este equipo. El Santuario reÃºne perfiles pÃºblicos, personajes, retratos, tÃ­tulos y sellos de campaÃ±a. Progresa jugando para desbloquear clases, rasgos, modificadores y dificultades; los personajes existentes conservan sus elecciones. Las tres primeras campaÃ±as completadas conceden puntos y un retrato dorado. La versiÃ³n 0.4.1 presenta marcos propios del HUD e inventario, avisos dentro del juego y la colecciÃ³n La Primera Vigilia: tres reliquias con iconos y sprites originales, obtenidas de jefes especÃ­ficos en la campaÃ±a Normal en Horror. El Santuario incorpora navegaciÃ³n compacta, pestaÃ±as de perfil y una nueva ilustraciÃ³n. Marcos gÃ³ticos completos, esculturas guardianas y superficies texturizadas forman la nueva interfaz del proyecto. Vida y manÃ¡ tienen lÃ­quido animado; ocho espacios de pociones acompaÃ±an la barra de experiencia. La versiÃ³n 0.4.6 aÃ±ade selecciÃ³n inicial de idioma, menÃºs principales en inglÃ©s y portuguÃ©s de Brasil y la banda sonora clÃ¡sica cuando falta el paquete opcional. La traducciÃ³n de toda la campaÃ±a sigue en desarrollo. La 0.4.12 incluye TH3data.mor en el instalador completo. El launcher prepara los datos del mod automáticamente y mantiene pequeñas las actualizaciones. DIABDAT.MPQ se importa de la instalación del jugador o se selecciona al preparar el juego."
+      "Disponible en esta versión",
+      "Cliente Windows con central integrada, salas cooperativas de hasta cuatro jugadores, actualizaciones automáticas y perfiles separados. El sistema de objetos comparte los drops de la sala; el guardado automático conserva inventario, oro y evolución en este equipo. El Santuario reúne perfiles públicos, personajes, retratos, títulos y sellos de campaña. Progresa jugando para desbloquear clases, rasgos, modificadores y dificultades; los personajes existentes conservan sus elecciones. Las tres primeras campañas completadas conceden puntos y un retrato dorado. La versión 0.4.1 presenta marcos propios del HUD e inventario, avisos dentro del juego y la colección La Primera Vigilia: tres reliquias con iconos y sprites originales, obtenidas de jefes específicos en la campaña Normal en Horror. El Santuario incorpora navegación compacta, pestañas de perfil y una nueva ilustración. Marcos góticos completos, esculturas guardianas y superficies texturizadas forman la nueva interfaz del proyecto. Vida y maná tienen líquido animado; ocho espacios de pociones acompañan la barra de experiencia. La versión 0.4.6 añade selección inicial de idioma, menús principales en inglés y portugués de Brasil y la banda sonora clásica cuando falta el paquete opcional. La traducción de toda la campaña sigue en desarrollo. La 0.4.12 incluye TH3data.mor en el instalador completo. El launcher prepara los datos del mod automáticamente y mantiene pequeñas las actualizaciones. DIABDAT.MPQ se importa de la instalación del jugador o se selecciona al preparar el juego."
     ],
     "next": [
       "En desarrollo",
-      "36 nuevas ilustraciones originales. Del dibujo al inventario, una colecciÃ³n toma forma en Returns from Darkness. Avance de desarrollo: estos 36 objetos aÃºn no se pueden obtener en la versiÃ³n pÃºblica. La apariencia equipada original y el equilibrio siguen en producciÃ³n."
+      "36 nuevas ilustraciones originales. Del dibujo al inventario, una colección toma forma en Returns from Darkness. Avance de desarrollo: estos 36 objetos aún no se pueden obtener en la versión pública. La apariencia equipada original y el equilibrio siguen en producción."
     ],
-    "limits": "La central usa servicios en la nube; la partida depende de los clientes y de que el creador siga conectado. Los personajes se guardan automÃ¡ticamente en este equipo con copias de recuperaciÃ³n. Cada sala nueva genera otro mundo. El arte HD completo, la migraciÃ³n de anfitriÃ³n y el ranking PvP siguen pendientes.",
+    "limits": "La central usa servicios en la nube; la partida depende de los clientes y de que el creador siga conectado. Los personajes se guardan automáticamente en este equipo con copias de recuperación. Cada sala nueva genera otro mundo. El arte HD completo, la migración de anfitrión y el ranking PvP siguen pendientes.",
     "milestones": [
       [
-        "La comunidad estÃ¡ online",
-        "Cuentas, canales, chat y salas estÃ¡n en el sitio, sin necesitar el PC del administrador encendido.",
+        "La comunidad está online",
+        "Cuentas, canales, chat y salas están en el sitio, sin necesitar el PC del administrador encendido.",
         "Disponible"
       ],
       [
         "Una aventura ampliada",
-        "29 caminos de personaje, equipos, talentos, hechizos y desafÃ­os forman parte del cliente actual.",
+        "29 caminos de personaje, equipos, talentos, hechizos y desafíos forman parte del cliente actual.",
         "En el cliente"
       ],
       [
-        "El regreso continÃºa",
-        "Full HD, mejoras de materiales y logo animado definen la direcciÃ³n visual. La remasterizaciÃ³n de todas las artes y Arena de las Cenizas siguen en desarrollo.",
+        "El regreso continúa",
+        "Full HD, mejoras de materiales y logo animado definen la dirección visual. La remasterización de todas las artes y Arena de las Cenizas siguen en desarrollo.",
         "En desarrollo"
       ]
     ],
     "faq": [
       [
-        "Â¿CÃ³mo empezar?",
-        "Descarga el cliente Windows, inicia sesiÃ³n y crea o elige una sala. El botÃ³n de la sala abre el juego y la central interna conecta con la comunidad. El launcher comprueba la versiÃ³n antes de una partida nueva e importa los archivos compatibles de tu instalaciÃ³n. Al abrir el juego desde el sitio, tu cuenta tambiÃ©n inicia sesiÃ³n en el centro del juego. Al abrir la comunidad desde el juego o lanzador conectado, tu cuenta te acompaÃ±a al navegador. La 0.4.12 incluye TH3data.mor en el instalador completo. El launcher prepara los datos del mod automáticamente y mantiene pequeñas las actualizaciones. DIABDAT.MPQ se importa de la instalación del jugador o se selecciona al preparar el juego."
+        "¿Cómo empezar?",
+        "Descarga el cliente Windows, inicia sesión y crea o elige una sala. El botón de la sala abre el juego y la central interna conecta con la comunidad. El launcher comprueba la versión antes de una partida nueva e importa los archivos compatibles de tu instalación. Al abrir el juego desde el sitio, tu cuenta también inicia sesión en el centro del juego. Al abrir la comunidad desde el juego o lanzador conectado, tu cuenta te acompaña al navegador. La 0.4.12 incluye TH3data.mor en el instalador completo. El launcher prepara los datos del mod automáticamente y mantiene pequeñas las actualizaciones. DIABDAT.MPQ se importa de la instalación del jugador o se selecciona al preparar el juego."
       ],
       [
-        "Â¿Necesito un servidor en mi PC?",
-        "Cuentas, chat y salas permanecen en la nube. El cliente del creador aloja la partida mediante conexiÃ³n directa o retransmisiÃ³n en redes restrictivas. El creador debe seguir jugando; al salir termina la sesiÃ³n del grupo."
+        "¿Necesito un servidor en mi PC?",
+        "Cuentas, chat y salas permanecen en la nube. El cliente del creador aloja la partida mediante conexión directa o retransmisión en redes restrictivas. El creador debe seguir jugando; al salir termina la sesión del grupo."
       ],
       [
-        "Â¿Mi personaje se guarda?",
-        "SÃ­. El guardado automÃ¡tico durante el juego y al salir normalmente conserva inventario, oro y evoluciÃ³n en un perfil por cuenta en este equipo. Los saves estÃ¡n separados de las actualizaciones. No se sincronizan entre equipos y el mundo de la sala no es persistente."
+        "¿Mi personaje se guarda?",
+        "Sí. El guardado automático durante el juego y al salir normalmente conserva inventario, oro y evolución en un perfil por cuenta en este equipo. Los saves están separados de las actualizaciones. No se sincronizan entre equipos y el mundo de la sala no es persistente."
       ],
       [
-        "Â¿Ya estÃ¡n terminadas la remasterizaciÃ³n y la Arena?",
-        "El cliente admite resoluciÃ³n Full HD. La versiÃ³n 0.4.1 aÃ±ade marcos originales y un material de piedra y metal en alta definiciÃ³n al HUD e inventario, ademÃ¡s de los iconos y sprites de suelo de las tres reliquias de La Primera Vigilia. Escenarios, personajes y monstruos aÃºn conservan gran parte del arte clÃ¡sico: la remasterizaciÃ³n de todo el mundo no estÃ¡ terminada. Coliseum estÃ¡ disponible como desafÃ­o del cliente; la Arena PvP competitiva, las clasificaciones y los eventos propios siguen en desarrollo."
+        "¿Ya están terminadas la remasterización y la Arena?",
+        "El cliente admite resolución Full HD. La versión 0.4.1 añade marcos originales y un material de piedra y metal en alta definición al HUD e inventario, además de los iconos y sprites de suelo de las tres reliquias de La Primera Vigilia. Escenarios, personajes y monstruos aún conservan gran parte del arte clásico: la remasterización de todo el mundo no está terminada. Coliseum está disponible como desafío del cliente; la Arena PvP competitiva, las clasificaciones y los eventos propios siguen en desarrollo."
       ],
       [
-        "Â¿Todo el contenido fue creado por Returns from Darkness?",
-        "Somos una ediciÃ³n de comunidad adaptada de Diablo/Hellfire y The Hell 3, con los crÃ©ditos de las bases conservados. Gran parte de las clases, zonas, equipos y artes procede de esas bases. Returns from Darkness crea el Santuario, la integraciÃ³n online, las actualizaciones y la progresiÃ³n de cuenta, junto con ilustraciones, emblema, marcos texturizados de HUD e inventario y las tres reliquias de La Primera Vigilia. Estos elementos originales son adiciones al contenido heredado; no atribuimos al proyecto la creaciÃ³n del juego entero."
+        "¿Todo el contenido fue creado por Returns from Darkness?",
+        "Somos una edición de comunidad adaptada de Diablo/Hellfire y The Hell 3, con los créditos de las bases conservados. Gran parte de las clases, zonas, equipos y artes procede de esas bases. Returns from Darkness crea el Santuario, la integración online, las actualizaciones y la progresión de cuenta, junto con ilustraciones, emblema, marcos texturizados de HUD e inventario y las tres reliquias de La Primera Vigilia. Estos elementos originales son adiciones al contenido heredado; no atribuimos al proyecto la creación del juego entero."
       ]
     ],
     "join": [
-      "El prÃ³ximo capÃ­tulo empieza con la comunidad.",
+      "El próximo capítulo empieza con la comunidad.",
       "Entra en la central para conversar, reunir tu grupo y abrir una partida. Sigue las novedades y comparte tu experiencia en Discord."
     ],
     "pending": [
-      "InvitaciÃ³n en preparaciÃ³n",
-      "CÃ³digo disponible en GitHub"
+      "Invitación en preparación",
+      "Código disponible en GitHub"
     ],
     "online": [
       "Santuario",
-      "El Santuario recrea la experiencia social del Battle.net clÃ¡sico de Diablo: inicia sesiÃ³n, conversa en canales, encuentra jugadores y crea o Ãºnete a salas multijugador. Es el punto de encuentro de Returns from Darkness para reunir al grupo y continuar la aventura en el juego."
+      "El Santuario recrea la experiencia social del Battle.net clásico de Diablo: inicia sesión, conversa en canales, encuentra jugadores y crea o únete a salas multijugador. Es el punto de encuentro de Returns from Darkness para reunir al grupo y continuar la aventura en el juego."
     ]
   },
   "fr": {
-    "summary": "Retrouvez Tristram dans une aventure enrichie : 29 voies de personnage, des milliers d'Ã©quipements, des sorts, talents et dÃ©fis. RÃ©unissez jusqu'Ã  quatre joueurs dans le portail en ligne et poursuivez sur le client Windows Returns from Darkness HD.",
+    "summary": "Retrouvez Tristram dans une aventure enrichie : 29 voies de personnage, des milliers d'équipements, des sorts, talents et défis. Réunissez jusqu'à quatre joueurs dans le portail en ligne et poursuivez sur le client Windows Returns from Darkness HD.",
     "facts": [
-      "Client disponible Â· En Ã©volution",
-      "Jusqu'Ã  4 joueurs par partie",
-      "Gratuit Â· Non commercial"
+      "Client disponible · En évolution",
+      "Jusqu'à 4 joueurs par partie",
+      "Gratuit · Non commercial"
     ],
     "vision": [
       "Certains lieux ne cessent jamais d'appeler.",
-      "Le silence de Tristram. La porte de la cathÃ©drale. Descendre un Ã©tage de plus entre amis.",
-      "RedÃ©couvrez le classique avec davantage de choix de personnage, d'exploration et d'Ã©quipement. Comptes, discussion et salons se retrouvent dans un portail commun ; chaque groupe vit sa propre aventure sous l'identitÃ© Returns from Darkness."
+      "Le silence de Tristram. La porte de la cathédrale. Descendre un étage de plus entre amis.",
+      "Redécouvrez le classique avec davantage de choix de personnage, d'exploration et d'équipement. Comptes, discussion et salons se retrouvent dans un portail commun ; chaque groupe vit sa propre aventure sous l'identité Returns from Darkness."
     ],
     "pillars": [
       [
         "29 voies",
-        "Six archÃ©types et 29 classes et spÃ©cialisations. Associez attributs, talents et traits pour dÃ©finir votre style."
+        "Six archétypes et 29 classes et spécialisations. Associez attributs, talents et traits pour définir votre style."
       ],
       [
-        "Un arsenal variÃ©",
-        "Plus de 2 500 bases d'Ã©quipement, affixes, raretÃ©s, gemmes et amÃ©liorations. Organisez votre collection dans un coffre agrandi."
+        "Un arsenal varié",
+        "Plus de 2 500 bases d'équipement, affixes, raretés, gemmes et améliorations. Organisez votre collection dans un coffre agrandi."
       ],
       [
-        "De nouveaux dÃ©fis",
-        "Sorts, boss, crÃ©atures, quÃªtes et zones enrichissent le voyage. Hardcore, Ironman, Survival et Coliseum proposent d'autres dÃ©fis dans le client."
+        "De nouveaux défis",
+        "Sorts, boss, créatures, quêtes et zones enrichissent le voyage. Hardcore, Ironman, Survival et Coliseum proposent d'autres défis dans le client."
       ]
     ],
     "now": [
       "Dans cette version",
-      "Client Windows avec portail intÃ©grÃ©, salons coopÃ©ratifs de quatre joueurs, mises Ã  jour automatiques et profils distincts. Le systÃ¨me de butin partage les objets de la partie ; les sauvegardes automatiques prÃ©servent inventaire, or et progression sur cet ordinateur. Le Sanctuaire rÃ©unit profils publics, personnages, portraits, titres et sceaux de campagne. Progressez en jouant pour dÃ©bloquer classes, traits, modificateurs et difficultÃ©s ; les personnages existants conservent leurs choix. Les trois premiÃ¨res campagnes terminÃ©es accordent des points et un portrait dorÃ©. La version 0.4.1 apporte un habillage propre au HUD et Ã  lâ€™inventaire, des avis dans le jeu et la collection La PremiÃ¨re Veille : trois reliques aux icÃ´nes et sprites originaux, obtenues auprÃ¨s de boss prÃ©cis en campagne Normal, difficultÃ© Horror. Le Sanctuaire reÃ§oit une navigation compacte, des onglets de profil et une nouvelle illustration. Des cadres gothiques complets, des sculptures gardiennes et des surfaces texturÃ©es composent la nouvelle interface. Vie et mana utilisent un liquide animÃ© ; huit emplacements de potions accompagnent la barre dâ€™expÃ©rience. La version 0.4.6 ajoute le choix initial de langue, les menus principaux en anglais et portugais du BrÃ©sil et la musique classique en lâ€™absence du pack optionnel. La traduction complÃ¨te de la campagne reste en dÃ©veloppement. La 0.4.12 inclut TH3data.mor dans le programme d’installation complet. Le lanceur prépare automatiquement les données du mod et garde les mises à jour légères. DIABDAT.MPQ est importé de l’installation du joueur ou choisi lors de la préparation initiale."
+      "Client Windows avec portail intégré, salons coopératifs de quatre joueurs, mises à jour automatiques et profils distincts. Le système de butin partage les objets de la partie ; les sauvegardes automatiques préservent inventaire, or et progression sur cet ordinateur. Le Sanctuaire réunit profils publics, personnages, portraits, titres et sceaux de campagne. Progressez en jouant pour débloquer classes, traits, modificateurs et difficultés ; les personnages existants conservent leurs choix. Les trois premières campagnes terminées accordent des points et un portrait doré. La version 0.4.1 apporte un habillage propre au HUD et à l’inventaire, des avis dans le jeu et la collection La Première Veille : trois reliques aux icônes et sprites originaux, obtenues auprès de boss précis en campagne Normal, difficulté Horror. Le Sanctuaire reçoit une navigation compacte, des onglets de profil et une nouvelle illustration. Des cadres gothiques complets, des sculptures gardiennes et des surfaces texturées composent la nouvelle interface. Vie et mana utilisent un liquide animé ; huit emplacements de potions accompagnent la barre d’expérience. La version 0.4.6 ajoute le choix initial de langue, les menus principaux en anglais et portugais du Brésil et la musique classique en l’absence du pack optionnel. La traduction complète de la campagne reste en développement. La 0.4.12 inclut TH3data.mor dans le programme d’installation complet. Le lanceur prépare automatiquement les données du mod et garde les mises à jour légères. DIABDAT.MPQ est importé de l’installation du joueur ou choisi lors de la préparation initiale."
     ],
     "next": [
-      "En dÃ©veloppement",
-      "36 nouvelles crÃ©ations originales. Du dessin Ã  l'inventaire, une collection prend forme dans Returns from Darkness. AperÃ§u de dÃ©veloppement : ces 36 objets ne peuvent pas encore Ãªtre obtenus dans la version publique. L'apparence Ã©quipÃ©e originale et l'Ã©quilibrage restent en production."
+      "En développement",
+      "36 nouvelles créations originales. Du dessin à l'inventaire, une collection prend forme dans Returns from Darkness. Aperçu de développement : ces 36 objets ne peuvent pas encore être obtenus dans la version publique. L'apparence équipée originale et l'équilibrage restent en production."
     ],
-    "limits": "Le portail utilise le cloud ; la partie s'exÃ©cute dans les clients et son crÃ©ateur doit rester connectÃ©. Les personnages sont sauvegardÃ©s automatiquement sur cet ordinateur avec une copie de rÃ©cupÃ©ration. Un nouveau salon crÃ©e un nouveau monde. Les visuels HD complets, la migration d'hÃ´te et le classement PvP restent Ã  terminer.",
+    "limits": "Le portail utilise le cloud ; la partie s'exécute dans les clients et son créateur doit rester connecté. Les personnages sont sauvegardés automatiquement sur cet ordinateur avec une copie de récupération. Un nouveau salon crée un nouveau monde. Les visuels HD complets, la migration d'hôte et le classement PvP restent à terminer.",
     "milestones": [
       [
-        "La communautÃ© est en ligne",
-        "Comptes, canaux, discussion et salons sont sur le site, sans dÃ©pendre du PC de l'administrateur allumÃ©.",
+        "La communauté est en ligne",
+        "Comptes, canaux, discussion et salons sont sur le site, sans dépendre du PC de l'administrateur allumé.",
         "Disponible"
       ],
       [
         "Une aventure enrichie",
-        "29 voies de personnage, Ã©quipements, talents, sorts et dÃ©fis font partie du client actuel.",
+        "29 voies de personnage, équipements, talents, sorts et défis font partie du client actuel.",
         "Dans le client"
       ],
       [
         "Le retour se poursuit",
-        "Full HD, matÃ©riaux amÃ©liorÃ©s et logo animÃ© guident les visuels. La remasterisation de toutes les illustrations et l'ArÃ¨ne des Cendres restent en production.",
-        "En dÃ©veloppement"
+        "Full HD, matériaux améliorés et logo animé guident les visuels. La remasterisation de toutes les illustrations et l'Arène des Cendres restent en production.",
+        "En développement"
       ]
     ],
     "faq": [
       [
         "Comment commencer ?",
-        "TÃ©lÃ©chargez le client Windows, connectez-vous et crÃ©ez ou choisissez un salon. Son bouton ouvre le jeu ; le portail interne rejoint aussi la communautÃ©. Le launcher vÃ©rifie la derniÃ¨re version avant une nouvelle partie et importe les fichiers compatibles de votre installation. Ouvrir le jeu depuis le site connecte aussi votre compte au centre intÃ©grÃ©. Ouvrir la communautÃ© depuis le jeu ou le lanceur connectÃ© vous connecte dans le navigateur. La 0.4.12 inclut TH3data.mor dans le programme d’installation complet. Le lanceur prépare automatiquement les données du mod et garde les mises à jour légères. DIABDAT.MPQ est importé de l’installation du joueur ou choisi lors de la préparation initiale."
+        "Téléchargez le client Windows, connectez-vous et créez ou choisissez un salon. Son bouton ouvre le jeu ; le portail interne rejoint aussi la communauté. Le launcher vérifie la dernière version avant une nouvelle partie et importe les fichiers compatibles de votre installation. Ouvrir le jeu depuis le site connecte aussi votre compte au centre intégré. Ouvrir la communauté depuis le jeu ou le lanceur connecté vous connecte dans le navigateur. La 0.4.12 inclut TH3data.mor dans le programme d’installation complet. Le lanceur prépare automatiquement les données du mod et garde les mises à jour légères. DIABDAT.MPQ est importé de l’installation du joueur ou choisi lors de la préparation initiale."
       ],
       [
         "Faut-il un serveur sur mon PC ?",
-        "Comptes, discussion et salons restent dans le cloud. Le client du crÃ©ateur hÃ©berge la partie, en connexion directe ou via un relais sur les rÃ©seaux restrictifs. Le crÃ©ateur doit rester dans le jeu ; son dÃ©part termine la session du groupe."
+        "Comptes, discussion et salons restent dans le cloud. Le client du créateur héberge la partie, en connexion directe ou via un relais sur les réseaux restrictifs. Le créateur doit rester dans le jeu ; son départ termine la session du groupe."
       ],
       [
-        "Mon personnage est-il sauvegardÃ© ?",
-        "Oui. Les sauvegardes automatiques et la sortie normale conservent inventaire, or et progression dans un profil par compte sur cet ordinateur, sÃ©parÃ© des mises Ã  jour. Il n'y a pas de synchronisation entre ordinateurs et le monde du salon n'est pas persistant."
+        "Mon personnage est-il sauvegardé ?",
+        "Oui. Les sauvegardes automatiques et la sortie normale conservent inventaire, or et progression dans un profil par compte sur cet ordinateur, séparé des mises à jour. Il n'y a pas de synchronisation entre ordinateurs et le monde du salon n'est pas persistant."
       ],
       [
-        "La remasterisation et l'ArÃ¨ne sont-elles terminÃ©es ?",
-        "Le client prend en charge la rÃ©solution Full HD. La version 0.4.1 ajoute un habillage original et un matÃ©riau de pierre et de mÃ©tal en haute dÃ©finition au HUD et Ã  lâ€™inventaire, ainsi que les icÃ´nes et sprites au sol des trois reliques de La PremiÃ¨re Veille. DÃ©cors, personnages et monstres conservent encore une grande partie des graphismes classiques : la refonte de tout le monde nâ€™est pas terminÃ©e. Coliseum est disponible comme dÃ©fi du client ; lâ€™arÃ¨ne PvP compÃ©titive, les classements et les Ã©vÃ©nements propres au projet restent en dÃ©veloppement."
+        "La remasterisation et l'Arène sont-elles terminées ?",
+        "Le client prend en charge la résolution Full HD. La version 0.4.1 ajoute un habillage original et un matériau de pierre et de métal en haute définition au HUD et à l’inventaire, ainsi que les icônes et sprites au sol des trois reliques de La Première Veille. Décors, personnages et monstres conservent encore une grande partie des graphismes classiques : la refonte de tout le monde n’est pas terminée. Coliseum est disponible comme défi du client ; l’arène PvP compétitive, les classements et les événements propres au projet restent en développement."
       ],
       [
-        "Tout le contenu a-t-il Ã©tÃ© crÃ©Ã© par Returns from Darkness ?",
-        "Nous sommes une Ã©dition communautaire adaptÃ©e de Diablo/Hellfire et de The Hell 3, dont les crÃ©dits sont conservÃ©s. La plupart des classes, zones, Ã©quipements et graphismes viennent de ces bases. Returns from Darkness crÃ©e le Sanctuaire, lâ€™intÃ©gration en ligne, les mises Ã  jour et la progression du compte, ainsi que des illustrations, un emblÃ¨me, un habillage texturÃ© du HUD et de lâ€™inventaire et les trois reliques de La PremiÃ¨re Veille. Ces Ã©lÃ©ments originaux complÃ¨tent le contenu hÃ©ritÃ© ; nous ne revendiquons pas la crÃ©ation de tout le jeu."
+        "Tout le contenu a-t-il été créé par Returns from Darkness ?",
+        "Nous sommes une édition communautaire adaptée de Diablo/Hellfire et de The Hell 3, dont les crédits sont conservés. La plupart des classes, zones, équipements et graphismes viennent de ces bases. Returns from Darkness crée le Sanctuaire, l’intégration en ligne, les mises à jour et la progression du compte, ainsi que des illustrations, un emblème, un habillage texturé du HUD et de l’inventaire et les trois reliques de La Première Veille. Ces éléments originaux complètent le contenu hérité ; nous ne revendiquons pas la création de tout le jeu."
       ]
     ],
     "join": [
-      "Le prochain chapitre commence avec la communautÃ©.",
-      "Rejoignez le portail pour discuter, rÃ©unir votre groupe et lancer une partie. Suivez les mises Ã  jour et partagez votre expÃ©rience sur Discord."
+      "Le prochain chapitre commence avec la communauté.",
+      "Rejoignez le portail pour discuter, réunir votre groupe et lancer une partie. Suivez les mises à jour et partagez votre expérience sur Discord."
     ],
     "pending": [
-      "Invitation en prÃ©paration",
+      "Invitation en préparation",
       "Sources disponibles sur GitHub"
     ],
     "online": [
       "Sanctuaire",
-      "Le Sanctuaire recrÃ©e lâ€™expÃ©rience sociale du Battle.net classique de Diablo : connectez-vous, discutez dans les canaux, trouvez des joueurs et crÃ©ez ou rejoignez des salons multijoueurs. Câ€™est le lieu de rencontre de Returns from Darkness pour rassembler votre groupe et poursuivre lâ€™aventure dans le jeu."
+      "Le Sanctuaire recrée l’expérience sociale du Battle.net classique de Diablo : connectez-vous, discutez dans les canaux, trouvez des joueurs et créez ou rejoignez des salons multijoueurs. C’est le lieu de rencontre de Returns from Darkness pour rassembler votre groupe et poursuivre l’aventure dans le jeu."
     ]
   },
   "de": {
-    "summary": "Kehre fÃ¼r ein erweitertes Abenteuer nach Tristram zurÃ¼ck: 29 Charakterwege, Tausende AusrÃ¼stungsgrundtypen, Zauber, Talente und Herausforderungen. Versammle bis zu vier Spieler in der Online-Zentrale und spiele im Windows-Client von Returns from Darkness HD.",
+    "summary": "Kehre für ein erweitertes Abenteuer nach Tristram zurück: 29 Charakterwege, Tausende Ausrüstungsgrundtypen, Zauber, Talente und Herausforderungen. Versammle bis zu vier Spieler in der Online-Zentrale und spiele im Windows-Client von Returns from Darkness HD.",
     "facts": [
-      "Client verfÃ¼gbar Â· In Entwicklung",
+      "Client verfügbar · In Entwicklung",
       "Bis zu 4 Spieler pro Partie",
-      "Kostenlos Â· Nicht kommerziell"
+      "Kostenlos · Nicht kommerziell"
     ],
     "vision": [
-      "Manche Orte hÃ¶ren niemals auf zu rufen.",
+      "Manche Orte hören niemals auf zu rufen.",
       "Tristrams Stille. Das Tor der Kathedrale. Noch eine Ebene tiefer mit Freunden.",
-      "Entdecke den Klassiker mit mehr Charakteraufbau, Erkundung und AusrÃ¼stung. Konten, Chat und RÃ¤ume kommen in einer Zentrale zusammen; jede Gruppe erlebt ihr eigenes Abenteuer mit der IdentitÃ¤t von Returns from Darkness."
+      "Entdecke den Klassiker mit mehr Charakteraufbau, Erkundung und Ausrüstung. Konten, Chat und Räume kommen in einer Zentrale zusammen; jede Gruppe erlebt ihr eigenes Abenteuer mit der Identität von Returns from Darkness."
     ],
     "pillars": [
       [
         "29 Charakterwege",
-        "Sechs Archetypen und 29 Klassen und Spezialisierungen. Kombiniere Attribute, Talente und Eigenschaften fÃ¼r deinen Kampfstil."
+        "Sechs Archetypen und 29 Klassen und Spezialisierungen. Kombiniere Attribute, Talente und Eigenschaften für deinen Kampfstil."
       ],
       [
         "Ein tieferes Arsenal",
-        "Ãœber 2.500 AusrÃ¼stungsgrundtypen, Affixe, Seltenheiten, Edelsteine und Verbesserungen. Verwalte deine Sammlung im erweiterten Lager."
+        "Über 2.500 Ausrüstungsgrundtypen, Affixe, Seltenheiten, Edelsteine und Verbesserungen. Verwalte deine Sammlung im erweiterten Lager."
       ],
       [
         "Mehr Herausforderungen",
@@ -375,38 +375,38 @@
     ],
     "now": [
       "In dieser Version",
-      "Windows-Client mit integrierter Zentrale, Koop-RÃ¤umen fÃ¼r vier Spieler, automatischen Updates und getrennten Profilen. Das Beutesystem teilt Drops im Raum; automatisches Speichern erhÃ¤lt Inventar, Gold und Entwicklung auf diesem PC. Das Sanktuario vereint Ã¶ffentliche Profile, Charaktere, PortrÃ¤ts, Titel und Kampagnensiegel. Schalte durch Spielen Klassen, Eigenschaften, Modifikatoren und Schwierigkeitsgrade frei; vorhandene Charaktere behalten ihre Auswahl. Die ersten drei abgeschlossenen Kampagnen verleihen Punkte und ein goldenes PortrÃ¤t. Version 0.4.1 bringt eigene HUD- und Inventarrahmen, Hinweise im Spiel und die Sammlung Die Erste Wacht: drei Relikte mit eigenen Symbolen und Bodensprites, als Belohnung bestimmter Bosse im Kampagnenmodus Normal auf Horror. Das Sanktuario erhÃ¤lt kompakte Navigation, Profilreiter und neue Illustrationen. VollstÃ¤ndige gotische Rahmen, WÃ¤chterfiguren und strukturierte OberflÃ¤chen bilden die neue ProjektoberflÃ¤che. Leben und Mana zeigen animierte FlÃ¼ssigkeit; acht TrankplÃ¤tze liegen bei der Erfahrungsleiste. Version 0.4.6 ergÃ¤nzt die anfÃ¤ngliche Sprachauswahl, HauptmenÃ¼s auf Englisch und brasilianischem Portugiesisch sowie klassische Musik, wenn das optionale Musikpaket fehlt. Die vollstÃ¤ndige KampagnenÃ¼bersetzung ist noch in Entwicklung. 0.4.12 enthält TH3data.mor im vollständigen Installer. Der Launcher richtet die Mod-Daten automatisch ein und hält Updates klein. DIABDAT.MPQ wird aus der Installation des Spielers importiert oder bei der ersten Einrichtung ausgewählt."
+      "Windows-Client mit integrierter Zentrale, Koop-Räumen für vier Spieler, automatischen Updates und getrennten Profilen. Das Beutesystem teilt Drops im Raum; automatisches Speichern erhält Inventar, Gold und Entwicklung auf diesem PC. Das Sanktuario vereint öffentliche Profile, Charaktere, Porträts, Titel und Kampagnensiegel. Schalte durch Spielen Klassen, Eigenschaften, Modifikatoren und Schwierigkeitsgrade frei; vorhandene Charaktere behalten ihre Auswahl. Die ersten drei abgeschlossenen Kampagnen verleihen Punkte und ein goldenes Porträt. Version 0.4.1 bringt eigene HUD- und Inventarrahmen, Hinweise im Spiel und die Sammlung Die Erste Wacht: drei Relikte mit eigenen Symbolen und Bodensprites, als Belohnung bestimmter Bosse im Kampagnenmodus Normal auf Horror. Das Sanktuario erhält kompakte Navigation, Profilreiter und neue Illustrationen. Vollständige gotische Rahmen, Wächterfiguren und strukturierte Oberflächen bilden die neue Projektoberfläche. Leben und Mana zeigen animierte Flüssigkeit; acht Trankplätze liegen bei der Erfahrungsleiste. Version 0.4.6 ergänzt die anfängliche Sprachauswahl, Hauptmenüs auf Englisch und brasilianischem Portugiesisch sowie klassische Musik, wenn das optionale Musikpaket fehlt. Die vollständige Kampagnenübersetzung ist noch in Entwicklung. 0.4.12 enthält TH3data.mor im vollständigen Installer. Der Launcher richtet die Mod-Daten automatisch ein und hält Updates klein. DIABDAT.MPQ wird aus der Installation des Spielers importiert oder bei der ersten Einrichtung ausgewählt."
     ],
     "next": [
       "In Entwicklung",
-      "36 neue eigene Motive. Von der Zeichnung zum Inventar entsteht eine Sammlung fÃ¼r Returns from Darkness. Entwicklungsvorschau: Diese 36 GegenstÃ¤nde sind Ã¶ffentlich noch nicht erhÃ¤ltlich. Eigenes ausgerÃ¼stetes Aussehen und Balance sind in Arbeit."
+      "36 neue eigene Motive. Von der Zeichnung zum Inventar entsteht eine Sammlung für Returns from Darkness. Entwicklungsvorschau: Diese 36 Gegenstände sind öffentlich noch nicht erhältlich. Eigenes ausgerüstetes Aussehen und Balance sind in Arbeit."
     ],
-    "limits": "Die Zentrale nutzt Cloud-Dienste; die Partie lÃ¤uft in den Clients und der Raumersteller muss verbunden bleiben. Charaktere speichern automatisch mit Sicherungskopien auf diesem PC. Ein neuer Raum erzeugt eine neue Welt. VollstÃ¤ndige HD-Grafik, Host-Wechsel und PvP-Ranglisten sind noch nicht fertig.",
+    "limits": "Die Zentrale nutzt Cloud-Dienste; die Partie läuft in den Clients und der Raumersteller muss verbunden bleiben. Charaktere speichern automatisch mit Sicherungskopien auf diesem PC. Ein neuer Raum erzeugt eine neue Welt. Vollständige HD-Grafik, Host-Wechsel und PvP-Ranglisten sind noch nicht fertig.",
     "milestones": [
       [
         "Die Gemeinschaft ist online",
-        "Konten, KanÃ¤le, Chat und RÃ¤ume sind auf der Website erreichbar, ohne eingeschalteten Administrator-PC.",
-        "VerfÃ¼gbar"
+        "Konten, Kanäle, Chat und Räume sind auf der Website erreichbar, ohne eingeschalteten Administrator-PC.",
+        "Verfügbar"
       ],
       [
-        "Eine grÃ¶ÃŸere Reise",
-        "29 Charakterwege, AusrÃ¼stung, Talente, Zauber und Herausforderungen gehÃ¶ren zum aktuellen Client.",
+        "Eine größere Reise",
+        "29 Charakterwege, Ausrüstung, Talente, Zauber und Herausforderungen gehören zum aktuellen Client.",
         "Im Client"
       ],
       [
-        "Die RÃ¼ckkehr geht weiter",
-        "Full HD, Materialverbesserungen und animiertes Logo prÃ¤gen die Optik. Die Ãœberarbeitung aller Grafiken und die Aschenarena sind weiterhin in Produktion.",
+        "Die Rückkehr geht weiter",
+        "Full HD, Materialverbesserungen und animiertes Logo prägen die Optik. Die Überarbeitung aller Grafiken und die Aschenarena sind weiterhin in Produktion.",
         "In Entwicklung"
       ]
     ],
     "faq": [
       [
         "Wie beginne ich?",
-        "Lade den Windows-Client herunter, melde dich an und erstelle oder wÃ¤hle einen Raum. Der Raumknopf Ã¶ffnet das Spiel; auch die interne Zentrale fÃ¼hrt zur Gemeinschaft. Der Launcher prÃ¼ft vor einer neuen Partie die aktuelle Version und importiert passende Spieldateien aus deiner Installation. Wenn du das Spiel Ã¼ber die Website Ã¶ffnest, wirst du auch im Spiel angemeldet. Ã–ffnest du die Community aus dem angemeldeten Spiel oder Launcher, wird dein Konto im Browser Ã¼bernommen. 0.4.12 enthält TH3data.mor im vollständigen Installer. Der Launcher richtet die Mod-Daten automatisch ein und hält Updates klein. DIABDAT.MPQ wird aus der Installation des Spielers importiert oder bei der ersten Einrichtung ausgewählt."
+        "Lade den Windows-Client herunter, melde dich an und erstelle oder wähle einen Raum. Der Raumknopf öffnet das Spiel; auch die interne Zentrale führt zur Gemeinschaft. Der Launcher prüft vor einer neuen Partie die aktuelle Version und importiert passende Spieldateien aus deiner Installation. Wenn du das Spiel über die Website öffnest, wirst du auch im Spiel angemeldet. Öffnest du die Community aus dem angemeldeten Spiel oder Launcher, wird dein Konto im Browser übernommen. 0.4.12 enthält TH3data.mor im vollständigen Installer. Der Launcher richtet die Mod-Daten automatisch ein und hält Updates klein. DIABDAT.MPQ wird aus der Installation des Spielers importiert oder bei der ersten Einrichtung ausgewählt."
       ],
       [
         "Brauche ich einen Server auf meinem PC?",
-        "Konten, Chat und RÃ¤ume bleiben in der Cloud. Der Client des Raumerstellers hostet die Partie, direkt oder mit Relay in eingeschrÃ¤nkten Netzwerken. Der Ersteller muss im Spiel bleiben; sein Austritt beendet die Gruppenpartie."
+        "Konten, Chat und Räume bleiben in der Cloud. Der Client des Raumerstellers hostet die Partie, direkt oder mit Relay in eingeschränkten Netzwerken. Der Ersteller muss im Spiel bleiben; sein Austritt beendet die Gruppenpartie."
       ],
       [
         "Wird mein Charakter gespeichert?",
@@ -414,37 +414,37 @@
       ],
       [
         "Sind Remaster und Arena fertig?",
-        "Der Client unterstÃ¼tzt Full-HD-AuflÃ¶sung. Version 0.4.1 ergÃ¤nzt eigene Rahmen und ein hochauflÃ¶sendes Stein- und Metallmaterial fÃ¼r HUD und Inventar sowie Symbole und Bodensprites der drei Relikte aus Die Erste Wacht. Umgebungen, Figuren und Monster nutzen weiterhin einen groÃŸen Teil der klassischen Grafik: Die Ãœberarbeitung der gesamten Welt ist nicht abgeschlossen. Coliseum ist als Herausforderung im Client verfÃ¼gbar; eine wettbewerbsorientierte PvP-Arena, Ranglisten und eigene Ereignisse sind noch in Entwicklung."
+        "Der Client unterstützt Full-HD-Auflösung. Version 0.4.1 ergänzt eigene Rahmen und ein hochauflösendes Stein- und Metallmaterial für HUD und Inventar sowie Symbole und Bodensprites der drei Relikte aus Die Erste Wacht. Umgebungen, Figuren und Monster nutzen weiterhin einen großen Teil der klassischen Grafik: Die Überarbeitung der gesamten Welt ist nicht abgeschlossen. Coliseum ist als Herausforderung im Client verfügbar; eine wettbewerbsorientierte PvP-Arena, Ranglisten und eigene Ereignisse sind noch in Entwicklung."
       ],
       [
         "Wurden alle Inhalte von Returns from Darkness erstellt?",
-        "Wir sind eine auf Diablo/Hellfire und The Hell 3 basierende Community-Edition und behalten die Quellenangaben bei. Die meisten Klassen, Gebiete, AusrÃ¼stungsstÃ¼cke und Grafiken stammen aus diesen Grundlagen. Returns from Darkness entwickelt das Sanktuario, die Online-Integration, Updates und den Kontofortschritt sowie Illustrationen, ein Emblem, texturierte HUD- und Inventarrahmen und die drei Relikte aus Die Erste Wacht. Diese eigenen Elemente ergÃ¤nzen Ã¼bernommene Inhalte; wir beanspruchen nicht die Urheberschaft am gesamten Spiel."
+        "Wir sind eine auf Diablo/Hellfire und The Hell 3 basierende Community-Edition und behalten die Quellenangaben bei. Die meisten Klassen, Gebiete, Ausrüstungsstücke und Grafiken stammen aus diesen Grundlagen. Returns from Darkness entwickelt das Sanktuario, die Online-Integration, Updates und den Kontofortschritt sowie Illustrationen, ein Emblem, texturierte HUD- und Inventarrahmen und die drei Relikte aus Die Erste Wacht. Diese eigenen Elemente ergänzen übernommene Inhalte; wir beanspruchen nicht die Urheberschaft am gesamten Spiel."
       ]
     ],
     "join": [
-      "Das nÃ¤chste Kapitel beginnt mit der Gemeinschaft.",
+      "Das nächste Kapitel beginnt mit der Gemeinschaft.",
       "Besuche die Zentrale zum Chatten, zur Gruppensuche und zum Starten einer Partie. Verfolge Updates und teile deine Erfahrungen auf Discord."
     ],
     "pending": [
       "Einladung in Vorbereitung",
-      "Quellcode auf GitHub verfÃ¼gbar"
+      "Quellcode auf GitHub verfügbar"
     ],
     "online": [
       "Sanktuario",
-      "Das Sanktuario lÃ¤sst das soziale Erlebnis von Diablos klassischem Battle.net wieder aufleben: anmelden, in KanÃ¤len chatten, Mitspieler finden und MehrspielerrÃ¤ume erstellen oder betreten. Hier trifft sich die Returns from Darkness-Community, um Gruppen zu bilden und das Abenteuer im Spiel fortzusetzen."
+      "Das Sanktuario lässt das soziale Erlebnis von Diablos klassischem Battle.net wieder aufleben: anmelden, in Kanälen chatten, Mitspieler finden und Mehrspielerräume erstellen oder betreten. Hier trifft sich die Returns from Darkness-Community, um Gruppen zu bilden und das Abenteuer im Spiel fortzusetzen."
     ]
   },
   "it": {
     "summary": "Torna a Tristram per un'avventura ampliata: 29 percorsi del personaggio, migliaia di equipaggiamenti, magie, talenti e sfide. Riunisci fino a quattro giocatori nella centrale online e continua nel client Windows Returns from Darkness HD.",
     "facts": [
-      "Client disponibile Â· In evoluzione",
+      "Client disponibile · In evoluzione",
       "Fino a 4 giocatori per partita",
-      "Gratuito Â· Non commerciale"
+      "Gratuito · Non commerciale"
     ],
     "vision": [
       "Certi luoghi non smettono mai di chiamare.",
-      "Il silenzio di Tristram. La porta della cattedrale. Un piano piÃ¹ in basso insieme agli amici.",
-      "Riscopri il classico con piÃ¹ possibilitÃ  di sviluppo, esplorazione ed equipaggiamento. Account, chat e stanze si incontrano nella centrale; ogni gruppo vive la propria avventura con l'identitÃ  Returns from Darkness."
+      "Il silenzio di Tristram. La porta della cattedrale. Un piano più in basso insieme agli amici.",
+      "Riscopri il classico con più possibilità di sviluppo, esplorazione ed equipaggiamento. Account, chat e stanze si incontrano nella centrale; ogni gruppo vive la propria avventura con l'identità Returns from Darkness."
     ],
     "pillars": [
       [
@@ -453,16 +453,16 @@
       ],
       [
         "Un arsenale profondo",
-        "Oltre 2.500 basi di equipaggiamento, affissi, raritÃ , gemme e miglioramenti. Organizza la collezione nel deposito ampliato."
+        "Oltre 2.500 basi di equipaggiamento, affissi, rarità, gemme e miglioramenti. Organizza la collezione nel deposito ampliato."
       ],
       [
-        "PiÃ¹ sfide",
+        "Più sfide",
         "Magie, boss, creature, missioni e aree ampliano il viaggio. Hardcore, Ironman, Survival e Coliseum offrono altre sfide nel client."
       ]
     ],
     "now": [
       "In questa versione",
-      "Client Windows con centrale integrata, stanze cooperative per quattro giocatori, aggiornamenti automatici e profili separati. Il sistema degli oggetti condivide i drop della stanza; il salvataggio automatico conserva inventario, oro e progressi su questo computer. Il Santuario riunisce profili pubblici, personaggi, ritratti, titoli e sigilli della campagna. Gioca e progredisci per sbloccare classi, tratti, modificatori e difficoltÃ ; i personaggi esistenti mantengono le proprie scelte. Le prime tre campagne completate assegnano punti e un ritratto dorato. La versione 0.4.1 introduce cornici originali per HUD e inventario, avvisi nel gioco e la collezione La Prima Veglia: tre reliquie con icone e sprite propri, ottenute da boss specifici nella campagna Normal a difficoltÃ  Horror. Il Santuario riceve navigazione compatta, schede del profilo e una nuova illustrazione. Cornici gotiche complete, sculture dei guardiani e superfici lavorate formano la nuova interfaccia del progetto. Vita e mana hanno liquidi animati; otto spazi per pozioni affiancano la barra dellâ€™esperienza. La versione 0.4.6 aggiunge la scelta iniziale della lingua, menu principali in inglese e portoghese brasiliano e la musica classica quando manca il pacchetto opzionale. La traduzione completa della campagna Ã¨ ancora in sviluppo. La 0.4.12 include TH3data.mor nel programma di installazione completo. Il launcher prepara automaticamente i dati del mod e mantiene gli aggiornamenti leggeri. DIABDAT.MPQ viene importato dall’installazione del giocatore o selezionato alla prima configurazione."
+      "Client Windows con centrale integrata, stanze cooperative per quattro giocatori, aggiornamenti automatici e profili separati. Il sistema degli oggetti condivide i drop della stanza; il salvataggio automatico conserva inventario, oro e progressi su questo computer. Il Santuario riunisce profili pubblici, personaggi, ritratti, titoli e sigilli della campagna. Gioca e progredisci per sbloccare classi, tratti, modificatori e difficoltà; i personaggi esistenti mantengono le proprie scelte. Le prime tre campagne completate assegnano punti e un ritratto dorato. La versione 0.4.1 introduce cornici originali per HUD e inventario, avvisi nel gioco e la collezione La Prima Veglia: tre reliquie con icone e sprite propri, ottenute da boss specifici nella campagna Normal a difficoltà Horror. Il Santuario riceve navigazione compatta, schede del profilo e una nuova illustrazione. Cornici gotiche complete, sculture dei guardiani e superfici lavorate formano la nuova interfaccia del progetto. Vita e mana hanno liquidi animati; otto spazi per pozioni affiancano la barra dell’esperienza. La versione 0.4.6 aggiunge la scelta iniziale della lingua, menu principali in inglese e portoghese brasiliano e la musica classica quando manca il pacchetto opzionale. La traduzione completa della campagna è ancora in sviluppo. La 0.4.12 include TH3data.mor nel programma di installazione completo. Il launcher prepara automaticamente i dati del mod e mantiene gli aggiornamenti leggeri. DIABDAT.MPQ viene importato dall’installazione del giocatore o selezionato alla prima configurazione."
     ],
     "next": [
       "In sviluppo",
@@ -471,12 +471,12 @@
     "limits": "La centrale usa servizi cloud; la partita gira nei client e il creatore deve restare connesso. I personaggi si salvano automaticamente su questo computer con copie di recupero. Una nuova stanza crea un nuovo mondo. Grafica HD completa, migrazione dell'host e classifiche PvP sono ancora da completare.",
     "milestones": [
       [
-        "La comunitÃ  Ã¨ online",
+        "La comunità è online",
         "Account, canali, chat e stanze sono sul sito, senza richiedere il PC dell'amministratore acceso.",
         "Disponibile"
       ],
       [
-        "Un viaggio piÃ¹ ampio",
+        "Un viaggio più ampio",
         "29 percorsi del personaggio, equipaggiamenti, talenti, magie e sfide fanno parte del client attuale.",
         "Nel client"
       ],
@@ -489,7 +489,7 @@
     "faq": [
       [
         "Come iniziare?",
-        "Scarica il client Windows, accedi e crea o scegli una stanza. Il pulsante della stanza apre il gioco; anche la centrale interna porta alla comunitÃ . Il launcher controlla l'ultima versione prima di una nuova partita e importa i file compatibili dalla tua installazione. Aprendo il gioco dal sito, il tuo account accede anche al centro interno. Aprendo la comunitÃ  dal gioco o dal launcher connesso, il tuo account ti segue nel browser. La 0.4.12 include TH3data.mor nel programma di installazione completo. Il launcher prepara automaticamente i dati del mod e mantiene gli aggiornamenti leggeri. DIABDAT.MPQ viene importato dall’installazione del giocatore o selezionato alla prima configurazione."
+        "Scarica il client Windows, accedi e crea o scegli una stanza. Il pulsante della stanza apre il gioco; anche la centrale interna porta alla comunità. Il launcher controlla l'ultima versione prima di una nuova partita e importa i file compatibili dalla tua installazione. Aprendo il gioco dal sito, il tuo account accede anche al centro interno. Aprendo la comunità dal gioco o dal launcher connesso, il tuo account ti segue nel browser. La 0.4.12 include TH3data.mor nel programma di installazione completo. Il launcher prepara automaticamente i dati del mod e mantiene gli aggiornamenti leggeri. DIABDAT.MPQ viene importato dall’installazione del giocatore o selezionato alla prima configurazione."
       ],
       [
         "Serve un server sul mio PC?",
@@ -497,19 +497,19 @@
       ],
       [
         "Il personaggio viene salvato?",
-        "SÃ¬. Salvataggi automatici e uscita normale mantengono inventario, oro e progressi in un profilo per account su questo computer, separato dagli aggiornamenti. Non c'Ã¨ sincronizzazione tra computer e il mondo della stanza non Ã¨ persistente."
+        "Sì. Salvataggi automatici e uscita normale mantengono inventario, oro e progressi in un profilo per account su questo computer, separato dagli aggiornamenti. Non c'è sincronizzazione tra computer e il mondo della stanza non è persistente."
       ],
       [
         "Rimasterizzazione e Arena sono complete?",
-        "Il client supporta la risoluzione Full HD. La versione 0.4.1 aggiunge cornici originali e un materiale di pietra e metallo in alta definizione a HUD e inventario, oltre a icone e sprite a terra delle tre reliquie de La Prima Veglia. Ambienti, personaggi e mostri conservano ancora gran parte della grafica classica: la rimasterizzazione di tutto il mondo non Ã¨ completa. Coliseum Ã¨ disponibile come sfida nel client; lâ€™Arena PvP competitiva, le classifiche e gli eventi del progetto restano in sviluppo."
+        "Il client supporta la risoluzione Full HD. La versione 0.4.1 aggiunge cornici originali e un materiale di pietra e metallo in alta definizione a HUD e inventario, oltre a icone e sprite a terra delle tre reliquie de La Prima Veglia. Ambienti, personaggi e mostri conservano ancora gran parte della grafica classica: la rimasterizzazione di tutto il mondo non è completa. Coliseum è disponibile come sfida nel client; l’Arena PvP competitiva, le classifiche e gli eventi del progetto restano in sviluppo."
       ],
       [
         "Tutti i contenuti sono stati creati da Returns from Darkness?",
-        "Siamo unâ€™edizione della comunitÃ  adattata da Diablo/Hellfire e The Hell 3, con i crediti delle basi conservati. Gran parte di classi, aree, equipaggiamenti e grafica proviene da queste basi. Returns from Darkness crea il Santuario, lâ€™integrazione online, gli aggiornamenti e la progressione dellâ€™account, oltre a illustrazioni, emblema, cornici texturizzate di HUD e inventario e le tre reliquie de La Prima Veglia. Questi elementi originali si aggiungono ai contenuti ereditati; non attribuiamo al progetto la creazione dellâ€™intero gioco."
+        "Siamo un’edizione della comunità adattata da Diablo/Hellfire e The Hell 3, con i crediti delle basi conservati. Gran parte di classi, aree, equipaggiamenti e grafica proviene da queste basi. Returns from Darkness crea il Santuario, l’integrazione online, gli aggiornamenti e la progressione dell’account, oltre a illustrazioni, emblema, cornici texturizzate di HUD e inventario e le tre reliquie de La Prima Veglia. Questi elementi originali si aggiungono ai contenuti ereditati; non attribuiamo al progetto la creazione dell’intero gioco."
       ]
     ],
     "join": [
-      "Il prossimo capitolo inizia con la comunitÃ .",
+      "Il prossimo capitolo inizia con la comunità.",
       "Entra nella centrale per conversare, trovare il gruppo e aprire una partita. Segui gli aggiornamenti e condividi la tua esperienza su Discord."
     ],
     "pending": [
@@ -518,7 +518,7 @@
     ],
     "online": [
       "Santuario",
-      "Il Santuario ricrea lâ€™esperienza sociale del Battle.net classico di Diablo: accedi, chatta nei canali, trova giocatori e crea o raggiungi stanze multigiocatore. Ãˆ il punto dâ€™incontro della comunitÃ  Returns from Darkness per riunire il gruppo e continuare lâ€™avventura nel gioco."
+      "Il Santuario ricrea l’esperienza sociale del Battle.net classico di Diablo: accedi, chatta nei canali, trova giocatori e crea o raggiungi stanze multigiocatore. È il punto d’incontro della comunità Returns from Darkness per riunire il gruppo e continuare l’avventura nel gioco."
     ]
   }
 }

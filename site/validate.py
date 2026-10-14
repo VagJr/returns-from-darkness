@@ -2,6 +2,7 @@
 import json
 from html.parser import HTMLParser
 from pathlib import Path
+from text_encoding import validate_text
 from urllib.parse import urlsplit,unquote
 import xml.etree.ElementTree as ET
 
@@ -9,6 +10,9 @@ ROOT=Path(__file__).parent
 DIST=ROOT/'dist'
 config=json.loads((ROOT/'site-config.json').read_text(encoding='utf-8'))
 errors=[]
+for text_file in DIST.rglob('*'):
+    if text_file.is_file() and text_file.suffix in ['.html','.json','.js','.svg','.css']:
+        validate_text(text_file.read_text(encoding='utf-8'),str(text_file.relative_to(DIST)))
 class Page(HTMLParser):
     def __init__(self):
         super().__init__();self.refs=[];self.ids=set();self.html={};self.h1=0;self.meta={};self.canonical=[];self.alt=[];self.schemas=[];self.schema=False

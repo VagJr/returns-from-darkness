@@ -7,6 +7,7 @@ from urllib.parse import urlsplit
 from xml.sax.saxutils import escape as xml_escape
 from real_gallery import render_gallery, prepare_sanctuary
 from development import render_development,render_teaser,prepare_development
+from text_encoding import validate_text
 
 ROOT = Path(__file__).resolve().parent
 DIST = ROOT / 'dist'
@@ -17,6 +18,7 @@ for language, content in json.loads((ROOT / 'current-content.json').read_text(en
     LOCALES[language].update(content)
 for language, content in json.loads((ROOT / 'current-content-extra.json').read_text(encoding='utf-8')).items():
     LOCALES[language].update(content)
+validate_text(LOCALES, 'localized website content')
 NAMES = {'pt-BR':'Português (Brasil)', 'en':'English', 'es':'Español', 'fr':'Français', 'de':'Deutsch', 'it':'Italiano', 'pl':'Polski', 'ru':'Русский', 'uk':'Українська', 'tr':'Türkçe', 'ja':'日本語', 'ko':'한국어', 'zh-CN':'简体中文', 'ar':'العربية'}
 ART_TITLES = {'pt-BR':['Primeira Luz','Arena das Cinzas'], 'en':['First Light','Ashen Arena'], 'es':['Primera Luz','Arena de las Cenizas'], 'fr':['Première Lumière','Arène des Cendres'], 'de':['Erstes Licht','Aschenarena'], 'it':['Prima Luce','Arena delle Ceneri'], 'pl':['Pierwsze Światło','Arena Popiołów'], 'ru':['Первый Свет','Арена Пепла'], 'uk':['Перше Світло','Арена Попелу'], 'tr':['İlk Işık','Kül Arenası'], 'ja':['最初の光','灰のアリーナ'], 'ko':['첫 번째 빛','잿빛 아레나'], 'zh-CN':['初光','灰烬竞技场'], 'ar':['النور الأول','ساحة الرماد']}
 CENTRAL_LABELS = {'pt-BR': 'Entrar no Santuário', 'en': 'Enter the Sanctuary', 'es': 'Entrar al Santuario', 'fr': 'Entrer dans le Sanctuaire', 'de': 'Das Sanktuario betreten', 'it': 'Entra nel Santuario', 'pl': 'Wejdź do Sanktuarium', 'ru': 'Войти в Санктуарий', 'uk': 'Увійти до Санктуарію', 'tr': 'Sığınağa gir', 'ja': 'サンクチュアリへ', 'ko': '성역 입장', 'zh-CN': '进入庇护之地', 'ar': 'ادخل الملاذ'}
