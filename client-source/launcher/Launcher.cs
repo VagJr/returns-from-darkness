@@ -23,8 +23,8 @@ using Microsoft.Win32;
 [assembly: AssemblyTitle("Returns from Darkness HD")]
 [assembly: AssemblyProduct("Returns from Darkness HD")]
 [assembly: AssemblyDescription("Cliente e atualizações de Returns from Darkness")]
-[assembly: AssemblyVersion("0.4.9.0")]
-[assembly: AssemblyFileVersion("0.4.9.0")]
+[assembly: AssemblyVersion("0.4.10.0")]
+[assembly: AssemblyFileVersion("0.4.10.0")]
 namespace ReturnsFromDarkness {
  static class Program {
   public static Mutex Instance;
@@ -360,7 +360,7 @@ namespace ReturnsFromDarkness {
     if(authenticated)next="rfd://open";
     version.Text="RETURNS FROM DARKNESS HD · v"+manifest["version"];if(next=="rfd://prepare"){request=null;status.Text=Lang.S("ready");Show();continue;}if(next=="rfd://focus")next=null;
     await Program.Launch(manifest,next=="rfd://open"?null:next,status);request=null;Hide();
-   }catch(Exception error){Program.Diagnostic("launch-failed",error.GetType().Name+": "+error.Message);try{Program.ExportConnectionDiagnostic();}catch{}status.Text=Lang.Error(error.Message);Show();Activate();}}}finally{processing=false;play.Enabled=true;progress.Visible=false;}
+   }catch(Exception error){Program.Diagnostic("launch-failed",error.GetType().Name+": "+error.Message);if(next!=null&&(next.StartsWith("rfd://play/")||next.StartsWith("rfd://resume/")))Program.SendRoom("launch-failed\nconnection");try{Program.ExportConnectionDiagnostic();}catch{}status.Text=Lang.Error(error.Message);Show();Activate();}}}finally{processing=false;play.Enabled=true;progress.Visible=false;}
   }
  }
 }

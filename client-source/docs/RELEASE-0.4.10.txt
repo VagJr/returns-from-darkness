@@ -1,0 +1,9 @@
+Returns from Darkness HD 0.4.10 — entrada pelo jogo
+
+A central dentro do jogo mantém uma tela de conexão até o launcher preparar a partida. Ela bloqueia novos pedidos durante essa etapa, evitando convites concorrentes que invalidavam a entrada anterior. A atualização de sessão da mesma conta preserva a tela atual; trocar de conta continua atualizando a identidade e o perfil.
+
+Se a preparação falhar, o launcher avisa o diálogo dentro do jogo por um canal local autenticado, com mensagem fixa e sem credenciais. A abertura direta do executável público passa pelo launcher residente, para usar a mesma atualização e o mesmo controle de sala dos demais caminhos.
+
+O multiplayer entre dois PCs em redes diferentes foi confirmado pelo usuário na 0.4.9, pela entrada do site. Esta publicação corrige o fluxo do menu interno; seus resultados gráficos controlados e a entrega pública estão documentados na auditoria da versão. O reteste externo do novo menu continua necessário.
+
+Artes, HUD, taxas, saves e protocolo de transporte permanecem na mesma direção. Não há migração automática de anfitrião; o criador deve continuar conectado.

@@ -1,4 +1,4 @@
-# Returns from Darkness HD 0.4.9
+# Returns from Darkness HD 0.4.10
 
 Community client adapted from The Hell 3 source 1.265/data1.267, with creator-hosted online rooms, signed updates and Sanctuary account progression. Inherited gameplay and artwork remain credited; project-specific additions include the integration, progression layer, interface framing and First Vigil relic collection. See NOTICE.md and ORIGINAL-SOURCE-README.txt.
 
@@ -27,3 +27,5 @@ Version 0.4.7 fixes guest admission before the creator opens the game, retries a
 Version 0.4.8 fixes incremental TCP burst parsing and bounded consumer backpressure, clears turn outputs on failure, waits for an explicit loaded-world announcement, validates initial state fragments and decompression, and forwards in-game room launch to the existing launcher. Native exception summaries and late exit diagnostics contain no memory or credentials. The cloud boundary refreshes resident realm release configuration with an immutable per-request snapshot, preserving accounts and bindings. External graphical multiplayer certification remains pending. See docs/AUDITORIA-CONEXOES-0.4.8.md.
 
 Version 0.4.9 clips bitmap glyphs to destination surfaces, bounds font-header reads and fixes the 256-entry loop. It verifies both installation archives against the signed compatible set, repairs incompatible imports atomically with backups, and includes only whitelisted module names and access kinds in crash summaries. Controlled production launches use the validated archive directory; the development override archive is disabled in public builds. The exact old Strm2.dll + 0x1A102 write failure was reproduced with guard pages, but confirmation on the affected external PCs is still required. See docs/AUDITORIA-INSTALACAO-0.4.9.md.
+
+Version 0.4.10 keeps native room launch in a skinned waiting dialog until the controller delivers room control or a fixed failure code. Same-account authentication refresh preserves the current menu. Public executables opened without a controller enter through the launcher before initializing graphics. The creator reported successful external multiplayer on two PCs/two networks in 0.4.9; this is a community report, not a relabeled 0.4.10 agent certification. See docs/AUDITORIA-CONEXOES-0.4.10.md.

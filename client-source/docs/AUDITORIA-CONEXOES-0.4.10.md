@@ -1,0 +1,9 @@
+# Entrada nativa e launcher — 0.4.10
+
+O usuário confirmou que a versão 0.4.9 reúne dois PCs em duas redes distintas pela entrada do site. Isso é evidência explícita da comunidade, não observação independente do agente ou certificação universal de redes. O novo problema relatado é a entrada pelo menu interno e a abertura direta do executável.
+
+A reprodução usa a fila real Portal.Accept/Program.Listen do launcher publicado, duas instalações isoladas, autenticação feita dentro do jogo e escolha de sala pela lista. A 0.4.9 deixava o hub interativo enquanto o launcher preparava a conexão. A seleção seguinte gerou outro convite; o primeiro peer terminou com “Convite expirado”. O fluxo podia voltar ao menu pelo controle de autenticação antes do controle de sala. O teste finalmente entrou, mas revelou o convite invalidado no diagnóstico — um resultado de entrada não escondia o erro intermediário.
+
+A 0.4.10 mostra um diálogo nativo de conexão até a solicitação de sala estar pronta. A espera distingue controle de conta de controle de sala, não fecha na mera renovação da mesma conta e não oferece a lista para solicitações concorrentes. A falha de preparação é transmitida pelo launcher com o mesmo token/PID de controle, exclusivamente pelo código fixo `connection`; não inclui texto arbitrário ou credenciais. A conta e o perfil seguem validados. Os executáveis públicos abertos fora do launcher encaminham `rfd://open` ao launcher, encerrando antes de criar um jogo sem controlador; builds privadas de QA preservam a abertura direta de teste.
+
+A candidata e a entrega final são verificadas pelos relatórios específicos desta versão. Os testes gráficos automatizados usam este computador; a confirmação externa da 0.4.9 não deve receber rótulo 0.4.10. As duas vias de entrada, criação de sala nativa, dois jogadores ativos, ausência de convites expirados no caminho nativo, atualização e preservação de saves serão registradas antes de finalizar a publicação.

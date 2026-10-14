@@ -3632,12 +3632,13 @@
 +}
 --- /dev/null
 +++ b/src/CommunityHub.cpp
-@@ -0,0 +1,344 @@
+@@ -0,0 +1,357 @@
 +#include "stdafx.h"
 +#include "CommunityHub.h"
 +#include "CommunityProgress.h"
 +#include "CommunityDev.h"
 +#include "CommunitySession.h"
++#include "CommunityOnline.h"
 +#include "CommunityMenuTranslations.h"
 +#pragma pack(push,8)
 +#include <winhttp.h>
@@ -3676,6 +3677,7 @@
 +extern void __fastcall DrawFontString(uint8_t*,TextWin*,int,int);
 +extern void __fastcall SetDialogBmpToElem(HWND,HWND);
 +extern PALETTEENTRY *__fastcall GetMenuPalette(int);
++extern void RfdRepaintMenus();
 +namespace {
 +std::set<std::string> playerTexts;
 +bool languageInitialized=false,portuguese=false;
@@ -3690,7 +3692,7 @@
 + char value[16]={};FILE *file=fopen(languagePath().c_str(),"r");if(file){fgets(value,sizeof(value),file);fclose(file);portuguese=strncmp(value,"pt-BR",5)==0;}
 + if(GetEnvironmentVariableA("RFD_GAME_LANGUAGE",value,sizeof(value)))portuguese=strcmp(value,"pt-BR")==0;
 +}
-+struct NoticeState {std::string caption,text;std::vector<std::string> lines;size_t page=0;int rows=1;};
++struct NoticeState {std::string caption,text;std::vector<std::string> lines;size_t page=0;int rows=1;bool waitingForRoom=false;DWORD started=0;};
 +int noticeTexts[]={ID_QUESTION_TEXT,ID_CAPTION,0},noticeButtons[]={ID_YES_OK_BUTTON,0};
 +std::string noticeText(const char *text){
 + std::string input=text?text:"";if(input.size()>8192)input.resize(8192);
@@ -3719,9 +3721,15 @@
 +  // Opening after hero selection/room pages may follow a completed fade-out.
 +  // Restore the popup palette before its first frame, as the original skin does.
 +  PALETTEENTRY *palette=GetMenuPalette(0);SDrawUpdatePalette(0,10,palette,0);SDrawUpdatePalette(112,144,palette+112,1);
-+  auto body=(TextWin*)GetWindowLongA(GetDlgItem(dlg,ID_QUESTION_TEXT),GWL_USERDATA);state->rows=std::max(1,(int(body->size.cy)-4)/26);wrapNotice(*state,int(body->size.cx)-20);drawNotice(dlg,*state);SetFocus(GetDlgItem(dlg,ID_YES_OK_BUTTON));SetPropA(ghMainWnd,"RFD_NATIVE_NOTICE",reinterpret_cast<HANDLE>(1));return 1;
++  auto body=(TextWin*)GetWindowLongA(GetDlgItem(dlg,ID_QUESTION_TEXT),GWL_USERDATA);state->rows=std::max(1,(int(body->size.cy)-4)/26);wrapNotice(*state,int(body->size.cx)-20);drawNotice(dlg,*state);SetFocus(GetDlgItem(dlg,ID_YES_OK_BUTTON));SetPropA(ghMainWnd,"RFD_NATIVE_NOTICE",reinterpret_cast<HANDLE>(1));
++  if(state->waitingForRoom){state->started=GetTickCount();EnableWindow(GetDlgItem(dlg,ID_YES_OK_BUTTON),FALSE);SetPropA(dlg,"RFD_ROOM_WAIT",reinterpret_cast<HANDLE>(1));SDlgSetTimer(dlg,3,100,0);}return 1;
 + }
-+ if(msg==WM_DESTROY){DeleteDialogTitleAnim();DeleteElementListData(dlg,noticeTexts);DeleteElementListData(dlg,noticeButtons);DeleteWinData((TextWin*)GetWindowLongA(dlg,GWL_USERDATA));SetWindowLongA(dlg,GWL_USERDATA,0);RemovePropA(dlg,"RFD_NOTICE_STATE");RemovePropA(ghMainWnd,"RFD_NATIVE_NOTICE");return SDlgDefDialogProc_(dlg,msg,w,l);}
++ if(msg==WM_DESTROY){DeleteDialogTitleAnim();DeleteElementListData(dlg,noticeTexts);DeleteElementListData(dlg,noticeButtons);DeleteWinData((TextWin*)GetWindowLongA(dlg,GWL_USERDATA));SetWindowLongA(dlg,GWL_USERDATA,0);RemovePropA(dlg,"RFD_NOTICE_STATE");RemovePropA(dlg,"RFD_ROOM_WAIT");RemovePropA(ghMainWnd,"RFD_NATIVE_NOTICE");return SDlgDefDialogProc_(dlg,msg,w,l);}
++ if(msg==WM_TIMER&&w==3&&state&&state->waitingForRoom){
++  if(RfdRoomRequestPending()){SDlgEndDialog(dlg,99);return 0;}
++  if(RfdTakeRoomLaunchFailure()||GetTickCount()-state->started>210000){state->waitingForRoom=false;RemovePropA(dlg,"RFD_ROOM_WAIT");state->text=noticeText(RfdMenuText("Nao foi possivel preparar a partida. Tente entrar na sala novamente."));state->lines.clear();state->page=0;auto body=(TextWin*)GetWindowLongA(GetDlgItem(dlg,ID_QUESTION_TEXT),GWL_USERDATA);wrapNotice(*state,int(body->size.cx)-20);drawNotice(dlg,*state);EnableWindow(GetDlgItem(dlg,ID_YES_OK_BUTTON),TRUE);SetFocus(GetDlgItem(dlg,ID_YES_OK_BUTTON));}return 0;
++ }
++ if(msg==WM_COMMAND&&state&&state->waitingForRoom)return 0;
 + if(msg==WM_COMMAND&&!HIWORD(w)&&(LOWORD(w)==1||LOWORD(w)==ID_YES_OK_BUTTON||LOWORD(w)==2)){if(state&&LOWORD(w)!=2&&(state->page+1)*state->rows<state->lines.size()){state->page++;drawNotice(dlg,*state);}else SDlgEndDialog(dlg,1);return 0;}
 + return SDlgDefDialogProc_(dlg,msg,w,l);
 +}
@@ -3813,7 +3821,12 @@
 + return SDlgDefDialogProc_(dlg,msg,w,l);
 +}
 +bool form(const char *caption,char *name,int nameSize,char *password,int passSize){title=caption;formName=name;formPassword=password;formNameSize=nameSize;formPasswordSize=passSize;LoadFonts();MainMainMenu=true;int result=SDlgDialogBoxParam(HInstance,"RFD_ONLINE_FORM",ghMainWnd,formDialog,0);MainMainMenu=false;formName=formPassword=nullptr;title="Online do projeto";return result==1;}
-+void launch(const HubJson &room){auto result=api(L"launch",{{"roomId",room.at("id")}});std::string uri=result.at("launchUri");if(uri.rfind("rfd://play/",0)!=0&&uri.rfind("rfd://resume/",0)!=0&&uri!="rfd://focus")throw std::runtime_error("Convite da sala invalido.");if(!RfdForwardRoomLaunch(uri.c_str())){char controlled[256]={};if(GetEnvironmentVariableA("RFD_CONTROL_PIPE",controlled,sizeof(controlled)))throw std::runtime_error("Nao foi possivel comunicar com o launcher aberto. Abra a sala novamente.");ShellExecuteA(ghMainWnd,"open",uri.c_str(),nullptr,nullptr,SW_SHOWNORMAL);}}
++void launch(const HubJson &room){
++ RfdTakeRoomLaunchFailure();auto result=api(L"launch",{{"roomId",room.at("id")}});std::string uri=result.at("launchUri");if(uri.rfind("rfd://play/",0)!=0&&uri.rfind("rfd://resume/",0)!=0&&uri!="rfd://focus")throw std::runtime_error("Convite da sala invalido.");
++ if(!RfdForwardRoomLaunch(uri.c_str()))throw std::runtime_error("Nao foi possivel comunicar com o launcher aberto. Abra a sala novamente.");
++ NoticeState state{noticeText("Returns from Darkness"),noticeText(RfdMenuText("Conectando ao grupo..."))};state.waitingForRoom=true;LoadFonts();SDlgDialogBoxParam(HInstance,"RFD_NATIVE_NOTICE",ghMainWnd,noticeDialog,(LPARAM)&state);
++ ::RfdRepaintMenus();
++}
 +const char *tierNames[]={"Horror","Purgatory","Doom","Crucible","Torment","Agony","Terror","Destruction","Inferno"};
 +bool chooseJourney(const HubJson &state,std::string &mode,int &tier){
 + labels={"Campanha cooperativa","Coliseum PvP","","","","","Voltar"};int choice=menu();if(choice==7||choice<1||choice==99)return false;
@@ -5061,7 +5074,7 @@
 +int RfdPutGroundItem(int row,int col,const LastItemInfo &info);
 --- /dev/null
 +++ b/src/CommunityMenuTranslations.h
-@@ -0,0 +1,383 @@
+@@ -0,0 +1,387 @@
 +#pragma once
 +// Native bitmap-font menu bridge. Full UTF-8 spelling is kept in the catalog.
 +struct RfdMenuTranslation {const char *key,*english,*portuguese;};
@@ -5292,6 +5305,8 @@
 +{"A Light Below","A Light Below","Uma Luz nas Profundezas"},
 +{"Footsteps into Darkness","Footsteps into Darkness","Passos na Escuridao"},
 +{"Return with a Map","Return with a Map","Volte com um Mapa"},
++{"Connecting to party...","Connecting to party...","Conectando ao grupo..."},
++{"Could not prepare the game. Try entering the room again.","Could not prepare the game. Try entering the room again.","Nao foi possivel preparar a partida. Tente entrar na sala novamente."},
 +{"Um jogador","Single Player","Um jogador"},
 +{"Multijogador","Multi Player","Multijogador"},
 +{"Jogar online","Play Online","Jogar online"},
@@ -5444,10 +5459,12 @@
 +{"Uma Luz nas Profundezas","A Light Below","Uma Luz nas Profundezas"},
 +{"Passos na Escuridao","Footsteps into Darkness","Passos na Escuridao"},
 +{"Volte com um Mapa","Return with a Map","Volte com um Mapa"},
++{"Conectando ao grupo...","Connecting to party...","Conectando ao grupo..."},
++{"Nao foi possivel preparar a partida. Tente entrar na sala novamente.","Could not prepare the game. Try entering the room again.","Nao foi possivel preparar a partida. Tente entrar na sala novamente."},
 +};
 --- /dev/null
 +++ b/src/CommunityOnline.cpp
-@@ -0,0 +1,117 @@
+@@ -0,0 +1,124 @@
 +#include "stdafx.h"
 +#include "CommunityDev.h"
 +#include "CommunityProgress.h"
@@ -5460,6 +5477,7 @@
 +bool active=false;
 +bool wantsHub=false;
 +bool authChanged=false;
++bool roomLaunchFailed=false;
 +std::string worldReadyError;
 +std::vector<std::string> pendingRoom;
 +GameTemplate connectedGame={};
@@ -5475,19 +5493,25 @@
 +}
 +bool RfdOnlineRequested(){char ticket[64];return environment(ticket,sizeof(ticket),"RFD_ROOM_TICKET");}
 +bool RfdControlPending(){return authChanged||!pendingRoom.empty();}
++bool RfdRoomRequestPending(){return !pendingRoom.empty();}
++bool RfdTakeRoomLaunchFailure(){bool failed=roomLaunchFailed;roomLaunchFailed=false;return failed;}
 +bool RfdHandleControl(WPARAM source,LPARAM data){
 + auto copy=reinterpret_cast<COPYDATASTRUCT*>(data);char token[64],owner[24];
 + if(!copy||copy->dwData!=0x52464432||copy->cbData>8192||copy->cbData<64||!environment(token,sizeof(token),"RFD_CONTROL_TOKEN")||!environment(owner,sizeof(owner),"RFD_CONTROL_PID")||strtoul(owner,nullptr,10)!=source)return false;
 + std::string text(static_cast<const char*>(copy->lpData),copy->cbData);std::vector<std::string> fields;size_t begin=0;
 + while(true){size_t end=text.find('\n',begin);fields.push_back(text.substr(begin,end==std::string::npos?end:end-begin));if(end==std::string::npos)break;begin=end+1;}
++ if(fields.size()==3&&fields[0]==token&&fields[1]=="launch-failed"&&fields[2]=="connection"){roomLaunchFailed=true;log("resident controller could not prepare room");return true;}
 + if(fields.size()==3&&fields[0]==token&&fields[1]=="auth"){
 +  wchar_t root[4096]={};DWORD n=GetEnvironmentVariableW(L"LOCALAPPDATA",root,4096);if(!n||n>=4096)return false;std::wstring prefix=std::wstring(root)+L"\\ReturnsFromDarkness\\profiles\\";wchar_t normalized[4096]={};if(!GetFullPathNameW(prefix.c_str(),4096,normalized,nullptr))return false;prefix=normalized;if(prefix.back()!=L'\\')prefix+=L'\\';auto profile=wideProfile(fields[2]);
 +  if(profile.size()<=prefix.size()||CompareStringOrdinal(profile.c_str(),int(prefix.size()),prefix.c_str(),int(prefix.size()),TRUE)!=CSTR_EQUAL)return false;auto suffix=profile.substr(prefix.size());if(suffix.size()<3||suffix.size()>16||suffix.find_first_not_of(L"abcdefghijklmnopqrstuvwxyz0123456789_-")!=std::wstring::npos)return false;std::string account(suffix.begin(),suffix.end());
-+  if(!applyProfile("RFD_AUTH_PROFILE",fields[2]))return false;RfdPublishNativeAccount(account.c_str());if(gbRunGame!=1&&!RfdOnlineRequested())authChanged=true;log("account control accepted");return true;
++  unsigned long long identity=14695981039346656037ull;for(unsigned char c:account)identity=(identity^c)*1099511628211ull;
++  unsigned long long previous=(static_cast<uint32_t>(reinterpret_cast<uintptr_t>(GetPropA(ghMainWnd,"RFD_ACCOUNT_HASH_LO"))))|(static_cast<unsigned long long>(static_cast<uint32_t>(reinterpret_cast<uintptr_t>(GetPropA(ghMainWnd,"RFD_ACCOUNT_HASH_HI"))))<<32);
++  bool sameAccount=GetPropA(ghMainWnd,"RFD_ACCOUNT_STATE")==reinterpret_cast<HANDLE>(1)&&previous==identity;
++  if(!applyProfile("RFD_AUTH_PROFILE",fields[2]))return false;RfdPublishNativeAccount(account.c_str());if(!sameAccount&&gbRunGame!=1&&!RfdOnlineRequested())authChanged=true;log(sameAccount?"same account session refreshed":"account control accepted");return true;
 + }
 + if(fields.size()!=11||fields[0]!=token||fields[1]!="room"||wideProfile(fields[2]).empty()||fields[3]!="127.0.0.1"||fields[5].size()!=43||fields[6].size()!=64||fields[7].size()>96||fields[9].size()!=36||fields[10].size()!=1||fields[10][0]<'0'||fields[10][0]>'8')return false;
 + if(!pendingRoom.empty())return false;
-+ pendingRoom=std::move(fields);if(gbRunGame==1){gbRunGame=0;gbRunGameResult=1;ResetMainMenu();}log("room switch queued by resident controller");return true;
++ roomLaunchFailed=false;pendingRoom=std::move(fields);if(gbRunGame==1){gbRunGame=0;gbRunGameResult=1;ResetMainMenu();}log("room switch queued by resident controller");return true;
 +}
 +bool RfdApplyRoomRequest(){
 + if(authChanged&&gbRunGame!=1&&!RfdOnlineRequested()){char profile[MAX_PATH]={};if(environment(profile,sizeof(profile),"RFD_AUTH_PROFILE"))SetEnvironmentVariableA("RFD_PROFILE",profile);}
@@ -5567,10 +5591,12 @@
 +int __stdcall RfdNetSendTurn(char *data,size_t size){if(!active)return RfdOnlineRequested()?unavailable():eSNetSendTurn(data,size);if(size!=4){SetLastError(ERROR_INVALID_PARAMETER);return 0;}uint value;memcpy(&value,data,4);return result(rfd_room_send_turn(value));}
 --- /dev/null
 +++ b/src/CommunityOnline.h
-@@ -0,0 +1,58 @@
+@@ -0,0 +1,60 @@
 +#pragma once
 +bool RfdOnlineRequested();
 +bool RfdControlPending();
++bool RfdRoomRequestPending();
++bool RfdTakeRoomLaunchFailure();
 +bool RfdApplyRoomRequest();
 +bool RfdHandleControl(WPARAM source, LPARAM data);
 +void RfdClearRoomRequest();
@@ -7566,12 +7592,28 @@
 +void RfdOrbClearSprite(void *destination,int width,int height);
 --- /dev/null
 +++ b/src/CommunitySession.cpp
-@@ -0,0 +1,57 @@
+@@ -0,0 +1,73 @@
 +#include "stdafx.h"
 +#include "CommunitySession.h"
++#include "CommunityDev.h"
++#include <shellapi.h>
 +
 +namespace {
 +std::string profile(){char value[4096]={};DWORD n=GetEnvironmentVariableA("RFD_PROFILE",value,sizeof(value));return n&&n<sizeof(value)?value:"";}
++}
++bool RfdStartThroughLauncher(){
++#if RFD_DEV_QA
++ return false;
++#else
++ wchar_t channel[256]={};DWORD length=GetEnvironmentVariableW(L"RFD_CONTROL_PIPE",channel,256);
++ if(length>=11&&length<256&&!wcsncmp(channel,L"RfdControl-",11))return false;
++ // A public native executable always enters through the resident updater.
++ // This prevents a second, uncontrolled game from using the same account.
++ wchar_t launcher[4096]={};DWORD count=GetModuleFileNameW(nullptr,launcher,4096);
++ if(count&&count<4096){wchar_t *name=wcsrchr(launcher,L'\\');if(name){name[1]=0;wcscat_s(launcher,L"RfdLauncher.exe");if(GetFileAttributesW(launcher)!=INVALID_FILE_ATTRIBUTES&&reinterpret_cast<INT_PTR>(ShellExecuteW(nullptr,L"open",launcher,L"rfd://open",nullptr,SW_SHOWNORMAL))>32)return true;}}
++ if(reinterpret_cast<INT_PTR>(ShellExecuteW(nullptr,L"open",L"rfd://open",nullptr,nullptr,SW_SHOWNORMAL))<=32)MessageBoxW(nullptr,L"Abra o instalador Returns from Darkness para preparar o launcher.",L"Returns from Darkness",MB_OK|MB_ICONINFORMATION);
++ return true;
++#endif
 +}
 +void RfdPublishNativeAccount(const char *account){
 + if(!ghMainWnd)return;
@@ -7626,9 +7668,10 @@
 +}
 --- /dev/null
 +++ b/src/CommunitySession.h
-@@ -0,0 +1,8 @@
+@@ -0,0 +1,9 @@
 +#pragma once
 +bool RfdAcquireInstance();
++bool RfdStartThroughLauncher();
 +void RfdConfigureWindow();
 +char *RfdConfigPath();
 +void RfdTestWindow(int &width,int &height,int &x,int &y);
@@ -57959,7 +58002,14 @@
  //-----  crash minidump functional ----------------------------------------
  void CreateMiniDump( EXCEPTION_POINTERS* pep )
  {
-@@ -2289,11 +2330,8 @@
+@@ -2283,17 +2324,15 @@
+ int __stdcall WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd)
+ {
+ 	__try{
++    if(RfdStartThroughLauncher())return 0;
+ 	#ifdef SHOW_CALL_STACK
+ 	void InintShowCallStack(); InintShowCallStack();
+ 	#endif
  	InitTH2( &hInstance );
  
  	// ------ Original code start here ---------------------------------------
@@ -57973,7 +58023,7 @@
  	HInstance = hInstance;
  	ShowCursor(0);
  	InitializeHashSource();
-@@ -2304,7 +2342,7 @@
+@@ -2304,7 +2343,7 @@
  	OldTopLevelExceptionFilter = (int(__stdcall*)(struct _EXCEPTION_POINTERS*))SetUnhandledExceptionFilter((LONG(__stdcall*)(struct _EXCEPTION_POINTERS*))TopLevelExceptionFilter);
  	#endif
  	// Проверки на уже запущенность
@@ -57982,7 +58032,7 @@
  		return 0;
  	}
  	InitOnScreenData();
-@@ -2330,7 +2368,7 @@
+@@ -2330,7 +2369,7 @@
  	}
  	BlackPalette();
  	InitRandomSeed64(TrueRandom64()); // TODO: add separate seed sequence (items/transmute), may be add it to save
@@ -57991,7 +58041,7 @@
  
  	UiDestroy();
  	SavePaletteSettings();
-@@ -2344,7 +2382,7 @@
+@@ -2344,7 +2383,7 @@
  	// ------ Original code end here ---------------------------------------
  
  	ExitTH2();
@@ -58000,7 +58050,7 @@
  	
  	return 0;
  }
-@@ -4439,7 +4477,7 @@
+@@ -4439,7 +4478,7 @@
  				// Вызов загрузки файла с горячими клавишами (грузим один раз)
  				// ToDo: хорошо бы переместить в "Config.cpp"
  				if (!CustomKeysFileLoaded) {
@@ -58009,7 +58059,7 @@
  					CustomKeysFileLoaded = true;
  				}
  
-@@ -4902,6 +4940,7 @@
+@@ -4902,6 +4941,7 @@
  //----- (0040B151) -------------------------------------------------------- game
  void __fastcall LoadGameLevel(int startNewGame, int lvlDir)
  {
@@ -58017,7 +58067,7 @@
      GameMode = Players[CurrentPlayerIndex].gameMode;
      EnforceNoSave = (GameMode == GM_NIGHTMARE || GameMode == GM_SPEEDRUN);
  	MemorialSign = { -1 }; //Iron Man Memorial on map message clear 
-@@ -4926,7 +4965,7 @@
+@@ -4926,7 +4966,7 @@
  	LoadLvlGFX();
  	ProgressUpdate();
  	if( startNewGame ){
@@ -58026,7 +58076,7 @@
  		LoadFlipItemCELFiles();
  		LoadSpeechPanelData();
  		for( int i = 0; i < MaxCountOfPlayersInGame; i++ ){ // TODO: Выполнение IsSinglePlayerMode раз - ошибка?
-@@ -4950,7 +4989,7 @@
+@@ -4950,7 +4990,7 @@
  	ProgressUpdate();
  	ClearWarps();
  	if( ! Dungeon->isQuest ){
@@ -58035,7 +58085,7 @@
  		ProgressUpdate();
  		FillSolidBlockTables();		
  		if (Players[CurrentPlayerIndex].gameChanger & BIT(GC_15_ICE_AGE) && !Dungeon->isQuest) {
-@@ -4984,7 +5023,7 @@
+@@ -4984,7 +5024,7 @@
  		for( int playerIndex = 0; playerIndex < 4; playerIndex++ ){
  			Player& player = Players[playerIndex];
  			if( player.IsExists && Dungeon == player.dungeon ){
@@ -58044,7 +58094,7 @@
  				if( lvlDir != LVL_4_NODIR ){
  					InitPlayer(playerIndex, startNewGame);
  				}
-@@ -5072,7 +5111,7 @@
+@@ -5072,7 +5112,7 @@
  			}
  			ClearAllObjects();
  			// Init town people
@@ -58053,7 +58103,7 @@
  			// Init items
  			InitItems();
  			// Init missiles
-@@ -5623,4 +5662,4 @@
+@@ -5623,4 +5663,4 @@
  			ClipCursor(0);
  		}
  	}
@@ -130721,9 +130771,9 @@
 +#pragma once
 +
 +#define TH3_REVISION 1265
-+#define THE_HELL_VERSION_INT 0,4,9,0
-+#define THE_HELL_VERSION_STRING "v0.4.9\0"
-+#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.4.9\0"
++#define THE_HELL_VERSION_INT 0,4,10,0
++#define THE_HELL_VERSION_STRING "v0.4.10\0"
++#define THE_HELL_VERSION_HUMAN_STRING "Returns from Darkness HD, v0.4.10\0"
 +
 +
 +
